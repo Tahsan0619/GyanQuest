@@ -28,9 +28,9 @@ import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hu
 import { registerLifeScenes } from "./life-scenes.js";
 import { registerCellScenes } from "./cell-scenes.js";
 import { registerPlantScenes } from "./plant-scenes.js";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book1";
-import { BOOK as BOOK_L2 } from "../books/level2.js?v=book1";
-import { BOOK as BOOK_L3 } from "../books/level3.js?v=book1";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
+import { BOOK as BOOK_L2 } from "../books/level2.js?v=book3";
+import { BOOK as BOOK_L3 } from "../books/level3.js?v=book3";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
 
 
@@ -592,6 +592,6 @@ try {
 
   document.documentElement.classList.add("bio-l1-live", "chem-l1-live");
   
-  if (state.inHub === false) resumePlaySession();
-  else showHub();
+  // Always open the mission levels hub first (do not auto-resume mid-mission).
+  showHub();
 }

@@ -1,211 +1,278 @@
 /**
- * Digital book - electronics-robotics mission 1: Sensor Bot
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Electronics & Robotics Mission 1: Sensor Bot
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: assets/book-shared electrical / ai_data themes (see assets/book/CREDITS-m1.json).
  */
 export const BOOK = {
   missionIndex: 0,
   title: "Sensor Bot",
   subtitle: "sense act",
   subject: "Electronics Robotics / Sensor Bot",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Sensor Bot",
-    art: "/games/electronics-robotics/assets/book/m1-fig1.svg",
+    art: "/games/electronics-robotics/assets/book/m1-cover.jpg",
   },
   glossary: [
-  {
-    "id": "sense",
-    "term": "sense"
-  },
-  {
-    "id": "sensors",
-    "term": "Sensors"
-  },
-  {
-    "id": "code",
-    "term": "code"
-  },
-  {
-    "id": "decides",
-    "term": "decides"
-  },
-  {
-    "id": "actuators",
-    "term": "actuators"
-  },
-  {
-    "id": "robot",
-    "term": "robot"
-  },
-  {
-    "id": "loop",
-    "term": "loop"
-  },
-  {
-    "id": "meet",
-    "term": "Meet"
-  }
-],
+    { id: "sensor", term: "sensor" },
+    { id: "actuator", term: "actuator" },
+    { id: "loop", term: "loop" },
+    { id: "input", term: "input" },
+    { id: "output", term: "output" },
+    { id: "decide", term: "decide" },
+    { id: "motor", term: "motor" },
+    { id: "signal", term: "signal" },
+  ],
   pages: [
-{
-  "title": "Welcome to Sensor Bot",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/electronics-robotics/assets/book/m1-fig1.svg",
-      "caption": "Figure: Sensor Bot overview",
-      "place": "top",
-      "alt": "Sensor Bot"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Sensors sense, code decides, actuators act - that is the robot loop."
+      title: "Sense, decide, act",
+      layout: "text",
+      theory: ["constructivism", "dual-coding", "cognitive-load"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/electronics-robotics/assets/book/m1-cover.jpg",
+              caption: "Figure 1. A robot body is useless without a loop that listens and responds.",
+              alt: "Robot system",
+            },
+            {
+              src: "/games/electronics-robotics/assets/book/m1-hook.jpg",
+              caption: "Arms and motors are actuators - they do the acting after a decision.",
+              alt: "Robotic arm actuator",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Sensors sense the world. Code decides what that reading means. Actuators act - motors, doors, lights.",
+        },
+        {
+          type: "p",
+          text: "That loop is the whole robot trick: sense -> decide -> act -> sense again.",
+        },
+        {
+          type: "p",
+          text: "Line followers, bump-and-turn toys, and auto doors all run the same spine with different sensors and actuators.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores sense act. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Energy that becomes motion",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "dual-coding"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/electronics-robotics/assets/book/m1-model.webp",
+              caption: "Figure 2. Controlled energy - robots turn power into timed action, not random sparks.",
+              alt: "Controlled flame as energy metaphor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A sensor reading is just a signal until a rule maps it to an output. Bright line? Steer. Bumper hit? Reverse and turn.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sensor = input",
+            "Program rule = decide",
+            "Motor or door = actuator output",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Line follower."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: sense act."
+      title: "Why the bot moves",
+      layout: "text",
+      theory: ["cognitive-load", "dual-coding"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/electronics-robotics/assets/book/m1-mechanism.jpg",
+              caption: "Figure 3. Combustion and motors differ, yet both show energy driving change.",
+              alt: "Combustion energy image",
+            },
+            {
+              src: "/games/electronics-robotics/assets/book/m1-detail.jpg",
+              caption: "Metal parts wear - loops must stay simple and testable.",
+              alt: "Metal surface detail",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "If the sensor is wrong, the decide step will look smart and still fail. Test inputs before blaming the motor.",
+        },
+        {
+          type: "p",
+          text: "Auto doors sense presence, decide open/close, then act with a motor. Same loop as a classroom line follower.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Sensors sense, code decides, actuators act - that is the robot loop."
+      title: "Wear, tear, and tough loops",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "spiral-scaffold"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/electronics-robotics/assets/book/m1-transfer.jpg",
+              caption: "Figure 4. Real hardware ages - clean sense-act rules make debugging possible.",
+              alt: "Weathered metal",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Fancy bodies impress. Reliable loops win: clear sensors, clear rules, actuators that match the job.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Line follower.",
-        "Compare it with Bump-and-turn.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/electronics-robotics/assets/book/m1-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "Bot Builder mission spine",
+      layout: "text",
+      theory: ["spiral-scaffold", "cognitive-load"],
+      blocks: [
+        {
+          type: "p",
+          text: "You met Sensor Bot, dialed the loop, sorted sense/decide/act cards, strengthened the loop, and named why the bot moves.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sort keeps the three roles from blurring",
+            "Stronger loop lab shows delayed or noisy sensors",
+            "Rule lock: sensors sense, code decides, actuators act",
+          ],
+        },
+        {
+          type: "p",
+          text: "Canvas steps stayed short. The book holds the full loop.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Sensor Bot",
-        "Loop Dial Lab",
-        "Sort Sense Decide Act",
-        "Stronger Loop Lab",
-        "Why the Bot Moves"
-      ]
+      title: "Follower, bumper, door",
+      layout: "split",
+      theory: ["constructivism", "dual-coding", "retrieval-practice"],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/electronics-robotics/assets/book/m1-cover.jpg",
+              caption: "Line follower - light sensor in, steering out.",
+              alt: "Robot for line following",
+            },
+            {
+              src: "/games/electronics-robotics/assets/book/m1-hook.jpg",
+              caption: "Bump-and-turn - contact sensor, then motor plan.",
+              alt: "Robotic arm motion",
+            },
+            {
+              src: "/games/electronics-robotics/assets/book/m1-model.webp",
+              caption: "Auto door - presence sense, open act.",
+              alt: "Energy for actuators",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "For each example, name the sensor, the decide rule, and the actuator in one breath.",
+        },
+        {
+          type: "ul",
+          items: [
+            "What is sensed?",
+            "What rule decides?",
+            "What part acts?",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/electronics-robotics/assets/book/m1-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Line follower as your example."
+      title: "Robot myths",
+      layout: "text",
+      theory: ["conceptual-change"],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: Robots understand like people. Better: they follow sense-decide-act loops from sensors and code.",
+        },
+        {
+          type: "p",
+          text: "Myth: More motors mean smarter. Better: better sensing and clearer rules beat extra thrashing.",
+        },
+        {
+          type: "p",
+          text: "Myth: If it moves, the sensor must be fine. Better: wrong input can still produce motion - test the signal.",
+        },
+        {
+          type: "p",
+          text: "Tap red terms like sensor or actuator to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Bot Builder mastery",
+      layout: "text",
+      theory: ["retrieval-practice", "spiral-scaffold"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/electronics-robotics/assets/book/m1-cover.jpg",
+              caption: "Figure 5. Teach the loop with one robot picture.",
+              alt: "Robot as sense-act anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach in one minute: sensors sense, code decides, actuators act; line followers and auto doors share that loop.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Draw the three-box loop",
+            "Point to a real auto door",
+            "Use the word actuator correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Bot Builder reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Sensor Bot to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

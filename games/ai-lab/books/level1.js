@@ -1,211 +1,305 @@
 /**
- * Digital book - ai-lab mission 1: What is AI?
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - AI Lab / What is AI?
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: local verified copies under /games/ai-lab/assets/book/ (see CREDITS-m1.json).
  */
 export const BOOK = {
   missionIndex: 0,
   title: "What is AI?",
   subtitle: "patterns from examples, not magic",
-  subject: "Ai Lab / What is AI?",
+  subject: "AI Lab / What is AI?",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "What is AI?",
-    art: "/games/ai-lab/assets/book/m1-fig1.svg",
+    art: "/games/ai-lab/assets/book/m1-cover.jpg",
   },
   glossary: [
-  {
-    "id": "patterns",
-    "term": "patterns"
-  },
-  {
-    "id": "examples",
-    "term": "examples"
-  },
-  {
-    "id": "magic",
-    "term": "magic"
-  },
-  {
-    "id": "spots",
-    "term": "spots"
-  },
-  {
-    "id": "does",
-    "term": "does"
-  },
-  {
-    "id": "think",
-    "term": "think"
-  },
-  {
-    "id": "like",
-    "term": "like"
-  },
-  {
-    "id": "person",
-    "term": "person"
-  }
-],
+    { id: "pattern", term: "pattern" },
+    { id: "examples", term: "examples" },
+    { id: "guess", term: "guess" },
+    { id: "data", term: "data" },
+    { id: "model", term: "model" },
+    { id: "bias", term: "bias" },
+    { id: "automation", term: "automation" },
+    { id: "feedback", term: "feedback" },
+    { id: "input", term: "input" },
+    { id: "output", term: "output" },
+  ],
   pages: [
-{
-  "title": "Welcome to What is AI?",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/ai-lab/assets/book/m1-fig1.svg",
-      "caption": "Figure: What is AI? overview",
-      "place": "top",
-      "alt": "What is AI?"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "AI spots patterns in examples - it is not magic and it does not think like a person."
+      title: "Why What is AI?",
+      layout: "text",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "cognitive-load",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/ai-lab/assets/book/m1-hook.jpg",
+              caption: "Figure 1. Rovers and robots follow sensed patterns - a concrete cousin of AI guessing.",
+              alt: "NASA rover on rocky terrain",
+            },
+            {
+              src: "/games/ai-lab/assets/book/m1-cover.jpg",
+              caption: "Lab robots remind us: machines act on data, not feelings.",
+              alt: "Industrial-style robot",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Your phone tags a cat photo. A voice helper guesses your next word. A map app suggests a faster road home.",
+        },
+        {
+          type: "p",
+          text: "None of those tools is a tiny person living in the silicon. They are systems that spot patterns in examples - then guess on new cases.",
+        },
+        {
+          type: "p",
+          text: "Everyday hook in Bangladesh: a shop camera that flags empty shelves learns from many past shelf photos, not from magic.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores patterns from examples, not magic. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Examples fuel patterns",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/ai-lab/assets/book/m1-model.png",
+              caption: "Figure 2. Brains inspire metaphors - but AI is statistics over examples, not a human mind.",
+              alt: "Human brain illustration",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Feed many labeled examples. Patterns emerge. New inputs get a guess.",
+        },
+        {
+          type: "ul",
+          items: [
+            "More varied examples usually mean sturdier patterns",
+            "Messy or biased examples can bend the guess",
+            "A light switch is automation - not pattern learning",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Phone photo tags."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: patterns from examples, not magic."
+      title: "Pattern dial in the lab",
+      layout: "text",
+      theory: [
+        "cognitive-load",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/ai-lab/assets/book/m1-mechanism.jpg",
+              caption: "Figure 3. Autonomous systems stack sensors + patterns + checks.",
+              alt: "Autonomous system hardware",
+            },
+            {
+              src: "/games/ai-lab/assets/book/m1-lab.jpg",
+              caption: "A lab bench is where you test guesses against fresh cases.",
+              alt: "Laboratory workspace",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "In the mission you raised a pattern dial. Clarity went up until the guess looked solid.",
+        },
+        {
+          type: "p",
+          text: "Think of that dial as how cleanly the examples line up. Sparse, noisy data keeps the dial low.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: AI spots patterns in examples - it is not magic and it does not think like a person."
+      title: "Sort: AI, not AI, tricky",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/ai-lab/assets/book/m1-mastery.jpg",
+              caption: "Figure 4. A robotic arm repeats trained motions - still pattern + control, not human thought.",
+              alt: "Robotic arm",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Photo taggers, voice helpers, and route suggesters lean on learned patterns.",
+        },
+        {
+          type: "p",
+          text: "Plain calculators and wall clocks follow fixed rules. A scripted FAQ bot can look smart yet only replay canned lines - tricky.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Phone photo tags.",
-        "Compare it with Voice assistant guesses.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/ai-lab/assets/book/m1-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: [
+        "spiral-scaffold",
+        "cognitive-load",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet -> dial clarity -> sort tools -> stronger lab -> order the guess story -> name the rule -> stretch places -> myth bust -> fluency -> mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting teaches what counts as AI",
+            "The dial links data quality to guess strength",
+            "The rule sentence locks: AI learns patterns from examples",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet AI",
-        "Watch Pattern Dial",
-        "Sort: AI or Not?",
-        "Stronger Pattern Lab",
-        "Why AI Guesses"
-      ]
+      title: "Street lab: photo tags",
+      layout: "split",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "retrieval-practice",
+      ],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/ai-lab/assets/book/m1-hook.jpg",
+              caption: "Field rover - sensing then deciding.",
+              alt: "Rover",
+            },
+            {
+              src: "/games/ai-lab/assets/book/m1-lab.jpg",
+              caption: "Bench testing - check before you trust.",
+              alt: "Lab",
+            },
+            {
+              src: "/games/ai-lab/assets/book/m1-cover.jpg",
+              caption: "Robot hardware - patterns in motion.",
+              alt: "Robot",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Open a gallery app that suggests names. Ask: what examples trained this? What would confuse it?",
+        },
+        {
+          type: "ul",
+          items: [
+            "Name one AI tool and one non-AI tool at home",
+            "Explain why a wrong tag might happen",
+            "Drag the photos to flip lab vs field views",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/ai-lab/assets/book/m1-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Phone photo tags as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: [
+        "conceptual-change",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: AI is a magic brain that thinks like humans. Better: AI spots statistical patterns in examples.",
+        },
+        {
+          type: "p",
+          text: "Myth: AI never needs data. Better: good examples are the fuel for pattern learning.",
+        },
+        {
+          type: "p",
+          text: "Myth: every automated button is AI. Better: simple switches and fixed scripts are not AI.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Mastery",
+      layout: "text",
+      theory: [
+        "retrieval-practice",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/ai-lab/assets/book/m1-mastery.jpg",
+              caption: "Figure 5. Keep this arm as your teaching anchor: trained motion, checked outcomes.",
+              alt: "Robotic arm anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend in one minute: AI learns patterns from examples, then guesses on new cases - and guesses can be wrong until data and checks improve.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Say the rule out loud once",
+            "Point to a phone feature that uses patterns",
+            "Name one myth you can bust",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the AI Rookie reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain What is AI? to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

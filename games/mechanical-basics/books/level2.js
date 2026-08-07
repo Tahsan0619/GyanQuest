@@ -1,211 +1,305 @@
 /**
- * Digital book - mechanical-basics mission 2: Motion Machines
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Mechanical Basics / Motion Machines
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: local verified copies under /games/mechanical-basics/assets/book/ (see CREDITS-m2.json).
  */
 export const BOOK = {
   missionIndex: 1,
   title: "Motion Machines",
   subtitle: "motion transfer",
   subject: "Mechanical Basics / Motion Machines",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Motion Machines",
-    art: "/games/mechanical-basics/assets/book/m2-fig1.svg",
+    art: "/games/mechanical-basics/assets/book/m2-cover.jpg",
   },
   glossary: [
-  {
-    "id": "motion",
-    "term": "motion"
-  },
-  {
-    "id": "transfer",
-    "term": "transfer"
-  },
-  {
-    "id": "wheels",
-    "term": "Wheels"
-  },
-  {
-    "id": "belts",
-    "term": "belts"
-  },
-  {
-    "id": "chains",
-    "term": "chains"
-  },
-  {
-    "id": "pass",
-    "term": "pass"
-  },
-  {
-    "id": "along",
-    "term": "along"
-  },
-  {
-    "id": "linked",
-    "term": "linked"
-  }
-],
+    { id: "wheel", term: "wheel" },
+    { id: "axle", term: "axle" },
+    { id: "belt", term: "belt" },
+    { id: "chain", term: "chain" },
+    { id: "transfer", term: "transfer" },
+    { id: "friction", term: "friction" },
+    { id: "brake", term: "brake" },
+    { id: "slip", term: "slip" },
+    { id: "jam", term: "jam" },
+    { id: "conveyor", term: "conveyor" },
+  ],
   pages: [
-{
-  "title": "Welcome to Motion Machines",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/mechanical-basics/assets/book/m2-fig1.svg",
-      "caption": "Figure: Motion Machines overview",
-      "place": "top",
-      "alt": "Motion Machines"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Wheels, belts, and chains pass motion along a linked path."
+      title: "Why Motion Machines?",
+      layout: "text",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "cognitive-load",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/mechanical-basics/assets/book/m2-hook.jpg",
+              caption: "Figure 1. Cranes move loads along planned paths - belts do the same for spin.",
+              alt: "Crane",
+            },
+            {
+              src: "/games/mechanical-basics/assets/book/m2-cover.jpg",
+              caption: "Wheels cut friction and carry motion.",
+              alt: "Skateboard motion",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Wheels, belts, and chains pass motion along a linked path.",
+        },
+        {
+          type: "p",
+          text: "Bike chains, fan belts, and conveyors succeed when each link stays connected and tight enough.",
+        },
+        {
+          type: "p",
+          text: "Everyday hook: pedal a bike - chain links carry your leg motion to the wheel.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores motion transfer. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Links that carry",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/mechanical-basics/assets/book/m2-model.webp",
+              caption: "Figure 2. Cart push shows how force becomes travel when links work.",
+              alt: "Pushing cart",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A belt or chain is a motion messenger. Loose belts slip. Jammed belts block the path.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Wheels and axles reduce rubbing losses",
+            "Brakes intentionally block or slow motion",
+            "Engines are not the only motion source - links pass it along",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Bike chain."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: motion transfer."
+      title: "Transfer dial",
+      layout: "text",
+      theory: [
+        "cognitive-load",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/mechanical-basics/assets/book/m2-mechanism.jpg",
+              caption: "Figure 3. Gears can sit inside a transfer path too.",
+              alt: "Gears",
+            },
+            {
+              src: "/games/mechanical-basics/assets/book/m2-lab.jpg",
+              caption: "Friction can help grip or steal motion - name which.",
+              alt: "Friction study",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "In the lab you dialed transfer quality until motion arrived at the far end.",
+        },
+        {
+          type: "p",
+          text: "If the far wheel stays still, check slip, jam, or a missing link.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Wheels, belts, and chains pass motion along a linked path."
+      title: "Brakes are blockers",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/mechanical-basics/assets/book/m2-mastery.webp",
+              caption: "Figure 4. When the path is clear, push becomes travel.",
+              alt: "Cart motion",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Brakes are not broken belts - they are designed to stop transfer on purpose.",
+        },
+        {
+          type: "p",
+          text: "A jammed belt is an accident; a brake is a choice.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Bike chain.",
-        "Compare it with Fan belt.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/mechanical-basics/assets/book/m2-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: [
+        "spiral-scaffold",
+        "cognitive-load",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet transfer -> dial links -> sort movers/blockers -> stronger lab -> why belts -> name the transfer rule -> stretch conveyors -> myths -> fluency -> mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting separates wheels, belts, and brakes",
+            "Labs show slip vs solid transfer",
+            "Rule: linked paths pass motion; jams and loose belts break it",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Motion Links",
-        "Belt Dial Lab",
-        "Sort Transfer Parts",
-        "Tighter Transfer",
-        "Why Motion Passes"
-      ]
+      title: "Street lab: bike chain",
+      layout: "split",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "retrieval-practice",
+      ],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/mechanical-basics/assets/book/m2-hook.jpg",
+              caption: "Lift path.",
+              alt: "Crane",
+            },
+            {
+              src: "/games/mechanical-basics/assets/book/m2-model.webp",
+              caption: "Push path.",
+              alt: "Cart",
+            },
+            {
+              src: "/games/mechanical-basics/assets/book/m2-cover.jpg",
+              caption: "Wheel path.",
+              alt: "Skateboard",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "With a bike (or clear photo), trace pedal -> chain -> rear wheel. Find the brake.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Predict what a loose chain does",
+            "Name one conveyor-like machine at a shop",
+            "Flip carousel: crane lift vs cart push",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/mechanical-basics/assets/book/m2-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Bike chain as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: [
+        "conceptual-change",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: wheels only look round for fun. Better: wheels and axles cut friction and carry motion.",
+        },
+        {
+          type: "p",
+          text: "Myth: a belt never needs to be tight. Better: loose belts slip - motion fails to transfer.",
+        },
+        {
+          type: "p",
+          text: "Myth: brakes add motion to the chain. Better: brakes block or slow motion on purpose.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Mastery",
+      layout: "text",
+      theory: [
+        "retrieval-practice",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/mechanical-basics/assets/book/m2-mastery.webp",
+              caption: "Figure 5. Clear path - your transfer goal.",
+              alt: "Cart anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend: motion travels along links; keep belts true; brakes stop on purpose.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sketch a three-part transfer path",
+            "Explain slip in one sentence",
+            "Use the word axle correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Motion Scout reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Motion Machines to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

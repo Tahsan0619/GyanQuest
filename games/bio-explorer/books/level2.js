@@ -1,212 +1,319 @@
 /**
  * Digital book - bio-explorer mission 2: Cell City
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Theory spine: cognitive load, dual coding, multimedia learning,
+ * constructivism, conceptual change, spiral scaffold, retrieval practice.
+ * Images: local assets under /games/bio-explorer/assets/book/ (verified downloads).
  */
 export const BOOK = {
-  missionIndex: 1,
-  title: "Cell City",
-  subtitle: "cells",
-  subject: "Bio Explorer / Cell City",
-  cover: {
-    title: "Cell City",
-    art: "/games/bio-explorer/assets/book/m2-fig1.svg",
+  "missionIndex": 1,
+  "title": "Cell City",
+  "subtitle": "cells",
+  "subject": "Bio Explorer / Cell City",
+  "theories": [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice"
+  ],
+  "cover": {
+    "title": "Cell City",
+    "art": "/games/bio-explorer/assets/book/m2-cover.jpg"
   },
-  glossary: [
-  {
-    "id": "cells",
-    "term": "cells"
-  },
-  {
-    "id": "living",
-    "term": "Living"
-  },
-  {
-    "id": "things",
-    "term": "things"
-  },
-  {
-    "id": "made",
-    "term": "made"
-  },
-  {
-    "id": "tiny",
-    "term": "tiny"
-  },
-  {
-    "id": "rooms",
-    "term": "rooms"
-  },
-  {
-    "id": "called",
-    "term": "called"
-  },
-  {
-    "id": "basic",
-    "term": "basic"
-  }
-],
-  pages: [
-{
-  "title": "Welcome to Cell City",
-  "layout": "text",
-  "figures": [
+  "glossary": [
     {
-      "src": "/games/bio-explorer/assets/book/m2-fig1.svg",
-      "caption": "Figure: Cell City overview",
-      "place": "top",
-      "alt": "Cell City"
+      "id": "cells",
+      "term": "cells"
+    },
+    {
+      "id": "cell",
+      "term": "cell"
+    },
+    {
+      "id": "city",
+      "term": "city"
+    },
+    {
+      "id": "living",
+      "term": "living"
+    },
+    {
+      "id": "things",
+      "term": "things"
+    },
+    {
+      "id": "made",
+      "term": "made"
+    },
+    {
+      "id": "tiny",
+      "term": "tiny"
+    },
+    {
+      "id": "rooms",
+      "term": "rooms"
     }
   ],
-  "blocks": [
+  "pages": [
     {
-      "type": "p",
-      "text": "Living things are made of tiny living rooms called cells - the basic units of life."
-    },
-    {
-      "type": "p",
-      "text": "This mission explores cells. In the game you practiced short steps; this book slows down and connects the big ideas."
-    },
-    {
-      "type": "p",
-      "text": "Everyday hook: think about Skin cells."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: cells."
-    },
-    {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Living things are made of tiny living rooms called cells - the basic units of life."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Notice it in Skin cells.",
-        "Compare it with Mango leaf cells.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/bio-explorer/assets/book/m2-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Meet Cell City",
-        "Zoom Lab",
-        "Sort: Cell Stories",
-        "Membrane Peek",
-        "Cell Jobs"
+      "title": "Why Cell City?",
+      "layout": "text",
+      "theory": [
+        "constructivism",
+        "dual-coding",
+        "cognitive-load"
+      ],
+      "figures": [
+        {
+          "place": "top",
+          "slides": [
+            {
+              "src": "/games/bio-explorer/assets/book/m2-hook.jpg",
+              "caption": "Figure 1. A real-world door into Cell City.",
+              "alt": "Cell City"
+            },
+            {
+              "src": "/games/bio-explorer/assets/book/m2-cover.jpg",
+              "caption": "Same idea, another angle.",
+              "alt": "Cell City"
+            }
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Living things are made of tiny living rooms called cells - the basic units of life."
+        },
+        {
+          "type": "p",
+          "text": "In the mission you practiced short steps. This book slows down: By the end of this mission, you'll be able to explain cells in your own words."
+        },
+        {
+          "type": "p",
+          "text": "Everyday hook: notice Skin cells."
+        }
       ]
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/bio-explorer/assets/book/m2-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Skin cells as your example."
-    },
-    {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
-    },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
+      "title": "The big model",
+      "layout": "full-fig",
+      "theory": [
+        "multimedia-learning",
+        "dual-coding"
+      ],
+      "figures": [
+        {
+          "place": "full",
+          "slides": [
+            {
+              "src": "/games/bio-explorer/assets/book/m2-model.jpg",
+              "caption": "Figure 2. Hold this picture of cells in your mind.",
+              "alt": "cells"
+            }
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Theme: cells."
+        },
+        {
+          "type": "p",
+          "text": "Point to the photo and say what stays the same vs what can change."
+        }
       ]
     },
     {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Cell Scout reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Cell City to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
+      "title": "What makes it change",
+      "layout": "text",
+      "theory": [
+        "cognitive-load",
+        "dual-coding"
+      ],
+      "figures": [
+        {
+          "place": "top",
+          "slides": [
+            {
+              "src": "/games/bio-explorer/assets/book/m2-mechanism.jpg",
+              "caption": "Figure 3. The process or force that drives the change.",
+              "alt": "Mechanism"
+            }
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Ask: what energy, force, or rule turns Skin cells into a new situation?"
+        },
+        {
+          "type": "p",
+          "text": "Compare with Mango leaf cells. Name one thing that stayed the same."
+        }
       ]
     },
     {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
+      "title": "Look closer",
+      "layout": "full-fig",
+      "theory": [
+        "multimedia-learning",
+        "spiral-scaffold"
+      ],
+      "figures": [
+        {
+          "place": "full",
+          "slides": [
+            {
+              "src": "/games/bio-explorer/assets/book/m2-mechanism.jpg",
+              "caption": "Figure 4. A closer structure or pattern underneath the everyday view.",
+              "alt": "Representation"
+            }
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Models are tools, not photographs of every detail. Use them to explain, then check against real life."
+        }
+      ]
+    },
+    {
+      "title": "How the 10 steps connect",
+      "layout": "text",
+      "theory": [
+        "spiral-scaffold",
+        "cognitive-load"
+      ],
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Meet \u2192 try \u2192 sort \u2192 lab \u2192 explain \u2192 rule \u2192 stretch \u2192 myth \u2192 fluency \u2192 mastery."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Meet Cell City",
+            "Zoom Lab",
+            "Sort: Cell Stories",
+            "Membrane Peek",
+            "Cell Jobs"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Each game step added one layer. The book gathers the full story."
+        }
+      ],
+      "figures": []
+    },
+    {
+      "title": "Transfer lab",
+      "layout": "split",
+      "theory": [
+        "constructivism",
+        "dual-coding",
+        "retrieval-practice"
+      ],
+      "figures": [
+        {
+          "place": "right",
+          "slides": [
+            {
+              "src": "/games/bio-explorer/assets/book/m2-cover.jpg",
+              "caption": "Try with Skin cells.",
+              "alt": "Skin cells"
+            },
+            {
+              "src": "/games/bio-explorer/assets/book/m2-hook.jpg",
+              "caption": "Compare with Mango leaf cells.",
+              "alt": "Mango leaf cells"
+            },
+            {
+              "src": "/games/bio-explorer/assets/book/m2-model.jpg",
+              "caption": "Find one more example nearby.",
+              "alt": "Transfer"
+            }
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Use Skin cells as your lab. Drag/flip the photos if more than one appears."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "What changed?",
+            "What stayed the same?",
+            "What rule explains it?"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Myths to bust",
+      "layout": "text",
+      "theory": [
+        "conceptual-change"
+      ],
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Myth: Cell City is just a fancy word. Better: it names a rule you can test with examples."
+        },
+        {
+          "type": "p",
+          "text": "Myth: if I memorized a sentence, I understand. Better: I can show an example and a counter-example."
+        },
+        {
+          "type": "p",
+          "text": "Red words are glossary terms. Tap one to ask the tutor."
+        }
+      ],
+      "figures": []
+    },
+    {
+      "title": "Mastery",
+      "layout": "text",
+      "theory": [
+        "retrieval-practice",
+        "spiral-scaffold"
+      ],
+      "figures": [
+        {
+          "place": "top",
+          "slides": [
+            {
+              "src": "/games/bio-explorer/assets/book/m2-cover.jpg",
+              "caption": "Figure 5. Teach Cell City using this picture as your anchor.",
+              "alt": "Cell City"
+            }
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Teach a friend in one minute: what Cell City means, one example (Skin cells), and one myth to avoid."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Sketch the idea behind cells",
+            "Point to Skin cells in real life",
+            "Use one glossary word correctly"
+          ]
+        }
+      ]
     }
   ]
-}
-  ],
 };
 
 export default BOOK;

@@ -1,4 +1,4 @@
-import { openDigitalBook } from "/engine/js/digital-book.js?v=ped1";
+import { openDigitalBook } from "/engine/js/digital-book.js?v=book3";
 import { mountBookChat, openBookChat } from "/engine/js/book-chat.js?v=ped1";
 import {
   areAllBooksUnlocked,

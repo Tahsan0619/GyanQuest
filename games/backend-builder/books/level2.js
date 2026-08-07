@@ -1,211 +1,305 @@
 /**
- * Digital book - backend-builder mission 2: Routes & APIs
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Backend Builder / Routes & APIs
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: local verified copies under /games/backend-builder/assets/book/ (see CREDITS-m2.json).
  */
 export const BOOK = {
   missionIndex: 1,
   title: "Routes & APIs",
   subtitle: "paths & endpoints",
   subject: "Backend Builder / Routes & APIs",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Routes & APIs",
-    art: "/games/backend-builder/assets/book/m2-fig1.svg",
+    art: "/games/backend-builder/assets/book/m2-cover.jpg",
   },
   glossary: [
-  {
-    "id": "paths",
-    "term": "paths"
-  },
-  {
-    "id": "endpoints",
-    "term": "endpoints"
-  },
-  {
-    "id": "urls",
-    "term": "URLs"
-  },
-  {
-    "id": "doors",
-    "term": "doors"
-  },
-  {
-    "id": "each",
-    "term": "Each"
-  },
-  {
-    "id": "route",
-    "term": "route"
-  },
-  {
-    "id": "path",
-    "term": "path"
-  },
-  {
-    "id": "does",
-    "term": "does"
-  }
-],
+    { id: "route", term: "route" },
+    { id: "path", term: "path" },
+    { id: "endpoint", term: "endpoint" },
+    { id: "api", term: "api" },
+    { id: "get", term: "get" },
+    { id: "post", term: "post" },
+    { id: "url", term: "url" },
+    { id: "method", term: "method" },
+    { id: "status", term: "status" },
+    { id: "404", term: "404" },
+  ],
   pages: [
-{
-  "title": "Welcome to Routes & APIs",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/backend-builder/assets/book/m2-fig1.svg",
-      "caption": "Figure: Routes & APIs overview",
-      "place": "top",
-      "alt": "Routes & APIs"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "URLs are doors. Each route path does a job - /users, /posts, /login."
+      title: "Why Routes & APIs?",
+      layout: "text",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "cognitive-load",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m2-hook.jpg",
+              caption: "Figure 1. Dense modules still expose clear ports - routes are clear ports.",
+              alt: "Chip",
+            },
+            {
+              src: "/games/backend-builder/assets/book/m2-cover.jpg",
+              caption: "Structures need labeled access points.",
+              alt: "Structure",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "URLs are doors. Each route path does a job - /users, /posts, /login, /forecast, /grades, /checkout.",
+        },
+        {
+          type: "p",
+          text: "APIs expose those doors so apps can ask for the right room.",
+        },
+        {
+          type: "p",
+          text: "Everyday hook: a weather app hitting /forecast is knocking on one labeled door, not every door at once.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores paths & endpoints. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "One path, one job",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m2-model.jpg",
+              caption: "Figure 2. Planned paths in space - planned paths in APIs.",
+              alt: "Orbit diagram",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Every URL is not the same job. /users lists people; /login checks identity; a wrong path can return 404 - not melted servers.",
+        },
+        {
+          type: "ul",
+          items: [
+            "GET often reads",
+            "POST often sends new data",
+            "Methods are not just colors",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Weather /forecast."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: paths & endpoints."
+      title: "Route dial",
+      layout: "text",
+      theory: [
+        "cognitive-load",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m2-mechanism.jpg",
+              caption: "Figure 3. Long-range links still need addresses.",
+              alt: "Satellite communication",
+            },
+            {
+              src: "/games/backend-builder/assets/book/m2-lab.jpg",
+              caption: "Sketch doors on paper before coding them.",
+              alt: "Education",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "In the lab you dialed route clarity until each door had a job label.",
+        },
+        {
+          type: "p",
+          text: "Rice is food, not a valid API route. Paths look like /users.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: URLs are doors. Each route path does a job - /users, /posts, /login."
+      title: "404 means not found",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m2-mastery.jpg",
+              caption: "Figure 4. Cranes move to labeled positions - requests move to labeled routes.",
+              alt: "Crane",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A 404 says that route was not found. It is a map problem, not a volcano.",
+        },
+        {
+          type: "p",
+          text: "Kids can learn /users as a door with a job.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Weather /forecast.",
-        "Compare it with School /grades.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/backend-builder/assets/book/m2-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: [
+        "spiral-scaffold",
+        "cognitive-load",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet routes -> dial paths -> sort jobs -> stronger lab -> why methods -> name the route rule -> stretch school APIs -> myths -> fluency -> mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting maps paths to jobs",
+            "Labs show 404 vs success",
+            "Rule: each route path usually does one clear job",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Route Doors",
-        "Open Routes Lab",
-        "Sort Paths & Methods",
-        "More Doors Lab",
-        "Why Paths Matter"
-      ]
+      title: "Street lab: door map",
+      layout: "split",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "retrieval-practice",
+      ],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m2-cover.jpg",
+              caption: "Access points.",
+              alt: "Structure",
+            },
+            {
+              src: "/games/backend-builder/assets/book/m2-mastery.jpg",
+              caption: "Labeled move.",
+              alt: "Crane",
+            },
+            {
+              src: "/games/backend-builder/assets/book/m2-model.jpg",
+              caption: "Planned path.",
+              alt: "Orbit",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Draw three doors: /forecast, /grades, /checkout. Write one sentence job on each.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Mark which might use GET vs POST",
+            "Invent a 404 story for a typo path",
+            "Flip carousel: structure vs crane positioning",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/backend-builder/assets/book/m2-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Weather /forecast as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: [
+        "conceptual-change",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: every URL is the same job. Better: each route path usually does one clear job.",
+        },
+        {
+          type: "p",
+          text: "Myth: 404 means the server melted. Better: 404 means that route was not found.",
+        },
+        {
+          type: "p",
+          text: "Myth: rice is a valid API route. Better: routes are paths like /users - not food.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Mastery",
+      layout: "text",
+      theory: [
+        "retrieval-practice",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m2-mastery.jpg",
+              caption: "Figure 5. Labeled positions - your route goal.",
+              alt: "Crane anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend: URLs are doors; methods say how you ask; 404 means missing door.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Name three real-feeling routes",
+            "Explain GET vs POST in kid words",
+            "Use the word endpoint correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Route Ranger reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Routes & APIs to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

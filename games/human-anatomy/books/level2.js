@@ -1,211 +1,270 @@
 /**
- * Digital book - human-anatomy mission 2: Heart Beat
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Human Anatomy Mission 2: Heart Beat
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: heart and circulation-related JPGs under assets/book/.
  */
 export const BOOK = {
   missionIndex: 1,
   title: "Heart Beat",
-  subtitle: "pump + oxygen blood",
+  subtitle: "pump and oxygen-carrying blood",
   subject: "Human Anatomy / Heart Beat",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Heart Beat",
-    art: "/games/human-anatomy/assets/book/m2-fig1.svg",
+    art: "/games/human-anatomy/assets/book/m2-cover.jpg",
   },
   glossary: [
-  {
-    "id": "pump",
-    "term": "pump"
-  },
-  {
-    "id": "oxygen",
-    "term": "oxygen"
-  },
-  {
-    "id": "blood",
-    "term": "blood"
-  },
-  {
-    "id": "heart",
-    "term": "Heart"
-  },
-  {
-    "id": "pumps",
-    "term": "pumps"
-  },
-  {
-    "id": "carries",
-    "term": "carries"
-  },
-  {
-    "id": "meet",
-    "term": "Meet"
-  },
-  {
-    "id": "pulse",
-    "term": "Pulse"
-  }
-],
+    { id: "heart", term: "heart" },
+    { id: "pulse", term: "pulse" },
+    { id: "blood", term: "blood" },
+    { id: "oxygen", term: "oxygen" },
+    { id: "circulation", term: "circulation" },
+    { id: "pump", term: "pump" },
+    { id: "vessel", term: "vessel" },
+    { id: "beat", term: "beat" },
+  ],
   pages: [
-{
-  "title": "Welcome to Heart Beat",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/human-anatomy/assets/book/m2-fig1.svg",
-      "caption": "Figure: Heart Beat overview",
-      "place": "top",
-      "alt": "Heart Beat"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Heart pumps blood that carries oxygen."
+      title: "Wrist tick after a run",
+      layout: "text",
+      theory: ["constructivism", "dual-coding", "cognitive-load"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/human-anatomy/assets/book/m2-hook.jpg",
+              caption: "Figure 1. Your brain needs a steady delivery of oxygenated blood.",
+              alt: "Human brain",
+            },
+            {
+              src: "/games/human-anatomy/assets/book/m2-active.jpg",
+              caption: "Activity raises demand - the pump works harder.",
+              alt: "Astronaut exertion as active-body cue",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Press two fingers on your wrist. That pulse is blood shoved by the heart. After running it speeds up. Calm breathing helps it settle.",
+        },
+        {
+          type: "p",
+          text: "The heart is a muscle pump. Blood carries oxygen from the lungs to the rest of the body through vessels.",
+        },
+        {
+          type: "p",
+          text: "Earn Pulse Pro by linking beat -> flow -> oxygen delivery.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores pump + oxygen blood. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Pump first, then flow",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "dual-coding"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/human-anatomy/assets/book/m2-cover.jpg",
+              caption: "Figure 2. Model: the heart squeezes; blood moves; oxygen rides along.",
+              alt: "Heart pump",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Each beat is a squeeze. Circulation is the loop that returns blood so it can pick up oxygen again.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Heart = pump",
+            "Blood = carrier",
+            "Oxygen = cargo from the lungs",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Wrist pulse."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: pump + oxygen blood."
+      title: "Why the pulse gets stronger",
+      layout: "text",
+      theory: ["cognitive-load", "dual-coding"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/human-anatomy/assets/book/m2-oxygen.jpg",
+              caption: "Figure 3. Working tissues need more oxygen - the pump answers with more beats.",
+              alt: "Microscope image hinting at living tissue",
+            },
+            {
+              src: "/games/human-anatomy/assets/book/m2-flow.jpg",
+              caption: "Flow paths matter - blocked thinking about 'blood sitting still' misses circulation.",
+              alt: "Leaf vein-like flow metaphor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Muscles burning energy during a sprint ask for more oxygen. The heart beats faster so circulation can deliver.",
+        },
+        {
+          type: "p",
+          text: "Mission 'stronger pulse' labs exaggerate that demand so you can see pump and path together.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Heart pumps blood that carries oxygen."
+      title: "Circulation is a loop",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "spiral-scaffold"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/human-anatomy/assets/book/m2-model.jpg",
+              caption: "Figure 4. Representation: tiny living units still depend on oxygen delivered by blood.",
+              alt: "Cell image",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Game paths are simplified loops. Real vessels branch finely, but the story stays: pump, carry oxygen, return, repeat.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Wrist pulse.",
-        "Compare it with After running.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/human-anatomy/assets/book/m2-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: ["spiral-scaffold", "cognitive-load"],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet the pump -> pulse clarity lab -> sort circulation / notice / not -> stronger pulse lab -> why blood moves -> name the pump rule -> stretch to active days -> myth bust -> fluency -> Pulse Pro mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting separates real circulation clues from distractions",
+            "Stronger pulse lab links activity to pump rate",
+            "The rule sentence: heart pumps blood that carries oxygen",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet the Pump",
-        "Pulse Clarity Lab",
-        "Sort: Circulation / Notice / Not",
-        "Stronger Pulse Lab",
-        "Why Blood Moves"
-      ]
+      title: "Active-day transfer",
+      layout: "split",
+      theory: ["constructivism", "dual-coding", "retrieval-practice"],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/human-anatomy/assets/book/m2-cover.jpg",
+              caption: "Find the pulse - proof of the pump.",
+              alt: "Heart",
+            },
+            {
+              src: "/games/human-anatomy/assets/book/m2-active.jpg",
+              caption: "After activity - faster beats.",
+              alt: "Active body",
+            },
+            {
+              src: "/games/human-anatomy/assets/book/m2-hook.jpg",
+              caption: "Calm focus - oxygen still arriving.",
+              alt: "Brain needing oxygen",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Count wrist beats for 15 seconds at rest, then after 20 jumping jacks. Compare. Name pump, blood, and oxygen.",
+        },
+        {
+          type: "ul",
+          items: [
+            "What changed?",
+            "What stayed the same (still a loop)?",
+            "Drag the photos to flip examples",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/human-anatomy/assets/book/m2-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Wrist pulse as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: ["conceptual-change"],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: The heart makes oxygen. Better: lungs add oxygen; the heart pumps the blood that carries it.",
+        },
+        {
+          type: "p",
+          text: "Myth: Blood only goes one way forever and never returns. Better: circulation is a loop - out and back.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Pulse Pro mastery",
+      layout: "text",
+      theory: ["retrieval-practice", "spiral-scaffold"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/human-anatomy/assets/book/m2-cover.jpg",
+              caption: "Figure 5. Teaching anchor: beat, flow, oxygen.",
+              alt: "Heart mastery anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend in one minute: the heart pumps; blood moves in vessels; oxygen from the lungs rides along; pulse is the beat you can feel.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Find a pulse safely on a wrist",
+            "Explain why it rises after exercise",
+            "Use the word circulation correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Pulse Pro reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Heart Beat to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

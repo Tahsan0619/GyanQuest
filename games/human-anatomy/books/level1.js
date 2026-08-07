@@ -1,211 +1,281 @@
 /**
- * Digital book - human-anatomy mission 1: Body Map
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Human Anatomy Mission 1: Body Map
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: brain, heart, and body-team JPGs under assets/book/.
  */
 export const BOOK = {
   missionIndex: 0,
   title: "Body Map",
-  subtitle: "organs team up",
+  subtitle: "organs that team up",
   subject: "Human Anatomy / Body Map",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Body Map",
-    art: "/games/human-anatomy/assets/book/m1-fig1.svg",
+    art: "/games/human-anatomy/assets/book/m1-cover.jpg",
   },
   glossary: [
-  {
-    "id": "organs",
-    "term": "organs"
-  },
-  {
-    "id": "team",
-    "term": "team"
-  },
-  {
-    "id": "heart",
-    "term": "heart"
-  },
-  {
-    "id": "lungs",
-    "term": "lungs"
-  },
-  {
-    "id": "brain",
-    "term": "brain"
-  },
-  {
-    "id": "stomach",
-    "term": "stomach"
-  },
-  {
-    "id": "meet",
-    "term": "Meet"
-  },
-  {
-    "id": "organ",
-    "term": "Organ"
-  }
-],
+    { id: "organ", term: "organ" },
+    { id: "system", term: "system" },
+    { id: "brain", term: "brain" },
+    { id: "heart", term: "heart" },
+    { id: "lungs", term: "lungs" },
+    { id: "stomach", term: "stomach" },
+    { id: "teamwork", term: "teamwork" },
+    { id: "pulse", term: "pulse" },
+  ],
   pages: [
-{
-  "title": "Welcome to Body Map",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/human-anatomy/assets/book/m1-fig1.svg",
-      "caption": "Figure: Body Map overview",
-      "place": "top",
-      "alt": "Body Map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Organs team up - heart, lungs, brain, stomach."
+      title: "Pulse, breath, and lunch",
+      layout: "text",
+      theory: ["constructivism", "dual-coding", "cognitive-load"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/human-anatomy/assets/book/m1-hook.jpg",
+              caption: "Figure 1. Living bodies are built from cooperating parts - not one lone hero organ.",
+              alt: "Cell-scale biology image",
+            },
+            {
+              src: "/games/human-anatomy/assets/book/m1-cover.jpg",
+              caption: "The brain helps plan and control - still needs heart, lungs, and stomach.",
+              alt: "Human brain",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Feel your wrist pulse after a walk. Take a deep breath at school. Notice lunch digesting later. Each moment uses a different organ - and they pass jobs to each other.",
+        },
+        {
+          type: "p",
+          text: "Organs are body parts with special jobs. They team up so you can move, think, breathe, and eat.",
+        },
+        {
+          type: "p",
+          text: "Earn Body Mapper by naming at least four organs and one job for each.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores organs team up. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Four teammates, four jobs",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "dual-coding"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/human-anatomy/assets/book/m1-heart.jpg",
+              caption: "Figure 2. Heart - the pump on the team map.",
+              alt: "Heart illustration",
+            },
+            {
+              src: "/games/human-anatomy/assets/book/m1-breath.jpg",
+              caption: "Lungs bring air in - oxygen for the team.",
+              alt: "Leaf as oxygen-producing nature parallel",
+            },
+            {
+              src: "/games/human-anatomy/assets/book/m1-cover.jpg",
+              caption: "Brain - control and sensing hub.",
+              alt: "Human brain",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A simple body map for this mission:",
+        },
+        {
+          type: "ul",
+          items: [
+            "Heart pumps blood",
+            "Lungs exchange air",
+            "Brain coordinates messages",
+            "Stomach starts breaking down food",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Feel your pulse."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: organs team up."
+      title: "Why teamwork beats solo",
+      layout: "text",
+      theory: ["cognitive-load", "dual-coding"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/human-anatomy/assets/book/m1-model.jpg",
+              caption: "Figure 3. Close-up structures remind us: organs are made of cooperating tissues.",
+              alt: "Microscope biology image",
+            },
+            {
+              src: "/games/human-anatomy/assets/book/m1-team.jpg",
+              caption: "Like plants need many parts, your body needs many organs.",
+              alt: "Plant as teamwork metaphor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "If lungs stopped, the heart would still beat for a short while - but blood would lack fresh oxygen. If the stomach stopped, energy from food would fade. Organs depend on each other.",
+        },
+        {
+          type: "p",
+          text: "Mission labs that raise 'teamwork clarity' are models of that dependence: map the links, not just the labels.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Organs team up - heart, lungs, brain, stomach."
+      title: "Map labels are models",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "spiral-scaffold"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/human-anatomy/assets/book/m1-cover.jpg",
+              caption: "Figure 4. Representation: a labeled organ is a map marker, not the whole story.",
+              alt: "Brain as mapped organ",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Canvas outlines in the game are simplified maps. Real organs are 3D and connected by vessels and nerves - still the same team idea.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Feel your pulse.",
-        "Compare it with Deep breath at school.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/human-anatomy/assets/book/m1-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: ["spiral-scaffold", "cognitive-load"],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet the organ team -> map clarity lab -> sort organ / support / not -> teamwork lab -> why organs team -> name the body rule -> stretch to daily body -> myth bust -> fluency -> Body Mapper mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting keeps organs separate from non-organs",
+            "Teamwork lab shows jobs linking together",
+            "The rule sentence: organs team up to keep you alive and active",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet the Organ Team",
-        "Map Clarity Lab",
-        "Sort: Organ / Support / Not",
-        "Teamwork Lab",
-        "Why Organs Team"
-      ]
+      title: "Daily-body transfer",
+      layout: "split",
+      theory: ["constructivism", "dual-coding", "retrieval-practice"],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/human-anatomy/assets/book/m1-heart.jpg",
+              caption: "Pulse check - heart at work.",
+              alt: "Heart",
+            },
+            {
+              src: "/games/human-anatomy/assets/book/m1-breath.jpg",
+              caption: "Deep breath - lungs at work.",
+              alt: "Breathing parallel image",
+            },
+            {
+              src: "/games/human-anatomy/assets/book/m1-cover.jpg",
+              caption: "Focus on a lesson - brain at work.",
+              alt: "Brain",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "After running, feel your pulse and notice faster breathing. After a meal, give the stomach quiet time. Name which organs teamed up.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Which organ did you feel?",
+            "Which organ helped next?",
+            "Drag the photos to flip examples",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/human-anatomy/assets/book/m1-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Feel your pulse as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: ["conceptual-change"],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: Only the brain matters for thinking and the rest is luggage. Better: brain needs oxygen from lungs and fuel from digestion.",
+        },
+        {
+          type: "p",
+          text: "Myth: Organs work alone in separate rooms. Better: systems share blood, air, and messages every second.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Body Mapper mastery",
+      layout: "text",
+      theory: ["retrieval-practice", "spiral-scaffold"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/human-anatomy/assets/book/m1-heart.jpg",
+              caption: "Figure 5. Teaching anchor: map organs, then name their teamwork.",
+              alt: "Heart mastery anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend in one minute: heart, lungs, brain, and stomach are organs with jobs; they team up so you can live, learn, and move.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Point to four organs on a sketch",
+            "Give each organ one job",
+            "Use the word organ correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Body Mapper reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Body Map to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

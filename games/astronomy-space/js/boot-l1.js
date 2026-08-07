@@ -27,8 +27,8 @@ import { mountMissionHub, mountSubRail } from "./mission-hub.js";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=playchrome1";
 import { registerSolarScenes } from "./solar-scenes.js";
 import { registerSkyScenes } from "./sky-scenes.js";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book1";
-import { BOOK as BOOK_L2 } from "../books/level2.js?v=book1";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
+import { BOOK as BOOK_L2 } from "../books/level2.js?v=book3";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
 
 
@@ -616,6 +616,6 @@ try {
 
   document.documentElement.classList.add("astronomyspa-live", "chem-l1-live");
   
-  if (state.inHub === false) resumePlaySession();
-  else showHub();
+  // Always open the mission levels hub first (do not auto-resume mid-mission).
+  showHub();
 }

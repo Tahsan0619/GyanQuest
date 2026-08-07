@@ -1,4 +1,4 @@
-import { bootMlLab } from "./js/boot-l1.js?v=resume1";
+import { bootMlLab } from "./js/boot-l1.js?v=hubfirst1";
 import { manifest } from "./manifest.js";
 
 function showBootError(msg) {

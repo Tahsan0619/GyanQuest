@@ -1,0 +1,834 @@
+[
+  {
+    "file": "physics/newton-cradle-1.webp",
+    "theme": "physics",
+    "query": "newton cradle",
+    "source": "https://www.rawpixel.com/image/6050436/free-public-domain-cc0-photo",
+    "license": "cc0",
+    "bytes": 171708
+  },
+  {
+    "file": "physics/skateboard-motion-2.jpg",
+    "theme": "physics",
+    "query": "skateboard motion",
+    "source": "https://stocksnap.io/photo/skateboarder-sidewalk-NH8J97NEVN",
+    "license": "cc0",
+    "bytes": 445840
+  },
+  {
+    "file": "physics/pushing-cart-3.webp",
+    "theme": "physics",
+    "query": "pushing cart",
+    "source": "https://www.rawpixel.com/image/6876812/squirrel-push-cart-101221",
+    "license": "cc0",
+    "bytes": 300400
+  },
+  {
+    "file": "physics/pushing-cart-4.webp",
+    "theme": "physics",
+    "query": "pushing cart",
+    "source": "https://www.rawpixel.com/image/14002249/image-cartoon-person-art",
+    "license": "cc0",
+    "bytes": 453464
+  },
+  {
+    "file": "physics/pushing-cart-5.webp",
+    "theme": "physics",
+    "query": "pushing cart",
+    "source": "https://www.rawpixel.com/image/6747359/closing-push-cart-market-saratoga-ave-and-prospect-place-brooklyn",
+    "license": "cc0",
+    "bytes": 413858
+  },
+  {
+    "file": "physics/pushing-cart-6.webp",
+    "theme": "physics",
+    "query": "pushing cart",
+    "source": "https://www.rawpixel.com/image/3286678/free-photo-image-box-cc0-creative-commons",
+    "license": "cc0",
+    "bytes": 178278
+  },
+  {
+    "file": "chemistry/bunsen-burner-flame-1.webp",
+    "theme": "chemistry",
+    "query": "bunsen burner flame",
+    "source": "https://www.rawpixel.com/image/8718225/photo-image-flower-public-domain",
+    "license": "cc0",
+    "bytes": 75972
+  },
+  {
+    "file": "chemistry/rust-metal-2.jpg",
+    "theme": "chemistry",
+    "query": "rust metal",
+    "source": "https://stocksnap.io/photo/rusted-metal-UGGO6NOPNJ",
+    "license": "cc0",
+    "bytes": 1006255
+  },
+  {
+    "file": "chemistry/rust-metal-3.jpg",
+    "theme": "chemistry",
+    "query": "rust metal",
+    "source": "https://stocksnap.io/photo/rusted-metal-YC4VGWAINB",
+    "license": "cc0",
+    "bytes": 1032641
+  },
+  {
+    "file": "chemistry/rust-metal-4.jpg",
+    "theme": "chemistry",
+    "query": "rust metal",
+    "source": "https://stocksnap.io/photo/rust-metal-LD2A8WZOBW",
+    "license": "cc0",
+    "bytes": 999339
+  },
+  {
+    "file": "chemistry/rust-metal-5.jpg",
+    "theme": "chemistry",
+    "query": "rust metal",
+    "source": "https://stocksnap.io/photo/rusted-metal-IECOQFB8DB",
+    "license": "cc0",
+    "bytes": 998011
+  },
+  {
+    "file": "chemistry/copper-wire-6.webp",
+    "theme": "chemistry",
+    "query": "copper wire",
+    "source": "https://www.rawpixel.com/image/7455278/metal-spring-coiled-copper-wires-ends-coils-are-cone-shaped",
+    "license": "cc0",
+    "bytes": 272708
+  },
+  {
+    "file": "chemistry/copper-wire-7.webp",
+    "theme": "chemistry",
+    "query": "copper wire",
+    "source": "https://www.rawpixel.com/image/3297546/free-photo-image-opal-amulet-jewelry",
+    "license": "cc0",
+    "bytes": 178672
+  },
+  {
+    "file": "chemistry/sugar-crystals-8.jpg",
+    "theme": "chemistry",
+    "query": "sugar crystals",
+    "source": "https://stocksnap.io/photo/sugar-spoons-3CCLQWRA3V",
+    "license": "cc0",
+    "bytes": 543031
+  },
+  {
+    "file": "chemistry/sugar-crystals-9.webp",
+    "theme": "chemistry",
+    "query": "sugar crystals",
+    "source": "https://www.rawpixel.com/image/5935072/photo-image-crystal-stone",
+    "license": "cc0",
+    "bytes": 249124
+  },
+  {
+    "file": "chemistry/sugar-crystals-10.webp",
+    "theme": "chemistry",
+    "query": "sugar crystals",
+    "source": "https://www.rawpixel.com/image/6049068/free-public-domain-cc0-photo",
+    "license": "cc0",
+    "bytes": 221446
+  },
+  {
+    "file": "biology/green-leaf-closeup-1.webp",
+    "theme": "biology",
+    "query": "green leaf closeup",
+    "source": "https://www.rawpixel.com/image/5915613/image-public-domain-leaf-plant",
+    "license": "cc0",
+    "bytes": 280204
+  },
+  {
+    "file": "biology/sunflower-plant-2.jpg",
+    "theme": "biology",
+    "query": "sunflower plant",
+    "source": "https://www.flickr.com/photos/7156765@N05/51683807565",
+    "license": "pdm",
+    "bytes": 104971
+  },
+  {
+    "file": "biology/sunflower-plant-3.jpg",
+    "theme": "biology",
+    "query": "sunflower plant",
+    "source": "https://stocksnap.io/photo/sunflowers-plants-DB195E3EAC",
+    "license": "cc0",
+    "bytes": 68989
+  },
+  {
+    "file": "biology/seedling-sprout-4.webp",
+    "theme": "biology",
+    "query": "seedling sprout",
+    "source": "https://www.rawpixel.com/image/3301266/free-photo-image-animal-blossom-cc0",
+    "license": "cc0",
+    "bytes": 185350
+  },
+  {
+    "file": "biology/butterfly-insect-5.jpg",
+    "theme": "biology",
+    "query": "butterfly insect",
+    "source": "https://stocksnap.io/photo/butterfly-insect-AJ8JCIDFHX",
+    "license": "cc0",
+    "bytes": 573856
+  },
+  {
+    "file": "biology/butterfly-insect-6.jpg",
+    "theme": "biology",
+    "query": "butterfly insect",
+    "source": "https://stocksnap.io/photo/butterfly-insect-M049WJ19TC",
+    "license": "cc0",
+    "bytes": 74118
+  },
+  {
+    "file": "biology/butterfly-insect-7.jpg",
+    "theme": "biology",
+    "query": "butterfly insect",
+    "source": "https://stocksnap.io/photo/butterfly-insect-72927319D7",
+    "license": "cc0",
+    "bytes": 65105
+  },
+  {
+    "file": "biology/butterfly-insect-8.jpg",
+    "theme": "biology",
+    "query": "butterfly insect",
+    "source": "https://stocksnap.io/photo/butterfly-insect-Q4GEAA7WMI",
+    "license": "cc0",
+    "bytes": 667680
+  },
+  {
+    "file": "biology/fish-underwater-9.jpg",
+    "theme": "biology",
+    "query": "fish underwater",
+    "source": "https://stocksnap.io/photo/fish-underwater-HM08FNA444",
+    "license": "cc0",
+    "bytes": 26748
+  },
+  {
+    "file": "biology/fish-underwater-10.jpg",
+    "theme": "biology",
+    "query": "fish underwater",
+    "source": "https://stocksnap.io/photo/fish-underwater-P3DQ36VF93",
+    "license": "cc0",
+    "bytes": 53555
+  },
+  {
+    "file": "math/abacus-counting-1.webp",
+    "theme": "math",
+    "query": "abacus counting",
+    "source": "https://www.rawpixel.com/image/5925011/photo-image-public-domain-art-office",
+    "license": "cc0",
+    "bytes": 209458
+  },
+  {
+    "file": "math/abacus-counting-2.webp",
+    "theme": "math",
+    "query": "abacus counting",
+    "source": "https://www.rawpixel.com/image/5913120/image-public-domain-art-office",
+    "license": "cc0",
+    "bytes": 294554
+  },
+  {
+    "file": "math/dice-game-3.jpg",
+    "theme": "math",
+    "query": "dice game",
+    "source": "https://stocksnap.io/photo/dice-game-IMUB39JBN1",
+    "license": "cc0",
+    "bytes": 21235
+  },
+  {
+    "file": "math/dice-game-4.webp",
+    "theme": "math",
+    "query": "dice game",
+    "source": "https://www.rawpixel.com/image/7635359/image-art-vintage-public-domain",
+    "license": "cc0",
+    "bytes": 309308
+  },
+  {
+    "file": "math/dice-game-5.webp",
+    "theme": "math",
+    "query": "dice game",
+    "source": "https://www.rawpixel.com/image/7635560/image-art-vintage-public-domain",
+    "license": "cc0",
+    "bytes": 475048
+  },
+  {
+    "file": "math/dice-game-6.webp",
+    "theme": "math",
+    "query": "dice game",
+    "source": "https://www.rawpixel.com/image/8883586/image-art-public-domain-person",
+    "license": "cc0",
+    "bytes": 494258
+  },
+  {
+    "file": "math/ruler-measurement-7.jpg",
+    "theme": "math",
+    "query": "ruler measurement",
+    "source": "https://stocksnap.io/photo/ruler-measurement-NN2EIQQYEA",
+    "license": "cc0",
+    "bytes": 64783
+  },
+  {
+    "file": "math/ruler-measurement-8.jpg",
+    "theme": "math",
+    "query": "ruler measurement",
+    "source": "https://stocksnap.io/photo/wood-ruler-029B5CBDC7",
+    "license": "cc0",
+    "bytes": 85862
+  },
+  {
+    "file": "math/ruler-measurement-9.jpg",
+    "theme": "math",
+    "query": "ruler measurement",
+    "source": "https://stocksnap.io/photo/ruler-closeup-C5FU2MAI2A",
+    "license": "cc0",
+    "bytes": 367796
+  },
+  {
+    "file": "space/planet-jupiter-1.webp",
+    "theme": "space",
+    "query": "planet jupiter",
+    "source": "https://www.rawpixel.com/image/7688990/the-planet-jupiter",
+    "license": "cc0",
+    "bytes": 194006
+  },
+  {
+    "file": "space/planet-jupiter-2.webp",
+    "theme": "space",
+    "query": "planet jupiter",
+    "source": "https://www.rawpixel.com/image/9328802/photo-image-art-vintage-planet",
+    "license": "cc0",
+    "bytes": 326682
+  },
+  {
+    "file": "space/full-moon-night-3.webp",
+    "theme": "space",
+    "query": "full moon night",
+    "source": "https://www.rawpixel.com/image/5910198/free-full-moon-night-public-domain-cc0-photo",
+    "license": "cc0",
+    "bytes": 194780
+  },
+  {
+    "file": "space/full-moon-night-4.webp",
+    "theme": "space",
+    "query": "full moon night",
+    "source": "https://www.rawpixel.com/image/3297444/free-photo-image-moon-astronomy-cc0",
+    "license": "cc0",
+    "bytes": 145348
+  },
+  {
+    "file": "space/full-moon-night-5.webp",
+    "theme": "space",
+    "query": "full moon night",
+    "source": "https://www.rawpixel.com/image/5916321/image-moon-planet-public-domain",
+    "license": "cc0",
+    "bytes": 159680
+  },
+  {
+    "file": "space/milky-way-stars-6.webp",
+    "theme": "space",
+    "query": "milky way stars",
+    "source": "https://www.rawpixel.com/image/3291864/free-photo-image-apparel-astronomy-cc0",
+    "license": "cc0",
+    "bytes": 324294
+  },
+  {
+    "file": "space/rocket-launch-7.jpg",
+    "theme": "space",
+    "query": "rocket launch",
+    "source": "https://stocksnap.io/photo/rocket-launch-7V1JEO2YXQ",
+    "license": "cc0",
+    "bytes": 606217
+  },
+  {
+    "file": "space/rocket-launch-8.jpg",
+    "theme": "space",
+    "query": "rocket launch",
+    "source": "https://stocksnap.io/photo/rocket-launch-O5PRP2Y2MQ",
+    "license": "cc0",
+    "bytes": 783190
+  },
+  {
+    "file": "anatomy/human-heart-anatomy-1.webp",
+    "theme": "anatomy",
+    "query": "human heart anatomy",
+    "source": "https://www.rawpixel.com/image/13971456/human-heart-four-figures-engraving-milton-1814",
+    "license": "cc0",
+    "bytes": 556698
+  },
+  {
+    "file": "anatomy/human-heart-anatomy-2.webp",
+    "theme": "anatomy",
+    "query": "human heart anatomy",
+    "source": "https://www.rawpixel.com/image/13969457/dissected-heart-back-view-watercolour-18",
+    "license": "cc0",
+    "bytes": 436422
+  },
+  {
+    "file": "anatomy/human-heart-anatomy-3.webp",
+    "theme": "anatomy",
+    "query": "human heart anatomy",
+    "source": "https://www.rawpixel.com/image/13996958/image-heart-cartoon-person",
+    "license": "cc0",
+    "bytes": 615168
+  },
+  {
+    "file": "anatomy/human-heart-anatomy-4.webp",
+    "theme": "anatomy",
+    "query": "human heart anatomy",
+    "source": "https://www.rawpixel.com/image/14009946/two-lateral-views-the-human-heart-coloured-engraving-kirtland-1806",
+    "license": "cc0",
+    "bytes": 513756
+  },
+  {
+    "file": "anatomy/human-brain-5.webp",
+    "theme": "anatomy",
+    "query": "human brain",
+    "source": "https://www.rawpixel.com/image/9976666/mesial-view-the-human-brain",
+    "license": "cc0",
+    "bytes": 368914
+  },
+  {
+    "file": "anatomy/human-brain-6.webp",
+    "theme": "anatomy",
+    "query": "human brain",
+    "source": "https://www.rawpixel.com/image/16333082/image-animal-plant-person",
+    "license": "cc0",
+    "bytes": 592374
+  },
+  {
+    "file": "anatomy/human-brain-7.webp",
+    "theme": "anatomy",
+    "query": "human brain",
+    "source": "https://www.rawpixel.com/image/14020106/image-cross-art-sword",
+    "license": "cc0",
+    "bytes": 565682
+  },
+  {
+    "file": "anatomy/human-brain-8.webp",
+    "theme": "anatomy",
+    "query": "human brain",
+    "source": "https://www.rawpixel.com/image/14021860/human-brain-thomas-willis-1672",
+    "license": "cc0",
+    "bytes": 664012
+  },
+  {
+    "file": "anatomy/skeleton-bones-9.webp",
+    "theme": "anatomy",
+    "query": "skeleton bones",
+    "source": "https://www.rawpixel.com/image/13980259/image-cartoon-hand-person",
+    "license": "cc0",
+    "bytes": 505640
+  },
+  {
+    "file": "anatomy/lungs-anatomy-10.webp",
+    "theme": "anatomy",
+    "query": "lungs anatomy",
+    "source": "https://www.rawpixel.com/image/13992027/photo-image-art-animal-public-domain",
+    "license": "cc0",
+    "bytes": 351530
+  },
+  {
+    "file": "eco/recycling-bins-plastic-1.webp",
+    "theme": "eco",
+    "query": "recycling bins plastic",
+    "source": "https://www.rawpixel.com/image/6074457/recycling-bins",
+    "license": "cc0",
+    "bytes": 347944
+  },
+  {
+    "file": "eco/recycling-bins-plastic-2.webp",
+    "theme": "eco",
+    "query": "recycling bins plastic",
+    "source": "https://www.rawpixel.com/image/6074479/recycling-plastic",
+    "license": "cc0",
+    "bytes": 197020
+  },
+  {
+    "file": "eco/recycling-bins-plastic-3.webp",
+    "theme": "eco",
+    "query": "recycling bins plastic",
+    "source": "https://www.rawpixel.com/image/8726041/trash-and-recycling-bins",
+    "license": "cc0",
+    "bytes": 395134
+  },
+  {
+    "file": "eco/recycling-bins-plastic-4.webp",
+    "theme": "eco",
+    "query": "recycling bins plastic",
+    "source": "https://www.rawpixel.com/image/5905547/photo-image-public-domain-free",
+    "license": "cc0",
+    "bytes": 277290
+  },
+  {
+    "file": "eco/solar-panels-rooftop-5.jpg",
+    "theme": "eco",
+    "query": "solar panels rooftop",
+    "source": "https://www.flickr.com/photos/184885952@N07/52451282483",
+    "license": "by-sa",
+    "bytes": 209008
+  },
+  {
+    "file": "eco/solar-panels-rooftop-6.jpg",
+    "theme": "eco",
+    "query": "solar panels rooftop",
+    "source": "https://www.flickr.com/photos/59081381@N03/54369501570",
+    "license": "by-sa",
+    "bytes": 310177
+  },
+  {
+    "file": "eco/solar-panels-rooftop-7.jpg",
+    "theme": "eco",
+    "query": "solar panels rooftop",
+    "source": "https://www.flickr.com/photos/59081381@N03/54368230412",
+    "license": "by-sa",
+    "bytes": 210944
+  },
+  {
+    "file": "eco/solar-panels-rooftop-8.jpg",
+    "theme": "eco",
+    "query": "solar panels rooftop",
+    "source": "https://stocksnap.io/photo/solar-building-EPYDFKPLZJ",
+    "license": "cc0",
+    "bytes": 666606
+  },
+  {
+    "file": "eco/wind-turbines-field-9.jpg",
+    "theme": "eco",
+    "query": "wind turbines field",
+    "source": "https://stocksnap.io/photo/wind-turbine-JRS7H54AAV",
+    "license": "cc0",
+    "bytes": 712775
+  },
+  {
+    "file": "eco/wind-turbines-field-10.jpg",
+    "theme": "eco",
+    "query": "wind turbines field",
+    "source": "https://stocksnap.io/photo/wind-mill-7MAJHHS0PL",
+    "license": "cc0",
+    "bytes": 304264
+  },
+  {
+    "file": "electrical/electric-motor-1.webp",
+    "theme": "electrical",
+    "query": "electric motor",
+    "source": "https://www.rawpixel.com/image/432964/free-photo-image-screen-electric-analysis",
+    "license": "cc0",
+    "bytes": 198162
+  },
+  {
+    "file": "electrical/solar-cell-panel-2.webp",
+    "theme": "electrical",
+    "query": "solar cell panel",
+    "source": "https://www.rawpixel.com/image/6042524/photo-image-public-domain-technology-free",
+    "license": "cc0",
+    "bytes": 174242
+  },
+  {
+    "file": "electrical/solar-cell-panel-3.webp",
+    "theme": "electrical",
+    "query": "solar cell panel",
+    "source": "https://www.rawpixel.com/image/3339280/free-photo-image-environmental-solar-cell-alternative-energy",
+    "license": "cc0",
+    "bytes": 434368
+  },
+  {
+    "file": "electrical/solar-cell-panel-4.jpg",
+    "theme": "electrical",
+    "query": "solar cell panel",
+    "source": "https://stocksnap.io/photo/solar-panels-EFYB8VJXNT",
+    "license": "cc0",
+    "bytes": 579352
+  },
+  {
+    "file": "electrical/solar-cell-panel-5.jpg",
+    "theme": "electrical",
+    "query": "solar cell panel",
+    "source": "https://stocksnap.io/photo/solar-panels-VZK8YEAJDO",
+    "license": "cc0",
+    "bytes": 558737
+  },
+  {
+    "file": "electrical/resistor-components-6.webp",
+    "theme": "electrical",
+    "query": "resistor components",
+    "source": "https://www.rawpixel.com/image/5974455/free-public-domain-cc0-photo",
+    "license": "cc0",
+    "bytes": 276778
+  },
+  {
+    "file": "electrical/power-outlet-plug-7.jpg",
+    "theme": "electrical",
+    "query": "power outlet plug",
+    "source": "https://stocksnap.io/photo/electrician-electricity-QJ55PI34SY",
+    "license": "cc0",
+    "bytes": 42458
+  },
+  {
+    "file": "electrical/power-outlet-plug-8.webp",
+    "theme": "electrical",
+    "query": "power outlet plug",
+    "source": "https://www.rawpixel.com/image/6054611/free-public-domain-cc0-photo",
+    "license": "cc0",
+    "bytes": 54446
+  },
+  {
+    "file": "electrical/copper-wire-coil-9.webp",
+    "theme": "electrical",
+    "query": "copper wire coil",
+    "source": "https://www.rawpixel.com/image/7456688/photo-image-wood-sword-art",
+    "license": "cc0",
+    "bytes": 107704
+  },
+  {
+    "file": "electrical/copper-wire-coil-10.webp",
+    "theme": "electrical",
+    "query": "copper wire coil",
+    "source": "https://www.rawpixel.com/image/12152260/image-person-art-vintage",
+    "license": "cc0",
+    "bytes": 313594
+  },
+  {
+    "file": "computing/computer-motherboard-1.webp",
+    "theme": "computing",
+    "query": "computer motherboard",
+    "source": "https://www.rawpixel.com/image/6040832/photo-image-public-domain-technology-lines",
+    "license": "cc0",
+    "bytes": 211964
+  },
+  {
+    "file": "computing/computer-motherboard-2.webp",
+    "theme": "computing",
+    "query": "computer motherboard",
+    "source": "https://www.rawpixel.com/image/5966565/details-computer-motherboard",
+    "license": "cc0",
+    "bytes": 496990
+  },
+  {
+    "file": "computing/computer-motherboard-3.jpg",
+    "theme": "computing",
+    "query": "computer motherboard",
+    "source": "https://stocksnap.io/photo/motherboard-circuits-66EE6E64A5",
+    "license": "cc0",
+    "bytes": 115077
+  },
+  {
+    "file": "computing/computer-motherboard-4.jpg",
+    "theme": "computing",
+    "query": "computer motherboard",
+    "source": "https://stocksnap.io/photo/futuristic-circuits-OZPRB0FQZK",
+    "license": "cc0",
+    "bytes": 648455
+  },
+  {
+    "file": "computing/cpu-processor-chip-5.webp",
+    "theme": "computing",
+    "query": "cpu processor chip",
+    "source": "https://www.rawpixel.com/image/5967260/cpu-processor-chip",
+    "license": "cc0",
+    "bytes": 300356
+  },
+  {
+    "file": "computing/cpu-processor-chip-6.webp",
+    "theme": "computing",
+    "query": "cpu processor chip",
+    "source": "https://www.rawpixel.com/image/5967817/cpu-processor-chip",
+    "license": "cc0",
+    "bytes": 319786
+  },
+  {
+    "file": "computing/cpu-processor-chip-7.webp",
+    "theme": "computing",
+    "query": "cpu processor chip",
+    "source": "https://www.rawpixel.com/image/5966604/cpu-processor-chip",
+    "license": "cc0",
+    "bytes": 227104
+  },
+  {
+    "file": "computing/cpu-processor-chip-8.jpg",
+    "theme": "computing",
+    "query": "cpu processor chip",
+    "source": "https://stocksnap.io/photo/technology-motherboard-PUWNNLCU1C",
+    "license": "cc0",
+    "bytes": 748478
+  },
+  {
+    "file": "computing/ram-memory-module-9.jpg",
+    "theme": "computing",
+    "query": "ram memory module",
+    "source": "https://stocksnap.io/photo/computer-ram-CK6OQK6JVN",
+    "license": "cc0",
+    "bytes": 412983
+  },
+  {
+    "file": "computing/ram-memory-module-10.jpg",
+    "theme": "computing",
+    "query": "ram memory module",
+    "source": "https://stocksnap.io/photo/computer-ram-52KJ8KZGWY",
+    "license": "cc0",
+    "bytes": 555665
+  },
+  {
+    "file": "ai_data/robot-industrial-arm-1.jpg",
+    "theme": "ai_data",
+    "query": "robot industrial arm",
+    "source": "https://www.flickr.com/photos/24662369@N07/15224577939",
+    "license": "by",
+    "bytes": 171317
+  },
+  {
+    "file": "ai_data/spreadsheet-charts-2.jpg",
+    "theme": "ai_data",
+    "query": "spreadsheet charts",
+    "source": "https://stocksnap.io/photo/business-working-PHE63L27S6",
+    "license": "cc0",
+    "bytes": 62809
+  },
+  {
+    "file": "ai_data/bar-chart-graph-3.webp",
+    "theme": "ai_data",
+    "query": "bar chart graph",
+    "source": "https://www.rawpixel.com/image/5927200/photo-image-public-domain-blue-free",
+    "license": "cc0",
+    "bytes": 188116
+  },
+  {
+    "file": "ai_data/bar-chart-graph-4.webp",
+    "theme": "ai_data",
+    "query": "bar chart graph",
+    "source": "https://www.rawpixel.com/image/5925357/photo-image-public-domain-person-business",
+    "license": "cc0",
+    "bytes": 35752
+  },
+  {
+    "file": "ai_data/pie-chart-data-5.webp",
+    "theme": "ai_data",
+    "query": "pie chart data",
+    "source": "https://www.rawpixel.com/image/8905751/image-face-vintage-public-domain",
+    "license": "cc0",
+    "bytes": 205980
+  },
+  {
+    "file": "civil_mech/construction-crane-1.jpg",
+    "theme": "civil_mech",
+    "query": "construction crane",
+    "source": "https://stocksnap.io/photo/construction-crane-RFOW6UPZ3M",
+    "license": "cc0",
+    "bytes": 126602
+  },
+  {
+    "file": "civil_mech/pulley-system-2.webp",
+    "theme": "civil_mech",
+    "query": "pulley system",
+    "source": "https://www.rawpixel.com/image/13957020/image-person-art-technology",
+    "license": "cc0",
+    "bytes": 582390
+  },
+  {
+    "file": "civil_mech/concrete-building-3.jpg",
+    "theme": "civil_mech",
+    "query": "concrete building",
+    "source": "https://stocksnap.io/photo/concrete-building-DVNUJHG6EP",
+    "license": "cc0",
+    "bytes": 1021544
+  },
+  {
+    "file": "civil_mech/concrete-building-4.jpg",
+    "theme": "civil_mech",
+    "query": "concrete building",
+    "source": "https://stocksnap.io/photo/concrete-building-DUC8CEDACQ",
+    "license": "cc0",
+    "bytes": 1469433
+  },
+  {
+    "file": "civil_mech/concrete-building-5.webp",
+    "theme": "civil_mech",
+    "query": "concrete building",
+    "source": "https://www.rawpixel.com/image/3303786/free-photo-image-window-alley",
+    "license": "cc0",
+    "bytes": 186318
+  },
+  {
+    "file": "civil_mech/concrete-building-6.webp",
+    "theme": "civil_mech",
+    "query": "concrete building",
+    "source": "https://www.rawpixel.com/image/6038900/photo-image-public-domain-free-city",
+    "license": "cc0",
+    "bytes": 246726
+  },
+  {
+    "file": "general/students-notebook-pencil-1.jpg",
+    "theme": "general",
+    "query": "students notebook pencil",
+    "source": "https://stocksnap.io/photo/writing-drawing-8Y0EDX4VP9",
+    "license": "cc0",
+    "bytes": 49061
+  },
+  {
+    "file": "general/students-notebook-pencil-2.jpg",
+    "theme": "general",
+    "query": "students notebook pencil",
+    "source": "https://stocksnap.io/photo/math-equation-GQ1ZPF01BL",
+    "license": "cc0",
+    "bytes": 69097
+  },
+  {
+    "file": "general/students-notebook-pencil-3.jpg",
+    "theme": "general",
+    "query": "students notebook pencil",
+    "source": "https://stocksnap.io/photo/girl-woman-BDAUNU30R3",
+    "license": "cc0",
+    "bytes": 73281
+  },
+  {
+    "file": "general/students-notebook-pencil-4.jpg",
+    "theme": "general",
+    "query": "students notebook pencil",
+    "source": "https://stocksnap.io/photo/student-school-1KOT8HDPAX",
+    "license": "cc0",
+    "bytes": 63687
+  },
+  {
+    "file": "general/stopwatch-timing-5.jpg",
+    "theme": "general",
+    "query": "stopwatch timing",
+    "source": "https://stocksnap.io/photo/stopwatch-time-BS8YSPFEGT",
+    "license": "cc0",
+    "bytes": 79204
+  },
+  {
+    "file": "general/stopwatch-timing-6.webp",
+    "theme": "general",
+    "query": "stopwatch timing",
+    "source": "https://www.rawpixel.com/image/3284959/free-photo-image-time-clock-management",
+    "license": "cc0",
+    "bytes": 203790
+  },
+  {
+    "file": "general/blackboard-chalk-7.jpg",
+    "theme": "general",
+    "query": "blackboard chalk",
+    "source": "https://stocksnap.io/photo/chalkboard-chalk-FQCCUDQ3N0",
+    "license": "cc0",
+    "bytes": 660703
+  },
+  {
+    "file": "general/blackboard-chalk-8.jpg",
+    "theme": "general",
+    "query": "blackboard chalk",
+    "source": "https://www.flickr.com/photos/192018235@N04/54654542171",
+    "license": "cc0",
+    "bytes": 272451
+  },
+  {
+    "file": "general/blackboard-chalk-9.webp",
+    "theme": "general",
+    "query": "blackboard chalk",
+    "source": "https://www.rawpixel.com/image/14255862/optical-illusion",
+    "license": "cc0",
+    "bytes": 178814
+  },
+  {
+    "file": "general/blackboard-chalk-10.webp",
+    "theme": "general",
+    "query": "blackboard chalk",
+    "source": "https://www.rawpixel.com/image/5917647/image-public-domain-free-question-mark",
+    "license": "cc0",
+    "bytes": 310280
+  }
+]

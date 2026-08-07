@@ -1,0 +1,210 @@
+[
+  {
+    "file": "ai_data/nasa-robot-1.jpg",
+    "query": "robot",
+    "title": "ROBOTICS TEAMS AT THE 2016 FIRST ROBOTICS COMPETITION",
+    "nasa_id": "MSFC-1700198",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "ai_data/nasa-rover-2.jpg",
+    "query": "rover",
+    "title": "Rover Team",
+    "nasa_id": "PIA04826",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "ai_data/nasa-autonomous-3.jpg",
+    "query": "autonomous",
+    "title": "ARC-1987-AC87-0211-1",
+    "nasa_id": "ARC-1987-AC87-0211-1",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "ai_data/nasa-mars-rover-4.jpg",
+    "query": "mars rover",
+    "title": "Mars Rover Studies Soil on Mars",
+    "nasa_id": "PIA07081",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "ai_data/nasa-robotic-arm-5.jpg",
+    "query": "robotic arm",
+    "title": "Robotic Arm Biobarrier Cable",
+    "nasa_id": "PIA10779",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "ai_data/nasa-curiosity-rover-6.jpg",
+    "query": "curiosity rover",
+    "title": "Inlet Cover On the Curiosity Rover",
+    "nasa_id": "PIA22327",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "computing/nasa-computer-4.jpg",
+    "query": "computer",
+    "title": "Ames and IBM Personnel Discussing the installation of the computing system.",
+    "nasa_id": "ARC-1961-A-28284",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "computing/nasa-chip-5.jpg",
+    "query": "chip",
+    "title": "Silicon Carbide Integrated Circuit Chip",
+    "nasa_id": "GRC-2015-C-00595",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "computing/nasa-satellite-communication-6.jpg",
+    "query": "satellite communication",
+    "title": "Palapa-B communications satellite launched from the Shuttle Challenger",
+    "nasa_id": "S83-35764",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "computing/nasa-circuit-board-7.jpg",
+    "query": "circuit board",
+    "title": "ES43 PRINTED CIRCUIT BOARD ASSEMBLY, JACOB HARPER",
+    "nasa_id": "MSFC-1700158",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "computing/nasa-iss-computer-8.jpg",
+    "query": "ISS computer",
+    "title": "International Space Station (ISS)",
+    "nasa_id": "9503941",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "civil_mech/nasa-gear-4.jpg",
+    "query": "gear",
+    "title": "Checkout Tests of X-59 Landing Gear",
+    "nasa_id": "LRC-2023-H1_P_X-59-69",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "civil_mech/nasa-bridge-5.jpg",
+    "query": "bridge",
+    "title": "Indian River Bridge Opening Ceremony",
+    "nasa_id": "KSC-20230609-PH-JBS01-0165",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "civil_mech/nasa-structure-6.jpg",
+    "query": "structure",
+    "title": "Polar Structures",
+    "nasa_id": "PIA02071",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "civil_mech/nasa-crane-7.jpg",
+    "query": "crane",
+    "title": "Creative Photography - Sandhill Cranes",
+    "nasa_id": "KSC-20210324-PH-JBS02_0035",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "civil_mech/nasa-mechanical-8.jpg",
+    "query": "mechanical",
+    "title": "A Mechanical Harmony to NASA's Webb Telescope Sunshield",
+    "nasa_id": "GSFC_20171208_Archive_e000209",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "math/nasa-graph-4.jpg",
+    "query": "graph",
+    "title": "Water Vapor Reaches Mars' Middle Atmosphere During Global Dust Storm",
+    "nasa_id": "PIA22080",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "math/nasa-geometry-5.jpg",
+    "query": "geometry",
+    "title": "Beautiful Geometry",
+    "nasa_id": "PIA15864",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "math/nasa-pattern-6.jpg",
+    "query": "pattern",
+    "title": "Pattern Upon Pattern",
+    "nasa_id": "PIA08202",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "math/nasa-measurement-7.jpg",
+    "query": "measurement",
+    "title": "Neutron Spectrometer Measurements",
+    "nasa_id": "PIA16526",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "math/nasa-orbit-diagram-8.jpg",
+    "query": "orbit diagram",
+    "title": "Diagrams of Spacecraft Responses to Orbit Attitude Control Thrust",
+    "nasa_id": "s64-03507",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "general/nasa-laboratory-4.jpg",
+    "query": "laboratory",
+    "title": "Testing for Mars Science Laboratory Descent",
+    "nasa_id": "PIA14308",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "general/nasa-experiment-5.jpg",
+    "query": "experiment",
+    "title": "Light Microscopy Microscope Experiment",
+    "nasa_id": "GRC-2015-C-08026",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "general/nasa-education-6.jpg",
+    "query": "education",
+    "title": "NASA and U.S. Department of Education Partnership Kickoff",
+    "nasa_id": "NHQ202409230036",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "general/nasa-notebook-7.jpg",
+    "query": "notebook",
+    "title": "STS-129 MS2 Bresnik reads his Crew Notebook on the FD",
+    "nasa_id": "s129e006221",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  },
+  {
+    "file": "general/nasa-classroom-science-8.jpg",
+    "query": "classroom science",
+    "title": "Biopolymer Research for In-Situ Capabilities team assembles the control experiments",
+    "nasa_id": "jsc2022e057880",
+    "source": "NASA Image Library",
+    "license": "Public domain (NASA)"
+  }
+]

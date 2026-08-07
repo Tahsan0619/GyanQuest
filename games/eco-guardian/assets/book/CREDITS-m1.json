@@ -1,0 +1,38 @@
+[
+  {
+    "file": "m1-representation.jpg",
+    "src": "/games/eco-guardian/assets/book/m1-representation.jpg",
+    "path": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\eco-guardian\\assets\\book\\m1-representation.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File%3ACoast%20watch%20%281979%29%20%2820037904574%29.jpg",
+    "license": "No restrictions",
+    "creator": "Internet Archive Book Images",
+    "query": "Waste Watch structure",
+    "bytes": 599814,
+    "provider": "commons",
+    "cached": false
+  },
+  {
+    "file": "m1-transfer_a.jpg",
+    "src": "/games/eco-guardian/assets/book/m1-transfer_a.jpg",
+    "path": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\eco-guardian\\assets\\book\\m1-transfer_a.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File%3ADrought%20Mitigation-Pajaro%20Valley%20Water%20Recycle%20Facility%20%2820150827-NRCS-LSC-0439%29.jpg",
+    "license": "Public domain",
+    "creator": "USDAgov",
+    "query": "reduce / reuse / recycle home",
+    "bytes": 308909,
+    "provider": "commons",
+    "cached": false
+  },
+  {
+    "file": "m1-transfer_b.jpg",
+    "src": "/games/eco-guardian/assets/book/m1-transfer_b.jpg",
+    "path": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\eco-guardian\\assets\\book\\m1-transfer_b.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File%3A3%20dumpster%20pools%20Pk%2041st%20jeh.jpg",
+    "license": "Public domain",
+    "creator": "Jim.henderson",
+    "query": "recycling bins outdoor",
+    "bytes": 618472,
+    "provider": "commons",
+    "cached": false
+  }
+]

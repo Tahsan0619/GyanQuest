@@ -1,211 +1,305 @@
 /**
- * Digital book - backend-builder mission 1: Server Basics
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Backend Builder / Server Basics
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: local verified copies under /games/backend-builder/assets/book/ (see CREDITS-m1.json).
  */
 export const BOOK = {
   missionIndex: 0,
   title: "Server Basics",
   subtitle: "request response",
   subject: "Backend Builder / Server Basics",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Server Basics",
-    art: "/games/backend-builder/assets/book/m1-fig1.svg",
+    art: "/games/backend-builder/assets/book/m1-cover.jpg",
   },
   glossary: [
-  {
-    "id": "request",
-    "term": "request"
-  },
-  {
-    "id": "response",
-    "term": "response"
-  },
-  {
-    "id": "client",
-    "term": "client"
-  },
-  {
-    "id": "asks",
-    "term": "asks"
-  },
-  {
-    "id": "server",
-    "term": "server"
-  },
-  {
-    "id": "answers",
-    "term": "answers"
-  },
-  {
-    "id": "goes",
-    "term": "goes"
-  },
-  {
-    "id": "comes",
-    "term": "comes"
-  }
-],
+    { id: "client", term: "client" },
+    { id: "server", term: "server" },
+    { id: "request", term: "request" },
+    { id: "response", term: "response" },
+    { id: "status", term: "status" },
+    { id: "http", term: "http" },
+    { id: "browser", term: "browser" },
+    { id: "api", term: "api" },
+    { id: "endpoint", term: "endpoint" },
+    { id: "error", term: "error" },
+  ],
   pages: [
-{
-  "title": "Welcome to Server Basics",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/backend-builder/assets/book/m1-fig1.svg",
-      "caption": "Figure: Server Basics overview",
-      "place": "top",
-      "alt": "Server Basics"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "A client asks. A server answers. Request goes in - response comes back."
+      title: "Why Server Basics?",
+      layout: "text",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "cognitive-load",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m1-hook.jpg",
+              caption: "Figure 1. Local machines ask; distant machines answer.",
+              alt: "Computer",
+            },
+            {
+              src: "/games/backend-builder/assets/book/m1-cover.jpg",
+              caption: "Signals carry requests and responses across distance.",
+              alt: "Satellite communication",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A client asks. A server answers. Request goes in - response comes back with data and a status.",
+        },
+        {
+          type: "p",
+          text: "Phone weather apps, school portal pages, and shop checkouts all ride this ask/answer loop.",
+        },
+        {
+          type: "p",
+          text: "Everyday hook: opening weather on your phone sends a request; the cloud replies with today's forecast.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores request response. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Client is not server",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m1-model.jpg",
+              caption: "Figure 2. Earth-scale networks - your app still uses the same ask/answer idea.",
+              alt: "Earth from space",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "The browser is usually the client. The server lives elsewhere and sends data - not just pretty colors (CSS handles look).",
+        },
+        {
+          type: "ul",
+          items: [
+            "Request: what you ask for",
+            "Response: status + body of data",
+            "Useful apps wait for an answer or a clear error",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Phone weather app."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: request response."
+      title: "Request dial",
+      layout: "text",
+      theory: [
+        "cognitive-load",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m1-mechanism.jpg",
+              caption: "Figure 3. Boards route signals - servers route responses.",
+              alt: "Circuit board",
+            },
+            {
+              src: "/games/backend-builder/assets/book/m1-lab.jpg",
+              caption: "Test ask/answer like an experiment trial.",
+              alt: "Experiment",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "In the lab you dialed request clarity until a sensible response returned.",
+        },
+        {
+          type: "p",
+          text: "Cake is not a valid HTTP response. Status codes and data are.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: A client asks. A server answers. Request goes in - response comes back."
+      title: "Status matters",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m1-mastery.jpg",
+              caption: "Figure 4. Mission machines that talk in request/response loops.",
+              alt: "ISS computer",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A good response says whether the ask worked. Silent failure confuses users; clear status helps everyone.",
+        },
+        {
+          type: "p",
+          text: "Kids can learn: client asks, server answers.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Phone weather app.",
-        "Compare it with School portal login page.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/backend-builder/assets/book/m1-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: [
+        "spiral-scaffold",
+        "cognitive-load",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet servers -> dial requests -> sort client/server -> stronger lab -> why responses -> name the loop rule -> stretch apps -> myths -> fluency -> mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting kills the myth that the browser is the server",
+            "Labs show request then response",
+            "Rule: client asks; server answers",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Client & Server",
-        "Request Loop Lab",
-        "Sort REQ / RES",
-        "Stronger Loop Lab",
-        "Why Wait for RES"
-      ]
+      title: "Street lab: weather ask",
+      layout: "split",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "retrieval-practice",
+      ],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m1-cover.jpg",
+              caption: "Carry the ask.",
+              alt: "Satellite",
+            },
+            {
+              src: "/games/backend-builder/assets/book/m1-model.jpg",
+              caption: "Big network.",
+              alt: "Earth",
+            },
+            {
+              src: "/games/backend-builder/assets/book/m1-hook.jpg",
+              caption: "Client machine.",
+              alt: "Computer",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Open a weather app with a grown-up. Say out loud: request sent, response received, data shown.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Name client and server in that story",
+            "Guess what a failed response might look like",
+            "Flip carousel: dish vs earth-scale net",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/backend-builder/assets/book/m1-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Phone weather app as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: [
+        "conceptual-change",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: the browser is the server. Better: browser is the client - server answers elsewhere.",
+        },
+        {
+          type: "p",
+          text: "Myth: a request never needs a response. Better: useful apps wait for a response (or a clear error).",
+        },
+        {
+          type: "p",
+          text: "Myth: cake is a valid HTTP response. Better: responses are status and data - not snacks.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Mastery",
+      layout: "text",
+      theory: [
+        "retrieval-practice",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m1-mastery.jpg",
+              caption: "Figure 5. Talking machines - your server goal.",
+              alt: "ISS computer anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend with a shop checkout: client sends order request; server responds with confirmation or error.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Draw arrows: client -> server -> client",
+            "Name one piece of data in a response",
+            "Use the word request correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Server Scout reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Server Basics to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

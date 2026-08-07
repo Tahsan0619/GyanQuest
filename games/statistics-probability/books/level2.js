@@ -1,211 +1,305 @@
 /**
- * Digital book - statistics-probability mission 2: Chance Games
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Statistics Probability / Chance Games
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: local verified copies under /games/statistics-probability/assets/book/ (see CREDITS-m2.json).
  */
 export const BOOK = {
   missionIndex: 1,
   title: "Chance Games",
   subtitle: "probability / fair shares of outcomes",
   subject: "Statistics Probability / Chance Games",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Chance Games",
-    art: "/games/statistics-probability/assets/book/m2-fig1.svg",
+    art: "/games/statistics-probability/assets/book/m2-cover.jpg",
   },
   glossary: [
-  {
-    "id": "probability",
-    "term": "probability"
-  },
-  {
-    "id": "fair",
-    "term": "fair"
-  },
-  {
-    "id": "shares",
-    "term": "shares"
-  },
-  {
-    "id": "outcomes",
-    "term": "outcomes"
-  },
-  {
-    "id": "share",
-    "term": "share"
-  },
-  {
-    "id": "coin",
-    "term": "coin"
-  },
-  {
-    "id": "heads",
-    "term": "heads"
-  },
-  {
-    "id": "gives",
-    "term": "gives"
-  }
-],
+    { id: "probability", term: "probability" },
+    { id: "outcome", term: "outcome" },
+    { id: "fair", term: "fair" },
+    { id: "chance", term: "chance" },
+    { id: "trial", term: "trial" },
+    { id: "impossible", term: "impossible" },
+    { id: "likely", term: "likely" },
+    { id: "share", term: "share" },
+    { id: "random", term: "random" },
+    { id: "sample", term: "sample" },
+  ],
   pages: [
-{
-  "title": "Welcome to Chance Games",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/statistics-probability/assets/book/m2-fig1.svg",
-      "caption": "Figure: Chance Games overview",
-      "place": "top",
-      "alt": "Chance Games"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Probability is a fair share of outcomes. A fair coin is 1/2 heads; a fair die gives each face an equal shot."
+      title: "Why Chance Games?",
+      layout: "text",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "cognitive-load",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/statistics-probability/assets/book/m2-hook.jpg",
+              caption: "Figure 1. Worlds of outcomes - chance ideas scale from coins to orbits.",
+              alt: "Planets",
+            },
+            {
+              src: "/games/statistics-probability/assets/book/m2-cover.jpg",
+              caption: "Patterns of possibility - not promises of the next flip.",
+              alt: "Pattern",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Probability is a fair share of outcomes. A fair coin is 1/2 heads; a fair die gives each face an equal shot.",
+        },
+        {
+          type: "p",
+          text: "Cricket tosses, board-game dice, and fun-fair spinners are probability labs in disguise.",
+        },
+        {
+          type: "p",
+          text: "Everyday hook: before a cricket match, the coin does not remember the last five tosses.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores probability / fair shares of outcomes. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Fair shares",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/statistics-probability/assets/book/m2-model.jpg",
+              caption: "Figure 2. Planned paths still meet uncertainty in measurement - chance has rules too.",
+              alt: "Orbit diagram",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A probability share stays between 0 and 1. Face 7 on a standard die is impossible - not just unlikely.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Fair coin: about 1/2 heads",
+            "Fair die: 1/6 each face",
+            "More fair trials usually settle closer to the true share",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Cricket toss coin."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: probability / fair shares of outcomes."
+      title: "Chance dial",
+      layout: "text",
+      theory: [
+        "cognitive-load",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/statistics-probability/assets/book/m2-mechanism.jpg",
+              caption: "Figure 3. Geometry of outcomes - sample spaces have shapes.",
+              alt: "Geometry",
+            },
+            {
+              src: "/games/statistics-probability/assets/book/m2-lab.jpg",
+              caption: "Run trials like experiments; tally honestly.",
+              alt: "Experiment",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "In the lab you dialed until fair shares felt intuitive - not mystical.",
+        },
+        {
+          type: "p",
+          text: "Casinos are not the only users; weather and games use chance ideas too.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Probability is a fair share of outcomes. A fair coin is 1/2 heads; a fair die gives each face an equal shot."
+      title: "No memory myth",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/statistics-probability/assets/book/m2-mastery.jpg",
+              caption: "Figure 4. Honest counting beats streak stories.",
+              alt: "Abacus",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "After five heads, tails is not 'due'. A fair coin has no memory - still about 1/2.",
+        },
+        {
+          type: "p",
+          text: "Record many tosses. Watch the share settle instead of chasing streaks.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Cricket toss coin.",
-        "Compare it with Board-game die.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/statistics-probability/assets/book/m2-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: [
+        "spiral-scaffold",
+        "cognitive-load",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet chance -> dial fair share -> sort possible/impossible -> stronger lab -> why trials -> name the probability rule -> stretch tosses -> myths -> fluency -> mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting separates impossible from unlikely",
+            "Labs show shares between 0 and 1",
+            "Rule: probability is a fair share of outcomes",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Chance Tools",
-        "Fair Share Dial",
-        "Sort: Likely, Unlikely, Impossible",
-        "Trial Lab",
-        "Why Probability is a Share"
-      ]
+      title: "Street lab: coin tally",
+      layout: "split",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "retrieval-practice",
+      ],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/statistics-probability/assets/book/m2-hook.jpg",
+              caption: "Outcome worlds.",
+              alt: "Planets",
+            },
+            {
+              src: "/games/statistics-probability/assets/book/m2-mastery.jpg",
+              caption: "Tally true.",
+              alt: "Abacus",
+            },
+            {
+              src: "/games/statistics-probability/assets/book/m2-cover.jpg",
+              caption: "Possibility pattern.",
+              alt: "Pattern",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Toss a fair coin 20 times. Tally heads. Compare your share to 1/2. Discuss streaks without inventing memory.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Explain why face 7 never appears on a standard die",
+            "Name one spinner at a fair and its fair-share idea",
+            "Flip carousel: planet outcomes vs abacus tallies",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/statistics-probability/assets/book/m2-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Cricket toss coin as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: [
+        "conceptual-change",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: after five heads, tails is 'due'. Better: fair coin has no memory - still about 1/2.",
+        },
+        {
+          type: "p",
+          text: "Myth: probability can be bigger than 1. Better: a share stays between 0 and 1.",
+        },
+        {
+          type: "p",
+          text: "Myth: die face 7 is just unlikely. Better: face 7 is impossible on a standard die.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Mastery",
+      layout: "text",
+      theory: [
+        "retrieval-practice",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/statistics-probability/assets/book/m2-mastery.jpg",
+              caption: "Figure 5. Count outcomes - your chance goal.",
+              alt: "Abacus anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend: fair share between 0 and 1; coins forget; more trials clarify the share.",
+        },
+        {
+          type: "ul",
+          items: [
+            "State P(heads) for a fair coin",
+            "Give one impossible event on a die",
+            "Use the word probability correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Chance Champ reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Chance Games to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

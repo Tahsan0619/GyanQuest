@@ -1,211 +1,305 @@
 /**
- * Digital book - geometry-trig mission 2: Angle Adventures
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Geometry Trig / Angle Adventures
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: local verified copies under /games/geometry-trig/assets/book/ (see CREDITS-m2.json).
  */
 export const BOOK = {
   missionIndex: 1,
   title: "Angle Adventures",
   subtitle: "angles / measuring turns",
   subject: "Geometry Trig / Angle Adventures",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Angle Adventures",
-    art: "/games/geometry-trig/assets/book/m2-fig1.svg",
+    art: "/games/geometry-trig/assets/book/m2-cover.jpg",
   },
   glossary: [
-  {
-    "id": "angles",
-    "term": "angles"
-  },
-  {
-    "id": "measuring",
-    "term": "measuring"
-  },
-  {
-    "id": "turns",
-    "term": "turns"
-  },
-  {
-    "id": "angle",
-    "term": "angle"
-  },
-  {
-    "id": "turn",
-    "term": "turn"
-  },
-  {
-    "id": "between",
-    "term": "between"
-  },
-  {
-    "id": "rays",
-    "term": "rays"
-  },
-  {
-    "id": "acute",
-    "term": "Acute"
-  }
-],
+    { id: "angle", term: "angle" },
+    { id: "ray", term: "ray" },
+    { id: "acute", term: "acute" },
+    { id: "right", term: "right" },
+    { id: "obtuse", term: "obtuse" },
+    { id: "degree", term: "degree" },
+    { id: "turn", term: "turn" },
+    { id: "protractor", term: "protractor" },
+    { id: "vertex", term: "vertex" },
+    { id: "straight", term: "straight" },
+  ],
   pages: [
-{
-  "title": "Welcome to Angle Adventures",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/geometry-trig/assets/book/m2-fig1.svg",
-      "caption": "Figure: Angle Adventures overview",
-      "place": "top",
-      "alt": "Angle Adventures"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "An angle is a turn between two rays. Acute is under 90\\u00b0, right is exactly 90\\u00b0, obtuse is over 90\\u00b0 but under 180\\u00b0."
+      title: "Why Angle Adventures?",
+      layout: "text",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "cognitive-load",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/geometry-trig/assets/book/m2-hook.jpg",
+              caption: "Figure 1. Measurement tools make turns visible.",
+              alt: "Measurement",
+            },
+            {
+              src: "/games/geometry-trig/assets/book/m2-cover.jpg",
+              caption: "Orbit paths are full of turning angles.",
+              alt: "Orbit diagram",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "An angle is a turn between two rays. Acute is under 90 degrees, right is exactly 90 degrees, obtuse is over 90 but under 180.",
+        },
+        {
+          type: "p",
+          text: "Clock hands, open doors, and roof pitches are angles you already live inside.",
+        },
+        {
+          type: "p",
+          text: "Everyday hook: a door swing from shut to open is a growing angle.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores angles / measuring turns. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Turn, not ray length",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/geometry-trig/assets/book/m2-model.jpg",
+              caption: "Figure 2. Moon phases dance around turning geometry in the sky.",
+              alt: "Full moon",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Bigger looking lines do not mean a bigger angle. Angle is the turn amount.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Compare to a square corner to spot right angles",
+            "Acute is sharp and under 90",
+            "Obtuse is wider than a corner but not a straight line",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Clock hands."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: angles / measuring turns."
+      title: "Angle dial",
+      layout: "text",
+      theory: [
+        "cognitive-load",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/geometry-trig/assets/book/m2-mechanism.jpg",
+              caption: "Figure 3. Engineered geometry is full of right corners.",
+              alt: "Geometry forms",
+            },
+            {
+              src: "/games/geometry-trig/assets/book/m2-lab.jpg",
+              caption: "Practice naming angles on classroom objects.",
+              alt: "Education",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "In the lab you dialed turns until acute, right, and obtuse felt distinct.",
+        },
+        {
+          type: "p",
+          text: "Degrees here measure turns - not thermometer weather.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: An angle is a turn between two rays. Acute is under 90\\u00b0, right is exactly 90\\u00b0, obtuse is over 90\\u00b0 but under 180\\u00b0."
+      title: "Right angles everywhere",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/geometry-trig/assets/book/m2-mastery.jpg",
+              caption: "Figure 4. Patterned turns - train recognition.",
+              alt: "Pattern",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Right angles appear in squares, books, tiles, and window frames - not only in triangles.",
+        },
+        {
+          type: "p",
+          text: "You can often compare to a square corner by eye before grabbing a protractor.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Clock hands.",
-        "Compare it with Open door swing.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/geometry-trig/assets/book/m2-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: [
+        "spiral-scaffold",
+        "cognitive-load",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet angles -> dial turns -> sort acute/right/obtuse -> stronger lab -> why degrees -> name the angle rule -> stretch roofs -> myths -> fluency -> mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting locks the three kid-level angle kinds",
+            "Labs separate turn size from ray length",
+            "Rule: angle measures turn between two rays",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet the Turn",
-        "Open the Angle",
-        "Sort: Acute, Right, Obtuse",
-        "Degree Lab",
-        "Why We Measure Turns"
-      ]
+      title: "Street lab: clock hands",
+      layout: "split",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "retrieval-practice",
+      ],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/geometry-trig/assets/book/m2-cover.jpg",
+              caption: "Turning paths.",
+              alt: "Orbit",
+            },
+            {
+              src: "/games/geometry-trig/assets/book/m2-model.jpg",
+              caption: "Sky geometry.",
+              alt: "Moon",
+            },
+            {
+              src: "/games/geometry-trig/assets/book/m2-hook.jpg",
+              caption: "Measure turns.",
+              alt: "Measurement",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "At 3:00, clock hands make a right angle. At other times, classify acute or obtuse by eye.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Open a book and call the corner a right angle check",
+            "Find one roof that looks obtuse from the side",
+            "Flip carousel: orbit turn vs moon disk",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/geometry-trig/assets/book/m2-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Clock hands as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: [
+        "conceptual-change",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: bigger looking lines mean a bigger angle. Better: angle is the turn, not how long the rays are drawn.",
+        },
+        {
+          type: "p",
+          text: "Myth: acute means any angle under 180. Better: acute is under 90 degrees; obtuse is over 90.",
+        },
+        {
+          type: "p",
+          text: "Myth: degrees are only for thermometers. Better: angle degrees measure turns; temperature is a different degree idea.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Mastery",
+      layout: "text",
+      theory: [
+        "retrieval-practice",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/geometry-trig/assets/book/m2-mastery.jpg",
+              caption: "Figure 5. Recognize turns - your angle goal.",
+              alt: "Pattern anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend: angle = turn; compare to a square corner; name acute, right, obtuse.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Draw all three kinds and label",
+            "Find a right angle in the room",
+            "Use the word degree correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Angle Ace reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Angle Adventures to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

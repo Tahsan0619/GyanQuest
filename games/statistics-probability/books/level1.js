@@ -1,211 +1,305 @@
 /**
- * Digital book - statistics-probability mission 1: Mean & Mode
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Statistics Probability / Mean & Mode
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: local verified copies under /games/statistics-probability/assets/book/ (see CREDITS-m1.json).
  */
 export const BOOK = {
   missionIndex: 0,
   title: "Mean & Mode",
   subtitle: "averages / typical values",
   subject: "Statistics Probability / Mean & Mode",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Mean & Mode",
-    art: "/games/statistics-probability/assets/book/m1-fig1.svg",
+    art: "/games/statistics-probability/assets/book/m1-cover.jpg",
   },
   glossary: [
-  {
-    "id": "averages",
-    "term": "averages"
-  },
-  {
-    "id": "typical",
-    "term": "typical"
-  },
-  {
-    "id": "values",
-    "term": "values"
-  },
-  {
-    "id": "mean",
-    "term": "Mean"
-  },
-  {
-    "id": "balances",
-    "term": "balances"
-  },
-  {
-    "id": "number",
-    "term": "number"
-  },
-  {
-    "id": "mode",
-    "term": "Mode"
-  },
-  {
-    "id": "value",
-    "term": "value"
-  }
-],
+    { id: "mean", term: "mean" },
+    { id: "mode", term: "mode" },
+    { id: "average", term: "average" },
+    { id: "outlier", term: "outlier" },
+    { id: "data", term: "data" },
+    { id: "value", term: "value" },
+    { id: "count", term: "count" },
+    { id: "sum", term: "sum" },
+    { id: "typical", term: "typical" },
+    { id: "distribution", term: "distribution" },
+  ],
   pages: [
-{
-  "title": "Welcome to Mean & Mode",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/statistics-probability/assets/book/m1-fig1.svg",
-      "caption": "Figure: Mean & Mode overview",
-      "place": "top",
-      "alt": "Mean & Mode"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Mean balances all values into one typical number. Mode is the value that appears most."
+      title: "Why Mean & Mode?",
+      layout: "text",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "cognitive-load",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/statistics-probability/assets/book/m1-hook.jpg",
+              caption: "Figure 1. Counting tools make totals honest before you average.",
+              alt: "Abacus",
+            },
+            {
+              src: "/games/statistics-probability/assets/book/m1-cover.jpg",
+              caption: "Graphs show where typical values sit.",
+              alt: "Graph",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Mean balances all values into one typical number. Mode is the value that appears most.",
+        },
+        {
+          type: "p",
+          text: "Class mark lists, cricket run totals, and shop price tags in BD markets all invite averages.",
+        },
+        {
+          type: "p",
+          text: "Everyday hook: if three snacks cost 10, 10, and 40, mode is 10 while mean is pulled upward.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores averages / typical values. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Balance vs popularity",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/statistics-probability/assets/book/m1-model.jpg",
+              caption: "Figure 2. Another graph view - spot the cluster (mode) vs the balance point (mean).",
+              alt: "Graph alternate",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Mean adds then divides by the count. Mode crowns the most common value. They can differ.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Outliers can pull the mean",
+            "Mode allows ties",
+            "Kids use both for marks, scores, and prices",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Class mark list."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: averages / typical values."
+      title: "Average dial",
+      layout: "text",
+      theory: [
+        "cognitive-load",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/statistics-probability/assets/book/m1-mechanism.jpg",
+              caption: "Figure 3. Measurement sheets feed averages.",
+              alt: "Measurement",
+            },
+            {
+              src: "/games/statistics-probability/assets/book/m1-lab.jpg",
+              caption: "Write the list before you compute.",
+              alt: "Notebook",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "In the lab you dialed until mean and mode stories felt different on purpose.",
+        },
+        {
+          type: "p",
+          text: "Mean never ignores how many values you have - the count is the divider.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Mean balances all values into one typical number. Mode is the value that appears most."
+      title: "Watch the outlier",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/statistics-probability/assets/book/m1-mastery.jpg",
+              caption: "Figure 4. Patterns in lists - clusters hint at mode.",
+              alt: "Pattern",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "One huge score can drag the mean while the mode stays with the crowd.",
+        },
+        {
+          type: "p",
+          text: "Say which average you mean before you compare classes or shops.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Class mark list.",
-        "Compare it with Cricket run totals.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/statistics-probability/assets/book/m1-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: [
+        "spiral-scaffold",
+        "cognitive-load",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet averages -> dial typical -> sort mean/mode -> stronger lab -> why outliers -> name the average rule -> stretch markets -> myths -> fluency -> mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting separates balance from popularity",
+            "Labs show mean move when an outlier appears",
+            "Rule: mean balances; mode is most common",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Mean & Mode",
-        "Balance the Mean",
-        "Sort: Mean, Mode, or Not?",
-        "Data Peak Lab",
-        "Why Both Summaries"
-      ]
+      title: "Street lab: mark list",
+      layout: "split",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "retrieval-practice",
+      ],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/statistics-probability/assets/book/m1-hook.jpg",
+              caption: "Total first.",
+              alt: "Abacus",
+            },
+            {
+              src: "/games/statistics-probability/assets/book/m1-cover.jpg",
+              caption: "See the typical.",
+              alt: "Graph",
+            },
+            {
+              src: "/games/statistics-probability/assets/book/m1-lab.jpg",
+              caption: "Write the list.",
+              alt: "Notebook",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Use five class marks. Compute mean. Circle the mode. Add one huge outlier and recompute mean.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Did mode change?",
+            "Explain the pull in one sentence",
+            "Flip carousel: abacus totals vs graph shape",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/statistics-probability/assets/book/m1-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Class mark list as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: [
+        "conceptual-change",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: mean and mode are always the same number. Better: they can differ - mean balances; mode is most common.",
+        },
+        {
+          type: "p",
+          text: "Myth: one outlier never moves the mean. Better: a very large or small value can pull the mean.",
+        },
+        {
+          type: "p",
+          text: "Myth: mean ignores how many values you have. Better: mean divides by the count of values.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Mastery",
+      layout: "text",
+      theory: [
+        "retrieval-practice",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/statistics-probability/assets/book/m1-mastery.jpg",
+              caption: "Figure 5. Spot clusters - your average goal.",
+              alt: "Pattern anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend with three prices: show mean vs mode and why shoppers might care about each.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Compute both on a 5-number list",
+            "Point to an outlier effect",
+            "Use the word average carefully (say mean or mode)",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Mean Scout reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Mean & Mode to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

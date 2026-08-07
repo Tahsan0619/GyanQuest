@@ -1,211 +1,270 @@
 /**
- * Digital book - electrical-basics mission 3: Safe Power
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Electrical Basics Mission 3: Safe Power
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: panel, bulb, circuit, and battery JPGs under assets/book/.
  */
 export const BOOK = {
   missionIndex: 2,
   title: "Safe Power",
-  subtitle: "dry hands / insulation / respect live wires",
+  subtitle: "dry hands, insulation, respect live wires",
   subject: "Electrical Basics / Safe Power",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Safe Power",
-    art: "/games/electrical-basics/assets/book/m3-fig1.svg",
+    art: "/games/electrical-basics/assets/book/m3-cover.jpg",
   },
   glossary: [
-  {
-    "id": "hands",
-    "term": "hands"
-  },
-  {
-    "id": "insulation",
-    "term": "insulation"
-  },
-  {
-    "id": "respect",
-    "term": "respect"
-  },
-  {
-    "id": "live",
-    "term": "live"
-  },
-  {
-    "id": "wires",
-    "term": "wires"
-  },
-  {
-    "id": "stay",
-    "term": "Stay"
-  },
-  {
-    "id": "safe",
-    "term": "safe"
-  },
-  {
-    "id": "good",
-    "term": "good"
-  }
-],
+    { id: "insulation", term: "insulation" },
+    { id: "live-wire", term: "live wire" },
+    { id: "outlet", term: "outlet" },
+    { id: "shock", term: "shock" },
+    { id: "dry-hands", term: "dry hands" },
+    { id: "frayed", term: "frayed" },
+    { id: "ground", term: "ground" },
+    { id: "safety", term: "safety" },
+  ],
   pages: [
-{
-  "title": "Welcome to Safe Power",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/electrical-basics/assets/book/m3-fig1.svg",
-      "caption": "Figure: Safe Power overview",
-      "place": "top",
-      "alt": "Safe Power"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Stay safe: dry hands, good insulation, and never poke live sockets or frayed wires."
+      title: "Home outlets, lab rules, street poles",
+      layout: "text",
+      theory: ["constructivism", "dual-coding", "cognitive-load"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/electrical-basics/assets/book/m3-hook.jpg",
+              caption: "Figure 1. Useful light still demands safe habits around power.",
+              alt: "Light bulb",
+            },
+            {
+              src: "/games/electrical-basics/assets/book/m3-model.jpg",
+              caption: "Covered paths and intact jackets keep charge where it belongs.",
+              alt: "Circuit with protective layout",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Home outlets are not toys. School labs post dry-hands rules for a reason. Street poles and hanging wires can be live - stay back and tell an adult.",
+        },
+        {
+          type: "p",
+          text: "Safe power means dry hands, good insulation, and never poking live sockets or frayed cords.",
+        },
+        {
+          type: "p",
+          text: "Earn Safety Star by choosing the safe habit before the curious poke.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores dry hands / insulation / respect live wires. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Insulation is the jacket",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "dual-coding"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/electrical-basics/assets/book/m3-insulate.jpg",
+              caption: "Figure 2. Model: conductors carry charge; insulation keeps it inside the designed path.",
+              alt: "Integrated circuit with packages",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "ul",
+          items: [
+            "Insulation - covering that stops unwanted contact",
+            "Live wire - can deliver dangerous current",
+            "Frayed cord - broken jacket, high risk",
+          ],
+        },
+        {
+          type: "p",
+          text: "Water on hands lowers resistance. Dry hands are a simple, powerful habit.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Home outlets."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: dry hands / insulation / respect live wires."
+      title: "Unsafe shortcuts hurt",
+      layout: "text",
+      theory: ["cognitive-load", "dual-coding"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/electrical-basics/assets/book/m3-safe.jpg",
+              caption: "Figure 3. Energy sources are useful - treat wall power with respect.",
+              alt: "Battery as controlled source contrast",
+            },
+            {
+              src: "/games/electrical-basics/assets/book/m3-cover.jpg",
+              caption: "Outdoor and panel gear still need trained adults for repairs.",
+              alt: "Solar panel installation",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Sorting safe vs unsafe in the mission is practice for real rooms: no metal in outlets, no wet fingers on switches, no climbing poles.",
+        },
+        {
+          type: "p",
+          text: "If a cord is frayed or a socket sparks, leave it and call a responsible adult.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Stay safe: dry hands, good insulation, and never poke live sockets or frayed wires."
+      title: "Safety checklist as a map",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "spiral-scaffold"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/electrical-basics/assets/book/m3-hook.jpg",
+              caption: "Figure 4. Representation: enjoy the light after the checklist, not before.",
+              alt: "Bulb after safe setup",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Dry hands. Intact insulation. Distance from live street wires. That checklist is your safety map.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Home outlets.",
-        "Compare it with School lab rules.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/electrical-basics/assets/book/m3-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: ["spiral-scaffold", "cognitive-load"],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet safe power -> safety dial lab -> sort safe / unsafe -> safer habits lab -> safety steps -> name the safe rule -> stretch to places -> myth bust -> fluency -> Safety Star mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting builds quick judgment",
+            "Habits lab turns rules into actions",
+            "The rule sentence: dry hands, good insulation, respect live wires",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Safe Power",
-        "Safety Dial Lab",
-        "Sort Safe / Unsafe",
-        "Safer Habits Lab",
-        "Safety Steps"
-      ]
+      title: "Room walk transfer",
+      layout: "split",
+      theory: ["constructivism", "dual-coding", "retrieval-practice"],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/electrical-basics/assets/book/m3-model.jpg",
+              caption: "Look for covered, undamaged paths.",
+              alt: "Circuit",
+            },
+            {
+              src: "/games/electrical-basics/assets/book/m3-safe.jpg",
+              caption: "Leave repairs to trained people.",
+              alt: "Energy source",
+            },
+            {
+              src: "/games/electrical-basics/assets/book/m3-cover.jpg",
+              caption: "Outdoor gear: look, don't touch.",
+              alt: "Solar panels",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Walk a room with an adult. Spot outlets, cords, and switches. Name one safe habit and one unsafe action you will avoid.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Are hands dry before touching switches?",
+            "Is any cord frayed?",
+            "Drag the photos to flip examples",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/electrical-basics/assets/book/m3-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Home outlets as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: ["conceptual-change"],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: Low household voltage cannot hurt. Better: wall outlets can still cause serious shock - respect them.",
+        },
+        {
+          type: "p",
+          text: "Myth: Rubber shoes make any stunt safe. Better: insulation helps, but poking live parts is still wrong.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Safety Star mastery",
+      layout: "text",
+      theory: ["retrieval-practice", "spiral-scaffold"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/electrical-basics/assets/book/m3-cover.jpg",
+              caption: "Figure 5. Teaching anchor: useful power, strict safety.",
+              alt: "Safe power anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend in one minute: dry hands, check insulation, never poke live sockets or street wires, and get adult help for damage.",
+        },
+        {
+          type: "ul",
+          items: [
+            "List three safe habits",
+            "List three unsafe actions",
+            "Use the word insulation correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Safety Star reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Safe Power to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

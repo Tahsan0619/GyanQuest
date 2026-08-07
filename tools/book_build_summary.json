@@ -1,0 +1,366 @@
+[
+  {
+    "game": "ai-lab",
+    "level": 1,
+    "images": 7,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\ai-lab\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "ai-lab",
+    "level": 2,
+    "images": 7,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\ai-lab\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "astronomy-space",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\astronomy-space\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "astronomy-space",
+    "level": 2,
+    "images": 7,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\astronomy-space\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "backend-builder",
+    "level": 1,
+    "images": 7,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\backend-builder\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "backend-builder",
+    "level": 2,
+    "images": 7,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\backend-builder\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "backend-builder",
+    "level": 3,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\backend-builder\\books\\level3.js",
+    "handcrafted": false
+  },
+  {
+    "game": "bio-explorer",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\bio-explorer\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "bio-explorer",
+    "level": 2,
+    "images": 7,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\bio-explorer\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "bio-explorer",
+    "level": 3,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\bio-explorer\\books\\level3.js",
+    "handcrafted": false
+  },
+  {
+    "game": "calculus-analysis",
+    "level": 1,
+    "images": 6,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\calculus-analysis\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "chemistry-lab",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\chemistry-lab\\books\\level1.js",
+    "handcrafted": true
+  },
+  {
+    "game": "chemistry-lab",
+    "level": 2,
+    "images": 7,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\chemistry-lab\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "chemistry-lab",
+    "level": 3,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\chemistry-lab\\books\\level3.js",
+    "handcrafted": false
+  },
+  {
+    "game": "civil-basics",
+    "level": 1,
+    "images": 7,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\civil-basics\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "cyber-shield",
+    "level": 1,
+    "images": 7,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\cyber-shield\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "data-science",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\data-science\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "database-sql",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\database-sql\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "database-sql",
+    "level": 2,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\database-sql\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "database-sql",
+    "level": 3,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\database-sql\\books\\level3.js",
+    "handcrafted": false
+  },
+  {
+    "game": "discrete-math",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\discrete-math\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "eco-guardian",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\eco-guardian\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "electrical-basics",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\electrical-basics\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "electrical-basics",
+    "level": 2,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\electrical-basics\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "electrical-basics",
+    "level": 3,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\electrical-basics\\books\\level3.js",
+    "handcrafted": false
+  },
+  {
+    "game": "electronics-robotics",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\electronics-robotics\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "force-fighter",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\force-fighter\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "force-fighter",
+    "level": 2,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\force-fighter\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "force-fighter",
+    "level": 3,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\force-fighter\\books\\level3.js",
+    "handcrafted": false
+  },
+  {
+    "game": "genetics-biotech",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\genetics-biotech\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "geology-earth",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\geology-earth\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "geometry-trig",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\geometry-trig\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "geometry-trig",
+    "level": 2,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\geometry-trig\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "green-tech",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\green-tech\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "human-anatomy",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\human-anatomy\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "human-anatomy",
+    "level": 2,
+    "images": 7,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\human-anatomy\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "ict-fundamentals",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\ict-fundamentals\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "ict-fundamentals",
+    "level": 2,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\ict-fundamentals\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "ict-fundamentals",
+    "level": 3,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\ict-fundamentals\\books\\level3.js",
+    "handcrafted": false
+  },
+  {
+    "game": "math-quest",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\math-quest\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "math-quest",
+    "level": 2,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\math-quest\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "mechanical-basics",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\mechanical-basics\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "mechanical-basics",
+    "level": 2,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\mechanical-basics\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "mechanical-basics",
+    "level": 3,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\mechanical-basics\\books\\level3.js",
+    "handcrafted": false
+  },
+  {
+    "game": "ml-lab",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\ml-lab\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "networking-internet",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\networking-internet\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "os-hardware",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\os-hardware\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "statistics-probability",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\statistics-probability\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "statistics-probability",
+    "level": 2,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\statistics-probability\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "web-dev-studio",
+    "level": 1,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\web-dev-studio\\books\\level1.js",
+    "handcrafted": false
+  },
+  {
+    "game": "web-dev-studio",
+    "level": 2,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\web-dev-studio\\books\\level2.js",
+    "handcrafted": false
+  },
+  {
+    "game": "web-dev-studio",
+    "level": 3,
+    "images": 8,
+    "book": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\web-dev-studio\\books\\level3.js",
+    "handcrafted": false
+  }
+]

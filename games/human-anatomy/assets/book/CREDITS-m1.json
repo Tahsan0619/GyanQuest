@@ -1,0 +1,20 @@
+[
+  {
+    "file": "m1-cover.png",
+    "path": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\human-anatomy\\assets\\book\\m1-cover.png",
+    "src": "/games/human-anatomy/assets/book/m1-cover.png",
+    "cached": true
+  },
+  {
+    "file": "m1-transfer_c.jpg",
+    "src": "/games/human-anatomy/assets/book/m1-transfer_c.jpg",
+    "path": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\human-anatomy\\assets\\book\\m1-transfer_c.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File%3A20080619%20Activity%20Bus.jpg",
+    "license": "CC BY-SA 3.0",
+    "creator": "Ildar Sagdejev (Specious)",
+    "query": "Body Map activity",
+    "bytes": 257986,
+    "provider": "commons",
+    "cached": false
+  }
+]

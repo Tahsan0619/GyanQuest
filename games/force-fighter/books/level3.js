@@ -1,211 +1,246 @@
 /**
- * Digital book - force-fighter mission 3: Push & Pull Pairs
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Force Fighter Mission 3: Push & Pull Pairs
+ * Unique curriculum book (Newton 3 / action-reaction pairs).
  */
 export const BOOK = {
   missionIndex: 2,
   title: "Push & Pull Pairs",
-  subtitle: "Newton 3 / pairs",
+  subtitle: "forces come in partners",
   subject: "Force Fighter / Push & Pull Pairs",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Push & Pull Pairs",
-    art: "/games/force-fighter/assets/book/m3-fig1.svg",
+    art: "/games/force-fighter/assets/book/m3-cover.jpg",
   },
   glossary: [
-  {
-    "id": "newton",
-    "term": "Newton"
-  },
-  {
-    "id": "pairs",
-    "term": "pairs"
-  },
-  {
-    "id": "push",
-    "term": "push"
-  },
-  {
-    "id": "something",
-    "term": "something"
-  },
-  {
-    "id": "pushes",
-    "term": "pushes"
-  },
-  {
-    "id": "back",
-    "term": "back"
-  },
-  {
-    "id": "pull",
-    "term": "Pull"
-  },
-  {
-    "id": "rope",
-    "term": "rope"
-  }
-],
+    { id: "pair", term: "pair" },
+    { id: "action", term: "action" },
+    { id: "reaction", term: "reaction" },
+    { id: "push", term: "push" },
+    { id: "pull", term: "pull" },
+    { id: "force", term: "force" },
+    { id: "equal", term: "equal" },
+    { id: "opposite", term: "opposite" },
+  ],
   pages: [
-{
-  "title": "Welcome to Push & Pull Pairs",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/force-fighter/assets/book/m3-fig1.svg",
-      "caption": "Figure: Push & Pull Pairs overview",
-      "place": "top",
-      "alt": "Push & Pull Pairs"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "When you push, something pushes back! Pull a rope and the rope pulls you too."
+      title: "You push - it pushes back",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/force-fighter/assets/book/m3-cover.jpg",
+              caption: "Even quiet scenes hide force pairs - ground and feet, rope and hands.",
+              alt: "Full moon night scene",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "When you push, something pushes back! Pull a rope and the rope pulls you too.",
+        },
+        {
+          type: "p",
+          text: "Tug-of-war is the classic pair: team A pulls the rope, the rope pulls team A. Walking works the same way - you push the ground backward, the ground pushes you forward.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores Newton 3 / pairs. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Newton 3 in one sentence",
+      layout: "full-fig",
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/force-fighter/assets/book/m3-cover.jpg",
+              caption: "One calm picture, many invisible pairs if objects touch or pull.",
+              alt: "Moon as calm backdrop for pairs idea",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "For every force, there is an equal and opposite partner force on the other object. Forces are a pair, not a solo.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Equal in size",
+            "Opposite in direction",
+            "Act on two different objects",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Pulling a rope in tug-of-war."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: Newton 3 / pairs."
+      title: "Why you still move",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/force-fighter/assets/book/m1-cover.jpg",
+              caption: "You accelerate when the net force on YOU is not zero - pairs live on two bodies.",
+              alt: "Skateboard rider",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Equal pair does not mean nothing moves. The forces act on different objects. You and the Earth pull each other; you jump higher because your mass is tiny compared with Earth's.",
+        },
+        {
+          type: "p",
+          text: "In the mission, magnets, ropes, and footsteps make the pair visible as a story.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: When you push, something pushes back! Pull a rope and the rope pulls you too."
+      title: "Pair detective",
+      layout: "full-fig",
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/force-fighter/assets/book/m1-model.webp",
+              caption: "Cradle collisions: each click is a pair of pushes between neighboring balls.",
+              alt: "Newton cradle pairs",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Name both sides: 'hand on rope' and 'rope on hand.' If you can only name one side, you are not done.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Pulling a rope in tug-of-war.",
-        "Compare it with Walking - you push the ground, it pushes you back.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/force-fighter/assets/book/m3-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "Mission path for pairs",
+      layout: "text",
+      blocks: [
+        {
+          type: "p",
+          text: "Meet pairs → feel the tug → sort pair vs solo stories → lab → explain → name Newton 3 → stretch walks and jumps → myths → fluency → Team Force mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting kills the 'one-sided force' habit",
+            "Walking example connects school physics to the playground",
+            "Myths page protects you from equal-pair confusion",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Force Pairs",
-        "Watch the Pair",
-        "Sort: Action  /  Reaction",
-        "Rocket Pair Lab",
-        "Rope Scale Lab"
-      ]
+      title: "Rope and footsteps",
+      layout: "split",
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/force-fighter/assets/book/m1-model.webp",
+              caption: "Collision pairs in the cradle.",
+              alt: "Cradle",
+            },
+            {
+              src: "/games/force-fighter/assets/book/m1-cover.jpg",
+              caption: "Board and ground exchange pushes as you ride.",
+              alt: "Skateboard",
+            },
+            {
+              src: "/games/force-fighter/assets/book/m3-cover.jpg",
+              caption: "Quiet night - still full of contact pairs wherever things touch.",
+              alt: "Moon",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Try a gentle tug on a rope with a friend (safe yard only). Each of you feels a pull. That is the pair.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Who did you pull?",
+            "Who pulled you?",
+            "Are those the same object? (No.)",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/force-fighter/assets/book/m3-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Pulling a rope in tug-of-war as your example."
+      title: "Pair myths",
+      layout: "text",
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: Equal and opposite forces cancel so nothing can accelerate. Better: they act on different objects, so each object can still accelerate.",
+        },
+        {
+          type: "p",
+          text: "Myth: The ground does not push you. Better: without the ground's push up (and friction forward), walking fails.",
+        },
+        {
+          type: "p",
+          text: "Red terms open the tutor if 'action/reaction' wording feels slippery.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Team Force check",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/force-fighter/assets/book/m1-model.webp",
+              caption: "Teaching anchor: every push you name should have a partner on the other object.",
+              alt: "Cradle anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend with tug-of-war and walking. End with: forces come in pairs - equal, opposite, two objects.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Name one pair on a rope",
+            "Name one pair in a footstep",
+            "Bust the 'they cancel so nothing moves' myth",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Team Force reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Push & Pull Pairs to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

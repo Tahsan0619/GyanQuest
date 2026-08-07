@@ -26,7 +26,7 @@ import { MISSIONS } from "./missions-meta.js";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=playchrome1";
 import { registerMlScenes } from "./ml-scenes.js";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book1";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
 
 
@@ -586,6 +586,6 @@ try {
 
   document.documentElement.classList.add("mllab-live", "chem-l1-live");
   
-  if (state.inHub === false) resumePlaySession();
-  else showHub();
+  // Always open the mission levels hub first (do not auto-resume mid-mission).
+  showHub();
 }

@@ -1,0 +1,38 @@
+[
+  {
+    "file": "m2-cover.jpg",
+    "source_shared": "math\\nasa-pattern-3.jpg",
+    "bytes": 37397,
+    "sha1": "06d2fca6e747"
+  },
+  {
+    "file": "m2-hook.jpg",
+    "source_shared": "math\\nasa-pattern-6.jpg",
+    "bytes": 37397,
+    "sha1": "06d2fca6e747"
+  },
+  {
+    "file": "m2-model.jpg",
+    "source_shared": "ai_data\\nasa-curiosity-rover-6.jpg",
+    "bytes": 49125,
+    "sha1": "453bdd9d8c2b"
+  },
+  {
+    "file": "m2-mechanism.jpg",
+    "source_shared": "math\\nasa-orbit-diagram-8.jpg",
+    "bytes": 87826,
+    "sha1": "a4710206b729"
+  },
+  {
+    "file": "m2-lab.jpg",
+    "source_shared": "general\\nasa-notebook-7.jpg",
+    "bytes": 137892,
+    "sha1": "7e6587f993d3"
+  },
+  {
+    "file": "m2-mastery.jpg",
+    "source_shared": "ai_data\\nasa-mars-rover-4.jpg",
+    "bytes": 33527,
+    "sha1": "fd854e7011b8"
+  }
+]

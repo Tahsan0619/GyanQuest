@@ -1,211 +1,305 @@
 /**
- * Digital book - web-dev-studio mission 2: CSS Style
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Web Dev Studio / CSS Style
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: local verified copies under /games/web-dev-studio/assets/book/ (see CREDITS-m2.json).
  */
 export const BOOK = {
   missionIndex: 1,
   title: "CSS Style",
   subtitle: "look & layout",
   subject: "Web Dev Studio / CSS Style",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "CSS Style",
-    art: "/games/web-dev-studio/assets/book/m2-fig1.svg",
+    art: "/games/web-dev-studio/assets/book/m2-cover.jpg",
   },
   glossary: [
-  {
-    "id": "look",
-    "term": "look"
-  },
-  {
-    "id": "layout",
-    "term": "layout"
-  },
-  {
-    "id": "paints",
-    "term": "paints"
-  },
-  {
-    "id": "html",
-    "term": "HTML"
-  },
-  {
-    "id": "rooms",
-    "term": "rooms"
-  },
-  {
-    "id": "color",
-    "term": "Color"
-  },
-  {
-    "id": "size",
-    "term": "size"
-  },
-  {
-    "id": "spacing",
-    "term": "spacing"
-  }
-],
+    { id: "css", term: "css" },
+    { id: "stylesheet", term: "stylesheet" },
+    { id: "selector", term: "selector" },
+    { id: "color", term: "color" },
+    { id: "margin", term: "margin" },
+    { id: "padding", term: "padding" },
+    { id: "contrast", term: "contrast" },
+    { id: "layout", term: "layout" },
+    { id: "font", term: "font" },
+    { id: "spacing", term: "spacing" },
+  ],
   pages: [
-{
-  "title": "Welcome to CSS Style",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/web-dev-studio/assets/book/m2-fig1.svg",
-      "caption": "Figure: CSS Style overview",
-      "place": "top",
-      "alt": "CSS Style"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "CSS paints the HTML rooms. Color, size, and spacing make a page clear to read."
+      title: "Why CSS Style?",
+      layout: "text",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "cognitive-load",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/web-dev-studio/assets/book/m2-hook.jpg",
+              caption: "Figure 1. Experiments tweak one variable - CSS tweaks look without breaking structure.",
+              alt: "Experiment setup",
+            },
+            {
+              src: "/games/web-dev-studio/assets/book/m2-cover.jpg",
+              caption: "Chips are dense; good CSS keeps pages breathable.",
+              alt: "Computer chip",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "HTML built the rooms. CSS paints them: color, size, and spacing so a page is clear to read from a phone or a wall screen.",
+        },
+        {
+          type: "p",
+          text: "School posters, shop product cards, and rickshaw ads all fail when text is tiny or colors fight.",
+        },
+        {
+          type: "p",
+          text: "Everyday hook: a market flyer that must read from far uses contrast and gap - the same ideas as CSS.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores look & layout. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Look vs structure",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/web-dev-studio/assets/book/m2-model.jpg",
+              caption: "Figure 2. Clear signals across distance - pages need the same clarity.",
+              alt: "Satellite communication dish",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "HTML says what a heading is. CSS says how big, which color, and how much space around it.",
+        },
+        {
+          type: "ul",
+          items: [
+            "A few clear colors beat a messy rainbow",
+            "Readable size matters on phones",
+            "Gap and margin guide the eye",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about School poster colors."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: look & layout."
+      title: "Style dial",
+      layout: "text",
+      theory: [
+        "cognitive-load",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/web-dev-studio/assets/book/m2-mechanism.jpg",
+              caption: "Figure 3. Light is a design tool - contrast helps text pop.",
+              alt: "Incandescent light bulb",
+            },
+            {
+              src: "/games/web-dev-studio/assets/book/m2-lab.jpg",
+              caption: "Try changes, then check readability.",
+              alt: "Laboratory",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "In the lab you dialed style strength. Too little and the page looks raw; too much noise and nothing stands out.",
+        },
+        {
+          type: "p",
+          text: "Aim for hierarchy: one loud headline, quieter body text, steady spacing.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: CSS paints the HTML rooms. Color, size, and spacing make a page clear to read."
+      title: "Layout that breathes",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/web-dev-studio/assets/book/m2-mastery.jpg",
+              caption: "Figure 4. Ordered hardware still leaves pathways - leave pathways on your page.",
+              alt: "Computer workstation",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Whitespace is not empty waste. It separates ideas so a shop card or notice can be scanned in a second.",
+        },
+        {
+          type: "p",
+          text: "CSS box ideas - margin, padding, border - are how you carve that air.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in School poster colors.",
-        "Compare it with Shop product card gaps.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/web-dev-studio/assets/book/m2-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: [
+        "spiral-scaffold",
+        "cognitive-load",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet style -> dial look -> sort style jobs -> stronger layout lab -> why spacing -> name the style rule -> stretch posters -> myths -> fluency -> mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting separates structure jobs from look jobs",
+            "Dial practice links contrast to readability",
+            "Rule: CSS paints HTML rooms with color, size, and space",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Color Size Space",
-        "Style Dial Lab",
-        "Sort CSS Look",
-        "Stronger Style Lab",
-        "Why Clear Look"
-      ]
+      title: "Street lab: poster audit",
+      layout: "split",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "retrieval-practice",
+      ],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/web-dev-studio/assets/book/m2-mechanism.jpg",
+              caption: "Contrast tool.",
+              alt: "Bulb",
+            },
+            {
+              src: "/games/web-dev-studio/assets/book/m2-hook.jpg",
+              caption: "Try and check.",
+              alt: "Experiment",
+            },
+            {
+              src: "/games/web-dev-studio/assets/book/m2-cover.jpg",
+              caption: "Dense vs breathable.",
+              alt: "Chip",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Pick a school poster or shop sign. Score contrast, text size, and spacing from 1 to 5.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Suggest one CSS-like fix (bigger type, more gap, fewer colors)",
+            "Name what should stay HTML structure",
+            "Flip carousel: bulb contrast vs chip density",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/web-dev-studio/assets/book/m2-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use School poster colors as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: [
+        "conceptual-change",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: more colors always look better. Better: a few clear colors beat a messy rainbow.",
+        },
+        {
+          type: "p",
+          text: "Myth: CSS and HTML are the same job. Better: HTML structures; CSS styles the look.",
+        },
+        {
+          type: "p",
+          text: "Myth: spacing does not matter. Better: gap and margin guide the eye.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Mastery",
+      layout: "text",
+      theory: [
+        "retrieval-practice",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/web-dev-studio/assets/book/m2-mastery.jpg",
+              caption: "Figure 5. Clear pathways - your CSS goal.",
+              alt: "Computer anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend: structure first, then paint with CSS - contrast, size, spacing.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Say one property you would change on a messy page",
+            "Explain why tiny text fails on phones",
+            "Use the word stylesheet correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Style Star reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain CSS Style to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

@@ -1,0 +1,44 @@
+[
+  {
+    "file": "m1-cover.jpg",
+    "src": "/games/data-science/assets/book/m1-cover.jpg",
+    "from_shared": "ai_data/nasa-autonomous-3.jpg",
+    "theme": "ai_data",
+    "bytes": 109140
+  },
+  {
+    "file": "m1-hook.jpg",
+    "src": "/games/data-science/assets/book/m1-hook.jpg",
+    "from_shared": "ai_data/nasa-curiosity-rover-6.jpg",
+    "theme": "ai_data",
+    "bytes": 49125
+  },
+  {
+    "file": "m1-model.jpg",
+    "src": "/games/data-science/assets/book/m1-model.jpg",
+    "from_shared": "ai_data/nasa-mars-rover-4.jpg",
+    "theme": "ai_data",
+    "bytes": 33527
+  },
+  {
+    "file": "m1-mechanism.jpg",
+    "src": "/games/data-science/assets/book/m1-mechanism.jpg",
+    "from_shared": "ai_data/nasa-rover-2.jpg",
+    "theme": "ai_data",
+    "bytes": 66043
+  },
+  {
+    "file": "m1-detail.jpg",
+    "src": "/games/data-science/assets/book/m1-detail.jpg",
+    "from_shared": "Amazon_River.jpg",
+    "theme": "ai_data",
+    "bytes": 62491
+  },
+  {
+    "file": "m1-transfer.jpg",
+    "src": "/games/data-science/assets/book/m1-transfer.jpg",
+    "from_shared": "space/nasa-nebula-5.jpg",
+    "theme": "ai_data",
+    "bytes": 161213
+  }
+]

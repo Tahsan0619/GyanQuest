@@ -1,211 +1,278 @@
 /**
- * Digital book - genetics-biotech mission 1: Trait Tokens
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Genetics & Biotech Mission 1: Trait Tokens
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: assets/book-shared biology theme (see assets/book/CREDITS-m1.json).
  */
 export const BOOK = {
   missionIndex: 0,
   title: "Trait Tokens",
   subtitle: "inherited vs not",
   subject: "Genetics Biotech / Trait Tokens",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Trait Tokens",
-    art: "/games/genetics-biotech/assets/book/m1-fig1.svg",
+    art: "/games/genetics-biotech/assets/book/m1-cover.jpg",
   },
   glossary: [
-  {
-    "id": "inherited",
-    "term": "inherited"
-  },
-  {
-    "id": "traits",
-    "term": "Traits"
-  },
-  {
-    "id": "pass",
-    "term": "pass"
-  },
-  {
-    "id": "parents",
-    "term": "parents"
-  },
-  {
-    "id": "color",
-    "term": "color"
-  },
-  {
-    "id": "clues",
-    "term": "clues"
-  },
-  {
-    "id": "meet",
-    "term": "Meet"
-  },
-  {
-    "id": "trait",
-    "term": "Trait"
-  }
-],
+    { id: "trait", term: "trait" },
+    { id: "inherited", term: "inherited" },
+    { id: "gene", term: "gene" },
+    { id: "parent", term: "parent" },
+    { id: "family", term: "family" },
+    { id: "learned", term: "learned" },
+    { id: "variation", term: "variation" },
+    { id: "offspring", term: "offspring" },
+  ],
   pages: [
-{
-  "title": "Welcome to Trait Tokens",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/genetics-biotech/assets/book/m1-fig1.svg",
-      "caption": "Figure: Trait Tokens overview",
-      "place": "top",
-      "alt": "Trait Tokens"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Traits can pass from parents - eye color clues."
+      title: "What can pass down",
+      layout: "text",
+      theory: ["constructivism", "dual-coding", "cognitive-load"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/genetics-biotech/assets/book/m1-cover.jpg",
+              caption: "Figure 1. Cells carry instructions - some traits travel with them across generations.",
+              alt: "Cell imagery",
+            },
+            {
+              src: "/games/genetics-biotech/assets/book/m1-hook.jpg",
+              caption: "Sunflowers share family patterns, yet each bloom still varies.",
+              alt: "Sunflower plant",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A trait is a feature you can notice: eye color clues, hair type, dimples. Some traits are inherited from parents. Others are learned or caused by environment.",
+        },
+        {
+          type: "p",
+          text: "Inherited vs not is the first sorting skill in genetics. Family eye colors can hint at inheritance; a haircut cannot.",
+        },
+        {
+          type: "p",
+          text: "Mirror checks, classmate dimples, and family photos are gentle places to practice - never as a way to judge people.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores inherited vs not. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Living patterns",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "dual-coding"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/genetics-biotech/assets/book/m1-model.jpg",
+              caption: "Figure 2. Plants show inherited structure plus environment - sun, water, soil.",
+              alt: "Plant growth",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Offspring resemble parents because information passes through genes. That does not mean every detail is fixed or that one trait defines a person.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Inherited: often visible across relatives",
+            "Not inherited: skills, scars, dyed hair, practiced habits",
+            "Mixed: height and health also meet food, sleep, and care",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Family eye colors."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: inherited vs not."
+      title: "Clues, not fortune telling",
+      layout: "text",
+      theory: ["cognitive-load", "dual-coding"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/genetics-biotech/assets/book/m1-mechanism.jpg",
+              caption: "Figure 3. Leaves vary even on one plant - variation is normal.",
+              alt: "Leaf close-up",
+            },
+            {
+              src: "/games/genetics-biotech/assets/book/m1-detail.jpg",
+              caption: "Microscopes reveal structure; they do not assign destiny.",
+              alt: "Microscope investigation",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Family clues help you sort inherited vs not. They do not let you predict a person's worth, future, or every feature.",
+        },
+        {
+          type: "p",
+          text: "If a trait appears after practice or injury, put it in the not-inherited bin for this mission.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Traits can pass from parents - eye color clues."
+      title: "Environment leaves marks",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "spiral-scaffold"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/genetics-biotech/assets/book/m1-transfer.jpg",
+              caption: "Figure 4. Cold and warmth change living systems - environment matters beside inheritance.",
+              alt: "Ice and cold environment",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Genes load the starting kit. Weather, food, learning, and chance still shape what you see. Sorting carefully keeps both ideas honest.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Family eye colors.",
-        "Compare it with Hair in the mirror.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/genetics-biotech/assets/book/m1-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "Trait Tracker path",
+      layout: "text",
+      theory: ["spiral-scaffold", "cognitive-load"],
+      blocks: [
+        {
+          type: "p",
+          text: "Mission arc: meet trait tokens, clarify inherited vs not, sort examples, run a family-clue lab, then name why some traits pass.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sort bins stop mix-ups early",
+            "Family clue lab uses respectful examples only",
+            "Rule: some traits inherit; many visible features do not",
+          ],
+        },
+        {
+          type: "p",
+          text: "Short labs first. Full sorting story here.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Trait Tokens",
-        "Trait Clarity Lab",
-        "Sort: Inherit / Not",
-        "Family Clue Lab",
-        "Why Traits Pass"
-      ]
+      title: "Eyes, hair, dimples",
+      layout: "split",
+      theory: ["constructivism", "dual-coding", "retrieval-practice"],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/genetics-biotech/assets/book/m1-hook.jpg",
+              caption: "Family patterns - compare gently, never tease.",
+              alt: "Sunflower as family pattern metaphor",
+            },
+            {
+              src: "/games/genetics-biotech/assets/book/m1-model.jpg",
+              caption: "Hair in the mirror - which parts are style vs biology?",
+              alt: "Plant variation",
+            },
+            {
+              src: "/games/genetics-biotech/assets/book/m1-detail.jpg",
+              caption: "Dimples and other clues - sort inherited vs practiced.",
+              alt: "Microscope for close looking",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "List three features. Mark each inherited, not inherited, or need-more-info.",
+        },
+        {
+          type: "ul",
+          items: [
+            "What evidence is a family clue?",
+            "What evidence is learning or choice?",
+            "What should stay private and respectful?",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/genetics-biotech/assets/book/m1-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Family eye colors as your example."
+      title: "Trait myths",
+      layout: "text",
+      theory: ["conceptual-change"],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: Everything about you is inherited. Better: many traits are learned, environmental, or mixed.",
+        },
+        {
+          type: "p",
+          text: "Myth: One parent trait always appears unchanged. Better: inheritance can skip, blend in looks, or need two copies - this mission only starts the idea.",
+        },
+        {
+          type: "p",
+          text: "Myth: Inherited means better. Better: inherited only means passed biologically, not ranked.",
+        },
+        {
+          type: "p",
+          text: "Red words such as trait or inherited open tutor help.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Trait Tracker mastery",
+      layout: "text",
+      theory: ["retrieval-practice", "spiral-scaffold"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/genetics-biotech/assets/book/m1-cover.jpg",
+              caption: "Figure 5. Teach inherited vs not with one careful example.",
+              alt: "Cell image as trait anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach in one minute: some traits pass from parents; skills and many styled features do not; sort with respect.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Give one inherited example and one not-inherited example",
+            "Explain why a haircut does not inherit",
+            "Use the word trait correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Trait Tracker reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Trait Tokens to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

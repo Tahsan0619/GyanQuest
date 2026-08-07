@@ -103,9 +103,10 @@ body.gq-book-open {
 }
 
 .gq-book-cover__art img {
-  max-width: 78%;
+  max-width: 88%;
   max-height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: 6px;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
 }
 
@@ -190,9 +191,9 @@ body.gq-book-open {
 
 .gq-book-page__inner {
   height: 100%;
-  padding: 1.1rem 1.35rem 1.6rem;
-  overflow: auto;
-  font: 500 0.92rem/1.55 "Libre Baskerville", Georgia, "Times New Roman", serif;
+  padding: 0.85rem 1.15rem 1.45rem;
+  overflow: hidden; /* flip-book pages never scroll */
+  font: 500 0.84rem/1.42 "Libre Baskerville", Georgia, "Times New Roman", serif;
 }
 
 .gq-book-page__inner--blank {
@@ -201,24 +202,47 @@ body.gq-book-open {
   justify-content: center;
 }
 
+.gq-book-page__stack {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.gq-book-page__copy {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.gq-book-page__visual {
+  flex: 0 1 auto;
+  min-height: 0;
+  max-height: 58%;
+  overflow: hidden;
+}
+
 .gq-book-page__title {
-  margin: 0 0 0.65rem;
-  font: 700 1.1rem/1.25 Syne, Sora, system-ui, sans-serif;
+  margin: 0 0 0.35rem;
+  flex: 0 0 auto;
+  font: 700 0.98rem/1.2 Syne, Sora, system-ui, sans-serif;
   color: #1c1917;
 }
 
 .gq-book-page__inner h4 {
-  margin: 0.75rem 0 0.35rem;
-  font: 700 0.95rem/1.3 Sora, system-ui, sans-serif;
+  margin: 0.45rem 0 0.25rem;
+  font: 700 0.88rem/1.25 Sora, system-ui, sans-serif;
 }
 
 .gq-book-page__inner p {
-  margin: 0 0 0.65rem;
+  margin: 0 0 0.4rem;
 }
 
 .gq-book-page__inner ul {
-  margin: 0 0 0.65rem;
-  padding-left: 1.1rem;
+  margin: 0 0 0.4rem;
+  padding-left: 1rem;
 }
 
 .gq-book-page__num {
@@ -237,35 +261,145 @@ body.gq-book-open {
 }
 
 .gq-book-fig {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.4rem;
+  min-height: 0;
 }
 
 .gq-book-fig img {
   display: block;
   width: 100%;
   height: auto;
+  max-height: 9.5rem;
+  object-fit: cover;
   border-radius: 4px;
   border: 1px solid rgba(28, 25, 23, 0.12);
   background: #fff;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .gq-book-fig figcaption {
-  margin-top: 0.3rem;
-  font: italic 0.72rem/1.35 Georgia, serif;
+  margin-top: 0.2rem;
+  font: italic 0.68rem/1.3 Georgia, serif;
   color: var(--book-muted);
   text-align: center;
 }
 
 .gq-book-fig--full img {
-  max-height: 55%;
-  object-fit: contain;
+  max-height: 11rem;
+  object-fit: cover;
+}
+
+.gq-book-fig--carousel {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.gq-book-carousel {
+  position: relative;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #fff;
+  border: 1px solid rgba(28, 25, 23, 0.12);
+}
+
+.gq-book-carousel.is-dragging {
+  cursor: grabbing;
+}
+
+.gq-book-carousel__track {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-height: 11rem;
+  background: #f5f0e6;
+}
+
+.gq-book-carousel__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.gq-book-carousel__slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gq-book-carousel__slide img {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+  border: none;
+  border-radius: 0;
+}
+
+.gq-book-carousel__slide figcaption {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0.25rem 0.4rem;
+  background: rgba(255, 252, 245, 0.94);
+  font: italic 0.62rem/1.25 Georgia, serif;
+}
+
+.gq-book-carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0 0.15rem;
+}
+
+.gq-book-carousel__dot {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  border: none;
+  padding: 0;
+  background: rgba(28, 25, 23, 0.22);
+  cursor: pointer;
+}
+
+.gq-book-carousel__dot.is-active {
+  background: rgba(28, 25, 23, 0.7);
+}
+
+.gq-book-carousel__hint {
+  margin: 0.15rem 0 0;
+  text-align: center;
+  font: 500 0.58rem/1.2 Sora, system-ui, sans-serif;
+  color: var(--book-muted);
+  letter-spacing: 0.02em;
 }
 
 .gq-book-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-  margin-bottom: 0.5rem;
+  gap: 0.55rem;
+  margin-bottom: 0.25rem;
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.gq-book-split__col {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.gq-book-split__col--visual .gq-book-fig--carousel,
+.gq-book-split__col--visual .gq-book-fig {
+  height: 100%;
 }
 
 .gq-book-term {

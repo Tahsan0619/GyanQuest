@@ -1,211 +1,270 @@
 /**
- * Digital book - electrical-basics mission 2: Voltage & Current
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Electrical Basics Mission 2: Voltage & Current
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: battery, bulb, and circuit JPGs under assets/book/.
  */
 export const BOOK = {
   missionIndex: 1,
   title: "Voltage & Current",
-  subtitle: "V pushes / I flows",
+  subtitle: "V pushes, I flows",
   subject: "Electrical Basics / Voltage & Current",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Voltage & Current",
-    art: "/games/electrical-basics/assets/book/m2-fig1.svg",
+    art: "/games/electrical-basics/assets/book/m2-cover.jpg",
   },
   glossary: [
-  {
-    "id": "pushes",
-    "term": "pushes"
-  },
-  {
-    "id": "flows",
-    "term": "flows"
-  },
-  {
-    "id": "voltage",
-    "term": "Voltage"
-  },
-  {
-    "id": "push",
-    "term": "push"
-  },
-  {
-    "id": "current",
-    "term": "Current"
-  },
-  {
-    "id": "flow",
-    "term": "flow"
-  },
-  {
-    "id": "charge",
-    "term": "charge"
-  },
-  {
-    "id": "loop",
-    "term": "loop"
-  }
-],
+    { id: "voltage", term: "voltage" },
+    { id: "current", term: "current" },
+    { id: "volt", term: "volt" },
+    { id: "ampere", term: "ampere" },
+    { id: "push", term: "push" },
+    { id: "flow", term: "flow" },
+    { id: "charge", term: "charge" },
+    { id: "load", term: "load" },
+  ],
   pages: [
-{
-  "title": "Welcome to Voltage & Current",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/electrical-basics/assets/book/m2-fig1.svg",
-      "caption": "Figure: Voltage & Current overview",
-      "place": "top",
-      "alt": "Voltage & Current"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Voltage (V) is the push. Current (I) is the flow of charge in the loop."
+      title: "Phone charger, car battery, flashlight cells",
+      layout: "text",
+      theory: ["constructivism", "dual-coding", "cognitive-load"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/electrical-basics/assets/book/m2-hook.jpg",
+              caption: "Figure 1. A bulb glows when push and flow are both present in a loop.",
+              alt: "Light bulb",
+            },
+            {
+              src: "/games/electrical-basics/assets/book/m2-cover.jpg",
+              caption: "Cells and batteries provide the push we call voltage.",
+              alt: "Battery",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A phone charger label shows volts. A car battery is a strong push source. Flashlight cells stack to raise that push for the bulb.",
+        },
+        {
+          type: "p",
+          text: "Voltage (V) is the electrical push. Current (I) is the flow of charge around the loop. Push without a path does nothing; path without push stays dark.",
+        },
+        {
+          type: "p",
+          text: "Earn Volt Scout by saying 'V pushes, I flows' with a real device example.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores V pushes / I flows. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Two jobs, not two names for one thing",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "dual-coding"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/electrical-basics/assets/book/m2-model.jpg",
+              caption: "Figure 2. Model: traces are the path; the source provides push; charge flows as current.",
+              alt: "Circuit board",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "ul",
+          items: [
+            "Voltage - push, measured in volts",
+            "Current - flow, measured in amperes",
+            "Load - what uses the energy (bulb, phone)",
+          ],
+        },
+        {
+          type: "p",
+          text: "Sorting V vs I in the mission stops the mix-up: brighter ideas need both ideas clear.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Phone charger."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: V pushes / I flows."
+      title: "Stronger push, stronger flow (if the path allows)",
+      layout: "text",
+      theory: ["cognitive-load", "dual-coding"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/electrical-basics/assets/book/m2-push.jpg",
+              caption: "Figure 3. Sources can raise available push - still need a safe closed path.",
+              alt: "Solar panel source",
+            },
+            {
+              src: "/games/electrical-basics/assets/book/m2-flow.jpg",
+              caption: "Fine paths carry flow when push is applied.",
+              alt: "Integrated circuit",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Add another cell in a simple series torch and the push rises. If the loop is closed, current can increase and the bulb can brighten - within safe limits.",
+        },
+        {
+          type: "p",
+          text: "Mission push dials model that idea. Never invent unsafe experiments with wall sockets.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Voltage (V) is the push. Current (I) is the flow of charge in the loop."
+      title: "Symbols stand for push and flow",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "spiral-scaffold"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/electrical-basics/assets/book/m2-hook.jpg",
+              caption: "Figure 4. Representation: a glowing load is evidence that push drove flow through the loop.",
+              alt: "Glowing bulb",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Meters and labels are representations. The physics story stays: voltage pushes; current flows.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Phone charger.",
-        "Compare it with Car battery.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/electrical-basics/assets/book/m2-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: ["spiral-scaffold", "cognitive-load"],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet V and I -> push dial lab -> sort V vs I -> stronger push lab -> push then flow -> name the V-I rule -> stretch to power uses -> myth bust -> fluency -> Volt Scout mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting keeps voltage and current from blending",
+            "Push dial lab shows cause before flow effect",
+            "The rule sentence: V pushes, I flows",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet V and I",
-        "Push Dial Lab",
-        "Sort V vs I",
-        "Stronger Push Lab",
-        "Push then Flow"
-      ]
+      title: "Charger-label transfer",
+      layout: "split",
+      theory: ["constructivism", "dual-coding", "retrieval-practice"],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/electrical-basics/assets/book/m2-cover.jpg",
+              caption: "Read V on a battery or adapter.",
+              alt: "Battery",
+            },
+            {
+              src: "/games/electrical-basics/assets/book/m2-hook.jpg",
+              caption: "Flow shows up as light or heat in a load.",
+              alt: "Bulb load",
+            },
+            {
+              src: "/games/electrical-basics/assets/book/m2-push.jpg",
+              caption: "Sources provide push - path still required.",
+              alt: "Solar panel",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "With adult help, read a charger label. Find the volt number. Say: that is push. Name current as the flow that can charge the phone through a closed path.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Which number is voltage?",
+            "What is flowing when the phone charges?",
+            "Drag the photos to flip examples",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/electrical-basics/assets/book/m2-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Phone charger as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: ["conceptual-change"],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: Voltage and current are the same word for 'electricity'. Better: voltage is push; current is flow.",
+        },
+        {
+          type: "p",
+          text: "Myth: Higher volts always means the device is 'stronger' in every way. Better: check ratings; mismatched push can damage a load.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Volt Scout mastery",
+      layout: "text",
+      theory: ["retrieval-practice", "spiral-scaffold"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/electrical-basics/assets/book/m2-cover.jpg",
+              caption: "Figure 5. Teaching anchor: push from the source, flow in the loop.",
+              alt: "Battery mastery anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend in one minute: voltage pushes charge; current is the flow; a closed path lets push create flow through a load.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Point to V on a label",
+            "Act push vs flow with hand motions",
+            "Use volt and current correctly once each",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Volt Scout reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Voltage & Current to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

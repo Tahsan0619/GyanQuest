@@ -1,211 +1,305 @@
 /**
- * Digital book - database-sql mission 1: Tables & Rows
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Database SQL / Tables & Rows
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: local verified copies under /games/database-sql/assets/book/ (see CREDITS-m1.json).
  */
 export const BOOK = {
   missionIndex: 0,
   title: "Tables & Rows",
   subtitle: "rows columns",
-  subject: "Database Sql / Tables & Rows",
+  subject: "Database SQL / Tables & Rows",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Tables & Rows",
-    art: "/games/database-sql/assets/book/m1-fig1.svg",
+    art: "/games/database-sql/assets/book/m1-cover.jpg",
   },
   glossary: [
-  {
-    "id": "rows",
-    "term": "rows"
-  },
-  {
-    "id": "columns",
-    "term": "columns"
-  },
-  {
-    "id": "data",
-    "term": "Data"
-  },
-  {
-    "id": "lives",
-    "term": "lives"
-  },
-  {
-    "id": "neat",
-    "term": "neat"
-  },
-  {
-    "id": "each",
-    "term": "Each"
-  },
-  {
-    "id": "record",
-    "term": "record"
-  },
-  {
-    "id": "column",
-    "term": "column"
-  }
-],
+    { id: "table", term: "table" },
+    { id: "row", term: "row" },
+    { id: "column", term: "column" },
+    { id: "record", term: "record" },
+    { id: "field", term: "field" },
+    { id: "cell", term: "cell" },
+    { id: "header", term: "header" },
+    { id: "database", term: "database" },
+    { id: "schema", term: "schema" },
+    { id: "value", term: "value" },
+  ],
   pages: [
-{
-  "title": "Welcome to Tables & Rows",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/database-sql/assets/book/m1-fig1.svg",
-      "caption": "Figure: Tables & Rows overview",
-      "place": "top",
-      "alt": "Tables & Rows"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Data lives in neat rows and columns. Each row is a record; each column is a field."
+      title: "Why Tables & Rows?",
+      layout: "text",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "cognitive-load",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/database-sql/assets/book/m1-hook.jpg",
+              caption: "Figure 1. Counting tools love grids - databases love rows and columns.",
+              alt: "Abacus",
+            },
+            {
+              src: "/games/database-sql/assets/book/m1-cover.jpg",
+              caption: "Notebook grids preview how tables store facts.",
+              alt: "Notebook",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Phone contacts, class registers, and shop inventory sheets are tables: neat rows and columns.",
+        },
+        {
+          type: "p",
+          text: "Each row is one record. Each column is one field - like name, city, or stock count.",
+        },
+        {
+          type: "p",
+          text: "Everyday hook: your contacts list is already a tiny database without the scary name.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores rows columns. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Row vs column",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/database-sql/assets/book/m1-model.jpg",
+              caption: "Figure 2. Graphs summarize table numbers - first you need clean fields.",
+              alt: "Data graph",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A row holds one whole story (one student, one product). A column holds the same kind of fact across stories.",
+        },
+        {
+          type: "ul",
+          items: [
+            "id, name, city are columns",
+            "One student across those columns is a row",
+            "Messy piles of notes are not tables yet",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Phone contacts list."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: rows columns."
+      title: "Table dial",
+      layout: "text",
+      theory: [
+        "cognitive-load",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/database-sql/assets/book/m1-mechanism.jpg",
+              caption: "Figure 3. Computers store tables as structured data, not cake crumbs.",
+              alt: "Computer",
+            },
+            {
+              src: "/games/database-sql/assets/book/m1-lab.jpg",
+              caption: "Class registers are live tables you already read.",
+              alt: "Education setting",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "In the mission you tightened the grid until rows and columns snapped into place.",
+        },
+        {
+          type: "p",
+          text: "Clear headers beat mystery scribbles. Same column means same kind of value.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Data lives in neat rows and columns. Each row is a record; each column is a field."
+      title: "Read a grid",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/database-sql/assets/book/m1-mastery.jpg",
+              caption: "Figure 4. Measurement sheets are tables in the wild.",
+              alt: "Measurement chart",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Practice pointing: this cell is row 3, column city. That habit unlocks every later SQL question.",
+        },
+        {
+          type: "p",
+          text: "Apps store people, products, and scores this way - not only math class worksheets.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Phone contacts list.",
-        "Compare it with Class register.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/database-sql/assets/book/m1-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: [
+        "spiral-scaffold",
+        "cognitive-load",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet tables -> dial grid -> sort row/column -> stronger lab -> why records -> name the table rule -> stretch sheets -> myths -> fluency -> mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting locks row vs column jobs",
+            "Lab grids build reading fluency",
+            "Rule: rows are records; columns are fields",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet the Grid",
-        "Fill Rows Lab",
-        "Sort Table Parts",
-        "Neater Grid Lab",
-        "Why Rows & Columns"
-      ]
+      title: "Street lab: inventory",
+      layout: "split",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "retrieval-practice",
+      ],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/database-sql/assets/book/m1-hook.jpg",
+              caption: "Count and grid.",
+              alt: "Abacus",
+            },
+            {
+              src: "/games/database-sql/assets/book/m1-cover.jpg",
+              caption: "Write the headers.",
+              alt: "Notebook",
+            },
+            {
+              src: "/games/database-sql/assets/book/m1-model.jpg",
+              caption: "Later: charts from tables.",
+              alt: "Graph",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Make a 3x3 table for a tiny shop: item, price, stock. Fill three rows.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Circle one row and one column",
+            "Explain why cake is not a column name here",
+            "Flip carousel: abacus grid vs notebook grid",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/database-sql/assets/book/m1-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Phone contacts list as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: [
+        "conceptual-change",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: tables are only for math class. Better: apps store people, products, and scores in tables.",
+        },
+        {
+          type: "p",
+          text: "Myth: columns and rows are the same. Better: columns are fields; rows are whole records.",
+        },
+        {
+          type: "p",
+          text: "Myth: cake is a database column. Better: columns are fields like name - not desserts.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Mastery",
+      layout: "text",
+      theory: [
+        "retrieval-practice",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/database-sql/assets/book/m1-mastery.jpg",
+              caption: "Figure 5. Clean fields - your table goal.",
+              alt: "Measurement anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend with a contact list: point to a row, a column, and one cell.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Define record and field in one sentence each",
+            "Build a 4-row class register on paper",
+            "Use the word table correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Table Scout reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Tables & Rows to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

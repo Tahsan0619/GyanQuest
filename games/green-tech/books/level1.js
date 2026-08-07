@@ -1,211 +1,278 @@
 /**
- * Digital book - green-tech mission 1: Clean Energy
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Green Tech Mission 1: Clean Energy
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: assets/book-shared eco / electrical themes (see assets/book/CREDITS-m1.json).
  */
 export const BOOK = {
   missionIndex: 0,
   title: "Clean Energy",
   subtitle: "solar wind",
   subject: "Green Tech / Clean Energy",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Clean Energy",
-    art: "/games/green-tech/assets/book/m1-fig1.svg",
+    art: "/games/green-tech/assets/book/m1-cover.jpg",
   },
   glossary: [
-  {
-    "id": "solar",
-    "term": "solar"
-  },
-  {
-    "id": "wind",
-    "term": "wind"
-  },
-  {
-    "id": "power",
-    "term": "power"
-  },
-  {
-    "id": "homes",
-    "term": "homes"
-  },
-  {
-    "id": "without",
-    "term": "without"
-  },
-  {
-    "id": "smoke",
-    "term": "smoke"
-  },
-  {
-    "id": "burning",
-    "term": "burning"
-  },
-  {
-    "id": "fuel",
-    "term": "fuel"
-  }
-],
+    { id: "solar", term: "solar" },
+    { id: "wind", term: "wind" },
+    { id: "renewable", term: "renewable" },
+    { id: "panel", term: "panel" },
+    { id: "turbine", term: "turbine" },
+    { id: "fuel", term: "fuel" },
+    { id: "emission", term: "emission" },
+    { id: "grid", term: "grid" },
+  ],
   pages: [
-{
-  "title": "Welcome to Clean Energy",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/green-tech/assets/book/m1-fig1.svg",
-      "caption": "Figure: Clean Energy overview",
-      "place": "top",
-      "alt": "Clean Energy"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Sun and wind can power homes without smoke from burning fuel."
+      title: "Power without the smoke stack",
+      layout: "text",
+      theory: ["constructivism", "dual-coding", "cognitive-load"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/green-tech/assets/book/m1-cover.jpg",
+              caption: "Figure 1. Solar panels catch sunlight and turn it into electric current.",
+              alt: "Solar panel array",
+            },
+            {
+              src: "/games/green-tech/assets/book/m1-hook.jpg",
+              caption: "Earth's thin blue edge - the atmosphere we share with every power choice.",
+              alt: "Earth atmosphere from space",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Sun and wind can power homes without smoke from burning fuel. That is the clean energy promise behind solar and wind.",
+        },
+        {
+          type: "p",
+          text: "Rooftop solar, a wind turbine in open land, and a solar lamp in a night market are three faces of the same idea.",
+        },
+        {
+          type: "p",
+          text: "Burning fuel still runs many places. Clean sources cut local smoke and long-term emissions when they replace that burn.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores solar wind. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Forests and oceans watch us",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "dual-coding"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/green-tech/assets/book/m1-model.jpg",
+              caption: "Figure 2. Living landscapes depend on the air and climate our energy choices shape.",
+              alt: "Forest seen from space",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Solar panels convert light. Wind turbines convert moving air. Neither needs a continuous fuel truck once built and maintained.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Solar: best with clear sun on the panel face",
+            "Wind: needs steady moving air across blades",
+            "Both: weather varies, so storage and grids matter",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Rooftop solar."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: solar wind."
+      title: "Why clean helps",
+      layout: "text",
+      theory: ["cognitive-load", "dual-coding"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/green-tech/assets/book/m1-mechanism.jpg",
+              caption: "Figure 3. Oceans and air trade heat - energy systems sit inside this planetary engine.",
+              alt: "Ocean from space",
+            },
+            {
+              src: "/games/green-tech/assets/book/m1-detail.jpg",
+              caption: "The Sun is the upstream battery for solar power.",
+              alt: "Solar system with Sun",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Clean here means the running step does not burn fuel on site. Building panels and turbines still uses materials - honesty includes that.",
+        },
+        {
+          type: "p",
+          text: "For learners, the key contrast is smoke-making burn versus sun-and-wind capture.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Sun and wind can power homes without smoke from burning fuel."
+      title: "Heat we already know",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "spiral-scaffold"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/green-tech/assets/book/m1-transfer.jpg",
+              caption: "Figure 4. Boiling water is burn-or-resist heat at kitchen scale - power plants can do similar with fuel smoke.",
+              alt: "Boiling water",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A kettle shows energy becoming heat. A solar lamp shows energy becoming light without a fuel flame at the point of use.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Rooftop solar.",
-        "Compare it with Wind turbine.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/green-tech/assets/book/m1-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "Clean Champ path",
+      layout: "text",
+      theory: ["spiral-scaffold", "cognitive-load"],
+      blocks: [
+        {
+          type: "p",
+          text: "You met clean power, dialed sources, sorted energy types, grew the clean share in a lab, and named why clean helps.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sort: solar/wind vs burn-on-site fuels",
+            "Lab: more clean share, less smoke story",
+            "Rule: sun and wind can power without burning fuel",
+          ],
+        },
+        {
+          type: "p",
+          text: "Mission bites stayed small. This book keeps the energy contrast clear.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Clean Power",
-        "Clean Dial Lab",
-        "Sort Energy Sources",
-        "More Clean Lab",
-        "Why Clean Helps"
-      ]
+      title: "Roof, turbine, lamp",
+      layout: "split",
+      theory: ["constructivism", "dual-coding", "retrieval-practice"],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/green-tech/assets/book/m1-cover.jpg",
+              caption: "Rooftop solar - light in, electricity out.",
+              alt: "Solar panels",
+            },
+            {
+              src: "/games/green-tech/assets/book/m1-hook.jpg",
+              caption: "Shared atmosphere - why cleaner running matters.",
+              alt: "Earth atmosphere",
+            },
+            {
+              src: "/games/green-tech/assets/book/m1-detail.jpg",
+              caption: "Sun as source - solar lamps borrow this flood of light.",
+              alt: "Sun in solar system",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Find or imagine rooftop solar, a turbine photo, and a solar lamp. For each, name the input (light or wind) and the useful output.",
+        },
+        {
+          type: "ul",
+          items: [
+            "What is captured?",
+            "What is not burned on site?",
+            "When would weather slow the system?",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/green-tech/assets/book/m1-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Rooftop solar as your example."
+      title: "Clean energy myths",
+      layout: "text",
+      theory: ["conceptual-change"],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: Solar works only in deserts. Better: panels work wherever light hits; brighter sites produce more.",
+        },
+        {
+          type: "p",
+          text: "Myth: Wind power means the air will run out. Better: wind is moving air driven by heating differences; turbines sample it, they do not empty the sky.",
+        },
+        {
+          type: "p",
+          text: "Myth: Clean means zero impact forever. Better: clean running avoids burn smoke; manufacturing and land use still need care.",
+        },
+        {
+          type: "p",
+          text: "Red glossary words like solar or renewable invite tutor questions.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Clean Champ mastery",
+      layout: "text",
+      theory: ["retrieval-practice", "spiral-scaffold"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/green-tech/assets/book/m1-cover.jpg",
+              caption: "Figure 5. Teach solar and wind with one panel picture.",
+              alt: "Solar panel teaching anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach in one minute: solar and wind capture natural flows instead of burning fuel on site; roofs and lamps make the idea local.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Contrast a solar lamp with a kerosene flame story",
+            "Name one weather limit",
+            "Use the word renewable correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Clean Champ reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Clean Energy to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

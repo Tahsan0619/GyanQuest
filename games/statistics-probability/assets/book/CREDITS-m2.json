@@ -1,0 +1,38 @@
+[
+  {
+    "file": "m2-cover.jpg",
+    "source_shared": "math\\nasa-pattern-6.jpg",
+    "bytes": 37397,
+    "sha1": "06d2fca6e747"
+  },
+  {
+    "file": "m2-hook.jpg",
+    "source_shared": "Planets2013.jpg",
+    "bytes": 96899,
+    "sha1": "9b5ee174017f"
+  },
+  {
+    "file": "m2-model.jpg",
+    "source_shared": "math\\nasa-orbit-diagram-8.jpg",
+    "bytes": 87826,
+    "sha1": "a4710206b729"
+  },
+  {
+    "file": "m2-mechanism.jpg",
+    "source_shared": "math\\nasa-geometry-5.jpg",
+    "bytes": 179113,
+    "sha1": "e781c16d6868"
+  },
+  {
+    "file": "m2-lab.jpg",
+    "source_shared": "general\\nasa-experiment-5.jpg",
+    "bytes": 145933,
+    "sha1": "5098e6cd8604"
+  },
+  {
+    "file": "m2-mastery.jpg",
+    "source_shared": "Abacus_6.jpg",
+    "bytes": 1570067,
+    "sha1": "a6ad4a5cb6f6"
+  }
+]

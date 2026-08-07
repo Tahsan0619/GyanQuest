@@ -1,211 +1,305 @@
 /**
- * Digital book - backend-builder mission 3: Auth Lite
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Backend Builder / Auth Lite
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: local verified copies under /games/backend-builder/assets/book/ (see CREDITS-m3.json).
  */
 export const BOOK = {
   missionIndex: 2,
   title: "Auth Lite",
   subtitle: "who are you",
   subject: "Backend Builder / Auth Lite",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Auth Lite",
-    art: "/games/backend-builder/assets/book/m3-fig1.svg",
+    art: "/games/backend-builder/assets/book/m3-cover.jpg",
   },
   glossary: [
-  {
-    "id": "login",
-    "term": "Login"
-  },
-  {
-    "id": "checks",
-    "term": "checks"
-  },
-  {
-    "id": "identity",
-    "term": "identity"
-  },
-  {
-    "id": "before",
-    "term": "before"
-  },
-  {
-    "id": "private",
-    "term": "private"
-  },
-  {
-    "id": "rooms",
-    "term": "rooms"
-  },
-  {
-    "id": "open",
-    "term": "open"
-  },
-  {
-    "id": "public",
-    "term": "Public"
-  }
-],
+    { id: "auth", term: "auth" },
+    { id: "login", term: "login" },
+    { id: "password", term: "password" },
+    { id: "session", term: "session" },
+    { id: "logout", term: "logout" },
+    { id: "token", term: "token" },
+    { id: "public", term: "public" },
+    { id: "private", term: "private" },
+    { id: "identity", term: "identity" },
+    { id: "permission", term: "permission" },
+  ],
   pages: [
-{
-  "title": "Welcome to Auth Lite",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/backend-builder/assets/book/m3-fig1.svg",
-      "caption": "Figure: Auth Lite overview",
-      "place": "top",
-      "alt": "Auth Lite"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Login checks identity before private rooms open. Public pages can stay open."
+      title: "Why Auth Lite?",
+      layout: "text",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "cognitive-load",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m3-hook.jpg",
+              caption: "Figure 1. Autonomous systems still gate actions on permission checks.",
+              alt: "Autonomous system",
+            },
+            {
+              src: "/games/backend-builder/assets/book/m3-cover.jpg",
+              caption: "Labs lock cabinets - apps lock private data.",
+              alt: "Laboratory",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Login checks identity before private rooms open. Public pages can stay open.",
+        },
+        {
+          type: "p",
+          text: "School grades portals, bank app PINs, and family photo clouds all separate public from private.",
+        },
+        {
+          type: "p",
+          text: "Everyday hook: anyone may see a school homepage; only you should see your grades after login.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores who are you. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Public vs private",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m3-model.png",
+              caption: "Figure 2. Identity metaphors start in the brain - auth is a digital ID check.",
+              alt: "Human brain",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Public pages do not need your password. Private rooms need proof of who you are.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Auth is not only for banks",
+            "Passwords stay private - never share",
+            "Logout ends the session so others cannot peek",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about School grades login."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: who are you."
+      title: "Auth dial",
+      layout: "text",
+      theory: [
+        "cognitive-load",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m3-mechanism.jpg",
+              caption: "Figure 3. Machines that ask who you are before serving private data.",
+              alt: "Computer",
+            },
+            {
+              src: "/games/backend-builder/assets/book/m3-lab.jpg",
+              caption: "Write public vs private lists in a notebook first.",
+              alt: "Notebook",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "In the lab you dialed gate strength until private doors stayed shut without login.",
+        },
+        {
+          type: "p",
+          text: "Socks are not login tokens. Tokens are digital proofs.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Login checks identity before private rooms open. Public pages can stay open."
+      title: "Session sense",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m3-mastery.jpg",
+              caption: "Figure 4. Guarded systems - auth is the gate.",
+              alt: "Robot gate metaphor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "After login, a session remembers you for a while. Logout clears that memory on purpose.",
+        },
+        {
+          type: "p",
+          text: "Sharing a password shares your private rooms - do not.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in School grades login.",
-        "Compare it with Bank app PIN.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/backend-builder/assets/book/m3-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: [
+        "spiral-scaffold",
+        "cognitive-load",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet auth -> dial gates -> sort public/private -> stronger lab -> why logout -> name the auth rule -> stretch portals -> myths -> fluency -> mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting teaches what stays public",
+            "Labs prove login opens private rooms",
+            "Rule: prove who you are before private data",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet the Gate",
-        "Unlock Lab",
-        "Sort Auth vs Public",
-        "Stronger Check Lab",
-        "Why Prove Who"
-      ]
+      title: "Street lab: grades gate",
+      layout: "split",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "retrieval-practice",
+      ],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m3-cover.jpg",
+              caption: "Locked bench.",
+              alt: "Lab",
+            },
+            {
+              src: "/games/backend-builder/assets/book/m3-mastery.jpg",
+              caption: "Guarded system.",
+              alt: "Robot",
+            },
+            {
+              src: "/games/backend-builder/assets/book/m3-lab.jpg",
+              caption: "Plan the rules.",
+              alt: "Notebook",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "List three public school-site things and three private things that need login.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Explain why logout matters on a shared computer",
+            "Invent a safe password rule (length, not sharing)",
+            "Flip carousel: lab lock vs robot gate",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/backend-builder/assets/book/m3-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use School grades login as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: [
+        "conceptual-change",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: public pages need your password. Better: public pages can open without login.",
+        },
+        {
+          type: "p",
+          text: "Myth: sharing your password is fine. Better: passwords stay private - never share.",
+        },
+        {
+          type: "p",
+          text: "Myth: socks are login tokens. Better: tokens are digital proofs - not clothing.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Mastery",
+      layout: "text",
+      theory: [
+        "retrieval-practice",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/backend-builder/assets/book/m3-mastery.jpg",
+              caption: "Figure 5. Gatekeeping - your auth goal.",
+              alt: "Robot anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend: public stays open; private needs identity proof; logout closes the session.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Name one public and one private page",
+            "Say why PIN/password secrecy matters",
+            "Use the word session correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Auth Guard reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Auth Lite to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

@@ -1,0 +1,1664 @@
+[
+  {
+    "game": "ai-lab",
+    "level": 1,
+    "book_path": "games/ai-lab/books/level1.js",
+    "asset_dir": "games/ai-lab/assets/book",
+    "meta": {
+      "kidTitle": "What is AI?",
+      "theme": "patterns from examples, not magic",
+      "intro": "AI spots patterns in examples - it is not magic and it does not think like a person.",
+      "rewardName": "AI Rookie",
+      "objective": "By the end of this mission, you'll be able to explain patterns from examples, not magic in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice patterns from examples, not magic around you \u2014 then connect it to What is AI?.",
+      "everyday": [
+        "Phone photo tags",
+        "Voice assistant guesses",
+        "Map route suggestions"
+      ],
+      "subTitles": [
+        "Meet AI",
+        "Watch Pattern Dial",
+        "Sort: AI or Not?",
+        "Stronger Pattern Lab",
+        "Why AI Guesses",
+        "Name the AI Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "AI Rookie Mastery"
+      ]
+    }
+  },
+  {
+    "game": "ai-lab",
+    "level": 2,
+    "book_path": "games/ai-lab/books/level2.js",
+    "asset_dir": "games/ai-lab/assets/book",
+    "meta": {
+      "kidTitle": "Pattern Predict",
+      "theme": "see a pattern, predict the next piece",
+      "intro": "See a repeating pattern, then predict the next piece before it appears.",
+      "rewardName": "Pattern Pro",
+      "objective": "By the end of this mission, you'll be able to explain see a pattern, predict the next piece in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice see a pattern, predict the next piece around you \u2014 then connect it to Pattern Predict.",
+      "everyday": [
+        "Bead necklace colors",
+        "Traffic light order",
+        "Class timetable blocks"
+      ],
+      "subTitles": [
+        "Meet Patterns",
+        "Watch Predict Dial",
+        "Sort Pattern Clues",
+        "Stronger Predict Lab",
+        "Why We Predict",
+        "Name the Predict Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Pattern Pro Mastery"
+      ]
+    }
+  },
+  {
+    "game": "astronomy-space",
+    "level": 1,
+    "book_path": "games/astronomy-space/books/level1.js",
+    "asset_dir": "games/astronomy-space/assets/book",
+    "meta": {
+      "kidTitle": "Solar Family",
+      "theme": "sun + planets orbit",
+      "intro": "Planets orbit the Sun - our solar family.",
+      "rewardName": "Orbit Scout",
+      "objective": "By the end of this mission, you'll be able to explain sun + planets orbit in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice sun + planets orbit around you \u2014 then connect it to Solar Family.",
+      "everyday": [
+        "Night sky peek",
+        "School globe",
+        "Dhaka clear evening"
+      ],
+      "subTitles": [
+        "Meet the Solar Family",
+        "Orbit Clarity Lab",
+        "Sort: Planet / Sun / Other",
+        "Closer Orbit Lab",
+        "Why Planets Orbit",
+        "Name the Orbit Rule",
+        "Stretch: Sky Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Orbit Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "astronomy-space",
+    "level": 2,
+    "book_path": "games/astronomy-space/books/level2.js",
+    "asset_dir": "games/astronomy-space/assets/book",
+    "meta": {
+      "kidTitle": "Day & Night Sky",
+      "theme": "Earth rotation = day / night",
+      "intro": "Earth spins - day and night take turns.",
+      "rewardName": "Sky Watcher",
+      "objective": "By the end of this mission, you'll be able to explain Earth rotation = day / night in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice Earth rotation = day / night around you \u2014 then connect it to Day & Night Sky.",
+      "everyday": [
+        "Sunrise window",
+        "School timetable",
+        "Dhaka evening lights"
+      ],
+      "subTitles": [
+        "Meet Day and Night",
+        "Spin Clarity Lab",
+        "Sort: Cause / Result",
+        "Faster Spin Lab",
+        "Why Day Follows Night",
+        "Name the Spin Rule",
+        "Stretch: BD Times",
+        "Myth Bust",
+        "Fluency Drill",
+        "Sky Watcher Mastery"
+      ]
+    }
+  },
+  {
+    "game": "backend-builder",
+    "level": 1,
+    "book_path": "games/backend-builder/books/level1.js",
+    "asset_dir": "games/backend-builder/assets/book",
+    "meta": {
+      "kidTitle": "Server Basics",
+      "theme": "request response",
+      "intro": "A client asks. A server answers. Request goes in - response comes back.",
+      "rewardName": "Server Scout",
+      "objective": "By the end of this mission, you'll be able to explain request response in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice request response around you \u2014 then connect it to Server Basics.",
+      "everyday": [
+        "Phone weather app",
+        "School portal login page",
+        "Shop checkout order"
+      ],
+      "subTitles": [
+        "Meet Client & Server",
+        "Request Loop Lab",
+        "Sort REQ / RES",
+        "Stronger Loop Lab",
+        "Why Wait for RES",
+        "Name the Server Rule",
+        "Stretch: Real Apps",
+        "Myth Bust",
+        "Fluency Drill",
+        "Server Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "backend-builder",
+    "level": 2,
+    "book_path": "games/backend-builder/books/level2.js",
+    "asset_dir": "games/backend-builder/assets/book",
+    "meta": {
+      "kidTitle": "Routes & APIs",
+      "theme": "paths & endpoints",
+      "intro": "URLs are doors. Each route path does a job - /users, /posts, /login.",
+      "rewardName": "Route Ranger",
+      "objective": "By the end of this mission, you'll be able to explain paths & endpoints in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice paths & endpoints around you \u2014 then connect it to Routes & APIs.",
+      "everyday": [
+        "Weather /forecast",
+        "School /grades",
+        "Shop /checkout"
+      ],
+      "subTitles": [
+        "Meet Route Doors",
+        "Open Routes Lab",
+        "Sort Paths & Methods",
+        "More Doors Lab",
+        "Why Paths Matter",
+        "Name the Route Rule",
+        "Stretch: App Paths",
+        "Myth Bust",
+        "Fluency Drill",
+        "Route Ranger Mastery"
+      ]
+    }
+  },
+  {
+    "game": "backend-builder",
+    "level": 3,
+    "book_path": "games/backend-builder/books/level3.js",
+    "asset_dir": "games/backend-builder/assets/book",
+    "meta": {
+      "kidTitle": "Auth Lite",
+      "theme": "who are you",
+      "intro": "Login checks identity before private rooms open. Public pages can stay open.",
+      "rewardName": "Auth Guard",
+      "objective": "By the end of this mission, you'll be able to explain who are you in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice who are you around you \u2014 then connect it to Auth Lite.",
+      "everyday": [
+        "School grades login",
+        "Bank app PIN",
+        "Family photo cloud"
+      ],
+      "subTitles": [
+        "Meet the Gate",
+        "Unlock Lab",
+        "Sort Auth vs Public",
+        "Stronger Check Lab",
+        "Why Prove Who",
+        "Name the Auth Rule",
+        "Stretch: Real Logins",
+        "Myth Bust",
+        "Fluency Drill",
+        "Auth Guard Mastery"
+      ]
+    }
+  },
+  {
+    "game": "bio-explorer",
+    "level": 1,
+    "book_path": "games/bio-explorer/books/level1.js",
+    "asset_dir": "games/bio-explorer/assets/book",
+    "meta": {
+      "kidTitle": "Living or Not",
+      "theme": "life",
+      "intro": "Living things grow, need energy, respond, and can make more life - even quiet seeds!",
+      "rewardName": "Living Rookie",
+      "objective": "By the end of this mission, you'll be able to explain life in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice life around you \u2014 then connect it to Living or Not.",
+      "everyday": [
+        "A sleeping cat",
+        "A mango seed",
+        "A phone that \u2018moves\u2019 when you touch it"
+      ],
+      "subTitles": [
+        "Meet Living Clues",
+        "Seed Sprout Lab",
+        "Sort: Living or Not?",
+        "Watch Growth",
+        "Why Seeds Count",
+        "Name the Life Rule",
+        "Stretch: New Contexts",
+        "Myth Bust",
+        "Fluency Drill",
+        "Living Rookie Mastery"
+      ]
+    }
+  },
+  {
+    "game": "bio-explorer",
+    "level": 2,
+    "book_path": "games/bio-explorer/books/level2.js",
+    "asset_dir": "games/bio-explorer/assets/book",
+    "meta": {
+      "kidTitle": "Cell City",
+      "theme": "cells",
+      "intro": "Living things are made of tiny living rooms called cells - the basic units of life.",
+      "rewardName": "Cell Scout",
+      "objective": "By the end of this mission, you'll be able to explain cells in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice cells around you \u2014 then connect it to Cell City.",
+      "everyday": [
+        "Skin cells",
+        "Mango leaf cells",
+        "Pond microbes"
+      ],
+      "subTitles": [
+        "Meet Cell City",
+        "Zoom Lab",
+        "Sort: Cell Stories",
+        "Membrane Peek",
+        "Cell Jobs",
+        "Name the Cell Rule",
+        "Stretch: New Contexts",
+        "Myth Bust",
+        "Fluency Drill",
+        "Cell Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "bio-explorer",
+    "level": 3,
+    "book_path": "games/bio-explorer/books/level3.js",
+    "asset_dir": "games/bio-explorer/assets/book",
+    "meta": {
+      "kidTitle": "Plant Power",
+      "theme": "plants",
+      "intro": "Plants make food with light, water, and air - then grow flowers, fruit, and more plants.",
+      "rewardName": "Plant Explorer",
+      "objective": "By the end of this mission, you'll be able to explain plants in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice plants around you \u2014 then connect it to Plant Power.",
+      "everyday": [
+        "Mango trees",
+        "Rice paddies",
+        "Bees visiting flowers"
+      ],
+      "subTitles": [
+        "Meet Plant Power",
+        "Sun Energy Lab",
+        "Sort: Plant Needs",
+        "Grow Stages",
+        "Food vs Soil",
+        "Name the Plant Rule",
+        "Stretch: BD Stories",
+        "Myth Bust",
+        "Fluency Drill",
+        "Plant Explorer Mastery"
+      ]
+    }
+  },
+  {
+    "game": "calculus-analysis",
+    "level": 1,
+    "book_path": "games/calculus-analysis/books/level1.js",
+    "asset_dir": "games/calculus-analysis/assets/book",
+    "meta": {
+      "kidTitle": "Slope Stories",
+      "theme": "steep = faster change",
+      "intro": "Steep means fast change - slope tells the rate.",
+      "rewardName": "Slope Scout",
+      "objective": "By the end of this mission, you'll be able to explain steep = faster change in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice steep = faster change around you \u2014 then connect it to Slope Stories.",
+      "everyday": [
+        "Hill walk",
+        "Graph in class",
+        "Speed on a ramp"
+      ],
+      "subTitles": [
+        "Meet Slope Stories",
+        "Slope Clarity Lab",
+        "Sort: Slope / Not",
+        "Steeper Lab",
+        "Why Slope Means Rate",
+        "Name the Slope Rule",
+        "Stretch: Hills & Graphs",
+        "Myth Bust",
+        "Fluency Drill",
+        "Slope Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "chemistry-lab",
+    "level": 1,
+    "book_path": "games/chemistry-lab/books/level1.js",
+    "asset_dir": "games/chemistry-lab/assets/book",
+    "meta": {
+      "kidTitle": "Tiny Bits",
+      "theme": "particles of matter",
+      "intro": "Everything you can touch (and even air) is made of tiny moving particles. We start with salt, ice, and steam - then name a clear rule you can reuse anywhere.",
+      "rewardName": "Tiny Rookie",
+      "objective": "By the end of this mission, you'll be able to explain particles of matter in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice particles of matter around you \u2014 then connect it to Tiny Bits.",
+      "everyday": [
+        "Salt grains next to the oil bottle",
+        "Ice melting in a cup on the desk",
+        "Steam rising above a hot pan"
+      ],
+      "subTitles": [
+        "Meet Tiny Bits",
+        "Salt Crystal Pattern",
+        "Sort: Matter or Not?",
+        "Ice Melting Lab",
+        "Why Steam Rises",
+        "Name the Particle Rule",
+        "Stretch: New Contexts",
+        "Myth Bust",
+        "Fluency Drill",
+        "Tiny Bits Mastery"
+      ]
+    }
+  },
+  {
+    "game": "chemistry-lab",
+    "level": 2,
+    "book_path": "games/chemistry-lab/books/level2.js",
+    "asset_dir": "games/chemistry-lab/assets/book",
+    "meta": {
+      "kidTitle": "Element Hunt",
+      "theme": "elements",
+      "intro": "Some everyday stuff is made of only one kind of atom - that is an element. Hunt iron-like metal, copper wire, and oxygen in air, then name a rule you can reuse anywhere.",
+      "rewardName": "Element Scout",
+      "objective": "By the end of this mission, you'll be able to explain elements in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice elements around you \u2014 then connect it to Element Hunt.",
+      "everyday": [
+        "Grey bottle = iron-like metal",
+        "Amber bottle = copper-like wire metal",
+        "Blue bottle = oxygen in air"
+      ],
+      "subTitles": [
+        "Meet Element Hunt",
+        "Iron: One Atom Kind",
+        "Sort: Element or Not?",
+        "Copper Wire Lab",
+        "Why O\u2082 Is Still an Element",
+        "Name the Element Rule",
+        "Stretch: New Contexts",
+        "Myth Bust",
+        "Fluency Drill",
+        "Element Hunt Mastery"
+      ]
+    }
+  },
+  {
+    "game": "chemistry-lab",
+    "level": 3,
+    "book_path": "games/chemistry-lab/books/level3.js",
+    "asset_dir": "games/chemistry-lab/assets/book",
+    "meta": {
+      "kidTitle": "Bond Buddies",
+      "theme": "bonds",
+      "intro": "Atoms rarely live alone in everyday stuff. Bonds are the links that hold atom friends together - like magnets clicking or water droplets sticking. Hunt the idea, then name the rule.",
+      "rewardName": "Bond Explorer",
+      "objective": "By the end of this mission, you'll be able to explain bonds in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice bonds around you \u2014 then connect it to Bond Buddies.",
+      "everyday": [
+        "Crane magnet pulling a cup closer",
+        "Magnets clicking together",
+        "Water droplets sticking in a bowl"
+      ],
+      "subTitles": [
+        "Meet Bond Buddies",
+        "Attraction Pull",
+        "Sort: Bond or Not?",
+        "Magnet Snap Lab",
+        "Why Water Sticks",
+        "Name the Bond Rule",
+        "Stretch: New Contexts",
+        "Myth Bust",
+        "Fluency Drill",
+        "Bond Buddies Mastery"
+      ]
+    }
+  },
+  {
+    "game": "civil-basics",
+    "level": 1,
+    "book_path": "games/civil-basics/books/level1.js",
+    "asset_dir": "games/civil-basics/assets/book",
+    "meta": {
+      "kidTitle": "Strong Structures",
+      "theme": "triangles & load",
+      "intro": "Triangles and good bases keep bridges and towers strong under load.",
+      "rewardName": "Structure Scout",
+      "objective": "By the end of this mission, you'll be able to explain triangles & load in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice triangles & load around you \u2014 then connect it to Strong Structures.",
+      "everyday": [
+        "Bridge truss",
+        "Shelf bracket",
+        "Building frame"
+      ],
+      "subTitles": [
+        "Meet Strong Shapes",
+        "Strength Dial",
+        "Sort Strong Ideas",
+        "Stronger Bridge Lab",
+        "Why It Holds",
+        "Name the Structure Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Structure Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "cyber-shield",
+    "level": 1,
+    "book_path": "games/cyber-shield/books/level1.js",
+    "asset_dir": "games/cyber-shield/assets/book",
+    "meta": {
+      "kidTitle": "Password Power",
+      "theme": "long unique secrets beat short easy ones",
+      "intro": "Strong passwords are long, unique, and hard to guess - not your name or 1234.",
+      "rewardName": "Password Pro",
+      "objective": "By the end of this mission, you'll be able to explain long unique secrets beat short easy ones in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice long unique secrets beat short easy ones around you \u2014 then connect it to Password Power.",
+      "everyday": [
+        "School login",
+        "Game account",
+        "Family email"
+      ],
+      "subTitles": [
+        "Meet Passwords",
+        "Watch Strength Dial",
+        "Sort Strong vs Weak",
+        "Stronger Secret Lab",
+        "Why Length Helps",
+        "Name the Password Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Password Pro Mastery"
+      ]
+    }
+  },
+  {
+    "game": "data-science",
+    "level": 1,
+    "book_path": "games/data-science/books/level1.js",
+    "asset_dir": "games/data-science/assets/book",
+    "meta": {
+      "kidTitle": "Chart Stories",
+      "theme": "bars and lines turn numbers into stories",
+      "intro": "Charts turn piles of numbers into a story you can see - compare bars, follow lines.",
+      "rewardName": "Chart Scout",
+      "objective": "By the end of this mission, you'll be able to explain bars and lines turn numbers into stories in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice bars and lines turn numbers into stories around you \u2014 then connect it to Chart Stories.",
+      "everyday": [
+        "Class marks bar chart",
+        "Rainfall line",
+        "Shop sales bars"
+      ],
+      "subTitles": [
+        "Meet Charts",
+        "Watch Story Dial",
+        "Sort Chart Parts",
+        "Clearer Chart Lab",
+        "Why Charts Help",
+        "Name the Chart Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Chart Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "database-sql",
+    "level": 1,
+    "book_path": "games/database-sql/books/level1.js",
+    "asset_dir": "games/database-sql/assets/book",
+    "meta": {
+      "kidTitle": "Tables & Rows",
+      "theme": "rows columns",
+      "intro": "Data lives in neat rows and columns. Each row is a record; each column is a field.",
+      "rewardName": "Table Scout",
+      "objective": "By the end of this mission, you'll be able to explain rows columns in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice rows columns around you \u2014 then connect it to Tables & Rows.",
+      "everyday": [
+        "Phone contacts list",
+        "Class register",
+        "Shop inventory sheet"
+      ],
+      "subTitles": [
+        "Meet the Grid",
+        "Fill Rows Lab",
+        "Sort Table Parts",
+        "Neater Grid Lab",
+        "Why Rows & Columns",
+        "Name the Table Rule",
+        "Stretch: Real Lists",
+        "Myth Bust",
+        "Fluency Drill",
+        "Table Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "database-sql",
+    "level": 2,
+    "book_path": "games/database-sql/books/level2.js",
+    "asset_dir": "games/database-sql/assets/book",
+    "meta": {
+      "kidTitle": "SELECT Stories",
+      "theme": "query basics",
+      "intro": "Ask the table with SELECT. FROM picks the table; WHERE filters the story.",
+      "rewardName": "Query Kid",
+      "objective": "By the end of this mission, you'll be able to explain query basics in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice query basics around you \u2014 then connect it to SELECT Stories.",
+      "everyday": [
+        "Find contacts in Dhaka",
+        "List class 5 names",
+        "Show items in stock"
+      ],
+      "subTitles": [
+        "Meet SELECT",
+        "Filter Dial Lab",
+        "Sort Ask vs Write",
+        "Sharper Query Lab",
+        "Why WHERE Helps",
+        "Name the SELECT Rule",
+        "Stretch: Real Questions",
+        "Myth Bust",
+        "Fluency Drill",
+        "Query Kid Mastery"
+      ]
+    }
+  },
+  {
+    "game": "database-sql",
+    "level": 3,
+    "book_path": "games/database-sql/books/level3.js",
+    "asset_dir": "games/database-sql/assets/book",
+    "meta": {
+      "kidTitle": "Keys & Joins",
+      "theme": "linking tables",
+      "intro": "Keys link tables so stories stay connected. JOIN matches key values across tables.",
+      "rewardName": "Join Junior",
+      "objective": "By the end of this mission, you'll be able to explain linking tables in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice linking tables around you \u2014 then connect it to Keys & Joins.",
+      "everyday": [
+        "Student + class list",
+        "Order + order items",
+        "Ticket + seat"
+      ],
+      "subTitles": [
+        "Meet Key Links",
+        "Match Dial Lab",
+        "Sort Keys & Joins",
+        "Stronger Link Lab",
+        "Why Keys Matter",
+        "Name the Join Rule",
+        "Stretch: Real Links",
+        "Myth Bust",
+        "Fluency Drill",
+        "Join Junior Mastery"
+      ]
+    }
+  },
+  {
+    "game": "discrete-math",
+    "level": 1,
+    "book_path": "games/discrete-math/books/level1.js",
+    "asset_dir": "games/discrete-math/assets/book",
+    "meta": {
+      "kidTitle": "Logic Lite",
+      "theme": "AND / OR / NOT",
+      "intro": "AND, OR, NOT - tiny rules that decide.",
+      "rewardName": "Logic Learner",
+      "objective": "By the end of this mission, you'll be able to explain AND / OR / NOT in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice AND / OR / NOT around you \u2014 then connect it to Logic Lite.",
+      "everyday": [
+        "Both shoes on (AND)",
+        "Bus or rickshaw (OR)",
+        "Not raining"
+      ],
+      "subTitles": [
+        "Meet AND OR NOT",
+        "Logic Clarity Lab",
+        "Sort: Logic / Not",
+        "Gate Lab",
+        "Why Gates Decide",
+        "Name the Logic Rule",
+        "Stretch: Daily Decide",
+        "Myth Bust",
+        "Fluency Drill",
+        "Logic Learner Mastery"
+      ]
+    }
+  },
+  {
+    "game": "eco-guardian",
+    "level": 1,
+    "book_path": "games/eco-guardian/books/level1.js",
+    "asset_dir": "games/eco-guardian/assets/book",
+    "meta": {
+      "kidTitle": "Waste Watch",
+      "theme": "reduce / reuse / recycle",
+      "intro": "Sort smart - recycle, compost, or landfill. Reduce first whenever you can.",
+      "rewardName": "Waste Watcher",
+      "objective": "By the end of this mission, you'll be able to explain reduce / reuse / recycle in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice reduce / reuse / recycle around you \u2014 then connect it to Waste Watch.",
+      "everyday": [
+        "Kitchen peels",
+        "School paper",
+        "Market plastic bags"
+      ],
+      "subTitles": [
+        "Meet the Bins",
+        "Fill Recycle Goal",
+        "Sort the Litter",
+        "Clean-up Lab",
+        "Why Reduce First",
+        "Name the 3R Rule",
+        "Stretch: BD Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Waste Watcher Mastery"
+      ]
+    }
+  },
+  {
+    "game": "electrical-basics",
+    "level": 1,
+    "book_path": "games/electrical-basics/books/level1.js",
+    "asset_dir": "games/electrical-basics/assets/book",
+    "meta": {
+      "kidTitle": "Circuit Loop",
+      "theme": "closed path lights the bulb",
+      "intro": "Current needs a closed loop - battery, wires, switch, and bulb connected.",
+      "rewardName": "Loop Learner",
+      "objective": "By the end of this mission, you'll be able to explain closed path lights the bulb in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice closed path lights the bulb around you \u2014 then connect it to Circuit Loop.",
+      "everyday": [
+        "Torch switch",
+        "Room light",
+        "School lab kit"
+      ],
+      "subTitles": [
+        "Meet the Loop",
+        "Close the Path Lab",
+        "Sort Loop Parts",
+        "Brighter Loop Lab",
+        "Why the Bulb Lights",
+        "Name the Loop Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Loop Learner Mastery"
+      ]
+    }
+  },
+  {
+    "game": "electrical-basics",
+    "level": 2,
+    "book_path": "games/electrical-basics/books/level2.js",
+    "asset_dir": "games/electrical-basics/assets/book",
+    "meta": {
+      "kidTitle": "Voltage & Current",
+      "theme": "V pushes / I flows",
+      "intro": "Voltage (V) is the push. Current (I) is the flow of charge in the loop.",
+      "rewardName": "Volt Scout",
+      "objective": "By the end of this mission, you'll be able to explain V pushes / I flows in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice V pushes / I flows around you \u2014 then connect it to Voltage & Current.",
+      "everyday": [
+        "Phone charger",
+        "Car battery",
+        "Flashlight cells"
+      ],
+      "subTitles": [
+        "Meet V and I",
+        "Push Dial Lab",
+        "Sort V vs I",
+        "Stronger Push Lab",
+        "Push then Flow",
+        "Name the V-I Rule",
+        "Stretch: Power Uses",
+        "Myth Bust",
+        "Fluency Drill",
+        "Volt Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "electrical-basics",
+    "level": 3,
+    "book_path": "games/electrical-basics/books/level3.js",
+    "asset_dir": "games/electrical-basics/assets/book",
+    "meta": {
+      "kidTitle": "Safe Power",
+      "theme": "dry hands / insulation / respect live wires",
+      "intro": "Stay safe: dry hands, good insulation, and never poke live sockets or frayed wires.",
+      "rewardName": "Safety Star",
+      "objective": "By the end of this mission, you'll be able to explain dry hands / insulation / respect live wires in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice dry hands / insulation / respect live wires around you \u2014 then connect it to Safe Power.",
+      "everyday": [
+        "Home outlets",
+        "School lab rules",
+        "Street poles / wires"
+      ],
+      "subTitles": [
+        "Meet Safe Power",
+        "Safety Dial Lab",
+        "Sort Safe / Unsafe",
+        "Safer Habits Lab",
+        "Safety Steps",
+        "Name the Safe Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Safety Star Mastery"
+      ]
+    }
+  },
+  {
+    "game": "electronics-robotics",
+    "level": 1,
+    "book_path": "games/electronics-robotics/books/level1.js",
+    "asset_dir": "games/electronics-robotics/assets/book",
+    "meta": {
+      "kidTitle": "Sensor Bot",
+      "theme": "sense act",
+      "intro": "Sensors sense, code decides, actuators act - that is the robot loop.",
+      "rewardName": "Bot Builder",
+      "objective": "By the end of this mission, you'll be able to explain sense act in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice sense act around you \u2014 then connect it to Sensor Bot.",
+      "everyday": [
+        "Line follower",
+        "Bump-and-turn",
+        "Auto door"
+      ],
+      "subTitles": [
+        "Meet Sensor Bot",
+        "Loop Dial Lab",
+        "Sort Sense Decide Act",
+        "Stronger Loop Lab",
+        "Why the Bot Moves",
+        "Name the Bot Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Bot Builder Mastery"
+      ]
+    }
+  },
+  {
+    "game": "force-fighter",
+    "level": 1,
+    "book_path": "games/force-fighter/books/level1.js",
+    "asset_dir": "games/force-fighter/assets/book",
+    "meta": {
+      "kidTitle": "The Lazy Rock",
+      "theme": "inertia / Newton 1",
+      "intro": "Things stay still until something pushes or pulls them. Wake a sleepy rock - just like pushing a door open!",
+      "rewardName": "Rock Rookie",
+      "objective": "By the end of this mission, you'll be able to explain inertia / Newton 1 in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice inertia / Newton 1 around you \u2014 then connect it to The Lazy Rock.",
+      "everyday": [
+        "Pushing a door open",
+        "Kicking a football",
+        "Pushing a shopping trolley"
+      ],
+      "subTitles": [
+        "Meet the Lazy Rock",
+        "Coast & Glide",
+        "Sort: Force or Not?",
+        "Wall Hit Lab",
+        "Why It Coasts",
+        "Name the Inertia Rule",
+        "Stretch: New Contexts",
+        "Myth Bust",
+        "Fluency Drill",
+        "Lazy Rock Mastery"
+      ]
+    }
+  },
+  {
+    "game": "force-fighter",
+    "level": 2,
+    "book_path": "games/force-fighter/books/level2.js",
+    "asset_dir": "games/force-fighter/assets/book",
+    "meta": {
+      "kidTitle": "Push Power",
+      "theme": "F = m / a / Newton 2",
+      "intro": "A small push moves light things faster. A heavy thing needs a bigger push to get going!",
+      "rewardName": "Speed Star",
+      "objective": "By the end of this mission, you'll be able to explain F = m / a / Newton 2 in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice F = m / a / Newton 2 around you \u2014 then connect it to Push Power.",
+      "everyday": [
+        "Kicking a light ball vs rolling a heavy drum",
+        "Pushing a chair vs a sofa"
+      ],
+      "subTitles": [
+        "Meet Push Power",
+        "Watch F, m, a",
+        "Sort: Force  /  Mass  /  Accel",
+        "Crate Push Lab",
+        "Live F = m / a Sim",
+        "Name the Second Law",
+        "Stretch: New Contexts",
+        "Myth Bust",
+        "Number Drill",
+        "Push Power Mastery"
+      ]
+    }
+  },
+  {
+    "game": "force-fighter",
+    "level": 3,
+    "book_path": "games/force-fighter/books/level3.js",
+    "asset_dir": "games/force-fighter/assets/book",
+    "meta": {
+      "kidTitle": "Push & Pull Pairs",
+      "theme": "Newton 3 / pairs",
+      "intro": "When you push, something pushes back! Pull a rope and the rope pulls you too.",
+      "rewardName": "Team Force",
+      "objective": "By the end of this mission, you'll be able to explain Newton 3 / pairs in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice Newton 3 / pairs around you \u2014 then connect it to Push & Pull Pairs.",
+      "everyday": [
+        "Pulling a rope in tug-of-war",
+        "Walking - you push the ground, it pushes you back"
+      ],
+      "subTitles": [
+        "Meet Force Pairs",
+        "Watch the Pair",
+        "Sort: Action  /  Reaction",
+        "Rocket Pair Lab",
+        "Rope Scale Lab",
+        "Walking Pairs",
+        "Name the Pair Rule",
+        "Stretch: New Contexts",
+        "Myth Bust",
+        "Pairs Mastery"
+      ]
+    }
+  },
+  {
+    "game": "genetics-biotech",
+    "level": 1,
+    "book_path": "games/genetics-biotech/books/level1.js",
+    "asset_dir": "games/genetics-biotech/assets/book",
+    "meta": {
+      "kidTitle": "Trait Tokens",
+      "theme": "inherited vs not",
+      "intro": "Traits can pass from parents - eye color clues.",
+      "rewardName": "Trait Tracker",
+      "objective": "By the end of this mission, you'll be able to explain inherited vs not in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice inherited vs not around you \u2014 then connect it to Trait Tokens.",
+      "everyday": [
+        "Family eye colors",
+        "Hair in the mirror",
+        "Classmate dimples"
+      ],
+      "subTitles": [
+        "Meet Trait Tokens",
+        "Trait Clarity Lab",
+        "Sort: Inherit / Not",
+        "Family Clue Lab",
+        "Why Traits Pass",
+        "Name the Trait Rule",
+        "Stretch: Family Stories",
+        "Myth Bust",
+        "Fluency Drill",
+        "Trait Tracker Mastery"
+      ]
+    }
+  },
+  {
+    "game": "geology-earth",
+    "level": 1,
+    "book_path": "games/geology-earth/books/level1.js",
+    "asset_dir": "games/geology-earth/assets/book",
+    "meta": {
+      "kidTitle": "Rock Cycle Lite",
+      "theme": "igneous / sedimentary / metamorphic",
+      "intro": "Igneous, sedimentary, metamorphic - rocks transform.",
+      "rewardName": "Rock Ranger",
+      "objective": "By the end of this mission, you'll be able to explain igneous / sedimentary / metamorphic in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice igneous / sedimentary / metamorphic around you \u2014 then connect it to Rock Cycle Lite.",
+      "everyday": [
+        "River pebbles",
+        "Brick / building stone",
+        "Hill paths in BD"
+      ],
+      "subTitles": [
+        "Meet Rock Types",
+        "Cycle Clarity Lab",
+        "Sort: Type / Form / Not",
+        "Pressure Lab",
+        "Why Rocks Transform",
+        "Name the Cycle Rule",
+        "Stretch: BD Rocks",
+        "Myth Bust",
+        "Fluency Drill",
+        "Rock Ranger Mastery"
+      ]
+    }
+  },
+  {
+    "game": "geometry-trig",
+    "level": 1,
+    "book_path": "games/geometry-trig/books/level1.js",
+    "asset_dir": "games/geometry-trig/assets/book",
+    "meta": {
+      "kidTitle": "Shape Studio",
+      "theme": "polygons / sides & corners",
+      "intro": "Shapes have rules: triangles have 3 sides, squares have 4 equal sides, circles are round with no corners.",
+      "rewardName": "Shape Scout",
+      "objective": "By the end of this mission, you'll be able to explain polygons / sides & corners in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice polygons / sides & corners around you \u2014 then connect it to Shape Studio.",
+      "everyday": [
+        "Traffic signs",
+        "Tiles on a floor",
+        "Rickshaw wheels and windows"
+      ],
+      "subTitles": [
+        "Meet the Shape Crew",
+        "Build Side Count",
+        "Sort: Triangle, Square, Circle",
+        "Property Lab",
+        "Why Properties Matter",
+        "Name the Shape Rule",
+        "Stretch: BD Shape Stories",
+        "Myth Bust",
+        "Fluency Drill",
+        "Shape Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "geometry-trig",
+    "level": 2,
+    "book_path": "games/geometry-trig/books/level2.js",
+    "asset_dir": "games/geometry-trig/assets/book",
+    "meta": {
+      "kidTitle": "Angle Adventures",
+      "theme": "angles / measuring turns",
+      "intro": "An angle is a turn between two rays. Acute is under 90\\u00b0, right is exactly 90\\u00b0, obtuse is over 90\\u00b0 but under 180\\u00b0.",
+      "rewardName": "Angle Ace",
+      "objective": "By the end of this mission, you'll be able to explain angles / measuring turns in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice angles / measuring turns around you \u2014 then connect it to Angle Adventures.",
+      "everyday": [
+        "Clock hands",
+        "Open door swing",
+        "Roof pitch on houses"
+      ],
+      "subTitles": [
+        "Meet the Turn",
+        "Open the Angle",
+        "Sort: Acute, Right, Obtuse",
+        "Degree Lab",
+        "Why We Measure Turns",
+        "Name the Angle Rule",
+        "Stretch: BD Angle Stories",
+        "Myth Bust",
+        "Fluency Drill",
+        "Angle Ace Mastery"
+      ]
+    }
+  },
+  {
+    "game": "green-tech",
+    "level": 1,
+    "book_path": "games/green-tech/books/level1.js",
+    "asset_dir": "games/green-tech/assets/book",
+    "meta": {
+      "kidTitle": "Clean Energy",
+      "theme": "solar wind",
+      "intro": "Sun and wind can power homes without smoke from burning fuel.",
+      "rewardName": "Clean Champ",
+      "objective": "By the end of this mission, you'll be able to explain solar wind in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice solar wind around you \u2014 then connect it to Clean Energy.",
+      "everyday": [
+        "Rooftop solar",
+        "Wind turbine",
+        "Solar lamp"
+      ],
+      "subTitles": [
+        "Meet Clean Power",
+        "Clean Dial Lab",
+        "Sort Energy Sources",
+        "More Clean Lab",
+        "Why Clean Helps",
+        "Name the Clean Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Clean Champ Mastery"
+      ]
+    }
+  },
+  {
+    "game": "human-anatomy",
+    "level": 1,
+    "book_path": "games/human-anatomy/books/level1.js",
+    "asset_dir": "games/human-anatomy/assets/book",
+    "meta": {
+      "kidTitle": "Body Map",
+      "theme": "organs team up",
+      "intro": "Organs team up - heart, lungs, brain, stomach.",
+      "rewardName": "Body Mapper",
+      "objective": "By the end of this mission, you'll be able to explain organs team up in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice organs team up around you \u2014 then connect it to Body Map.",
+      "everyday": [
+        "Feel your pulse",
+        "Deep breath at school",
+        "Meal digestion"
+      ],
+      "subTitles": [
+        "Meet the Organ Team",
+        "Map Clarity Lab",
+        "Sort: Organ / Support / Not",
+        "Teamwork Lab",
+        "Why Organs Team",
+        "Name the Body Rule",
+        "Stretch: Daily Body",
+        "Myth Bust",
+        "Fluency Drill",
+        "Body Mapper Mastery"
+      ]
+    }
+  },
+  {
+    "game": "human-anatomy",
+    "level": 2,
+    "book_path": "games/human-anatomy/books/level2.js",
+    "asset_dir": "games/human-anatomy/assets/book",
+    "meta": {
+      "kidTitle": "Heart Beat",
+      "theme": "pump + oxygen blood",
+      "intro": "Heart pumps blood that carries oxygen.",
+      "rewardName": "Pulse Pro",
+      "objective": "By the end of this mission, you'll be able to explain pump + oxygen blood in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice pump + oxygen blood around you \u2014 then connect it to Heart Beat.",
+      "everyday": [
+        "Wrist pulse",
+        "After running",
+        "Calm breathing"
+      ],
+      "subTitles": [
+        "Meet the Pump",
+        "Pulse Clarity Lab",
+        "Sort: Circulation / Notice / Not",
+        "Stronger Pulse Lab",
+        "Why Blood Moves",
+        "Name the Pump Rule",
+        "Stretch: Active Days",
+        "Myth Bust",
+        "Fluency Drill",
+        "Pulse Pro Mastery"
+      ]
+    }
+  },
+  {
+    "game": "ict-fundamentals",
+    "level": 1,
+    "book_path": "games/ict-fundamentals/books/level1.js",
+    "asset_dir": "games/ict-fundamentals/assets/book",
+    "meta": {
+      "kidTitle": "Computer Bits",
+      "theme": "CPU / RAM / storage",
+      "intro": "CPU thinks, RAM holds open work, storage keeps files after power off.",
+      "rewardName": "Bit Scout",
+      "objective": "By the end of this mission, you'll be able to explain CPU / RAM / storage in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice CPU / RAM / storage around you \u2014 then connect it to Computer Bits.",
+      "everyday": [
+        "Phone chip",
+        "Laptop upgrades",
+        "Saving a school file"
+      ],
+      "subTitles": [
+        "Meet the Inside Team",
+        "Busy PC Lab",
+        "Sort the Jobs",
+        "RAM Fill Lab",
+        "Why Three Parts",
+        "Name the Bits Rule",
+        "Stretch: Devices",
+        "Myth Bust",
+        "Fluency Drill",
+        "Bit Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "ict-fundamentals",
+    "level": 2,
+    "book_path": "games/ict-fundamentals/books/level2.js",
+    "asset_dir": "games/ict-fundamentals/assets/book",
+    "meta": {
+      "kidTitle": "Input & Output",
+      "theme": "devices in and out",
+      "intro": "Input sends data in. Output shows or plays results out. Some devices do both.",
+      "rewardName": "I/O Ranger",
+      "objective": "By the end of this mission, you'll be able to explain devices in and out in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice devices in and out around you \u2014 then connect it to Input & Output.",
+      "everyday": [
+        "Typing homework",
+        "Video call mic/speaker",
+        "Touchscreen tablet"
+      ],
+      "subTitles": [
+        "Meet I/O Devices",
+        "Type -> Screen Lab",
+        "Sort Input/Output",
+        "Signal Lab",
+        "Path of a Keypress",
+        "Name the I/O Rule",
+        "Stretch: Real Life",
+        "Myth Bust",
+        "Fluency Drill",
+        "I/O Ranger Mastery"
+      ]
+    }
+  },
+  {
+    "game": "ict-fundamentals",
+    "level": 3,
+    "book_path": "games/ict-fundamentals/books/level3.js",
+    "asset_dir": "games/ict-fundamentals/assets/book",
+    "meta": {
+      "kidTitle": "Files & Folders",
+      "theme": "name / save / find",
+      "intro": "Clear names and folders make homework findable - on PC, phone, or cloud.",
+      "rewardName": "File Finder",
+      "objective": "By the end of this mission, you'll be able to explain name / save / find in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice name / save / find around you \u2014 then connect it to Files & Folders.",
+      "everyday": [
+        "School folder",
+        "Photo albums",
+        "USB stick"
+      ],
+      "subTitles": [
+        "Meet Files & Folders",
+        "Save Bar Lab",
+        "Sort into Folders",
+        "Save Again Lab",
+        "Find Path Story",
+        "Name the File Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "File Finder Mastery"
+      ]
+    }
+  },
+  {
+    "game": "math-quest",
+    "level": 1,
+    "book_path": "games/math-quest/books/level1.js",
+    "asset_dir": "games/math-quest/assets/book",
+    "meta": {
+      "kidTitle": "Number Sense",
+      "theme": "tens & ones / place value",
+      "intro": "Numbers have places - tens and ones. A ten-rod is ten ones bundled together.",
+      "rewardName": "Number Scout",
+      "objective": "By the end of this mission, you'll be able to explain tens & ones / place value in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice tens & ones / place value around you \u2014 then connect it to Number Sense.",
+      "everyday": [
+        "Counting eggs in tens",
+        "Reading a cricket score",
+        "Making change with 10-taka notes"
+      ],
+      "subTitles": [
+        "Meet Tens & Ones",
+        "Build a Number",
+        "Sort: Tens or Ones?",
+        "Place Chart Lab",
+        "Why Place Matters",
+        "Name the Place Rule",
+        "Stretch: BD Stories",
+        "Myth Bust",
+        "Fluency Drill",
+        "Number Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "math-quest",
+    "level": 2,
+    "book_path": "games/math-quest/books/level2.js",
+    "asset_dir": "games/math-quest/assets/book",
+    "meta": {
+      "kidTitle": "Fraction Friends",
+      "theme": "equal shares / parts of a whole",
+      "intro": "Fractions name fair shares - equal parts of one whole. Halves, thirds, fourths.",
+      "rewardName": "Fraction Friend",
+      "objective": "By the end of this mission, you'll be able to explain equal shares / parts of a whole in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice equal shares / parts of a whole around you \u2014 then connect it to Fraction Friends.",
+      "everyday": [
+        "Sharing roti",
+        "Chocolate bar squares",
+        "Half an hour on the clock"
+      ],
+      "subTitles": [
+        "Meet Fair Shares",
+        "Shade the Whole",
+        "Sort: Equal or Not?",
+        "Parts Lab",
+        "Name Numerator & Denominator",
+        "Name the Fraction Rule",
+        "Stretch: BD Stories",
+        "Myth Bust",
+        "Fluency Drill",
+        "Fraction Friend Mastery"
+      ]
+    }
+  },
+  {
+    "game": "mechanical-basics",
+    "level": 1,
+    "book_path": "games/mechanical-basics/books/level1.js",
+    "asset_dir": "games/mechanical-basics/assets/book",
+    "meta": {
+      "kidTitle": "Levers & Gears",
+      "theme": "simple machines",
+      "intro": "Levers and gears make hard jobs easier by trading force, distance, and turn.",
+      "rewardName": "Lever Learner",
+      "objective": "By the end of this mission, you'll be able to explain simple machines in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice simple machines around you \u2014 then connect it to Levers & Gears.",
+      "everyday": [
+        "Seesaw",
+        "Bottle opener",
+        "Bike gears"
+      ],
+      "subTitles": [
+        "Meet Lever & Gear",
+        "Advantage Dial",
+        "Sort Machines",
+        "Stronger Advantage",
+        "Why It Helps",
+        "Name the Machine Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Lever Learner Mastery"
+      ]
+    }
+  },
+  {
+    "game": "mechanical-basics",
+    "level": 2,
+    "book_path": "games/mechanical-basics/books/level2.js",
+    "asset_dir": "games/mechanical-basics/assets/book",
+    "meta": {
+      "kidTitle": "Motion Machines",
+      "theme": "motion transfer",
+      "intro": "Wheels, belts, and chains pass motion along a linked path.",
+      "rewardName": "Motion Scout",
+      "objective": "By the end of this mission, you'll be able to explain motion transfer in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice motion transfer around you \u2014 then connect it to Motion Machines.",
+      "everyday": [
+        "Bike chain",
+        "Fan belt",
+        "Conveyor"
+      ],
+      "subTitles": [
+        "Meet Motion Links",
+        "Belt Dial Lab",
+        "Sort Transfer Parts",
+        "Tighter Transfer",
+        "Why Motion Passes",
+        "Name the Transfer Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Motion Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "mechanical-basics",
+    "level": 3,
+    "book_path": "games/mechanical-basics/books/level3.js",
+    "asset_dir": "games/mechanical-basics/assets/book",
+    "meta": {
+      "kidTitle": "Forces at Work",
+      "theme": "force & work",
+      "intro": "Work happens when a force moves something through a distance.",
+      "rewardName": "Work Warrior",
+      "objective": "By the end of this mission, you'll be able to explain force & work in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice force & work around you \u2014 then connect it to Forces at Work.",
+      "everyday": [
+        "Push a crate",
+        "Lift a bag",
+        "Pull a wagon"
+      ],
+      "subTitles": [
+        "Meet Force & Work",
+        "Work Dial Lab",
+        "Sort Work Cases",
+        "Bigger Work Lab",
+        "Why Work Happens",
+        "Name the Work Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Work Warrior Mastery"
+      ]
+    }
+  },
+  {
+    "game": "ml-lab",
+    "level": 1,
+    "book_path": "games/ml-lab/books/level1.js",
+    "asset_dir": "games/ml-lab/assets/book",
+    "meta": {
+      "kidTitle": "Teach the Model",
+      "theme": "train vs test - more good examples",
+      "intro": "A model learns from training examples, then we test it on new ones it has not memorized.",
+      "rewardName": "Model Mentor",
+      "objective": "By the end of this mission, you'll be able to explain train vs test - more good examples in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice train vs test - more good examples around you \u2014 then connect it to Teach the Model.",
+      "everyday": [
+        "Sorting fruit photos",
+        "Handwriting samples",
+        "Spam vs real mail"
+      ],
+      "subTitles": [
+        "Meet Training",
+        "Watch Train Dial",
+        "Sort Train vs Test",
+        "Stronger Train Lab",
+        "Why Models Learn",
+        "Name the Train Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Model Mentor Mastery"
+      ]
+    }
+  },
+  {
+    "game": "networking-internet",
+    "level": 1,
+    "book_path": "games/networking-internet/books/level1.js",
+    "asset_dir": "games/networking-internet/assets/book",
+    "meta": {
+      "kidTitle": "Packets Travel",
+      "theme": "messages split into packets and find a path",
+      "intro": "Internet messages split into packets that travel paths and reassemble at the end.",
+      "rewardName": "Packet Pilot",
+      "objective": "By the end of this mission, you'll be able to explain messages split into packets and find a path in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice messages split into packets and find a path around you \u2014 then connect it to Packets Travel.",
+      "everyday": [
+        "Sending a chat",
+        "Loading a photo",
+        "Video call bits"
+      ],
+      "subTitles": [
+        "Meet Packets",
+        "Watch Path Dial",
+        "Sort Packet Parts",
+        "Clearer Path Lab",
+        "Why Packets Move",
+        "Name the Packet Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Packet Pilot Mastery"
+      ]
+    }
+  },
+  {
+    "game": "os-hardware",
+    "level": 1,
+    "book_path": "games/os-hardware/books/level1.js",
+    "asset_dir": "games/os-hardware/assets/book",
+    "meta": {
+      "kidTitle": "Inside the Box",
+      "theme": "hardware does work - OS manages the team",
+      "intro": "Hardware parts do the physical work. The operating system manages apps, memory, and devices.",
+      "rewardName": "Box Scout",
+      "objective": "By the end of this mission, you'll be able to explain hardware does work - OS manages the team in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice hardware does work - OS manages the team around you \u2014 then connect it to Inside the Box.",
+      "everyday": [
+        "Laptop boots",
+        "Phone app switch",
+        "USB stick plug-in"
+      ],
+      "subTitles": [
+        "Meet the Box",
+        "Watch Team Dial",
+        "Sort HW vs OS",
+        "Smoother Team Lab",
+        "Why OS Manages",
+        "Name the Box Rule",
+        "Stretch: Places",
+        "Myth Bust",
+        "Fluency Drill",
+        "Box Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "statistics-probability",
+    "level": 1,
+    "book_path": "games/statistics-probability/books/level1.js",
+    "asset_dir": "games/statistics-probability/assets/book",
+    "meta": {
+      "kidTitle": "Mean & Mode",
+      "theme": "averages / typical values",
+      "intro": "Mean balances all values into one typical number. Mode is the value that appears most.",
+      "rewardName": "Mean Scout",
+      "objective": "By the end of this mission, you'll be able to explain averages / typical values in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice averages / typical values around you \u2014 then connect it to Mean & Mode.",
+      "everyday": [
+        "Class mark list",
+        "Cricket run totals",
+        "Shop price tags in BD markets"
+      ],
+      "subTitles": [
+        "Meet Mean & Mode",
+        "Balance the Mean",
+        "Sort: Mean, Mode, or Not?",
+        "Data Peak Lab",
+        "Why Both Summaries",
+        "Name the Average Rule",
+        "Stretch: BD Data Stories",
+        "Myth Bust",
+        "Fluency Drill",
+        "Mean Scout Mastery"
+      ]
+    }
+  },
+  {
+    "game": "statistics-probability",
+    "level": 2,
+    "book_path": "games/statistics-probability/books/level2.js",
+    "asset_dir": "games/statistics-probability/assets/book",
+    "meta": {
+      "kidTitle": "Chance Games",
+      "theme": "probability / fair shares of outcomes",
+      "intro": "Probability is a fair share of outcomes. A fair coin is 1/2 heads; a fair die gives each face an equal shot.",
+      "rewardName": "Chance Champ",
+      "objective": "By the end of this mission, you'll be able to explain probability / fair shares of outcomes in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice probability / fair shares of outcomes around you \u2014 then connect it to Chance Games.",
+      "everyday": [
+        "Cricket toss coin",
+        "Board-game die",
+        "Spinner at a fun fair"
+      ],
+      "subTitles": [
+        "Meet Chance Tools",
+        "Fair Share Dial",
+        "Sort: Likely, Unlikely, Impossible",
+        "Trial Lab",
+        "Why Probability is a Share",
+        "Name the Chance Rule",
+        "Stretch: BD Chance Stories",
+        "Myth Bust",
+        "Fluency Drill",
+        "Chance Champ Mastery"
+      ]
+    }
+  },
+  {
+    "game": "web-dev-studio",
+    "level": 1,
+    "book_path": "games/web-dev-studio/books/level1.js",
+    "asset_dir": "games/web-dev-studio/assets/book",
+    "meta": {
+      "kidTitle": "HTML House",
+      "theme": "structure tags",
+      "intro": "A web page is a house. Tags are the rooms - <html> wraps, <head> holds meta, <body> holds what you see.",
+      "rewardName": "HTML Builder",
+      "objective": "By the end of this mission, you'll be able to explain structure tags in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice structure tags around you \u2014 then connect it to HTML House.",
+      "everyday": [
+        "School notice page",
+        "Family photo blog",
+        "BD news headline block"
+      ],
+      "subTitles": [
+        "Meet the Tag House",
+        "Open Rooms Lab",
+        "Sort Structure",
+        "Build More Rooms",
+        "Why Nest Tags",
+        "Name the House Rule",
+        "Stretch: Real Pages",
+        "Myth Bust",
+        "Fluency Drill",
+        "HTML Builder Mastery"
+      ]
+    }
+  },
+  {
+    "game": "web-dev-studio",
+    "level": 2,
+    "book_path": "games/web-dev-studio/books/level2.js",
+    "asset_dir": "games/web-dev-studio/assets/book",
+    "meta": {
+      "kidTitle": "CSS Style",
+      "theme": "look & layout",
+      "intro": "CSS paints the HTML rooms. Color, size, and spacing make a page clear to read.",
+      "rewardName": "Style Star",
+      "objective": "By the end of this mission, you'll be able to explain look & layout in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice look & layout around you \u2014 then connect it to CSS Style.",
+      "everyday": [
+        "School poster colors",
+        "Shop product card gaps",
+        "Rickshaw ad that must read from far"
+      ],
+      "subTitles": [
+        "Meet Color Size Space",
+        "Style Dial Lab",
+        "Sort CSS Look",
+        "Stronger Style Lab",
+        "Why Clear Look",
+        "Name the Style Rule",
+        "Stretch: Surfaces",
+        "Myth Bust",
+        "Fluency Drill",
+        "Style Star Mastery"
+      ]
+    }
+  },
+  {
+    "game": "web-dev-studio",
+    "level": 3,
+    "book_path": "games/web-dev-studio/books/level3.js",
+    "asset_dir": "games/web-dev-studio/assets/book",
+    "meta": {
+      "kidTitle": "JS Click",
+      "theme": "interaction",
+      "intro": "A click is an event. JavaScript runs code that changes the page - buttons come alive.",
+      "rewardName": "Click Coder",
+      "objective": "By the end of this mission, you'll be able to explain interaction in your own words.",
+      "predict": "",
+      "bdHook": "Bangladesh everyday: notice interaction around you \u2014 then connect it to JS Click.",
+      "everyday": [
+        "Game Start button",
+        "Quiz tap A/B/C",
+        "BD ticket kiosk tap"
+      ],
+      "subTitles": [
+        "Meet the Click",
+        "Click Energy Lab",
+        "Sort Reactions",
+        "Stronger Click Lab",
+        "Why Pages React",
+        "Name the Click Rule",
+        "Stretch: Real Taps",
+        "Myth Bust",
+        "Fluency Drill",
+        "Click Coder Mastery"
+      ]
+    }
+  }
+]

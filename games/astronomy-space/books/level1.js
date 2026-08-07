@@ -1,211 +1,280 @@
 /**
- * Digital book - astronomy-space mission 1: Solar Family
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Astronomy Space Mission 1: Solar Family
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: solar system and planet JPGs under assets/book/.
  */
 export const BOOK = {
   missionIndex: 0,
   title: "Solar Family",
-  subtitle: "sun + planets orbit",
+  subtitle: "sun and planets in orbit",
   subject: "Astronomy Space / Solar Family",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Solar Family",
-    art: "/games/astronomy-space/assets/book/m1-fig1.svg",
+    art: "/games/astronomy-space/assets/book/m1-cover.jpg",
   },
   glossary: [
-  {
-    "id": "planets",
-    "term": "planets"
-  },
-  {
-    "id": "orbit",
-    "term": "orbit"
-  },
-  {
-    "id": "solar",
-    "term": "solar"
-  },
-  {
-    "id": "family",
-    "term": "family"
-  },
-  {
-    "id": "meet",
-    "term": "Meet"
-  },
-  {
-    "id": "clarity",
-    "term": "Clarity"
-  },
-  {
-    "id": "sort",
-    "term": "Sort"
-  },
-  {
-    "id": "planet",
-    "term": "Planet"
-  }
-],
+    { id: "sun", term: "Sun" },
+    { id: "planet", term: "planet" },
+    { id: "orbit", term: "orbit" },
+    { id: "solar-system", term: "solar system" },
+    { id: "gravity", term: "gravity" },
+    { id: "star", term: "star" },
+    { id: "inner-planet", term: "inner planet" },
+    { id: "outer-planet", term: "outer planet" },
+  ],
   pages: [
-{
-  "title": "Welcome to Solar Family",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/astronomy-space/assets/book/m1-fig1.svg",
-      "caption": "Figure: Solar Family overview",
-      "place": "top",
-      "alt": "Solar Family"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Planets orbit the Sun - our solar family."
+      title: "Family around one bright star",
+      layout: "text",
+      theory: ["constructivism", "dual-coding", "cognitive-load"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/astronomy-space/assets/book/m1-hook.jpg",
+              caption: "Figure 1. Planets are not scattered randomly - they loop the Sun.",
+              alt: "Diagram-like view of planets",
+            },
+            {
+              src: "/games/astronomy-space/assets/book/m1-earth.jpg",
+              caption: "Earth is one planet in that family - our home world.",
+              alt: "Earth seen from space",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "On a clear Dhaka evening you may spot a bright 'star' that is really a planet. A school globe is a tiny Earth model. Both hint at the same truth: planets travel around the Sun.",
+        },
+        {
+          type: "p",
+          text: "The solar system is our neighborhood: one star at the center, planets in orbit, and smaller travelers like moons and rocks.",
+        },
+        {
+          type: "p",
+          text: "Earn Orbit Scout by naming who orbits whom - planets orbit the Sun, not the other way around.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores sun + planets orbit. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Sun in the middle, paths outside",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "dual-coding"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/astronomy-space/assets/book/m1-cover.jpg",
+              caption: "Figure 2. Model: the Sun anchors the family; planets follow closed paths.",
+              alt: "Solar system illustration",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "An orbit is a repeating path. Gravity from the Sun keeps planets from flying off in a straight line.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sun = the system's star (huge and hot)",
+            "Inner planets = closer, rockier",
+            "Outer planets = farther, often giant",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Night sky peek."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: sun + planets orbit."
+      title: "Closer paths feel faster",
+      layout: "text",
+      theory: ["cognitive-load", "dual-coding"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/astronomy-space/assets/book/m1-model.jpg",
+              caption: "Figure 3. The Sun's pull is stronger nearby - closer planets finish a lap sooner.",
+              alt: "Sun-focused space image",
+            },
+            {
+              src: "/games/astronomy-space/assets/book/m1-mars.jpg",
+              caption: "Mars - farther than Earth, longer year.",
+              alt: "Mars",
+            },
+            {
+              src: "/games/astronomy-space/assets/book/m1-jupiter.jpg",
+              caption: "Jupiter - a giant on a wide orbit.",
+              alt: "Jupiter",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A year is one full orbit. Mercury's year is short; Neptune's year is huge. Distance changes the lap time.",
+        },
+        {
+          type: "p",
+          text: "Mission dials that pull a planet closer are models of that idea: shorter path, quicker loop.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Planets orbit the Sun - our solar family."
+      title: "Sort planet, Sun, other",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "spiral-scaffold"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/astronomy-space/assets/book/m1-saturn.jpg",
+              caption: "Figure 4. Representation: ringed Saturn is still a planet orbiting the Sun.",
+              alt: "Saturn",
+            },
+            {
+              src: "/games/astronomy-space/assets/book/m1-nebula.jpg",
+              caption: "Pretty sky clouds are not planets - sort carefully.",
+              alt: "Nebula",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Canvas dots are models. Real photos still ask the same sort: Is it the Sun, a planet, or something else?",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Night sky peek.",
-        "Compare it with School globe.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/astronomy-space/assets/book/m1-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: ["spiral-scaffold", "cognitive-load"],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet the solar family -> orbit clarity lab -> sort planet / Sun / other -> closer orbit lab -> why planets orbit -> name the orbit rule -> stretch to sky places -> myth bust -> fluency -> Orbit Scout mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting prevents calling the Sun a planet",
+            "Closer-orbit lab links distance to lap time",
+            "The rule sentence: planets orbit the Sun",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet the Solar Family",
-        "Orbit Clarity Lab",
-        "Sort: Planet / Sun / Other",
-        "Closer Orbit Lab",
-        "Why Planets Orbit"
-      ]
+      title: "Night-sky transfer",
+      layout: "split",
+      theory: ["constructivism", "dual-coding", "retrieval-practice"],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/astronomy-space/assets/book/m1-earth.jpg",
+              caption: "Earth - one orbiting planet.",
+              alt: "Earth from Apollo",
+            },
+            {
+              src: "/games/astronomy-space/assets/book/m1-mars.jpg",
+              caption: "Mars - another planet on its own path.",
+              alt: "Mars",
+            },
+            {
+              src: "/games/astronomy-space/assets/book/m1-cover.jpg",
+              caption: "Family map - Sun plus orbiting worlds.",
+              alt: "Solar system map",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Use a globe or a ball-and-lamp demo. Keep the lamp as the Sun. Move Earth on a loop. Name orbit and planet.",
+        },
+        {
+          type: "ul",
+          items: [
+            "What stays in the center?",
+            "What travels on a path?",
+            "Drag the photos to flip examples",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/astronomy-space/assets/book/m1-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Night sky peek as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: ["conceptual-change"],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: The Sun orbits Earth each day. Better: Earth spins and also orbits the Sun; day/night is mostly spin (next mission).",
+        },
+        {
+          type: "p",
+          text: "Myth: Planets sit still on a flat map. Better: maps are snapshots; real planets keep moving on orbits.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Orbit Scout mastery",
+      layout: "text",
+      theory: ["retrieval-practice", "spiral-scaffold"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/astronomy-space/assets/book/m1-cover.jpg",
+              caption: "Figure 5. Teaching anchor: Sun center, planets on paths.",
+              alt: "Solar system teaching anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend in one minute: the Sun is our star; planets orbit because of gravity; closer orbits finish a year sooner.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sketch Sun plus two planet paths",
+            "Point to Earth on a family map",
+            "Use the word orbit correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Orbit Scout reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Solar Family to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

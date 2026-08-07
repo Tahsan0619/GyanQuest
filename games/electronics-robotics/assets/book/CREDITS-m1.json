@@ -1,0 +1,44 @@
+[
+  {
+    "file": "m1-cover.jpg",
+    "src": "/games/electronics-robotics/assets/book/m1-cover.jpg",
+    "from_shared": "ai_data/nasa-robot-1.jpg",
+    "theme": "electrical",
+    "bytes": 162721
+  },
+  {
+    "file": "m1-hook.jpg",
+    "src": "/games/electronics-robotics/assets/book/m1-hook.jpg",
+    "from_shared": "ai_data/nasa-robotic-arm-5.jpg",
+    "theme": "electrical",
+    "bytes": 48425
+  },
+  {
+    "file": "m1-model.webp",
+    "src": "/games/electronics-robotics/assets/book/m1-model.webp",
+    "from_shared": "chemistry/bunsen-burner-flame-1.webp",
+    "theme": "electrical",
+    "bytes": 75972
+  },
+  {
+    "file": "m1-mechanism.jpg",
+    "src": "/games/electronics-robotics/assets/book/m1-mechanism.jpg",
+    "from_shared": "chemistry/nasa-combustion-4.jpg",
+    "theme": "electrical",
+    "bytes": 175792
+  },
+  {
+    "file": "m1-detail.jpg",
+    "src": "/games/electronics-robotics/assets/book/m1-detail.jpg",
+    "from_shared": "chemistry/rust-metal-3.jpg",
+    "theme": "electrical",
+    "bytes": 1032641
+  },
+  {
+    "file": "m1-transfer.jpg",
+    "src": "/games/electronics-robotics/assets/book/m1-transfer.jpg",
+    "from_shared": "chemistry/rust-metal-4.jpg",
+    "theme": "electrical",
+    "bytes": 999339
+  }
+]

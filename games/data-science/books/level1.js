@@ -1,211 +1,278 @@
 /**
- * Digital book - data-science mission 1: Chart Stories
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Data Science Mission 1: Chart Stories
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: assets/book-shared ai_data theme (see assets/book/CREDITS-m1.json).
  */
 export const BOOK = {
   missionIndex: 0,
   title: "Chart Stories",
   subtitle: "bars and lines turn numbers into stories",
   subject: "Data Science / Chart Stories",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Chart Stories",
-    art: "/games/data-science/assets/book/m1-fig1.svg",
+    art: "/games/data-science/assets/book/m1-cover.jpg",
   },
   glossary: [
-  {
-    "id": "bars",
-    "term": "bars"
-  },
-  {
-    "id": "lines",
-    "term": "lines"
-  },
-  {
-    "id": "turn",
-    "term": "turn"
-  },
-  {
-    "id": "numbers",
-    "term": "numbers"
-  },
-  {
-    "id": "stories",
-    "term": "stories"
-  },
-  {
-    "id": "charts",
-    "term": "Charts"
-  },
-  {
-    "id": "piles",
-    "term": "piles"
-  },
-  {
-    "id": "story",
-    "term": "story"
-  }
-],
+    { id: "chart", term: "chart" },
+    { id: "bar", term: "bar" },
+    { id: "line", term: "line" },
+    { id: "axis", term: "axis" },
+    { id: "scale", term: "scale" },
+    { id: "compare", term: "compare" },
+    { id: "trend", term: "trend" },
+    { id: "data", term: "data" },
+  ],
   pages: [
-{
-  "title": "Welcome to Chart Stories",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/data-science/assets/book/m1-fig1.svg",
-      "caption": "Figure: Chart Stories overview",
-      "place": "top",
-      "alt": "Chart Stories"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Charts turn piles of numbers into a story you can see - compare bars, follow lines."
+      title: "Numbers that speak aloud",
+      layout: "text",
+      theory: ["constructivism", "dual-coding", "cognitive-load"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/data-science/assets/book/m1-cover.jpg",
+              caption: "Figure 1. Machines collect readings - charts turn those readings into a story you can see.",
+              alt: "Autonomous sensing system",
+            },
+            {
+              src: "/games/data-science/assets/book/m1-hook.jpg",
+              caption: "Exploration tools gather many measurements before anyone spots a pattern.",
+              alt: "Rover-style exploration hardware",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A list of marks or rainfall totals is hard to hold in your head. A chart paints the same numbers so your eyes can compare and follow.",
+        },
+        {
+          type: "p",
+          text: "Bars shout comparison: which category is taller? Lines whisper trend: what happened next as time moved?",
+        },
+        {
+          type: "p",
+          text: "Class marks bar chart, a rainfall line across months, and shop sales bars are everyday Bangladesh data stories.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores bars and lines turn numbers into stories. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Bars compare, lines follow",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "dual-coding"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/data-science/assets/book/m1-model.jpg",
+              caption: "Figure 2. Field machines sample the world one reading at a time - charts assemble the samples.",
+              alt: "Mars rover collecting environmental data",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Choose the picture that matches the question. Comparing groups favors bars. Watching change over time favors a line.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Bar height -> amount for one category",
+            "Line path -> how a value moves along an axis",
+            "Missing axis labels -> story you cannot trust",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Class marks bar chart."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: bars and lines turn numbers into stories."
+      title: "Scale tells the truth",
+      layout: "text",
+      theory: ["cognitive-load", "dual-coding"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/data-science/assets/book/m1-mechanism.jpg",
+              caption: "Figure 3. Another rover view - same idea: many points, one readable picture.",
+              alt: "Rover instrumentation",
+            },
+            {
+              src: "/games/data-science/assets/book/m1-detail.jpg",
+              caption: "Rivers of measurement: flow data is useless without a clear scale.",
+              alt: "River landscape as flow metaphor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A chart can lie with a chopped axis or uneven scale. Always read the numbers on the side before trusting a dramatic spike.",
+        },
+        {
+          type: "p",
+          text: "Good chart stories keep scale honest, categories clear, and the question in view: compare, or track change?",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Charts turn piles of numbers into a story you can see - compare bars, follow lines."
+      title: "Patterns in the cloud of points",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "spiral-scaffold"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/data-science/assets/book/m1-transfer.jpg",
+              caption: "Figure 4. Dense patterns still hide structure - charts are how we pull a story out.",
+              alt: "Nebula-like field of points",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Raw tables are starfields. Bars and lines are the constellation drawings that help a classmate see what you saw.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Class marks bar chart.",
-        "Compare it with Rainfall line.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/data-science/assets/book/m1-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "Chart Scout mission map",
+      layout: "text",
+      theory: ["spiral-scaffold", "cognitive-load"],
+      blocks: [
+        {
+          type: "p",
+          text: "You met charts, dialed story clarity, sorted chart parts, cleaned a chart, and named why pictures beat raw piles of numbers.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Parts: title, axis, scale, bars or line",
+            "Lab: make the story readable, not fancy",
+            "Rule: bars and lines turn numbers into stories",
+          ],
+        },
+        {
+          type: "p",
+          text: "Practice was stepwise on purpose. Now hold the full reading habit.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Charts",
-        "Watch Story Dial",
-        "Sort Chart Parts",
-        "Clearer Chart Lab",
-        "Why Charts Help"
-      ]
+      title: "Marks, rain, sales",
+      layout: "split",
+      theory: ["constructivism", "dual-coding", "retrieval-practice"],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/data-science/assets/book/m1-hook.jpg",
+              caption: "Class marks - bars for subject comparison.",
+              alt: "Data collection metaphor",
+            },
+            {
+              src: "/games/data-science/assets/book/m1-detail.jpg",
+              caption: "Rainfall - a line across months.",
+              alt: "Flowing landscape for time series",
+            },
+            {
+              src: "/games/data-science/assets/book/m1-model.jpg",
+              caption: "Shop sales - bars by item or day.",
+              alt: "Sampling machine metaphor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "For each everyday set, pick bar or line and say what question the chart answers.",
+        },
+        {
+          type: "ul",
+          items: [
+            "What is being compared?",
+            "What is changing over time?",
+            "Where must the scale start?",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/data-science/assets/book/m1-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Class marks bar chart as your example."
+      title: "Chart myths",
+      layout: "text",
+      theory: ["conceptual-change"],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: The tallest bar is always the most important. Better: importance depends on the question; scale and labels decide meaning.",
+        },
+        {
+          type: "p",
+          text: "Myth: A line chart means the values are connected in real life. Better: a line is a visual guide; check whether order on the axis makes sense.",
+        },
+        {
+          type: "p",
+          text: "Myth: Pretty colors equal true data. Better: honest axes beat decoration.",
+        },
+        {
+          type: "p",
+          text: "Tap red words (chart, scale, trend) to quiz the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Chart Scout mastery",
+      layout: "text",
+      theory: ["retrieval-practice", "spiral-scaffold"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/data-science/assets/book/m1-cover.jpg",
+              caption: "Figure 5. Anchor: charts make number stories visible.",
+              alt: "Sensing system as chart story anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach in one minute: bars compare amounts; lines follow change; always read the scale before trusting the drama.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sketch one bar chart and one line chart",
+            "Point to a real marks or rainfall example",
+            "Use the word trend correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Chart Scout reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Chart Stories to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

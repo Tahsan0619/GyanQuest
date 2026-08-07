@@ -1,211 +1,278 @@
 /**
- * Digital book - geology-earth mission 1: Rock Cycle Lite
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Geology & Earth Mission 1: Rock Cycle Lite
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: assets/book-shared space / earth themes (see assets/book/CREDITS-m1.json).
  */
 export const BOOK = {
   missionIndex: 0,
   title: "Rock Cycle Lite",
   subtitle: "igneous / sedimentary / metamorphic",
   subject: "Geology Earth / Rock Cycle Lite",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Rock Cycle Lite",
-    art: "/games/geology-earth/assets/book/m1-fig1.svg",
+    art: "/games/geology-earth/assets/book/m1-cover.jpg",
   },
   glossary: [
-  {
-    "id": "igneous",
-    "term": "igneous"
-  },
-  {
-    "id": "sedimentary",
-    "term": "sedimentary"
-  },
-  {
-    "id": "metamorphic",
-    "term": "metamorphic"
-  },
-  {
-    "id": "rocks",
-    "term": "rocks"
-  },
-  {
-    "id": "transform",
-    "term": "transform"
-  },
-  {
-    "id": "meet",
-    "term": "Meet"
-  },
-  {
-    "id": "rock",
-    "term": "Rock"
-  },
-  {
-    "id": "types",
-    "term": "Types"
-  }
-],
+    { id: "igneous", term: "igneous" },
+    { id: "sedimentary", term: "sedimentary" },
+    { id: "metamorphic", term: "metamorphic" },
+    { id: "magma", term: "magma" },
+    { id: "sediment", term: "sediment" },
+    { id: "pressure", term: "pressure" },
+    { id: "cycle", term: "cycle" },
+    { id: "weathering", term: "weathering" },
+  ],
   pages: [
-{
-  "title": "Welcome to Rock Cycle Lite",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/geology-earth/assets/book/m1-fig1.svg",
-      "caption": "Figure: Rock Cycle Lite overview",
-      "place": "top",
-      "alt": "Rock Cycle Lite"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Igneous, sedimentary, metamorphic - rocks transform."
+      title: "Earth recycles stone",
+      layout: "text",
+      theory: ["constructivism", "dual-coding", "cognitive-load"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/geology-earth/assets/book/m1-cover.jpg",
+              caption: "Figure 1. Our planet's crust is a workshop - rocks form, break, and reform.",
+              alt: "Earth seen from space",
+            },
+            {
+              src: "/games/geology-earth/assets/book/m1-hook.jpg",
+              caption: "From orbit, land and water hint at erosion paths that feed sediment.",
+              alt: "Earth from orbit",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Igneous, sedimentary, and metamorphic are three rock families. They transform through heat, pressure, melting, and the slow work of water and wind.",
+        },
+        {
+          type: "p",
+          text: "The rock cycle is not a single road. Any family can feed another when conditions change.",
+        },
+        {
+          type: "p",
+          text: "River pebbles, brick or building stone, and hill paths in Bangladesh are local doors into the same cycle.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores igneous / sedimentary / metamorphic. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "Three families",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "dual-coding"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/geology-earth/assets/book/m1-model.jpg",
+              caption: "Figure 2. Other worlds show bare rock faces - useful reminders that crust tells a heat-and-time story.",
+              alt: "Mars rocky surface celebration imagery",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "ul",
+          items: [
+            "Igneous: cools from magma or lava",
+            "Sedimentary: bits pressed and cemented after weathering",
+            "Metamorphic: old rock changed by heat and pressure without fully melting",
+          ],
+        },
+        {
+          type: "p",
+          text: "Name the process before you force a rock into a family.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about River pebbles."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: igneous / sedimentary / metamorphic."
+      title: "Heat, press, wash",
+      layout: "text",
+      theory: ["cognitive-load", "dual-coding"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/geology-earth/assets/book/m1-mechanism.jpg",
+              caption: "Figure 3. Craters and highland scars record impacts and change - Earth uses slower tools too.",
+              alt: "Moon surface",
+            },
+            {
+              src: "/games/geology-earth/assets/book/m1-detail.jpg",
+              caption: "Layered worlds elsewhere echo how materials can stack and shift.",
+              alt: "Saturn atmosphere layers",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Melting and cooling write igneous pages. Weathering and burial write sedimentary pages. Deep squeeze and heat rewrite metamorphic pages.",
+        },
+        {
+          type: "p",
+          text: "A river pebble may be a traveler from an older rock that broke apart - sediment on the move.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Igneous, sedimentary, metamorphic - rocks transform."
+      title: "Ice as a sculptor",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "spiral-scaffold"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/geology-earth/assets/book/m1-transfer.jpg",
+              caption: "Figure 4. Melting and freezing help crack and carry rock - weathering in action.",
+              alt: "Melting ice",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "You will not see a full cycle in one afternoon. You can still spot pieces: broken bits, layered stone, and cooled volcanic rock in some regions.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in River pebbles.",
-        "Compare it with Brick / building stone.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/geology-earth/assets/book/m1-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "Rock Ranger route",
+      layout: "text",
+      theory: ["spiral-scaffold", "cognitive-load"],
+      blocks: [
+        {
+          type: "p",
+          text: "You met rock types, clarified the cycle, sorted type vs form vs not, felt a pressure lab, and named why rocks transform.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sort stops mixing process words with rock names",
+            "Pressure lab: change without needing a full melt",
+            "Rule: igneous, sedimentary, metamorphic link through change",
+          ],
+        },
+        {
+          type: "p",
+          text: "Game steps were bite-sized. The cycle view is here.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Rock Types",
-        "Cycle Clarity Lab",
-        "Sort: Type / Form / Not",
-        "Pressure Lab",
-        "Why Rocks Transform"
-      ]
+      title: "Pebbles, bricks, hills",
+      layout: "split",
+      theory: ["constructivism", "dual-coding", "retrieval-practice"],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/geology-earth/assets/book/m1-hook.jpg",
+              caption: "River pebbles - sediment on a journey.",
+              alt: "Earth water and land",
+            },
+            {
+              src: "/games/geology-earth/assets/book/m1-model.jpg",
+              caption: "Building stone - ask how it formed.",
+              alt: "Rocky terrain",
+            },
+            {
+              src: "/games/geology-earth/assets/book/m1-transfer.jpg",
+              caption: "Hill paths - weathering breaks bigger rock into bits.",
+              alt: "Ice weathering metaphor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "For each local example, guess family or process, then say what evidence you wish you had (crystals, layers, fossils, sparkle).",
+        },
+        {
+          type: "ul",
+          items: [
+            "Is it layered or glassy?",
+            "Does it look like pressed bits?",
+            "Could heat or pressure have rewritten it?",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/geology-earth/assets/book/m1-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use River pebbles as your example."
+      title: "Rock myths",
+      layout: "text",
+      theory: ["conceptual-change"],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: Rocks stay in one family forever. Better: the cycle lets material move between families when conditions change.",
+        },
+        {
+          type: "p",
+          text: "Myth: Metamorphic means melted. Better: metamorphic changes while mostly solid under heat and pressure.",
+        },
+        {
+          type: "p",
+          text: "Myth: Sedimentary only means sandcastles. Better: pressed and cemented sediments become solid rock over long time.",
+        },
+        {
+          type: "p",
+          text: "Tap igneous, sedimentary, or metamorphic in red to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Rock Ranger mastery",
+      layout: "text",
+      theory: ["retrieval-practice", "spiral-scaffold"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/geology-earth/assets/book/m1-cover.jpg",
+              caption: "Figure 5. Teach the three families with Earth as your anchor.",
+              alt: "Earth from Apollo as geology anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach in one minute: igneous from melt, sedimentary from bits, metamorphic from rewrite by heat and pressure; pebbles and hills show pieces of the cycle.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sketch a simple three-family cycle",
+            "Point to a river pebble story",
+            "Use the word sediment correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Rock Ranger reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Rock Cycle Lite to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

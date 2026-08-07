@@ -1,207 +1,266 @@
 /**
- * Digital book - ict-fundamentals mission 3: Files & Folders
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - ICT Fundamentals Mission 3: Files & Folders
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: communication, computer, chip, and storage JPGs under assets/book/.
  */
 export const BOOK = {
   missionIndex: 2,
   title: "Files & Folders",
-  subtitle: "name / save / find",
-  subject: "Ict Fundamentals / Files & Folders",
+  subtitle: "name, save, and find",
+  subject: "ICT Fundamentals / Files & Folders",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Files & Folders",
-    art: "/games/ict-fundamentals/assets/book/m3-fig1.svg",
+    art: "/games/ict-fundamentals/assets/book/m3-cover.jpg",
   },
   glossary: [
-  {
-    "id": "file",
-    "term": "file"
-  },
-  {
-    "id": "folder",
-    "term": "folder"
-  },
-  {
-    "id": "path",
-    "term": "path"
-  },
-  {
-    "id": "extension",
-    "term": "extension"
-  },
-  {
-    "id": "save",
-    "term": "save"
-  },
-  {
-    "id": "directory",
-    "term": "directory"
-  },
-  {
-    "id": "document",
-    "term": "document"
-  }
-],
+    { id: "file", term: "file" },
+    { id: "folder", term: "folder" },
+    { id: "filename", term: "filename" },
+    { id: "save", term: "save" },
+    { id: "path", term: "path" },
+    { id: "storage", term: "storage" },
+    { id: "cloud", term: "cloud" },
+    { id: "usb", term: "USB" },
+  ],
   pages: [
-{
-  "title": "Welcome to Files & Folders",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/ict-fundamentals/assets/book/m3-fig1.svg",
-      "caption": "Figure: Files & Folders overview",
-      "place": "top",
-      "alt": "Files & Folders"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Clear names and folders make homework findable - on PC, phone, or cloud."
+      title: "School folder, photo albums, USB stick",
+      layout: "text",
+      theory: ["constructivism", "dual-coding", "cognitive-load"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/ict-fundamentals/assets/book/m3-hook.jpg",
+              caption: "Figure 1. Finding work later depends on clear names and places.",
+              alt: "Computer for file work",
+            },
+            {
+              src: "/games/ict-fundamentals/assets/book/m3-cover.jpg",
+              caption: "Links and drives still need human-friendly labels.",
+              alt: "Communication / link gear",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A school folder named Math2026 beats a pile of Document1 copies. Phone photo albums group memories. A USB stick only helps if filenames make sense.",
+        },
+        {
+          type: "p",
+          text: "Clear names and folders make homework findable on PC, phone, or cloud.",
+        },
+        {
+          type: "p",
+          text: "Earn File Finder by practicing name -> save -> find as one habit.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores files, folders, and finding saved work. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "File is the item, folder is the shelf",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "dual-coding"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/ict-fundamentals/assets/book/m3-model.jpg",
+              caption: "Figure 2. Model: storage chips hold bits; folders are how we organize them.",
+              alt: "Storage chip",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "ul",
+          items: [
+            "File - one saved item (essay, photo, sheet)",
+            "Folder - a named container for related files",
+            "Path - the route of folders that leads to the file",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about School folder."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: name / save / find."
+      title: "Save again so finds succeed",
+      layout: "text",
+      theory: ["cognitive-load", "dual-coding"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/ict-fundamentals/assets/book/m3-storage.jpg",
+              caption: "Figure 3. Storage keeps the bytes - your name tells humans which bytes.",
+              alt: "Integrated circuit storage metaphor",
+            },
+            {
+              src: "/games/ict-fundamentals/assets/book/m3-save.jpg",
+              caption: "Saving moves work from temporary space into lasting storage.",
+              alt: "Battery/power reminder that saves survive power cycles",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Save bar labs in the mission practice the moment work becomes findable. Save again after edits so the path leads to the newest version.",
+        },
+        {
+          type: "p",
+          text: "A good filename says subject and date: Science_WaterCycle_07Aug.md beats final_final2.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Clear names and folders make homework findable - on PC, phone, or cloud."
+      title: "Path story on screen",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "spiral-scaffold"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/ict-fundamentals/assets/book/m3-hook.jpg",
+              caption: "Figure 4. Representation: School/Math/Homework is a path you can say aloud.",
+              alt: "Computer file browser context",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Mission folder bins are models. Real explorers show the same idea: nest folders, then open the file at the end of the path.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in School folder.",
-        "Compare it with Photo albums.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/ict-fundamentals/assets/book/m3-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: ["spiral-scaffold", "cognitive-load"],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet files and folders -> save bar lab -> sort into folders -> save again lab -> find path story -> name the file rule -> stretch to places -> myth bust -> fluency -> File Finder mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting builds folder habits",
+            "Save-again lab protects the newest version",
+            "The rule sentence: name it, save it, then you can find it",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Files & Folders",
-        "Save Bar Lab",
-        "Sort into Folders",
-        "Save Again Lab",
-        "Find Path Story"
-      ]
+      title: "Homework transfer",
+      layout: "split",
+      theory: ["constructivism", "dual-coding", "retrieval-practice"],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/ict-fundamentals/assets/book/m3-hook.jpg",
+              caption: "Create a School folder tree.",
+              alt: "Computer",
+            },
+            {
+              src: "/games/ict-fundamentals/assets/book/m3-storage.jpg",
+              caption: "Save into storage with a clear name.",
+              alt: "Storage",
+            },
+            {
+              src: "/games/ict-fundamentals/assets/book/m3-cover.jpg",
+              caption: "Cloud or USB - same naming rules.",
+              alt: "Link / remote storage cue",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Make folders School/Math and School/Science. Save one note in each with a dated name. Close everything, then find both using the path.",
+        },
+        {
+          type: "ul",
+          items: [
+            "What was the filename?",
+            "What was the folder path?",
+            "Drag the photos to flip examples",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/ict-fundamentals/assets/book/m3-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use School folder as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: ["conceptual-change"],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: Search always saves you, so names do not matter. Better: clear names and folders make search faster and backups safer.",
+        },
+        {
+          type: "p",
+          text: "Myth: Desktop dumps are a filing system. Better: a few subject folders beat fifty loose icons.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "File Finder mastery",
+      layout: "text",
+      theory: ["retrieval-practice", "spiral-scaffold"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/ict-fundamentals/assets/book/m3-model.jpg",
+              caption: "Figure 5. Teaching anchor: name, save, find on real storage.",
+              alt: "Chip storage anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend in one minute: a file is the item; a folder is the shelf; a path is the route; save with a clear name so you can find it later.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Create one nested path and one dated filename",
+            "Find the file after closing the app",
+            "Use path and folder correctly once each",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the File Finder reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Files & Folders to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

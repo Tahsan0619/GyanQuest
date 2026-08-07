@@ -1,7 +1,8 @@
 /**
  * GyanQuest digital book viewer - cover, spreads, page-turn, glossary terms.
+ * Pages are fixed (no scroll). Multi-image figures use an auto/drag carousel.
  */
-const BOOK_CSS = "/engine/css/digital-book.css?v=book1";
+const BOOK_CSS = "/engine/css/digital-book.css?v=book3";
 
 function ensureBookCss() {
   if (!document.querySelector('link[data-gq-book-css]')) {
@@ -50,12 +51,50 @@ function escapeRegExp(s) {
   return String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+/** Normalize a figure entry into a list of slides. */
+function figSlides(fig) {
+  if (!fig) return [];
+  if (Array.isArray(fig.slides) && fig.slides.length) {
+    return fig.slides.map((s) => ({
+      src: s.src || fig.src,
+      caption: s.caption || fig.caption || "",
+      alt: s.alt || s.caption || fig.alt || "",
+    })).filter((s) => s.src);
+  }
+  if (fig.src) {
+    return [{ src: fig.src, caption: fig.caption || "", alt: fig.alt || fig.caption || "" }];
+  }
+  return [];
+}
+
 function figHtml(fig) {
-  if (!fig?.src) return "";
+  const slides = figSlides(fig);
+  if (!slides.length) return "";
   const place = fig.place || "top";
-  return `<figure class="gq-book-fig gq-book-fig--${escapeHtml(place)}">
-    <img src="${escapeHtml(fig.src)}" alt="${escapeHtml(fig.alt || fig.caption || "Book figure")}" />
-    ${fig.caption ? `<figcaption>${escapeHtml(fig.caption)}</figcaption>` : ""}
+  if (slides.length === 1) {
+    const s = slides[0];
+    return `<figure class="gq-book-fig gq-book-fig--${escapeHtml(place)}">
+    <img src="${escapeHtml(s.src)}" alt="${escapeHtml(s.alt || "Book figure")}" draggable="false" />
+    ${s.caption ? `<figcaption>${escapeHtml(s.caption)}</figcaption>` : ""}
+  </figure>`;
+  }
+  const slidesHtml = slides
+    .map(
+      (s, i) => `<div class="gq-book-carousel__slide${i === 0 ? " is-active" : ""}" data-slide="${i}">
+        <img src="${escapeHtml(s.src)}" alt="${escapeHtml(s.alt || "Book figure")}" draggable="false" />
+        ${s.caption ? `<figcaption>${escapeHtml(s.caption)}</figcaption>` : ""}
+      </div>`,
+    )
+    .join("");
+  const dots = slides
+    .map((_, i) => `<button type="button" class="gq-book-carousel__dot${i === 0 ? " is-active" : ""}" data-dot="${i}" aria-label="Slide ${i + 1}"></button>`)
+    .join("");
+  return `<figure class="gq-book-fig gq-book-fig--${escapeHtml(place)} gq-book-fig--carousel" data-gq-carousel>
+    <div class="gq-book-carousel" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Photo carousel">
+      <div class="gq-book-carousel__track">${slidesHtml}</div>
+      <div class="gq-book-carousel__dots">${dots}</div>
+      <p class="gq-book-carousel__hint">Drag to flip photos</p>
+    </div>
   </figure>`;
 }
 
@@ -89,17 +128,100 @@ function pageInner(page, glossary) {
   const bottomFigs = figs.filter((f) => f.place === "bottom").map(figHtml).join("");
 
   if (layout === "full-fig" && fullFigs) {
-    return `${title}${fullFigs}${body}`;
+    return `<div class="gq-book-page__stack">${title}<div class="gq-book-page__visual">${fullFigs}</div><div class="gq-book-page__copy">${body}</div></div>`;
   }
   if (layout === "split" || leftFigs || rightFigs) {
-    return `${title}${topFigs}
+    return `<div class="gq-book-page__stack">${title}${topFigs}
       <div class="gq-book-split">
-        <div class="gq-book-split__col">${leftFigs || ""}${layout === "split" ? body : ""}</div>
-        <div class="gq-book-split__col">${rightFigs || ""}${layout === "split" ? "" : body}</div>
+        <div class="gq-book-split__col gq-book-split__col--copy">${leftFigs || ""}${layout === "split" ? body : ""}</div>
+        <div class="gq-book-split__col gq-book-split__col--visual">${rightFigs || ""}${layout === "split" ? "" : body}</div>
       </div>
-      ${layout === "split" ? "" : body}${bottomFigs}`;
+      ${layout === "split" ? "" : `<div class="gq-book-page__copy">${body}</div>`}${bottomFigs}</div>`;
   }
-  return `${title}${topFigs}${body}${bottomFigs}${fullFigs}`;
+  return `<div class="gq-book-page__stack">${title}${topFigs}<div class="gq-book-page__copy">${body}</div>${bottomFigs}${fullFigs}</div>`;
+}
+
+function mountCarousels(scope) {
+  scope.querySelectorAll("[data-gq-carousel]").forEach((host) => {
+    const track = host.querySelector(".gq-book-carousel");
+    const slides = [...host.querySelectorAll(".gq-book-carousel__slide")];
+    const dots = [...host.querySelectorAll(".gq-book-carousel__dot")];
+    if (slides.length < 2) return;
+
+    let idx = 0;
+    let timer = null;
+    let dragging = false;
+    let startX = 0;
+    let deltaX = 0;
+
+    const paint = () => {
+      slides.forEach((el, i) => el.classList.toggle("is-active", i === idx));
+      dots.forEach((el, i) => el.classList.toggle("is-active", i === idx));
+    };
+
+    const go = (n) => {
+      idx = ((n % slides.length) + slides.length) % slides.length;
+      paint();
+    };
+
+    const stop = () => {
+      if (timer) clearInterval(timer);
+      timer = null;
+    };
+
+    const start = () => {
+      stop();
+      timer = setInterval(() => go(idx + 1), 1000);
+    };
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        go(Number(dot.getAttribute("data-dot")) || 0);
+        start();
+      });
+    });
+
+    const onDown = (clientX) => {
+      dragging = true;
+      startX = clientX;
+      deltaX = 0;
+      stop();
+      track.classList.add("is-dragging");
+    };
+    const onMove = (clientX) => {
+      if (!dragging) return;
+      deltaX = clientX - startX;
+    };
+    const onUp = () => {
+      if (!dragging) return;
+      dragging = false;
+      track.classList.remove("is-dragging");
+      if (Math.abs(deltaX) > 36) go(idx + (deltaX < 0 ? 1 : -1));
+      start();
+    };
+
+    track.addEventListener("pointerdown", (e) => {
+      if (e.button != null && e.button !== 0) return;
+      onDown(e.clientX);
+      track.setPointerCapture?.(e.pointerId);
+    });
+    track.addEventListener("pointermove", (e) => onMove(e.clientX));
+    track.addEventListener("pointerup", onUp);
+    track.addEventListener("pointercancel", onUp);
+    track.addEventListener("pointerleave", () => {
+      if (dragging) onUp();
+    });
+
+    host.addEventListener("mouseenter", stop);
+    host.addEventListener("mouseleave", () => {
+      if (!dragging) start();
+    });
+
+    paint();
+    start();
+  });
 }
 
 /**
@@ -121,11 +243,9 @@ export function openDigitalBook(opts) {
   root.setAttribute("aria-label", book.title || "Mission book");
 
   const pages = Array.isArray(book.pages) ? book.pages : [];
-  // Spreads: cover alone, then pairs of pages, then close
-  // Index: -1 = cover, 0..n-1 = page index of left page of spread (even), closing
 
-  let mode = "cover"; // cover | open | closing
-  let pageIndex = 0; // left page index when open
+  let mode = "cover";
+  let pageIndex = 0;
 
   root.innerHTML = `
     <div class="gq-book-backdrop" data-gq-book-close></div>
@@ -193,6 +313,8 @@ export function openDigitalBook(opts) {
       : `<div class="gq-book-page__inner gq-book-page__inner--blank"><p class="gq-book-end">The End</p></div>`;
     bindTerms(leftEl);
     bindTerms(rightEl);
+    mountCarousels(leftEl);
+    mountCarousels(rightEl);
     const end = Math.min(pageIndex + 2, pages.length);
     labelEl.textContent = `Pages ${pageIndex + 1}-${end} of ${pages.length}`;
   }

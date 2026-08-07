@@ -1,211 +1,244 @@
 /**
- * Digital book - force-fighter mission 2: Push Power
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Force Fighter Mission 2: Push Power
+ * Unique curriculum book (F = m a / Newton 2).
  */
 export const BOOK = {
   missionIndex: 1,
   title: "Push Power",
-  subtitle: "F = m / a / Newton 2",
+  subtitle: "same push, different mass - different acceleration",
   subject: "Force Fighter / Push Power",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Push Power",
-    art: "/games/force-fighter/assets/book/m2-fig1.svg",
+    art: "/games/force-fighter/assets/book/m2-cover.jpg",
   },
   glossary: [
-  {
-    "id": "newton",
-    "term": "Newton"
-  },
-  {
-    "id": "small",
-    "term": "small"
-  },
-  {
-    "id": "push",
-    "term": "push"
-  },
-  {
-    "id": "moves",
-    "term": "moves"
-  },
-  {
-    "id": "light",
-    "term": "light"
-  },
-  {
-    "id": "things",
-    "term": "things"
-  },
-  {
-    "id": "faster",
-    "term": "faster"
-  },
-  {
-    "id": "heavy",
-    "term": "heavy"
-  }
-],
+    { id: "force", term: "force" },
+    { id: "mass", term: "mass" },
+    { id: "acceleration", term: "acceleration" },
+    { id: "newton", term: "Newton" },
+    { id: "push", term: "push" },
+    { id: "heavy", term: "heavy" },
+    { id: "light", term: "light" },
+  ],
   pages: [
-{
-  "title": "Welcome to Push Power",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/force-fighter/assets/book/m2-fig1.svg",
-      "caption": "Figure: Push Power overview",
-      "place": "top",
-      "alt": "Push Power"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "A small push moves light things faster. A heavy thing needs a bigger push to get going!"
+      title: "Light ball, heavy drum",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/force-fighter/assets/book/m2-cover.jpg",
+              caption: "Energy and motion change when a push acts - bigger jobs need bigger pushes.",
+              alt: "Boiling pot as energy/change metaphor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A small push moves light things faster. A heavy thing needs a bigger push to get going!",
+        },
+        {
+          type: "p",
+          text: "Kick a light football, then try to roll a heavy drum with the same foot strength. The drum's mass fights the change.",
+        },
+        {
+          type: "p",
+          text: "Chair vs sofa: same idea in the living room. More mass → less acceleration for the same force.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores F = m / a / Newton 2. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "The F = m a story",
+      layout: "full-fig",
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/force-fighter/assets/book/m2-hook.jpg",
+              caption: "Different states, different responses - compare how hard a change is to start.",
+              alt: "Ice water vapor states",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Newton 2 links three ideas: force, mass, and acceleration. Double the force (same mass) → about double the acceleration. Double the mass (same force) → about half the acceleration.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Force is the push or pull you apply",
+            "Mass is how much 'stuff' resists the change",
+            "Acceleration is how quickly velocity changes",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Kicking a light ball vs rolling a heavy drum."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: F = m / a / Newton 2."
+      title: "Feel it in the mission",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/force-fighter/assets/book/m2-cover.jpg",
+              caption: "Watch how strongly you must act to get a big change.",
+              alt: "Strong change under heat/energy",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Push Power labs compare light vs heavy targets. Keep asking: Did I change force, mass, or both?",
+        },
+        {
+          type: "p",
+          text: "If two objects get the same push and one speeds up more, that one had less mass - not 'more willingness.'",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: A small push moves light things faster. A heavy thing needs a bigger push to get going!"
+      title: "Picture the trade-off",
+      layout: "full-fig",
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/force-fighter/assets/book/m2-hook.jpg",
+              caption: "Same world, different responses - mass changes how hard acceleration is.",
+              alt: "Water states comparison",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Hold the triangle in your head: raise force → more acceleration. Raise mass → less acceleration. That triangle is Newton 2.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Kicking a light ball vs rolling a heavy drum.",
-        "Compare it with Pushing a chair vs a sofa.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/force-fighter/assets/book/m2-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "Steps that build Push Power",
+      layout: "text",
+      blocks: [
+        {
+          type: "p",
+          text: "Meet push power → compare masses → sort strong/weak pushes → lab → explain → name F=ma → stretch → myths → fluency → Speed Star mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Comparisons beat memorizing letters alone",
+            "The equation is a shortcut for what you already felt",
+            "Stretch contexts prove the rule travels",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Push Power",
-        "Watch F, m, a",
-        "Sort: Force  /  Mass  /  Accel",
-        "Crate Push Lab",
-        "Live F = m / a Sim"
-      ]
+      title: "Chair vs sofa lab",
+      layout: "split",
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/force-fighter/assets/book/m2-cover.jpg",
+              caption: "Bigger change needs more push for the same mass - or less mass for the same push.",
+              alt: "Energy change",
+            },
+            {
+              src: "/games/force-fighter/assets/book/m2-hook.jpg",
+              caption: "Compare two cases side by side, like the mission labs.",
+              alt: "Comparison photo",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "At home: push an empty chair, then a sofa. Same foot? Different acceleration. That is mass talking.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Which object had more mass?",
+            "Which sped up more?",
+            "What would a bigger force do to the sofa?",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/force-fighter/assets/book/m2-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Kicking a light ball vs rolling a heavy drum as your example."
+      title: "Push Power myths",
+      layout: "text",
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: Heavier objects need force just to 'keep moving.' Better: without friction they would coast; force is needed to change motion.",
+        },
+        {
+          type: "p",
+          text: "Myth: F=ma is only for rockets. Better: chair, sofa, football, and drum all obey the same link.",
+        },
+        {
+          type: "p",
+          text: "Tap glossary terms for a tutor breakdown of mass vs weight if those words collide.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Speed Star check",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/force-fighter/assets/book/m2-cover.jpg",
+              caption: "Anchor picture for teaching F = m a in plain words.",
+              alt: "Teaching anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend: same force, more mass → gentler acceleration. Same mass, more force → stronger acceleration. Use ball vs drum.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Say F = m a without looking",
+            "Give one light and one heavy example",
+            "Correct the 'force keeps things moving' myth",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Speed Star reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Push Power to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 

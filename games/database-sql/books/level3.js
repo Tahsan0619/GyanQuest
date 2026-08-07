@@ -1,211 +1,305 @@
 /**
- * Digital book - database-sql mission 3: Keys & Joins
- * Auto-generated curriculum deepen book (5-7 pages).
+ * Digital book - Database SQL / Keys & Joins
+ * Theory: cognitive load, dual coding, multimedia learning, constructivism,
+ * conceptual change, spiral scaffold, retrieval practice.
+ * Photos: local verified copies under /games/database-sql/assets/book/ (see CREDITS-m3.json).
  */
 export const BOOK = {
   missionIndex: 2,
   title: "Keys & Joins",
   subtitle: "linking tables",
-  subject: "Database Sql / Keys & Joins",
+  subject: "Database SQL / Keys & Joins",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
   cover: {
     title: "Keys & Joins",
-    art: "/games/database-sql/assets/book/m3-fig1.svg",
+    art: "/games/database-sql/assets/book/m3-cover.jpg",
   },
   glossary: [
-  {
-    "id": "linking",
-    "term": "linking"
-  },
-  {
-    "id": "tables",
-    "term": "tables"
-  },
-  {
-    "id": "keys",
-    "term": "Keys"
-  },
-  {
-    "id": "link",
-    "term": "link"
-  },
-  {
-    "id": "stories",
-    "term": "stories"
-  },
-  {
-    "id": "stay",
-    "term": "stay"
-  },
-  {
-    "id": "connected",
-    "term": "connected"
-  },
-  {
-    "id": "join",
-    "term": "JOIN"
-  }
-],
+    { id: "key", term: "key" },
+    { id: "primary", term: "primary" },
+    { id: "foreign", term: "foreign" },
+    { id: "join", term: "join" },
+    { id: "match", term: "match" },
+    { id: "link", term: "link" },
+    { id: "unique", term: "unique" },
+    { id: "orphan", term: "orphan" },
+    { id: "table", term: "table" },
+    { id: "id", term: "id" },
+  ],
   pages: [
-{
-  "title": "Welcome to Keys & Joins",
-  "layout": "text",
-  "figures": [
     {
-      "src": "/games/database-sql/assets/book/m3-fig1.svg",
-      "caption": "Figure: Keys & Joins overview",
-      "place": "top",
-      "alt": "Keys & Joins"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Keys link tables so stories stay connected. JOIN matches key values across tables."
+      title: "Why Keys & Joins?",
+      layout: "text",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "cognitive-load",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/database-sql/assets/book/m3-hook.jpg",
+              caption: "Figure 1. Structures stand when parts connect - tables stand when keys connect.",
+              alt: "Structure",
+            },
+            {
+              src: "/games/database-sql/assets/book/m3-cover.jpg",
+              caption: "Bridges link two sides - JOINs link two tables.",
+              alt: "Bridge",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Student + class list, order + order items, ticket + seat - related stories live in more than one table.",
+        },
+        {
+          type: "p",
+          text: "Keys link those tables. JOIN matches key values so the story stays connected.",
+        },
+        {
+          type: "p",
+          text: "Everyday hook: a bus ticket number must match a seat row - that match is a join idea.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "This mission explores linking tables. In the game you practiced short steps; this book slows down and connects the big ideas."
+      title: "What makes a key",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/database-sql/assets/book/m3-model.jpg",
+              caption: "Figure 2. Systems keep IDs consistent across modules - so should your keys.",
+              alt: "ISS computer",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "A good key uniquely identifies a row. Random scribbles that collide break the link.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Primary ideas: one id per student",
+            "Foreign ideas: class_id pointing to a class row",
+            "Orphan rows lose their story link",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Everyday hook: think about Student + class list."
-    }
-  ]
-},
-{
-  "title": "The big idea",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Theme: linking tables."
+      title: "Join dial",
+      layout: "text",
+      theory: [
+        "cognitive-load",
+        "dual-coding",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/database-sql/assets/book/m3-mechanism.jpg",
+              caption: "Figure 3. Patterns of pairing - join matches are patterned equality checks.",
+              alt: "Pattern",
+            },
+            {
+              src: "/games/database-sql/assets/book/m3-lab.jpg",
+              caption: "Practice linking on paper before typing JOIN.",
+              alt: "Classroom",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "In the lab you raised link strength until matching keys lined up. JOIN ON is the handshake, not tape or socks.",
+        },
+        {
+          type: "p",
+          text: "If keys do not match, the combined story has holes.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "If you remember only one sentence, remember this: Keys link tables so stories stay connected. JOIN matches key values across tables."
+      title: "Match across tables",
+      layout: "full-fig",
+      theory: [
+        "multimedia-learning",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/database-sql/assets/book/m3-mastery.jpg",
+              caption: "Figure 4. Another bridge view - connection is the point.",
+              alt: "Bridge span",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "JOIN students to classes on class_id. Now each student row can carry a class name without copying the whole class table into every row forever.",
+        },
+        {
+          type: "p",
+          text: "Related stories need links; they do not need duplicate chaos.",
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Notice it in Student + class list.",
-        "Compare it with Order + order items.",
-        "Say the rule in your own words."
-      ]
-    }
-  ]
-},
-{
-  "title": "Picture the concept",
-  "layout": "full-fig",
-  "figures": [
-    {
-      "src": "/games/database-sql/assets/book/m3-fig2.svg",
-      "caption": "Figure: key idea map",
-      "place": "full",
-      "alt": "Idea map"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Look at the figure carefully. Point to each part and name it aloud. Good scientists and makers always match words to pictures."
-    }
-  ]
-},
-{
-  "title": "How the mission steps fit",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Each sub-level was one spiral step: meet, try, sort, lab, explain, rule, stretch, myth, fluency, mastery."
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: [
+        "spiral-scaffold",
+        "cognitive-load",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet keys -> dial links -> sort key types -> stronger join lab -> why match -> name the join rule -> stretch tickets -> myths -> fluency -> mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting separates unique ids from random numbers",
+            "Labs show JOIN matches values",
+            "Rule: keys link tables; JOIN matches those keys",
+          ],
+        },
+      ],
     },
     {
-      "type": "ul",
-      "items": [
-        "Meet Key Links",
-        "Match Dial Lab",
-        "Sort Keys & Joins",
-        "Stronger Link Lab",
-        "Why Keys Matter"
-      ]
+      title: "Street lab: ticket + seat",
+      layout: "split",
+      theory: [
+        "constructivism",
+        "dual-coding",
+        "retrieval-practice",
+      ],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/database-sql/assets/book/m3-cover.jpg",
+              caption: "Link sides.",
+              alt: "Bridge",
+            },
+            {
+              src: "/games/database-sql/assets/book/m3-hook.jpg",
+              caption: "Connected parts.",
+              alt: "Structure",
+            },
+            {
+              src: "/games/database-sql/assets/book/m3-mechanism.jpg",
+              caption: "Match patterns.",
+              alt: "Pattern",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Draw two mini tables: tickets(id, seat_id) and seats(id, row). Draw lines where ids match.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Find an orphan ticket with no seat",
+            "Explain why socks are not join tools",
+            "Flip carousel: bridge vs structure metaphor",
+          ],
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Together they build the same story this book tells in longer form."
-    }
-  ]
-},
-{
-  "title": "Everyday lab",
-  "layout": "split",
-  "figures": [
-    {
-      "src": "/games/database-sql/assets/book/m3-fig3.svg",
-      "caption": "Figure: everyday example",
-      "place": "right",
-      "alt": "Everyday"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Try this at home or school: use Student + class list as your example."
+      title: "Myths to bust",
+      layout: "text",
+      theory: [
+        "conceptual-change",
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: tables never need to link. Better: related stories use keys to stay connected.",
+        },
+        {
+          type: "p",
+          text: "Myth: JOIN glues with tape. Better: JOIN matches key values between tables.",
+        },
+        {
+          type: "p",
+          text: "Myth: socks join tables. Better: keys and JOIN ON match fields - not socks.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
     },
     {
-      "type": "p",
-      "text": "Ask: What is changing? What stays the same? What rule explains it?"
+      title: "Mastery",
+      layout: "text",
+      theory: [
+        "retrieval-practice",
+        "spiral-scaffold",
+      ],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/database-sql/assets/book/m3-mastery.jpg",
+              caption: "Figure 5. Connection - your join goal.",
+              alt: "Bridge anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend: unique keys identify rows; JOIN matches keys across tables so stories connect.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Invent two tables that should link",
+            "Name the shared key field",
+            "Use the word join correctly once",
+          ],
+        },
+      ],
     },
-    {
-      "type": "p",
-      "text": "Write one sentence you could teach a friend."
-    }
-  ]
-},
-{
-  "title": "Watch for myths",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "Learners often mix up nearby ideas. Pause and check:"
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Did I use the right word for the right job?",
-        "Can I show an example and a counter-example?",
-        "Would my explanation still work tomorrow?"
-      ]
-    },
-    {
-      "type": "p",
-      "text": "Red words in this book are glossary terms - tap one to ask the tutor."
-    }
-  ]
-},
-{
-  "title": "Mastery checkpoint",
-  "layout": "text",
-  "blocks": [
-    {
-      "type": "p",
-      "text": "You earned the path to the Join Junior reward in the game. In the book, mastery means you can teach it."
-    },
-    {
-      "type": "ul",
-      "items": [
-        "Explain Keys & Joins to someone younger in under one minute.",
-        "Sketch the figure from memory.",
-        "Name two everyday places the idea appears."
-      ]
-    },
-    {
-      "type": "p",
-      "text": "When a word feels hard, tap it. Stay curious."
-    }
-  ]
-}
   ],
 };
 
