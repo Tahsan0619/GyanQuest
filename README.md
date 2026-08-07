@@ -27,3 +27,4 @@ Or without chat: `py -3 -m http.server 5500` from the repo root.
 - Do **not** commit `.env` (gitignored). Use `.env.example`.
 - Progress saves in `localStorage` per game (`save-v2`; chemistry also migrates `save-v1`).
 - Reload restores hub vs in-mission screen via the `inHub` save field.
+- `audio/` and `3D Assets/` stay local (gitignored) so GitHub clones stay small.
