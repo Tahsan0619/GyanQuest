@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GyanQuest | Force Fighter</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&amp;family=Sora:wght@300;400;600;700&amp;family=Noto+Sans+Bengali:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..900&amp;family=Syne:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-tertiary": "#20333e",
+                "tertiary-fixed": "#d1e5f5",
+                "on-primary-fixed-variant": "#005235",
+                "outline": "#87948b",
+                "secondary-fixed-dim": "#f8bd45",
+                "surface-container-lowest": "#0b0f0e",
+                "secondary-container": "#bc8709",
+                "primary-fixed-dim": "#71daa7",
+                "on-primary-container": "#00311e",
+                "on-secondary-fixed": "#271900",
+                "error": "#ffb4ab",
+                "surface-container-highest": "#313635",
+                "background": "#101413",
+                "surface-container-low": "#181c1b",
+                "error-container": "#93000a",
+                "on-primary": "#003823",
+                "outline-variant": "#3e4942",
+                "on-surface": "#e0e3e1",
+                "on-error-container": "#ffdad6",
+                "on-secondary-fixed-variant": "#5e4200",
+                "on-tertiary-container": "#192c37",
+                "tertiary-fixed-dim": "#b5c9d8",
+                "surface": "#101413",
+                "on-primary-fixed": "#002113",
+                "secondary": "#f8bd45",
+                "inverse-primary": "#006c47",
+                "on-secondary-container": "#392600",
+                "on-background": "#e0e3e1",
+                "on-tertiary-fixed": "#091e29",
+                "on-surface-variant": "#bdcac0",
+                "surface-container-high": "#272b2a",
+                "on-tertiary-fixed-variant": "#364955",
+                "primary-fixed": "#8ef7c1",
+                "surface-variant": "#313635",
+                "inverse-on-surface": "#2d3130",
+                "primary": "#71daa7",
+                "secondary-fixed": "#ffdea7",
+                "surface-dim": "#101413",
+                "tertiary-container": "#8093a1",
+                "inverse-surface": "#e0e3e1",
+                "on-error": "#690005",
+                "primary-container": "#35a373",
+                "on-secondary": "#412d00",
+                "surface-container": "#1c201f",
+                "surface-bright": "#363a39",
+                "surface-tint": "#71daa7",
+                "tertiary": "#b5c9d8"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "unit": "8px",
+                "container-max": "1280px",
+                "margin-desktop": "64px",
+                "margin-mobile": "16px",
+                "gutter": "24px"
+            },
+            "fontFamily": {
+                "headline-lg-mobile": ["Syne"],
+                "ui-action-lg": ["Sora"],
+                "label-caps": ["Sora"],
+                "body-main": ["Sora"],
+                "headline-lg": ["Syne"],
+                "display-hero": ["Syne"],
+                "bengali-support": ["Noto Sans Bengali"]
+            },
+            "fontSize": {
+                "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                "ui-action-lg": ["18px", {"lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                "body-main": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                "bengali-support": ["16px", {"lineHeight": "1.8", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+      }
+      
+      .wet-asphalt-reflection {
+        background: linear-gradient(to bottom, rgba(49, 54, 53, 0.4) 0%, rgba(16, 20, 19, 1) 100%);
+      }
+
+      .neon-glow-primary {
+        box-shadow: 0 0 15px rgba(113, 218, 167, 0.3);
+      }
+
+      .neon-glow-secondary {
+        box-shadow: 0 0 15px rgba(248, 189, 69, 0.3);
+      }
+
+      .tactile-button {
+        box-shadow: 0 4px 0 0 #bc8709;
+        transition: transform 0.1s, box-shadow 0.1s;
+      }
+
+      .tactile-button:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 0 0 #bc8709;
+      }
+
+      .progress-dot-active {
+        box-shadow: 0 0 10px #71daa7;
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #101413;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #313635;
+        border-radius: 10px;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-main selection:bg-primary selection:text-on-primary overflow-hidden h-screen flex flex-col">
+<!-- 1. TopAppBar (Game Shell Type) -->
+<header class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 z-50 bg-surface-container-lowest bg-gradient-to-b from-surface-variant/30 to-transparent">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-primary/10 p-2 rounded-full transition-all active:translate-y-0.5" title="Back to Hub">
+                arrow_back
+            </button>
+<div class="flex flex-col">
+<span class="font-display-hero text-headline-lg text-primary leading-none">GyanQuest</span>
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-widest">Monsoon Lab Shell</span>
+</div>
+</div>
+<div class="hidden md:flex flex-col items-center">
+<h1 class="font-headline-lg text-secondary tracking-tight">Force Fighter</h1>
+<span class="font-label-caps text-[10px] bg-on-primary-container text-primary px-2 py-0.5 rounded-full border border-primary/20">Core Science</span>
+</div>
+<div class="flex items-center gap-3">
+<!-- Rewards Pill -->
+<div class="flex items-center gap-2 bg-surface-container rounded-full px-3 py-1 border border-outline-variant/30 neon-glow-secondary">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+<span class="font-label-caps text-secondary">2,450</span>
+</div>
+<!-- Language Toggle -->
+<button class="font-label-caps text-on-surface-variant hover:text-primary transition-colors text-[11px] border border-outline-variant px-2 py-1 rounded">
+                EN/বাংলা
+            </button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-primary/10 p-2 rounded-full transition-all active:translate-y-0.5">
+                videogame_asset
+            </button>
+</div>
+</header>
+<!-- 2 & 3. Progress Section -->
+<div class="w-full px-margin-mobile md:px-margin-desktop py-4 bg-surface-container-low border-b border-outline-variant/20">
+<div class="max-w-container-max mx-auto flex flex-col gap-3">
+<div class="flex justify-between items-end">
+<h2 class="font-headline-lg text-secondary text-lg flex items-center gap-2">
+<span class="text-2xl">🪨</span> Force Fighter · Step 4 of 10
+                </h2>
+<span class="font-label-caps text-outline-variant">6 steps left to Mission Complete</span>
+</div>
+<!-- Step Dots -->
+<div class="flex gap-2 items-center">
+<!-- Completed (Marigold) -->
+<div class="h-3 w-3 rounded-full bg-secondary"></div>
+<div class="h-3 w-3 rounded-full bg-secondary"></div>
+<div class="h-3 w-3 rounded-full bg-secondary"></div>
+<!-- Active (Glowing Green) -->
+<div class="h-4 w-4 rounded-full bg-primary progress-dot-active border-2 border-on-primary"></div>
+<!-- Locked (Muted Teal) -->
+<div class="h-3 w-3 rounded-full bg-outline-variant/40"></div>
+<div class="h-3 w-3 rounded-full bg-outline-variant/40"></div>
+<div class="h-3 w-3 rounded-full bg-outline-variant/40"></div>
+<div class="h-3 w-3 rounded-full bg-outline-variant/40"></div>
+<div class="h-3 w-3 rounded-full bg-outline-variant/40"></div>
+<div class="h-3 w-3 rounded-full bg-outline-variant/40"></div>
+<div class="ml-4 h-2 flex-grow bg-surface-container-highest rounded-full overflow-hidden border border-outline-variant/10">
+<div class="h-full bg-primary neon-glow-primary transition-all duration-1000" style="width: 40%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- 4. Main Content Area -->
+<main class="flex-grow flex flex-col md:flex-row overflow-hidden relative">
+<!-- 3D Viewport Placeholder (Asymmetric layout) -->
+<div class="flex-grow relative bg-surface-container-lowest p-gutter overflow-hidden">
+<div class="absolute inset-0 z-0">
+
+</div>
+<!-- Lab UI Overlays -->
+<div class="relative z-10 w-full h-full flex flex-col justify-between pointer-events-none">
+<div class="flex justify-between">
+<div class="bg-surface/80 backdrop-blur-md border border-primary/20 p-4 rounded-xl pointer-events-auto">
+<div class="font-label-caps text-primary mb-1">REAL-TIME TELEMETRY</div>
+<div class="font-mono text-xl text-primary-fixed">0.00 m/s²</div>
+<div class="w-32 h-1 bg-outline-variant/30 mt-2 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-1/4"></div>
+</div>
+</div>
+<div class="bg-surface/80 backdrop-blur-md border border-secondary/20 p-4 rounded-xl pointer-events-auto">
+<div class="font-label-caps text-secondary mb-1">FRICTION COEFFICIENT</div>
+<div class="font-mono text-xl text-secondary-fixed">μ = 0.25</div>
+</div>
+</div>
+<!-- Simulation Interactive Area (Center) -->
+<div class="flex-grow flex items-center justify-center p-12">
+<div class="relative group cursor-crosshair pointer-events-auto">
+<!-- The Block -->
+<div class="w-48 h-32 bg-gradient-to-br from-surface-bright to-surface-container-low border-2 border-outline/30 rounded-lg flex items-center justify-center shadow-2xl transition-transform active:scale-95">
+<span class="material-symbols-outlined text-4xl text-outline-variant">package_2</span>
+<div class="absolute -top-8 text-secondary font-label-caps">15 kg</div>
+</div>
+<!-- Vector Arrow -->
+<div class="absolute left-full top-1/2 -translate-y-1/2 ml-4 flex items-center transition-all group-hover:translate-x-2">
+<div class="h-1 w-24 bg-primary neon-glow-primary"></div>
+<div class="w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-l-[12px] border-l-primary neon-glow-primary"></div>
+</div>
+</div>
+</div>
+<!-- Control Bar Overlay -->
+<div class="flex justify-center pb-8 pointer-events-auto">
+<div class="bg-surface-container-high/90 border border-outline-variant p-6 rounded-full flex items-center gap-8 shadow-2xl backdrop-blur-xl">
+<span class="font-label-caps text-on-surface">FORCE AMPLIFIER</span>
+<input class="w-64 accent-secondary bg-surface-container h-2 rounded-full appearance-none cursor-pointer" max="100" min="0" type="range" value="25"/>
+<div class="flex gap-4">
+<button class="bg-primary text-on-primary font-label-caps px-6 py-2 rounded-full tactile-button hover:bg-primary-container transition-colors">INITIATE PUSH</button>
+<button class="bg-error-container text-on-error-container font-label-caps px-6 py-2 rounded-full border border-error/20">RESET LAB</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 5. Coach Dock -->
+<aside class="w-full md:w-96 bg-surface-container border-l border-outline-variant/20 flex flex-col overflow-hidden">
+<!-- Coach Identity -->
+<div class="p-6 flex flex-col gap-4 border-b border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full border-2 border-primary p-1 bg-surface ring-4 ring-primary/10">
+<img class="w-full h-full rounded-full object-cover" data-alt="A stylized, high-tech digital avatar of a science instructor named Coach Force. He has a futuristic headset, a determined yet friendly expression, and is wearing a sleek lab jumpsuit with neon green accents. The art style is polished 3D with cinematic lighting, reflecting a high-stakes scientific mission vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTHiHYvCg3nLq-tB5C6fYXvmSc3KUljUo9SaKdVOy_kCPWGfHI8bhN4uV56CzWgAkUTweXEi8-80c5FadmT3GYQQNUSTXq_o2yNSTuzXdAXgWXmC_lRXE6x1EXB8Kyw2-AlBL7CNrBLql3Tz40yE2xdQdd-V5qsCVflIbKHS_XECTEEBISYB85kF2a36P-DRqPaQoozqvghk91RMSoRXlfbW3nk0dJ3Mr6iiijodNLuzzJeWuXAi3Ojg"/>
+</div>
+<div>
+<h3 class="font-headline-lg text-primary text-xl">Coach Force</h3>
+<p class="font-label-caps text-[10px] text-outline uppercase">Master Physics Specialist</p>
+</div>
+</div>
+</div>
+<!-- Speech Bubble -->
+<div class="flex-grow p-6 overflow-y-auto">
+<div class="relative bg-surface-container-high p-5 rounded-2xl border border-primary/20 neon-glow-primary">
+<div class="absolute -left-2 top-6 w-4 h-4 bg-surface-container-high border-l border-b border-primary/20 rotate-45"></div>
+<p class="text-on-surface leading-relaxed italic">
+                        "Welcome to the Monsoon Lab's friction field! Newton's First Law states an object remains at rest unless acted upon by an external force. 
+                        <br/><br/>
+<strong class="text-primary">Your Objective:</strong> Use the slider to apply enough force to overcome the static friction. Watch how the telemetry changes the moment the block moves!"
+                    </p>
+</div>
+<!-- Activity Buttons Mount -->
+<div class="mt-8 flex flex-col gap-3">
+<button class="flex items-center justify-between p-4 bg-surface-container-low border border-outline-variant rounded-xl hover:border-primary transition-all group active:scale-[0.98]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline group-hover:text-primary">psychology</span>
+<span class="font-ui-action-lg text-sm text-on-surface">View Hint</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</button>
+<button class="flex items-center justify-between p-4 bg-surface-container-low border border-outline-variant rounded-xl hover:border-secondary transition-all group active:scale-[0.98]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline group-hover:text-secondary">menu_book</span>
+<span class="font-ui-action-lg text-sm text-on-surface">Theory Log</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Deployment Trigger -->
+<div class="p-6 bg-surface-container-highest/50">
+<button class="w-full bg-secondary text-on-secondary font-display-hero py-4 rounded-xl tactile-button uppercase tracking-wider text-xl">
+                    Deploy Intel
+                </button>
+</div>
+</aside>
+</main>
+<!-- 6. Footer Area (Status Bar) -->
+<footer class="h-16 bg-surface-container-lowest border-t border-outline-variant flex items-center px-margin-mobile md:px-margin-desktop justify-between z-50">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-label-caps text-on-surface-variant">Lab Status: <span class="text-primary">Active</span></span>
+</div>
+<div class="h-4 w-px bg-outline-variant/30"></div>
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-on-surface-variant">Level Progress:</span>
+<span class="font-label-caps text-secondary">400 XP EARNED</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex flex-col items-end mr-4">
+<span class="font-label-caps text-[10px] text-outline uppercase">Next Challenge</span>
+<span class="font-label-caps text-on-surface">Balanced vs Unbalanced</span>
+</div>
+<button class="bg-primary-container text-on-primary-container px-8 py-2 rounded-full font-ui-action-lg text-sm flex items-center gap-2 hover:bg-primary transition-colors active:translate-y-0.5 shadow-lg shadow-primary/10">
+                Next Step
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</footer>
+<script>
+        // Simple Interaction logic
+        const slider = document.querySelector('input[type="range"]');
+        const pushBtn = document.querySelector('.tactile-button');
+        const telemetry = document.querySelector('.font-mono');
+
+        slider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            // Update UI feedback based on force
+            if(val > 50) {
+                telemetry.classList.add('text-secondary-fixed');
+                telemetry.classList.remove('text-primary-fixed');
+            } else {
+                telemetry.classList.remove('text-secondary-fixed');
+                telemetry.classList.add('text-primary-fixed');
+            }
+        });
+
+        // Small interaction for the coach avatar
+        const coachImg = document.querySelector('img');
+        coachImg.addEventListener('mouseover', () => {
+            coachImg.parentElement.classList.add('ring-primary/40');
+        });
+        coachImg.addEventListener('mouseout', () => {
+            coachImg.parentElement.classList.remove('ring-primary/40');
+        });
+    </script>
+</body></html>

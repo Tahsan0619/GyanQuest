@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <rect x="12" y="36" width="28" height="36" rx="8" fill="#4c1d95"/>
+  <rect x="44" y="36" width="40" height="36" rx="8" fill="#7c3aed"/>
+  <rect x="88" y="36" width="28" height="36" rx="8" fill="#a78bfa"/>
+  <text x="26" y="58" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#ede9fe">A</text>
+  <text x="64" y="58" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#fff">BOND</text>
+  <text x="102" y="58" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#1e1b4b">B</text>
+  <line x1="40" y1="54" x2="44" y2="54" stroke="#c4b5fd" stroke-width="4"/>
+  <line x1="84" y1="54" x2="88" y2="54" stroke="#c4b5fd" stroke-width="4"/>
+  <text x="64" y="108" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="13" font-weight="700" fill="#4c1d95">RULE</text>
+</svg>

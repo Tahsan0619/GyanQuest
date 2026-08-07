@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GyanQuest | Instructor Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Syne:wght@700;800&amp;family=Noto+Sans+Bengali:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glow-primary {
+            box-shadow: 0 0 20px rgba(113, 218, 167, 0.25);
+        }
+        .glow-secondary {
+            box-shadow: 0 0 20px rgba(248, 189, 69, 0.2);
+        }
+        .wet-asphalt {
+            background: linear-gradient(180deg, rgba(49, 54, 53, 0.4) 0%, rgba(16, 20, 19, 1) 100%);
+            border: 1px solid rgba(113, 218, 167, 0.1);
+        }
+        .heat-cell {
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+        .heat-cell:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+            z-index: 10;
+        }
+        /* Custom scrollbar for data density */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101413;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3e4942;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#101413",
+                      "tertiary-fixed-dim": "#b5c9d8",
+                      "on-tertiary": "#20333e",
+                      "tertiary-container": "#8093a1",
+                      "surface-container-lowest": "#0b0f0e",
+                      "on-primary-container": "#00311e",
+                      "on-tertiary-fixed": "#091e29",
+                      "on-surface": "#e0e3e1",
+                      "inverse-primary": "#006c47",
+                      "on-surface-variant": "#bdcac0",
+                      "secondary-container": "#bc8709",
+                      "surface-container-highest": "#313635",
+                      "surface-tint": "#71daa7",
+                      "inverse-on-surface": "#2d3130",
+                      "on-primary-fixed-variant": "#005235",
+                      "secondary": "#f8bd45",
+                      "primary-fixed": "#8ef7c1",
+                      "primary": "#71daa7",
+                      "on-tertiary-container": "#192c37",
+                      "error": "#ffb4ab",
+                      "secondary-fixed-dim": "#f8bd45",
+                      "on-secondary-fixed": "#271900",
+                      "error-container": "#93000a",
+                      "on-error-container": "#ffdad6",
+                      "tertiary": "#b5c9d8",
+                      "secondary-fixed": "#ffdea7",
+                      "on-primary": "#003823",
+                      "primary-fixed-dim": "#71daa7",
+                      "surface-variant": "#313635",
+                      "on-error": "#690005",
+                      "surface-container-low": "#181c1b",
+                      "outline-variant": "#3e4942",
+                      "on-secondary": "#412d00",
+                      "on-background": "#e0e3e1",
+                      "surface-bright": "#363a39",
+                      "surface": "#101413",
+                      "tertiary-fixed": "#d1e5f5",
+                      "on-secondary-fixed-variant": "#5e4200",
+                      "primary-container": "#35a373",
+                      "inverse-surface": "#e0e3e1",
+                      "surface-container": "#1c201f",
+                      "surface-container-high": "#272b2a",
+                      "outline": "#87948b",
+                      "on-primary-fixed": "#002113",
+                      "surface-dim": "#101413",
+                      "on-secondary-container": "#392600",
+                      "on-tertiary-fixed-variant": "#364955"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "margin-desktop": "64px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Sora"],
+                      "bengali-support": ["Noto Sans Bengali"],
+                      "body-main": ["Sora"],
+                      "ui-action-lg": ["Sora"],
+                      "headline-lg-mobile": ["Syne"],
+                      "display-hero": ["Syne"],
+                      "headline-lg": ["Syne"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "body-main": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "ui-action-lg": ["18px", {"lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background font-body-main selection:bg-primary selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-[100] bg-surface/80 backdrop-blur-md border-b border-primary/20 h-20">
+<div class="flex justify-between items-center w-full px-margin-desktop h-full max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<span class="font-display-hero text-headline-lg text-primary uppercase tracking-tighter">GyanQuest</span>
+<nav class="hidden md:flex gap-6">
+<a class="text-secondary font-bold border-b-2 border-secondary pb-1 font-body-main text-body-main" href="#">Games</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-main text-body-main" href="#">Why</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-main text-body-main" href="#">Vision</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-label-caps text-outline px-3 py-1 border border-outline/30 rounded">EN/বাংলা</span>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-ui-action-lg text-ui-action-lg hover:scale-105 transition-transform glow-primary">
+                    Play now
+                </button>
+</div>
+</div>
+</header>
+<main class="pt-32 pb-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<!-- Header & Core Metrics -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-8">
+<div>
+<h1 class="font-display-hero text-display-hero text-primary mb-2">Force Fighter Analytics</h1>
+<p class="text-on-surface-variant max-w-2xl">Class intelligence dashboard for Instructor Commander. Identifying friction points and kinetic engagement across 42 active cadets.</p>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-container-high p-4 rounded-xl border border-outline-variant/30 text-right">
+<span class="block font-label-caps text-label-caps text-secondary mb-1">AVERAGE PRECISION</span>
+<span class="font-display-hero text-headline-lg text-on-surface">84.2%</span>
+</div>
+<div class="bg-surface-container-high p-4 rounded-xl border border-outline-variant/30 text-right">
+<span class="block font-label-caps text-label-caps text-primary mb-1">TIME ON TASK</span>
+<span class="font-display-hero text-headline-lg text-on-surface">22m 4s</span>
+</div>
+</div>
+</div>
+<!-- Bento Data Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Point of Failure Heat Map (Large) -->
+<div class="md:col-span-8 wet-asphalt p-6 rounded-xl relative overflow-hidden group">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-lg text-headline-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">analytics</span>
+                            Point of Failure Grid
+                        </h3>
+<div class="flex gap-2">
+<span class="flex items-center gap-1 font-label-caps text-[10px] text-outline"><div class="w-3 h-3 bg-error rounded-sm"></div> CRITICAL</span>
+<span class="flex items-center gap-1 font-label-caps text-[10px] text-outline"><div class="w-3 h-3 bg-primary rounded-sm"></div> OPTIMAL</span>
+</div>
+</div>
+<div class="grid grid-cols-10 grid-rows-6 gap-2 h-80">
+<!-- Simulated Heat Grid -->
+<script>
+                            document.write(Array.from({length: 60}, (_, i) => {
+                                const opacity = Math.random();
+                                const color = opacity > 0.8 ? 'bg-error' : (opacity > 0.4 ? 'bg-primary' : 'bg-primary/20');
+                                return `<div class="heat-cell ${color} rounded-sm cursor-pointer opacity-80 hover:opacity-100" style="opacity: ${opacity + 0.2}"></div>`;
+                            }).join(''));
+                        </script>
+</div>
+<div class="mt-4 flex justify-between font-label-caps text-label-caps text-outline">
+<span>MISSION START (ENTRY)</span>
+<span>MISSION CRITICAL (VECTOR CALC)</span>
+<span>MISSION EXIT (FEEDBACK)</span>
+</div>
+</div>
+<!-- Live Feed (Vertical) -->
+<div class="md:col-span-4 bg-surface-container p-6 rounded-xl border border-outline-variant/50">
+<h3 class="font-label-caps text-label-caps text-outline mb-6">LIVE INTEL FEED</h3>
+<div class="space-y-6 max-h-[360px] overflow-y-auto pr-2">
+<div class="flex gap-4 items-start pb-4 border-b border-outline-variant/20">
+<div class="w-10 h-10 rounded bg-secondary/10 border border-secondary/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary">person</span>
+</div>
+<div>
+<p class="text-on-surface text-sm font-bold">Cadet Rahat</p>
+<p class="text-on-surface-variant text-xs">Failed "Newton-3" calculation. 4th attempt.</p>
+<span class="text-[10px] text-error font-bold mt-1 block">CRITICAL ASSIST NEEDED</span>
+</div>
+</div>
+<div class="flex gap-4 items-start pb-4 border-b border-outline-variant/20">
+<div class="w-10 h-10 rounded bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">verified</span>
+</div>
+<div>
+<p class="text-on-surface text-sm font-bold">Cadet Sumaiya</p>
+<p class="text-on-surface-variant text-xs">Perfect execution on "Force Vector" dash.</p>
+<span class="text-[10px] text-primary font-bold mt-1 block">ACHIEVEMENT UNLOCKED</span>
+</div>
+</div>
+<div class="flex gap-4 items-start pb-4 border-b border-outline-variant/20">
+<div class="w-10 h-10 rounded bg-outline/10 border border-outline/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline">timer</span>
+</div>
+<div>
+<p class="text-on-surface text-sm font-bold">Cadet Arifin</p>
+<p class="text-on-surface-variant text-xs">Session time exceeded 45m. Fatigued.</p>
+<span class="text-[10px] text-tertiary font-bold mt-1 block">BREAK RECOMMENDED</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Precision Metrics (Medium) -->
+<div class="md:col-span-6 wet-asphalt p-6 rounded-xl min-h-[300px] flex flex-col justify-between">
+<div>
+<h3 class="font-headline-lg text-headline-lg-mobile text-primary mb-2">Kinetic Precision</h3>
+<p class="text-on-surface-variant text-sm mb-6">Historical accuracy across Force Fighter modules over 7 days.</p>
+</div>
+<!-- Simple CSS Graph Representation -->
+<div class="flex items-end gap-4 h-32 px-4">
+<div class="flex-1 bg-primary/20 rounded-t h-[40%] hover:bg-primary transition-all relative group">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] bg-background border border-primary p-1">42%</span>
+</div>
+<div class="flex-1 bg-primary/20 rounded-t h-[55%] hover:bg-primary transition-all relative group">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] bg-background border border-primary p-1">55%</span>
+</div>
+<div class="flex-1 bg-primary/20 rounded-t h-[80%] hover:bg-primary transition-all relative group">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] bg-background border border-primary p-1">80%</span>
+</div>
+<div class="flex-1 bg-primary/20 rounded-t h-[65%] hover:bg-primary transition-all relative group">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] bg-background border border-primary p-1">65%</span>
+</div>
+<div class="flex-1 bg-primary/20 rounded-t h-[90%] hover:bg-primary transition-all relative group">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] bg-background border border-primary p-1">90%</span>
+</div>
+<div class="flex-1 bg-primary/20 rounded-t h-[75%] hover:bg-primary transition-all relative group">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] bg-background border border-primary p-1">75%</span>
+</div>
+<div class="flex-1 bg-primary/20 rounded-t h-[85%] hover:bg-primary transition-all relative group">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] bg-background border border-primary p-1">85%</span>
+</div>
+</div>
+<div class="flex justify-between font-label-caps text-[10px] text-outline pt-4">
+<span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
+</div>
+</div>
+<!-- Concept Heat-Map (Medium) -->
+<div class="md:col-span-6 bg-surface-container-high p-6 rounded-xl border border-outline-variant/30">
+<h3 class="font-headline-lg text-headline-lg-mobile text-secondary mb-6">Topic Friction</h3>
+<div class="space-y-4">
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-label-caps">
+<span>Newton's Second Law</span>
+<span class="text-error">92% FRICTION</span>
+</div>
+<div class="w-full bg-background h-3 rounded-full overflow-hidden border border-outline-variant/30">
+<div class="h-full bg-error w-[92%]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-label-caps">
+<span>Gravitational Constant</span>
+<span class="text-secondary">45% FRICTION</span>
+</div>
+<div class="w-full bg-background h-3 rounded-full overflow-hidden border border-outline-variant/30">
+<div class="h-full bg-secondary w-[45%]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-label-caps">
+<span>Mass vs Weight</span>
+<span class="text-primary">12% FRICTION</span>
+</div>
+<div class="w-full bg-background h-3 rounded-full overflow-hidden border border-outline-variant/30">
+<div class="h-full bg-primary w-[12%]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-label-caps">
+<span>Inertial Ref Frames</span>
+<span class="text-error">78% FRICTION</span>
+</div>
+<div class="w-full bg-background h-3 rounded-full overflow-hidden border border-outline-variant/30">
+<div class="h-full bg-error w-[78%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Dynamic Lab Module Display -->
+<section class="mt-12 bg-surface-container p-8 rounded-2xl border border-primary/10 relative">
+<div class="absolute top-0 right-0 p-8">
+<span class="material-symbols-outlined text-primary/20 text-9xl select-none">rocket_launch</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-4 mb-6">
+<span class="bg-primary/20 text-primary px-3 py-1 rounded font-label-caps text-label-caps">MODULE 04</span>
+<h2 class="font-headline-lg text-headline-lg">Force Fighter Simulation Shell</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="space-y-2">
+<p class="font-label-caps text-label-caps text-outline">ACTIVE USERS</p>
+<p class="text-2xl font-bold">14 Cadets</p>
+</div>
+<div class="space-y-2">
+<p class="font-label-caps text-label-caps text-outline">SERVER STATUS</p>
+<p class="text-2xl font-bold text-primary flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                            Operational
+                        </p>
+</div>
+<div class="space-y-2">
+<p class="font-label-caps text-label-caps text-outline">DATA THROUGHPUT</p>
+<p class="text-2xl font-bold">1.2 GB / min</p>
+</div>
+</div>
+<div class="mt-8 flex gap-4">
+<button class="bg-primary text-on-primary px-8 py-3 rounded-lg font-ui-action-lg hover:scale-105 transition-transform flex items-center gap-2">
+<span class="material-symbols-outlined">cast_connected</span>
+                        ENTER COMMAND CENTER
+                    </button>
+<button class="border border-outline text-on-surface px-8 py-3 rounded-lg font-ui-action-lg hover:bg-surface-variant transition-colors">
+                        EXPORT CSV LOGS
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- SideNavBar (Coach Dock Style) -->
+<aside class="fixed right-unit bottom-unit w-80 rounded-xl bg-surface-container border border-primary/20 shadow-lg shadow-primary/20 flex flex-col p-4 gap-unit z-[90]">
+<div class="flex items-center gap-4 mb-2">
+<div class="w-12 h-12 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional digital portrait of a high-tech science instructor with glowing holographic eyewear. The character has an intense, focused expression, set against a background of deep teal and glowing green laboratory instrumentation. The lighting is dramatic and moody, reflecting a premium dark-mode aesthetic with neon green highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRi3yDfFSbv0dY4J2GLtOqTwIaWhapfyhtS1Nh2LlsXmjIaEfCMekHQALBUE_pTodD2kIPgjTzouabp8KpgLf56CMwU76J3choMlCO87WbAnDCMG6qci7HjBILtwOTRNXS6MaI7V47qfrZoa8ckjYLMR_79hWvhq1riLoriyDJj2JnFsue6r9oJ9TwbrLnk2xsMszg3s_16DU5T4G9yH6eok7kf6UIAd6oTp3zHHfUDF8Z2MSIZoJWeQ"/>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Commander</h4>
+<p class="text-xs text-primary font-label-caps">Lab Status: Active</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="bg-secondary text-on-secondary rounded-lg p-2 flex items-center gap-3 transition-transform active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-body-main">Mission</span>
+</a>
+<a class="text-on-surface-variant hover:text-primary p-2 flex items-center gap-3 transition-colors" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-body-main">Intel</span>
+</a>
+<a class="text-on-surface-variant hover:text-primary p-2 flex items-center gap-3 transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-body-main">Log</span>
+</a>
+</nav>
+<button class="mt-2 bg-primary/10 border border-primary/30 text-primary py-3 rounded-lg font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-all">
+            DEPLOY INTEL
+        </button>
+</aside>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant py-12 flex flex-col items-center justify-center gap-4 w-full text-center">
+<span class="font-display-hero text-headline-lg text-primary opacity-50 uppercase tracking-tighter">GyanQuest</span>
+<div class="flex gap-8">
+<a class="text-outline hover:text-primary transition-colors font-label-caps text-label-caps" href="#">Privacy</a>
+<a class="text-outline hover:text-primary transition-colors font-label-caps text-label-caps" href="#">Terms</a>
+<a class="text-outline hover:text-primary transition-colors font-label-caps text-label-caps" href="#">Research</a>
+</div>
+<p class="text-outline font-label-caps text-label-caps mt-4 opacity-70">
+            © 2024 GyanQuest Monsoon Lab. High-Tech Education for the Bold.
+        </p>
+</footer>
+<script>
+        // Simple micro-interaction for heat map cells
+        document.querySelectorAll('.heat-cell').forEach(cell => {
+            cell.addEventListener('mouseenter', () => {
+                const colors = ['#71daa7', '#f8bd45', '#ffb4ab'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                cell.style.boxShadow = `0 0 10px ${randomColor}`;
+            });
+            cell.addEventListener('mouseleave', () => {
+                cell.style.boxShadow = 'none';
+            });
+        });
+
+        // Auto-scroll simulation for live feed
+        const liveFeed = document.querySelector('.space-y-6.max-h-\\[360px\\]');
+        setInterval(() => {
+            if (liveFeed) {
+                const firstChild = liveFeed.firstElementChild;
+                liveFeed.appendChild(firstChild.cloneNode(true));
+                if (liveFeed.children.length > 10) {
+                    liveFeed.removeChild(liveFeed.firstElementChild);
+                }
+            }
+        }, 5000);
+    </script>
+</body></html>

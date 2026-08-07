@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GyanQuest | Commander Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Syne:wght@700;800&amp;family=Noto+Sans+Bengali:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-primary {
+            box-shadow: 0 0 20px rgba(113, 218, 167, 0.3);
+        }
+        .glow-secondary {
+            box-shadow: 0 0 20px rgba(248, 189, 69, 0.4);
+        }
+        .wet-asphalt {
+            background: linear-gradient(180deg, rgba(49, 54, 53, 0.4) 0%, rgba(16, 20, 19, 1) 100%);
+        }
+        .mechanical-press:active {
+            transform: translateY(2px);
+        }
+        .offset-border {
+            box-shadow: 0 4px 0 0 #5e4200;
+        }
+        .offset-border:active {
+            box-shadow: 0 0px 0 0 #5e4200;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101413;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3e4942;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#101413",
+                      "tertiary-fixed-dim": "#b5c9d8",
+                      "on-tertiary": "#20333e",
+                      "tertiary-container": "#8093a1",
+                      "surface-container-lowest": "#0b0f0e",
+                      "on-primary-container": "#00311e",
+                      "on-tertiary-fixed": "#091e29",
+                      "on-surface": "#e0e3e1",
+                      "inverse-primary": "#006c47",
+                      "on-surface-variant": "#bdcac0",
+                      "secondary-container": "#bc8709",
+                      "surface-container-highest": "#313635",
+                      "surface-tint": "#71daa7",
+                      "inverse-on-surface": "#2d3130",
+                      "on-primary-fixed-variant": "#005235",
+                      "secondary": "#f8bd45",
+                      "primary-fixed": "#8ef7c1",
+                      "primary": "#71daa7",
+                      "on-tertiary-container": "#192c37",
+                      "error": "#ffb4ab",
+                      "secondary-fixed-dim": "#f8bd45",
+                      "on-secondary-fixed": "#271900",
+                      "error-container": "#93000a",
+                      "on-error-container": "#ffdad6",
+                      "tertiary": "#b5c9d8",
+                      "secondary-fixed": "#ffdea7",
+                      "on-primary": "#003823",
+                      "primary-fixed-dim": "#71daa7",
+                      "surface-variant": "#313635",
+                      "on-error": "#690005",
+                      "surface-container-low": "#181c1b",
+                      "outline-variant": "#3e4942",
+                      "on-secondary": "#412d00",
+                      "on-background": "#e0e3e1",
+                      "surface-bright": "#363a39",
+                      "surface": "#101413",
+                      "tertiary-fixed": "#d1e5f5",
+                      "on-secondary-fixed-variant": "#5e4200",
+                      "primary-container": "#35a373",
+                      "inverse-surface": "#e0e3e1",
+                      "surface-container": "#1c201f",
+                      "surface-container-high": "#272b2a",
+                      "outline": "#87948b",
+                      "on-primary-fixed": "#002113",
+                      "surface-dim": "#101413",
+                      "on-secondary-container": "#392600",
+                      "on-tertiary-fixed-variant": "#364955"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "margin-desktop": "64px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Sora"],
+                      "bengali-support": ["Noto Sans Bengali"],
+                      "body-main": ["Sora"],
+                      "ui-action-lg": ["Sora"],
+                      "headline-lg-mobile": ["Syne"],
+                      "display-hero": ["Syne"],
+                      "headline-lg": ["Syne"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "bengali-support": ["16px", {"lineHeight": "1.8", "fontWeight": "400"}],
+                      "body-main": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "ui-action-lg": ["18px", {"lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-main selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar (Hub) -->
+<nav class="fixed top-0 w-full h-20 z-[60] bg-surface/80 backdrop-blur-md border-b border-primary/20">
+<div class="flex justify-between items-center w-full px-margin-desktop h-full max-w-container-max mx-auto">
+<div class="font-display-hero text-display-hero text-primary uppercase tracking-tighter">GyanQuest</div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-main text-body-main" href="#">Games</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-main text-body-main" href="#">Why</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-main text-body-main" href="#">Vision</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:text-secondary-fixed transition-all duration-300 font-label-caps text-label-caps">EN/বাংলা</button>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-ui-action-lg text-ui-action-lg mechanical-press glow-primary">Play now</button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Avatar Section (Left Rail) -->
+<div class="md:col-span-4 lg:col-span-3 flex flex-col gap-6">
+<div class="relative group p-1 rounded-xl bg-surface-container border border-primary/20 wet-asphalt">
+<div class="relative overflow-hidden rounded-lg aspect-square">
+<img class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700" data-alt="A high-tech laboratory portrait of a young student wearing sleek neon-accented futuristic goggles and a technical jumpsuit. The lighting is dominated by deep teal and vibrant marigold yellow highlights, mimicking a humid dusk atmosphere. Digital instrumentation and holographic data displays float in the background, reinforcing the Rickshaw Neon Science aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX5dKa2vEIbc1pPnl_PLnxxSyH8MzyzLZCe53UlaomoqU3ZhhA9mz7B8TgLo_Q-6lq031snfA3-ccPXSZnqKMSqsKIyn5bvK8-CwlQd6D5J5BK-esl8latduzmcZZgD0xlitysLhm1Hb8bfkzRsezGVnCATDzSh5SNoIfXdgJFZ9FMQxk-QhfefSIuGnSVA6v5hnl1bT-YNokTARIv1AqPyWILtJ4cq0hzRjT95RlwyDiIuc8kiikF0g"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4">
+<span class="font-label-caps text-label-caps bg-secondary text-on-secondary px-3 py-1 rounded-full glow-secondary uppercase">Level 14</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl border border-primary/10">
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-headline-lg text-[20px] text-primary">Commander Status</h2>
+<span class="material-symbols-outlined text-secondary">verified</span>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-outline">DAILY STREAK</span>
+<span class="font-display-hero text-[24px] text-secondary">08 DAYS</span>
+</div>
+<div class="h-[2px] bg-outline-variant w-full"></div>
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-outline">XP EARNED</span>
+<span class="font-body-main font-bold text-on-surface">12,450</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="md:col-span-8 lg:col-span-9 flex flex-col gap-gutter">
+<!-- Track Progress Header -->
+<div class="bg-surface-container p-8 rounded-xl border border-primary/20 wet-asphalt relative overflow-hidden">
+<div class="relative z-10 flex flex-col md:flex-row justify-between items-end md:items-center gap-6">
+<div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em] mb-2 block">Current Active Track</span>
+<h1 class="font-display-hero text-headline-lg text-primary uppercase">Force Fighter</h1>
+</div>
+<div class="text-right">
+<div class="font-display-hero text-headline-lg text-secondary">75%</div>
+<span class="font-label-caps text-label-caps text-outline">TO COMMANDER RANK</span>
+</div>
+</div>
+<!-- Progress Micro-Bar -->
+<div class="mt-8 h-3 bg-surface-container-highest rounded-full overflow-hidden border border-outline-variant">
+<div class="h-full bg-primary glow-primary transition-all duration-1000" style="width: 75%"></div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<!-- Badges Section -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">military_tech</span>
+                            HONORARY BADGES
+                        </h3>
+<div class="flex flex-wrap gap-4">
+<!-- Precision Badge -->
+<div class="flex flex-col items-center gap-2 p-4 bg-surface-container-highest rounded-lg border border-primary/30 group cursor-help transition-all hover:bg-primary/5">
+<div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center border border-primary glow-primary">
+<span class="material-symbols-outlined text-primary text-3xl">target</span>
+</div>
+<span class="font-label-caps text-[10px] text-primary text-center">PRECISION BADGE</span>
+</div>
+<!-- Force Champion -->
+<div class="flex flex-col items-center gap-2 p-4 bg-surface-container-highest rounded-lg border border-secondary/30 group cursor-help transition-all hover:bg-secondary/5">
+<div class="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center border border-secondary glow-secondary">
+<span class="material-symbols-outlined text-secondary text-3xl">electric_bolt</span>
+</div>
+<span class="font-label-caps text-[10px] text-secondary text-center uppercase">Force Champion</span>
+</div>
+<!-- Locked Badge -->
+<div class="flex flex-col items-center gap-2 p-4 bg-background/50 rounded-lg border border-outline-variant opacity-40 grayscale">
+<div class="w-16 h-16 rounded-full flex items-center justify-center border border-outline">
+<span class="material-symbols-outlined text-outline text-3xl">lock</span>
+</div>
+<span class="font-label-caps text-[10px] text-outline text-center">LOCKED</span>
+</div>
+</div>
+</div>
+<!-- Mission Log -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">history</span>
+                            MISSION LOG
+                        </h3>
+<div class="space-y-4">
+<div class="flex gap-4 items-start pb-4 border-b border-outline-variant/30">
+<div class="p-2 rounded bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-[20px]">science</span>
+</div>
+<div>
+<p class="font-body-main text-[14px] text-on-surface">Lab Exercise: Quantum Mechanics</p>
+<p class="font-label-caps text-[10px] text-outline">COMPLETED • 2H AGO</p>
+</div>
+<div class="ml-auto text-primary font-bold text-[12px]">+450 XP</div>
+</div>
+<div class="flex gap-4 items-start pb-4 border-b border-outline-variant/30">
+<div class="p-2 rounded bg-secondary/10 text-secondary">
+<span class="material-symbols-outlined text-[20px]">psychology</span>
+</div>
+<div>
+<p class="font-body-main text-[14px] text-on-surface">Intel Sync: Force Distribution</p>
+<p class="font-label-caps text-[10px] text-outline">SUCCESSFUL • 5H AGO</p>
+</div>
+<div class="ml-auto text-secondary font-bold text-[12px]">+120 XP</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="p-2 rounded bg-tertiary/10 text-tertiary">
+<span class="material-symbols-outlined text-[20px]">assignment</span>
+</div>
+<div>
+<p class="font-body-main text-[14px] text-on-surface">Strategic Assessment</p>
+<p class="font-label-caps text-[10px] text-outline">INITIATED • YESTERDAY</p>
+</div>
+<div class="ml-auto text-outline font-bold text-[12px]">PENDING</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+<button class="flex-1 bg-secondary text-on-secondary py-4 rounded-lg font-ui-action-lg text-ui-action-lg offset-border mechanical-press flex items-center justify-center gap-3">
+<span class="material-symbols-outlined">rocket_launch</span>
+                        CONTINUE MISSION
+                    </button>
+<button class="px-8 py-4 border border-outline text-on-surface rounded-lg font-ui-action-lg text-ui-action-lg hover:bg-surface-bright transition-colors">
+                        VIEW ALL TRACKS
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- SideNavBar (Coach Dock) -->
+<aside class="hidden lg:flex fixed right-8 bottom-8 w-80 rounded-xl bg-surface-container border border-primary/20 shadow-[0_0_20px_rgba(113,218,167,0.15)] flex-col p-4 gap-unit z-50">
+<div class="flex items-center gap-4 mb-2 p-2">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-primary">
+<img class="object-cover w-full h-full" data-alt="A portrait of a futuristic AI mentor or high-tech lab commander. The character has a wise, stern expression, illuminated by cyan and orange holographic interfaces that suggest advanced knowledge. The aesthetic is clean, lab-focused, and highly detailed, fitting the GyanQuest monsoon lab theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApZRfr1RG3rLQc06b73v47eeo1YNbfBXBJ4VprkiRQFcr0nvJdfuviYcMGUlnf3t65BfOu8K8yKQW2O5gMrI_n8fQo9XnDZtREa5F66aX2y0uaoDqeHkybong0WKG7fJj1wKgvabhUA8G7tHwaD2ps0Y-sGcwrfGrAKvfSpH6yYCzNDjvOK8JfSh_DZSpO27dkCXZOmvOf7nVTiBZQnBuAVDlw_3cFukxE7ddkhE7EplAP2BDHScdxxA"/>
+</div>
+<div>
+<h4 class="font-display-hero text-primary text-[18px]">Commander</h4>
+<p class="font-label-caps text-[10px] text-outline">Lab Status: Active</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<button class="flex items-center gap-3 p-2 text-on-surface-variant hover:bg-surface-bright transition-colors rounded-lg">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-body-main">Mission</span>
+</button>
+<button class="flex items-center gap-3 p-2 text-on-surface-variant hover:bg-surface-bright transition-colors rounded-lg">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-body-main">Intel</span>
+</button>
+<button class="flex items-center gap-3 p-2 bg-secondary text-on-secondary rounded-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-body-main font-bold">Log</span>
+</button>
+</nav>
+<button class="mt-4 w-full bg-primary/10 border border-primary text-primary py-2 rounded-lg font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-all">
+            Deploy Intel
+        </button>
+</aside>
+<!-- Footer -->
+<footer class="mt-20 py-12 border-t border-outline-variant bg-surface-container-lowest">
+<div class="flex flex-col items-center justify-center gap-6 w-full text-center max-w-container-max mx-auto px-margin-desktop">
+<div class="font-display-hero text-primary opacity-50 text-[32px] uppercase">GyanQuest</div>
+<p class="font-label-caps text-label-caps text-outline">© 2024 GyanQuest Monsoon Lab. High-Tech Education for the Bold.</p>
+<div class="flex gap-8">
+<a class="font-label-caps text-label-caps text-outline hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="font-label-caps text-label-caps text-outline hover:text-primary transition-colors" href="#">Terms</a>
+<a class="font-label-caps text-label-caps text-outline hover:text-primary transition-colors" href="#">Research</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions and subtle glow pulse
+        document.querySelectorAll('.glow-primary').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                el.style.boxShadow = '0 0 30px rgba(113, 218, 167, 0.5)';
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.boxShadow = '0 0 20px rgba(113, 218, 167, 0.3)';
+            });
+        });
+
+        // Simulating loading sequence for progress bar
+        window.addEventListener('load', () => {
+            const progressBar = document.querySelector('.h-full.bg-primary');
+            progressBar.style.width = '0%';
+            setTimeout(() => {
+                progressBar.style.width = '75%';
+            }, 500);
+        });
+    </script>
+</body></html>

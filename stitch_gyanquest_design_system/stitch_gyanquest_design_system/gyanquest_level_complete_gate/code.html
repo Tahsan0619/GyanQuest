@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GyanQuest | Level Gate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Syne:wght@700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..900&amp;family=Syne:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-primary {
+            box-shadow: 0 0 20px rgba(113, 218, 167, 0.3);
+        }
+        .glow-secondary {
+            box-shadow: 0 0 25px rgba(248, 189, 69, 0.4);
+        }
+        .wet-asphalt {
+            background: linear-gradient(180deg, rgba(49, 54, 53, 0.8) 0%, rgba(16, 20, 19, 1) 100%);
+        }
+        .offset-border {
+            box-shadow: 0 4px 0 0 #bc8709;
+        }
+        .offset-border:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 0 #bc8709;
+        }
+        @keyframes subtle-pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; transform: scale(1.02); }
+        }
+        .animate-pulse-glow {
+            animation: subtle-pulse 3s infinite ease-in-out;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#006c47",
+                      "on-secondary-fixed": "#271900",
+                      "on-tertiary-fixed-variant": "#364955",
+                      "outline": "#87948b",
+                      "on-error": "#690005",
+                      "surface-container-low": "#181c1b",
+                      "on-primary-fixed": "#002113",
+                      "secondary-fixed-dim": "#f8bd45",
+                      "on-primary": "#003823",
+                      "surface": "#101413",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary": "#20333e",
+                      "on-secondary-container": "#392600",
+                      "surface-container-highest": "#313635",
+                      "on-surface-variant": "#bdcac0",
+                      "secondary-container": "#bc8709",
+                      "inverse-surface": "#e0e3e1",
+                      "surface-tint": "#71daa7",
+                      "on-tertiary-fixed": "#091e29",
+                      "surface-dim": "#101413",
+                      "surface-bright": "#363a39",
+                      "on-tertiary-container": "#192c37",
+                      "on-surface": "#e0e3e1",
+                      "on-primary-container": "#00311e",
+                      "surface-container-high": "#272b2a",
+                      "error": "#ffb4ab",
+                      "secondary": "#f8bd45",
+                      "tertiary-fixed-dim": "#b5c9d8",
+                      "tertiary": "#b5c9d8",
+                      "inverse-on-surface": "#2d3130",
+                      "tertiary-container": "#8093a1",
+                      "primary-container": "#35a373",
+                      "tertiary-fixed": "#d1e5f5",
+                      "on-secondary": "#412d00",
+                      "on-background": "#e0e3e1",
+                      "on-primary-fixed-variant": "#005235",
+                      "primary-fixed-dim": "#71daa7",
+                      "background": "#101413",
+                      "outline-variant": "#3e4942",
+                      "surface-container-lowest": "#0b0f0e",
+                      "on-secondary-fixed-variant": "#5e4200",
+                      "error-container": "#93000a",
+                      "surface-container": "#1c201f",
+                      "secondary-fixed": "#ffdea7",
+                      "primary": "#71daa7",
+                      "primary-fixed": "#8ef7c1",
+                      "surface-variant": "#313635"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "margin-desktop": "64px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Sora"],
+                      "body-main": ["Sora"],
+                      "ui-action-lg": ["Sora"],
+                      "bengali-support": ["Noto Sans Bengali"],
+                      "headline-lg": ["Syne"],
+                      "headline-lg-mobile": ["Syne"],
+                      "display-hero": ["Syne"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "body-main": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "ui-action-lg": ["18px", {"lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "bengali-support": ["16px", {"lineHeight": "1.8", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-main selection:bg-primary selection:text-on-primary overflow-hidden">
+<!-- Top App Bar (Game Shell Variant) -->
+<header class="flex justify-between items-center w-full px-margin-mobile h-16 z-50 fixed top-0 bg-gradient-to-b from-surface-variant/30 to-transparent">
+<div class="flex items-center gap-4">
+<button class="hover:bg-primary/10 rounded-full transition-all p-2 active:translate-y-0.5">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-display-hero text-headline-lg-mobile md:text-headline-lg text-primary">GyanQuest</h1>
+</div>
+<div class="flex gap-4">
+<button class="hover:bg-primary/10 rounded-full transition-all p-2 active:translate-y-0.5">
+<span class="material-symbols-outlined text-primary">military_tech</span>
+</button>
+<button class="hover:bg-primary/10 rounded-full transition-all p-2 active:translate-y-0.5">
+<span class="material-symbols-outlined text-primary">videogame_asset</span>
+</button>
+</div>
+</header>
+<!-- Main Backdrop Content (Blurred background of the level) -->
+<main class="relative w-full h-screen flex items-center justify-center pt-20">
+
+<div class="w-full max-w-container-max px-margin-desktop grid grid-cols-12 gap-gutter relative z-10 pointer-events-none opacity-20">
+<!-- Simulated Background Content (The Lab) -->
+<div class="col-span-8 space-y-6">
+<div class="h-64 bg-surface-container-high rounded-xl border border-primary/10"></div>
+<div class="grid grid-cols-3 gap-4">
+<div class="h-32 bg-surface-container-high rounded-xl border border-primary/10"></div>
+<div class="h-32 bg-surface-container-high rounded-xl border border-primary/10"></div>
+<div class="h-32 bg-surface-container-high rounded-xl border border-primary/10"></div>
+</div>
+</div>
+<div class="col-span-4 h-full bg-surface-container-high rounded-xl border border-primary/10"></div>
+</div>
+<!-- LEVEL GATE MODAL -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-margin-mobile">
+<!-- Overlay -->
+<div class="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+<!-- Modal Container -->
+<div class="relative w-full max-w-2xl bg-surface-container rounded-xl border border-primary/20 shadow-lg glow-primary overflow-hidden flex flex-col items-center p-1 md:p-2">
+<!-- Success Header -->
+<div class="w-full pt-8 pb-4 text-center px-6">
+<div class="mb-4 inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 text-primary border border-primary/40 animate-pulse-glow">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h2 class="font-display-hero text-headline-lg text-primary tracking-tight">Level 4 Complete: Friction Fun</h2>
+<p class="font-label-caps text-on-surface-variant mt-2 uppercase tracking-widest">Mission Status: Secured • Data Synchronized</p>
+</div>
+<!-- Next Level Preview Card (Bento/Glassmorphism feel) -->
+<div class="w-full px-6 py-4">
+<div class="wet-asphalt rounded-xl border border-outline-variant p-6 relative group overflow-hidden transition-all duration-500 hover:border-primary/40">
+<!-- Technical Sheen Overlay -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent -mr-16 -mt-16 rounded-full blur-2xl"></div>
+<div class="flex flex-col md:flex-row gap-6 relative z-10">
+<!-- Preview Image -->
+<div class="w-full md:w-48 h-32 rounded-lg overflow-hidden border border-outline/20">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A high-tech science laboratory interface showing physics diagrams of balanced forces and vectors. The lighting is a moody deep teal night with vibrant neon mango-leaf green highlights, reflecting off metallic laboratory equipment. Cinematic laboratory setting with wet-asphalt textures and glowing digital instrumentation for a premium learning experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwsoDVqRsHpIEsTh7XSDLxIp3WVkmrVgdeyp33NHeQ3jQtkFcX0EV1-bo-3xInz_G6fwyTJt0Mp7IxrLzG5W5bcU4InOvB4tON4SDCkw2ajgSrea8rI7Y1v7q1-9HqzBtN_bHVJsInmLaod9wnp9URpEQMJlksxcCdi81EXS1ZwuVqJ3S9N6RQ0G5-NC1xeeG6Mg_KibKawuKWdQp9SfMZcFllhTJFlZTQFmjLDE2OYKyjSm0eDBfDVQ"/>
+</div>
+<!-- Preview Details -->
+<div class="flex-1 space-y-3">
+<span class="bg-primary/20 text-primary px-3 py-1 rounded-full font-label-caps text-[10px] border border-primary/30 uppercase">Up Next</span>
+<h3 class="font-headline-lg text-secondary text-2xl">Level 5: Forces in Balance</h3>
+<p class="text-on-surface-variant text-sm line-clamp-2">Master the art of equilibrium. Deploy vector analysis to solve the mystery of the hanging laboratory crystals.</p>
+<!-- Progress Bar (Mandatory Component Rule) -->
+<div class="pt-2">
+<div class="flex justify-between font-label-caps text-[10px] text-outline mb-1">
+<span>INTEL READINESS</span>
+<span>88%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[88%] glow-primary"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer / CTA Section -->
+<div class="w-full p-6 flex flex-col sm:flex-row gap-4 items-center justify-between border-t border-outline-variant/30 mt-2">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">military_tech</span>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-outline">REWARD EARNED</p>
+<p class="font-body-main font-bold text-sm text-on-surface">Precision Badge</p>
+</div>
+</div>
+<button class="bg-secondary text-on-secondary px-8 py-3 rounded-lg font-ui-action-lg text-ui-action-lg uppercase tracking-wider offset-border transition-all active:scale-95 glow-secondary w-full sm:w-auto">
+                        Begin Level 5
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Side NavBar (Coach Dock) -->
+<aside class="fixed right-unit bottom-unit w-80 rounded-xl bg-surface-container text-secondary font-body-main border border-primary/20 shadow-lg shadow-primary/20 flex flex-col p-4 gap-unit z-[110]">
+<div class="flex items-center gap-3 mb-2">
+<div class="relative">
+<div class="w-12 h-12 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a futuristic mission commander in a tactical laboratory suit. The lighting is dramatic, with neon green light hitting their face from a nearby console. The background is a humid, dark Bangladeshi tech lab with glowing circuits and high-tech equipment, embodying the Monsoon Lab aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuobxNRCn9iPw_QWgjPs2jGFPWG3A3atrb_D_ApxySm3d8vS5oNDIJEcUJMXbvwiF3BSgMf-bq0NaHbZw2ajznKiBkCkPVoEltB6GkUmkCDYKlDJJqLj6tNB4ZNaSDqMe5P2qyDhU4VnBbE0O9w1PUT79D9NW6xzlNS-mjBrBoFnX_IHz4fsSJWW0x9xrYXB0HFI7JAze7hbMU82wWD5YodLngYihotfs6myVmn2q_COMoM9pLtBOIrQ"/>
+</div>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-primary rounded-full border-2 border-surface"></div>
+</div>
+<div>
+<h4 class="font-display-hero text-lg text-primary leading-none">Commander</h4>
+<p class="text-xs text-on-surface-variant opacity-70">Lab Status: Active</p>
+</div>
+</div>
+<p class="text-sm text-on-surface italic px-2 py-1 border-l-2 border-primary/30">"Exemplary work on Level 4. Friction is the gateway to control. Prepare for equilibrium."</p>
+<nav class="flex flex-col gap-1 mt-2">
+<div class="flex items-center gap-3 p-2 text-on-surface-variant hover:bg-surface-bright transition-colors rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-sm">Mission</span>
+</div>
+<div class="flex items-center gap-3 bg-secondary text-on-secondary rounded-lg p-2 cursor-pointer shadow-md">
+<span class="material-symbols-outlined">psychology</span>
+<span class="text-sm font-bold">Intel</span>
+</div>
+<div class="flex items-center gap-3 p-2 text-on-surface-variant hover:bg-surface-bright transition-colors rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">history</span>
+<span class="text-sm">Log</span>
+</div>
+</nav>
+<button class="w-full py-2 bg-surface-container-highest border border-primary/20 text-primary font-label-caps text-xs rounded-lg mt-2 hover:bg-primary/10 transition-all active:scale-[0.98]">
+            Deploy Intel
+        </button>
+</aside>
+<!-- Footer (Universal) -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface-container-lowest text-outline font-label-caps text-label-caps py-4 border-t border-outline-variant flex flex-col items-center justify-center gap-4 z-[90]">
+<div class="font-display-hero text-primary opacity-50 text-xl tracking-tighter">GyanQuest</div>
+<div class="flex gap-8">
+<a class="hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms</a>
+<a class="hover:text-primary transition-colors" href="#">Research</a>
+</div>
+<div class="text-[10px]">© 2024 GyanQuest Monsoon Lab. High-Tech Education for the Bold.</div>
+</footer>
+<script>
+        // Micro-interaction for the CTA button to add a spark effect when clicked
+        document.querySelector('.offset-border').addEventListener('click', function(e) {
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const ripple = document.createElement('span');
+            ripple.className = 'absolute bg-white/30 rounded-full pointer-events-none transform -translate-x-1/2 -translate-y-1/2 animate-ping';
+            ripple.style.width = '100px';
+            ripple.style.height = '100px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            this.style.position = 'relative';
+            this.style.overflow = 'hidden';
+            this.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 700);
+        });
+
+        // Add floating technical indicators to the modal
+        const modal = document.querySelector('.glow-primary');
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                const particle = document.createElement('div');
+                particle.className = 'absolute w-1 h-1 bg-primary/40 rounded-full pointer-events-none z-[110]';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                modal.appendChild(particle);
+                
+                particle.animate([
+                    { transform: 'translateY(0)', opacity: 1 },
+                    { transform: 'translateY(-20px)', opacity: 0 }
+                ], { duration: 1000, easing: 'ease-out' });
+                
+                setTimeout(() => particle.remove(), 1000);
+            }
+        }, 300);
+    </script>
+</body></html>

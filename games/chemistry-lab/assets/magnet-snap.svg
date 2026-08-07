@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <rect x="18" y="36" width="36" height="56" rx="8" fill="#ef4444"/>
+  <rect x="74" y="36" width="36" height="56" rx="8" fill="#3b82f6"/>
+  <text x="36" y="70" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="18" font-weight="700" fill="#fff">N</text>
+  <text x="92" y="70" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="18" font-weight="700" fill="#fff">S</text>
+  <path d="M54 64 H74" stroke="#c4b5fd" stroke-width="6" stroke-linecap="round"/>
+  <path d="M60 52 L68 64 L60 76" stroke="#a78bfa" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>

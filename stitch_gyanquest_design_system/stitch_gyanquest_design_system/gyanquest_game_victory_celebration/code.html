@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mission Accomplished | GyanQuest</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Syne:wght@700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..900&family=Syne:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        
+        .glow-primary {
+            box-shadow: 0 0 40px rgba(113, 218, 167, 0.3);
+        }
+        
+        .glow-secondary {
+            box-shadow: 0 0 30px rgba(248, 189, 69, 0.4);
+        }
+
+        .wet-asphalt-reflection {
+            background: linear-gradient(180deg, rgba(49, 54, 53, 0.4) 0%, rgba(16, 20, 19, 0.8) 100%);
+            backdrop-filter: blur(8px);
+        }
+
+        .mission-button-offset {
+            box-shadow: 0 4px 0 0 #5e4200;
+        }
+        
+        .mission-button-offset:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 0 #5e4200;
+        }
+
+        @keyframes pulse-neon {
+            0%, 100% { opacity: 0.6; filter: blur(20px); }
+            50% { opacity: 1; filter: blur(25px); }
+        }
+
+        .neon-pulse {
+            animation: pulse-neon 4s ease-in-out infinite;
+        }
+
+        .bento-card {
+            border: 1px solid rgba(113, 218, 167, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bento-card:hover {
+            border-color: rgba(113, 218, 167, 0.5);
+            background: rgba(113, 218, 167, 0.05);
+        }
+    </style>
+<!-- Tailwind Config defined in prompt -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#006c47",
+                      "on-secondary-fixed": "#271900",
+                      "on-tertiary-fixed-variant": "#364955",
+                      "outline": "#87948b",
+                      "on-error": "#690005",
+                      "surface-container-low": "#181c1b",
+                      "on-primary-fixed": "#002113",
+                      "secondary-fixed-dim": "#f8bd45",
+                      "on-primary": "#003823",
+                      "surface": "#101413",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary": "#20333e",
+                      "on-secondary-container": "#392600",
+                      "surface-container-highest": "#313635",
+                      "on-surface-variant": "#bdcac0",
+                      "secondary-container": "#bc8709",
+                      "inverse-surface": "#e0e3e1",
+                      "surface-tint": "#71daa7",
+                      "on-tertiary-fixed": "#091e29",
+                      "surface-dim": "#101413",
+                      "surface-bright": "#363a39",
+                      "on-tertiary-container": "#192c37",
+                      "on-surface": "#e0e3e1",
+                      "on-primary-container": "#00311e",
+                      "surface-container-high": "#272b2a",
+                      "error": "#ffb4ab",
+                      "secondary": "#f8bd45",
+                      "tertiary-fixed-dim": "#b5c9d8",
+                      "tertiary": "#b5c9d8",
+                      "inverse-on-surface": "#2d3130",
+                      "tertiary-container": "#8093a1",
+                      "primary-container": "#35a373",
+                      "tertiary-fixed": "#d1e5f5",
+                      "on-secondary": "#412d00",
+                      "on-background": "#e0e3e1",
+                      "on-primary-fixed-variant": "#005235",
+                      "primary-fixed-dim": "#71daa7",
+                      "background": "#101413",
+                      "outline-variant": "#3e4942",
+                      "surface-container-lowest": "#0b0f0e",
+                      "on-secondary-fixed-variant": "#5e4200",
+                      "error-container": "#93000a",
+                      "surface-container": "#1c201f",
+                      "secondary-fixed": "#ffdea7",
+                      "primary": "#71daa7",
+                      "primary-fixed": "#8ef7c1",
+                      "surface-variant": "#313635"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "margin-desktop": "64px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Sora"],
+                      "body-main": ["Sora"],
+                      "ui-action-lg": ["Sora"],
+                      "bengali-support": ["Noto Sans Bengali"],
+                      "headline-lg": ["Syne"],
+                      "headline-lg-mobile": ["Syne"],
+                      "display-hero": ["Syne"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "body-main": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "ui-action-lg": ["18px", {"lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "bengali-support": ["16px", {"lineHeight": "1.8", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen overflow-x-hidden selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar Replacement (Game Shell Style) -->
+<header class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 z-50 bg-gradient-to-b from-surface-variant/30 to-transparent fixed top-0">
+<div class="flex items-center gap-4">
+<button aria-label="Go back" class="material-symbols-outlined text-primary hover:bg-primary/10 rounded-full transition-all p-2 active:translate-y-0.5">arrow_back</button>
+<span class="font-display-hero text-headline-lg-mobile md:text-headline-lg text-primary uppercase tracking-tighter">GyanQuest</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1 bg-surface-container-high rounded-full px-3 py-1 border border-primary/20">
+<span class="material-symbols-outlined text-secondary text-[18px]" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+<span class="font-label-caps text-label-caps text-on-surface">Level 24</span>
+</div>
+<span class="material-symbols-outlined text-outline hover:bg-primary/10 rounded-full transition-all p-2 cursor-pointer">videogame_asset</span>
+</div>
+</header>
+<main class="relative pt-24 pb-12 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto min-h-screen flex flex-col items-center justify-center">
+<!-- Atmospheric Background Element -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none neon-pulse"></div>
+<!-- Hero Section: Trophy & Title -->
+<div class="relative z-10 text-center mb-12 flex flex-col items-center">
+<div class="relative mb-8 group">
+<!-- Glowing Aura behind Badge -->
+<div class="absolute inset-0 bg-secondary/20 rounded-full blur-3xl scale-125 group-hover:scale-150 transition-transform duration-1000"></div>
+<!-- Badge Illustration (Using Image Placeholder with specific prompt) -->
+<div class="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center">
+<img class="w-full h-full object-contain filter drop-shadow-[0_0_30px_rgba(248,189,69,0.5)]" data-alt="A high-tech digital trophy badge floating in a humid laboratory atmosphere. The badge features a stylized metallic shield with neon Mango-Leaf green circuitry patterns and a glowing Marigold yellow star in the center. Reflections of wet pavement and neon lights dance on its surface. The style is futuristic science-fiction with intricate mechanical detailing, set against a dark teal background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7XJcoi_Y8O7zOo2Com4KgUNIqEtLh034gt1RCpyLTiVN3JVSV8oaepkgfSV1UdFVf2gSnx_soxlz8WH-aLDYGd5hzqK0OnglMR7IEp7ca7G5ttSoCjkUBGyBk-uymeuZC2KTkFZxjMMOM0UHRlSFQPwn8KRi5HmL9bI9wvfWvlBbrOKFxjR0CP_dJOSBTY6-EJEY8SvyzOvnXQfgUIVIwM05VBsODSPo9ZoP8EuheJ1ZNn0FUlhxHXg"/>
+</div>
+<!-- Victory Label -->
+<div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-secondary text-on-secondary px-6 py-2 rounded-full font-label-caps text-label-caps tracking-widest uppercase shadow-lg shadow-secondary/30">
+                    Force Champion
+                </div>
+</div>
+<h1 class="font-display-hero text-display-hero md:text-[64px] text-primary uppercase tracking-tighter mb-4 max-w-2xl leading-[1]">
+                Mission <br class="md:hidden"/> Accomplished
+            </h1>
+<p class="font-body-main text-body-main text-on-surface-variant max-w-lg mx-auto">
+                Track cleared. You've demonstrated superior cognitive precision in the Force Dynamics modules. Commander is impressed.
+            </p>
+</div>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter w-full max-w-4xl mb-12">
+<!-- XP Earned -->
+<div class="bento-card bg-surface-container rounded-xl p-6 flex flex-col items-center justify-center text-center">
+<span class="font-label-caps text-label-caps text-outline uppercase mb-2">XP Gained</span>
+<div class="flex items-center gap-2">
+<span class="font-display-hero text-headline-lg text-secondary">+2,450</span>
+</div>
+</div>
+<!-- Accuracy -->
+<div class="bento-card bg-surface-container rounded-xl p-6 flex flex-col items-center justify-center text-center">
+<span class="font-label-caps text-label-caps text-outline uppercase mb-2">Precision</span>
+<div class="font-display-hero text-headline-lg text-primary">94%</div>
+</div>
+<!-- Modules Completed -->
+<div class="bento-card bg-surface-container rounded-xl p-6 flex flex-col items-center justify-center text-center">
+<span class="font-label-caps text-label-caps text-outline uppercase mb-2">Modules</span>
+<div class="font-display-hero text-headline-lg text-on-surface">12/12</div>
+</div>
+<!-- New Unlock -->
+<div class="bento-card bg-surface-container rounded-xl p-6 flex flex-col items-center justify-center text-center border-secondary/30">
+<span class="font-label-caps text-label-caps text-secondary uppercase mb-2">Unlocked</span>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-label-caps text-[10px] text-on-surface mt-1">Quantum Lab</span>
+</div>
+</div>
+<!-- Action Section -->
+<div class="flex flex-col md:flex-row gap-6 w-full max-w-md">
+<button class="flex-1 bg-secondary text-on-secondary font-ui-action-lg text-ui-action-lg px-8 py-4 rounded-xl mission-button-offset transition-all flex items-center justify-center gap-2">
+<span>Back to Mission Hub</span>
+<span class="material-symbols-outlined">rocket_launch</span>
+</button>
+<button class="flex-1 bg-surface-container text-on-surface border border-primary/20 hover:bg-surface-bright font-ui-action-lg text-ui-action-lg px-8 py-4 rounded-xl transition-all flex items-center justify-center gap-2 active:scale-95">
+<span class="material-symbols-outlined text-primary">share</span>
+<span>Share Achievement</span>
+</button>
+</div>
+</main>
+<!-- Side Coach Dock (From JSON) -->
+<aside class="hidden xl:flex fixed right-unit bottom-unit w-80 rounded-xl flex-col p-4 gap-unit bg-surface-container border border-primary/20 shadow-lg shadow-primary/20">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary">
+<img class="w-full h-full object-cover" data-alt="A portrait of a futuristic robotic commander character with a sleek black visor glowing with Mango-Leaf green data readouts. The character has a high-collared military uniform with neon accents. Soft, cinematic lighting highlights the metallic textures against a blurred laboratory background in Deep Teal tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ5FMJQbMwIFmFK5tXwWZ2z8Iq5Ke6A_6dLRQt6pV_vqxbzDFp1qyLoMvUpYlqh6hRofTJ3Y7op2q0F8NncyE1zxBcAf8zMWdVjNiL2tUx0xPyCbFUucM6kfsx7BNawEqEe3xN5EyAwfRE3RmvgZHJX9HJqu_ER2_MSuOkrIXLq3ozbXhWOBKD7qE81CWoyCV4auEJwWrbIRf5aO48V4bPU-DUPiEZsVmD4pA4yQEJ9Kc9Vm6GFQ601Q"/>
+</div>
+<div>
+<h4 class="font-display-hero text-on-surface text-lg leading-none">Commander</h4>
+<p class="font-label-caps text-[10px] text-primary">Lab Status: Active</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg border-l-4 border-primary italic font-body-main text-on-surface-variant text-sm mb-4">
+            "Your tactical analysis of the Force Vectors was impeccable. Proceed to the Mission Hub for your next assignment, operative."
+        </div>
+<nav class="flex flex-col gap-2 mb-4">
+<div class="bg-secondary text-on-secondary rounded-lg p-2 flex items-center gap-3 cursor-pointer active:scale-[0.98]">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-body-main">Mission</span>
+</div>
+<div class="text-on-surface-variant hover:text-primary p-2 flex items-center gap-3 cursor-pointer transition-colors">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-body-main">Intel</span>
+</div>
+<div class="text-on-surface-variant hover:text-primary p-2 flex items-center gap-3 cursor-pointer transition-colors">
+<span class="material-symbols-outlined">history</span>
+<span class="font-body-main">Log</span>
+</div>
+</nav>
+<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-ui-action-lg text-sm uppercase tracking-wider hover:opacity-90 transition-opacity">
+            Deploy Intel
+        </button>
+</aside>
+<!-- Footer -->
+<footer class="full-width py-12 flex flex-col items-center justify-center gap-4 w-full text-center bg-surface-container-lowest border-t border-outline-variant mt-24">
+<div class="font-display-hero text-headline-lg text-primary opacity-50 uppercase tracking-tighter">GyanQuest</div>
+<p class="font-label-caps text-label-caps text-outline">© 2024 GyanQuest Monsoon Lab. High-Tech Education for the Bold.</p>
+<div class="flex gap-8 mt-2">
+<a class="font-label-caps text-label-caps text-outline hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="font-label-caps text-label-caps text-outline hover:text-primary transition-colors" href="#">Terms</a>
+<a class="font-label-caps text-label-caps text-outline hover:text-primary transition-colors" href="#">Research</a>
+</div>
+</footer>
+<!-- Interactive Layer: Rain/Dust Particles -->
+<canvas class="fixed inset-0 pointer-events-none z-[1] opacity-30" id="particleCanvas"></canvas>
+<script>
+        // Micro-interaction for particle background (Monsoon Lab atmosphere)
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedY = Math.random() * 2 + 1;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.y += this.speedY;
+                if (this.y > canvas.height) {
+                    this.y = -10;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(113, 218, 167, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Celebration Trigger (Confetti simulated via simple logic)
+        function triggerVictory() {
+            console.log('Victory UI Initialized');
+        }
+        triggerVictory();
+    </script>
+</body></html>

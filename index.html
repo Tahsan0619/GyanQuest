@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="GyanQuest  -  interactive learning games for Bangladesh. Learn. Level Up. Lead." />
+  <title>GyanQuest  -  Learn. Level Up. Lead.</title>
+  <link rel="icon" href="/assets/gyanquest-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/gyanquest-logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&family=Sora:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/landing.css" />
+</head>
+<body class="gq-landing">
+  <div class="gq-bg" aria-hidden="true"></div>
+
+  <header class="gq-nav">
+    <a href="/" class="gq-logo">
+      <img class="gq-logo__mark" src="/assets/gyanquest-logo.png" width="44" height="44" alt="GyanQuest" />
+      <span class="gq-logo__text">Gyan<em>Quest</em></span>
+    </a>
+    <nav class="gq-nav__links" aria-label="Main">
+      <a href="#games" data-i18n="navGames">Games</a>
+      <a href="#why" data-i18n="navWhy">Why GyanQuest</a>
+      <a href="#vision" data-i18n="navVision">Vision</a>
+    </nav>
+    <div class="gq-nav__actions">
+      <button
+        type="button"
+        class="gq-books-toggle"
+        id="gq-unlock-books"
+        aria-pressed="false"
+        title="Unlock mission books without finishing levels"
+      >
+        Unlock books: Off
+      </button>
+      <button type="button" class="gq-lang" id="gq-lang" aria-label="Switch language">বাংলা</button>
+      <a class="gq-btn gq-btn--primary" href="/games/force-fighter/" data-i18n="playNow">Play now</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="gq-hero">
+      <p class="gq-hero__badge" data-i18n="badge">Interactive learning for Bangladesh</p>
+      <div class="gq-hero__brand">
+        <img class="gq-hero__logo" src="/assets/gyanquest-logo.png" width="96" height="96" alt="" />
+        <h1><span>GyanQuest</span></h1>
+      </div>
+      <p class="gq-hero__tagline" data-i18n="tagline">Learn. Level Up. Lead.</p>
+      <p class="gq-hero__lead" data-i18n="heroLead">
+        GyanQuest is a growing library of 3D mission games  -  বাংলা and English  -  that turn textbooks into labs you can touch on any phone.
+      </p>
+      <div class="gq-hero__cta">
+        <a class="gq-btn gq-btn--primary" href="/games/force-fighter/" data-i18n="playNow">Play now</a>
+        <a class="gq-btn gq-btn--ghost" href="#games" data-i18n="exploreGames">Explore games</a>
+      </div>
+      <div class="gq-stats">
+        <div class="gq-stat">
+          <strong>28</strong>
+          <span data-i18n="statGames">Learning games</span>
+        </div>
+        <div class="gq-stat">
+          <strong>2</strong>
+          <span data-i18n="statLang">Languages</span>
+        </div>
+        <div class="gq-stat">
+          <strong data-i18n="statPlayVal">3D + missions</strong>
+          <span data-i18n="statPlay">Play style</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="gq-section" id="games">
+      <div class="gq-section__head">
+        <h2 data-i18n="gamesTitle">Game library</h2>
+        <p data-i18n="gamesLead">One live game today. Twenty-seven more on the roadmap  -  same engine, new subjects.</p>
+      </div>
+      <div class="gq-tracks" id="gq-catalog" aria-live="polite"></div>
+    </section>
+
+    <section class="gq-section" id="why">
+      <div class="gq-section__head">
+        <h2 data-i18n="whyTitle">Why we outperform</h2>
+        <p data-i18n="whyLead">Built for how Bangladesh actually learns.</p>
+      </div>
+      <div class="gq-pillars">
+        <article class="gq-pillar">
+          <h3>🎯 <span data-i18n="p1t">Learn by doing</span></h3>
+          <p data-i18n="p1d">Drag, push, fail, retry  -  not passive video.</p>
+        </article>
+        <article class="gq-pillar">
+          <h3>🗣️ <span data-i18n="p2t">বাংলা + English</span></h3>
+          <p data-i18n="p2d">Strict language modes  -  no mixed UI.</p>
+        </article>
+        <article class="gq-pillar">
+          <h3>📱 <span data-i18n="p3t">Any device</span></h3>
+          <p data-i18n="p3d">Browser-based. No install. Works on shared family phones.</p>
+        </article>
+        <article class="gq-pillar">
+          <h3>🇧🇩 <span data-i18n="p4t">National scale</span></h3>
+          <p data-i18n="p4d">One platform, every subject  -  from physics to cybersecurity.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="gq-section" id="vision">
+      <div class="gq-vision">
+        <h2 data-i18n="visionTitle">Digitalizing Bangladesh, one subject at a time</h2>
+        <p data-i18n="visionLead">
+          From village classrooms to city prep centers: quality labs, local language, and measurable progress  -  without expensive hardware or foreign-only content.
+        </p>
+        <a class="gq-btn gq-btn--primary" href="/games/force-fighter/" data-i18n="visionCta">Start with Force Fighter</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="gq-footer">
+    <p><strong>GyanQuest</strong>  -  <span data-i18n="footer">Learn. Level Up. Lead.</span></p>
+    <p>© <span id="gq-year"></span> · ImpactX</p>
+  </footer>
+
+  <script defer src="/js/landing.js?v=unlock2"></script>
+  <script>
+    document.getElementById("gq-year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

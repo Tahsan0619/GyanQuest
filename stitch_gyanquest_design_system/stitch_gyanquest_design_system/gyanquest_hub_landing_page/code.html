@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GyanQuest | Monsoon Lab Learning</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&amp;family=Sora:wght@400;600;700&amp;family=Noto+Sans+Bengali:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..900&amp;family=Syne:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#ffdea7",
+                    "secondary": "#f8bd45",
+                    "primary": "#71daa7",
+                    "on-error": "#690005",
+                    "on-primary-fixed-variant": "#005235",
+                    "on-tertiary": "#20333e",
+                    "tertiary-fixed": "#d1e5f5",
+                    "surface-container-low": "#181c1b",
+                    "on-secondary-fixed-variant": "#5e4200",
+                    "tertiary": "#b5c9d8",
+                    "primary-fixed-dim": "#71daa7",
+                    "on-secondary-fixed": "#271900",
+                    "on-secondary-container": "#392600",
+                    "on-secondary": "#412d00",
+                    "on-surface-variant": "#bdcac0",
+                    "surface": "#101413",
+                    "surface-tint": "#71daa7",
+                    "surface-container-lowest": "#0b0f0e",
+                    "on-primary": "#003823",
+                    "inverse-primary": "#006c47",
+                    "secondary-container": "#bc8709",
+                    "surface-dim": "#101413",
+                    "on-error-container": "#ffdad6",
+                    "surface-bright": "#363a39",
+                    "inverse-on-surface": "#2d3130",
+                    "secondary-fixed-dim": "#f8bd45",
+                    "surface-container-high": "#272b2a",
+                    "on-tertiary-container": "#192c37",
+                    "on-tertiary-fixed-variant": "#364955",
+                    "primary-fixed": "#8ef7c1",
+                    "error": "#ffb4ab",
+                    "surface-variant": "#313635",
+                    "on-surface": "#e0e3e1",
+                    "tertiary-container": "#8093a1",
+                    "background": "#101413",
+                    "on-primary-fixed": "#002113",
+                    "surface-container-highest": "#313635",
+                    "on-background": "#e0e3e1",
+                    "on-primary-container": "#00311e",
+                    "outline-variant": "#3e4942",
+                    "tertiary-fixed-dim": "#b5c9d8",
+                    "outline": "#87948b",
+                    "inverse-surface": "#e0e3e1",
+                    "error-container": "#93000a",
+                    "primary-container": "#35a373",
+                    "surface-container": "#1c201f",
+                    "on-tertiary-fixed": "#091e29"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "margin-mobile": "16px",
+                    "container-max": "1280px",
+                    "gutter": "24px",
+                    "margin-desktop": "64px"
+            },
+            "fontFamily": {
+                    "display-hero": ["Syne"],
+                    "label-caps": ["Sora"],
+                    "headline-lg": ["Syne"],
+                    "body-main": ["Sora"],
+                    "bengali-support": ["Noto Sans Bengali"],
+                    "headline-lg-mobile": ["Syne"],
+                    "ui-action-lg": ["Sora"]
+            },
+            "fontSize": {
+                    "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "body-main": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "bengali-support": ["16px", {"lineHeight": "1.8", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "ui-action-lg": ["18px", {"lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .wet-asphalt-reflection {
+            background: linear-gradient(180deg, rgba(49, 54, 53, 0.4) 0%, rgba(16, 20, 19, 0.8) 100%);
+            border: 1px solid rgba(113, 218, 167, 0.15);
+        }
+
+        .neon-glow-primary {
+            box-shadow: 0 0 20px rgba(113, 218, 167, 0.25);
+        }
+
+        .neon-glow-secondary {
+            box-shadow: 0 0 20px rgba(248, 189, 69, 0.25);
+        }
+
+        .mission-button {
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            box-shadow: 0 4px 0 0 #bc8709;
+        }
+
+        .mission-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 0 #bc8709;
+        }
+
+        .glass-blur {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-main selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 z-[100] border-b border-primary/20 bg-surface/80 backdrop-blur-md">
+<div class="flex justify-between items-center w-full px-4 md:px-margin-desktop h-20 max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<span class="font-display-hero text-2xl md:text-display-hero text-primary uppercase tracking-tighter">GyanQuest</span>
+</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-caps uppercase" href="#games">Games</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-caps uppercase" href="#why">Why</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-caps uppercase" href="#vision">Vision</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:text-secondary-fixed transition-all font-label-caps tracking-widest">EN/বাংলা</button>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 font-ui-action-lg hover:scale-95 transition-transform">Play now</button>
+</div>
+</div>
+</nav>
+<main class="relative">
+<!-- Hero Section -->
+<section class="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
+<!-- Full-bleed background shader -->
+
+<div class="relative z-10 flex flex-col items-center text-center px-margin-mobile">
+<img alt="GyanQuest Logo" class="h-[120px] w-auto mb-8 drop-shadow-[0_0_30px_rgba(113,218,167,0.4)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzgquzWrkon--6t_WUX-NUHeJTahPC7icITkcnoM7H5F9B80tvf3tIgkFT5TC8z-2JaKbc5TNqVXeQ-dnSEDUbn1nP-4FKhEQQXoSK5YOlMHUYQWNG01l495c3ZhtBZw1US56TPwXK8hGFzG5yRi4ibsB9k_eczDFyJHKdnvlxpRoWgK44ozeZMReUCBSaGd2q765tCeobBM7Iq2VHfJ4l1G2p7K-Uo8ubCGDoJ3ZE44kJQb5j5qxYSw"/>
+<h1 class="font-display-hero text-[64px] md:text-[120px] text-primary leading-none mb-4 uppercase tracking-tighter">
+                    GyanQuest
+                </h1>
+<p class="font-label-caps text-secondary text-xl md:text-2xl tracking-[0.3em] mb-12 uppercase">
+                    Learn. Level Up. Lead.
+                </p>
+<div class="flex flex-col md:flex-row gap-6">
+<button class="mission-button bg-secondary text-on-secondary px-10 py-4 font-ui-action-lg uppercase tracking-widest min-w-[220px]">
+                        Play Now
+                    </button>
+<button class="border-2 border-outline-variant text-on-surface hover:bg-surface-variant/40 px-10 py-4 font-ui-action-lg uppercase tracking-widest transition-colors min-w-[220px]">
+                        Explore Games
+                    </button>
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce flex flex-col items-center opacity-40">
+<span class="font-label-caps text-[10px] mb-2 tracking-widest">DECRYPTING BELOW</span>
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</section>
+<!-- Game Library Section (Bento Grid) -->
+<section class="py-24 px-4 md:px-margin-desktop max-w-container-max mx-auto relative" id="games">
+<div class="mb-16">
+<span class="text-primary font-label-caps tracking-[0.4em] uppercase block mb-2">Tactical Map</span>
+<h2 class="font-headline-lg text-4xl md:text-5xl text-on-surface">Mission Command Hub</h2>
+</div>
+<!-- Categories Tabs -->
+<div class="flex flex-wrap gap-4 mb-12 border-b border-outline-variant/30 pb-4">
+<button class="text-primary font-bold border-b-2 border-primary pb-2 font-label-caps uppercase">All Tracks</button>
+<button class="text-outline hover:text-on-surface transition-colors font-label-caps uppercase pb-2">Core Sciences</button>
+<button class="text-outline hover:text-on-surface transition-colors font-label-caps uppercase pb-2">CS &amp; Tech</button>
+<button class="text-outline hover:text-on-surface transition-colors font-label-caps uppercase pb-2">Engineering</button>
+<button class="text-outline hover:text-on-surface transition-colors font-label-caps uppercase pb-2">Math Extended</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Large Featured Tile -->
+<div class="md:col-span-8 group relative overflow-hidden wet-asphalt-reflection p-8 min-h-[400px] flex flex-col justify-end transition-all hover:border-primary/40 cursor-pointer">
+<div class="absolute top-0 right-0 p-6 flex gap-2">
+<span class="bg-error/20 text-error px-3 py-1 font-label-caps text-[10px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span> LIVE
+                        </span>
+<span class="bg-surface-bright/50 text-on-surface px-3 py-1 font-label-caps text-[10px]">DIFFICULTY: ACE</span>
+</div>
+<div class="relative z-10">
+<span class="text-secondary font-display-hero text-5xl mb-4 block">⚔️</span>
+<h3 class="font-headline-lg text-4xl mb-2 text-on-surface">Force Fighter</h3>
+<p class="text-on-surface-variant max-w-md mb-6 font-body-main">Master Newton's Laws through high-speed hovercraft combat. Real physics, real stakes.</p>
+<div class="w-full h-1 bg-surface-container-high relative overflow-hidden">
+<div class="absolute inset-y-0 left-0 bg-primary w-3/4 shadow-[0_0_10px_#71daa7]"></div>
+</div>
+<div class="mt-2 flex justify-between font-label-caps text-[10px] text-outline">
+<span>TACTICAL PROGRESS</span>
+<span>75% DEPLOYED</span>
+</div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60"></div>
+</div>
+<!-- Secondary Tiles -->
+<div class="md:col-span-4 wet-asphalt-reflection p-8 group transition-all hover:neon-glow-primary cursor-pointer">
+<div class="mb-8 flex justify-between items-start">
+<span class="text-primary text-4xl font-display-hero">🧪</span>
+<span class="bg-primary/20 text-primary px-3 py-1 font-label-caps text-[10px]">SCIENCE</span>
+</div>
+<h3 class="font-headline-lg text-2xl mb-2 text-on-surface">Chemistry Lab</h3>
+<p class="text-on-surface-variant font-body-main mb-12">Simulate molecular fusion with zero risk. Maximum impact learning.</p>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</div>
+<div class="md:col-span-4 wet-asphalt-reflection p-8 group transition-all hover:neon-glow-secondary cursor-pointer border-secondary/20">
+<div class="mb-8 flex justify-between items-start">
+<span class="text-secondary text-4xl font-display-hero">🛡️</span>
+<span class="bg-secondary/20 text-secondary px-3 py-1 font-label-caps text-[10px]">TECH</span>
+</div>
+<h3 class="font-headline-lg text-2xl mb-2 text-on-surface">Cyber Shield</h3>
+<p class="text-on-surface-variant font-body-main mb-12">Defense systems engineering. Protecting the digital frontier.</p>
+<span class="material-symbols-outlined text-secondary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</div>
+<div class="md:col-span-4 wet-asphalt-reflection p-8 group transition-all hover:border-tertiary/40 cursor-pointer">
+<div class="mb-8 flex justify-between items-start">
+<span class="text-tertiary text-4xl font-display-hero">⚡</span>
+<span class="bg-tertiary/20 text-tertiary px-3 py-1 font-label-caps text-[10px]">ENGINEERING</span>
+</div>
+<h3 class="font-headline-lg text-2xl mb-2 text-on-surface">Circuit Breaker</h3>
+<p class="text-on-surface-variant font-body-main mb-12">Analyze power grids under stress. Real-world electrical logic.</p>
+<span class="material-symbols-outlined text-tertiary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</div>
+<div class="md:col-span-4 wet-asphalt-reflection p-8 group transition-all hover:border-outline/40 cursor-pointer">
+<div class="mb-8 flex justify-between items-start">
+<span class="text-on-surface text-4xl font-display-hero">📐</span>
+<span class="bg-surface-bright text-on-surface px-3 py-1 font-label-caps text-[10px]">MATH</span>
+</div>
+<h3 class="font-headline-lg text-2xl mb-2 text-on-surface">Prime Vector</h3>
+<p class="text-on-surface-variant font-body-main mb-12">Geometry and calculus as your ultimate navigation tool.</p>
+<span class="material-symbols-outlined text-on-surface group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</div>
+</div>
+</section>
+<!-- Why GyanQuest Section -->
+<section class="py-32 bg-surface-container-lowest overflow-hidden relative" id="why">
+<!-- Decorative atmospheric reflection element -->
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+<div class="max-w-container-max mx-auto px-4 md:px-margin-desktop grid md:grid-cols-2 gap-24 items-center">
+<div>
+<span class="text-primary font-label-caps tracking-[0.4em] uppercase block mb-4">Laboratory Specs</span>
+<h2 class="font-display-hero text-5xl md:text-7xl text-on-surface mb-8 leading-[1.1]">The Monsoon Lab Advantage</h2>
+<p class="text-on-surface-variant text-xl leading-relaxed mb-12 max-w-lg">
+                        We don't just teach; we simulate. Our mission is to transform every student into a high-tech researcher through immersive, game-based learning.
+                    </p>
+<div class="grid grid-cols-2 gap-8">
+<div>
+<span class="font-display-hero text-primary text-4xl block mb-2">98%</span>
+<span class="font-label-caps text-outline uppercase tracking-widest text-[10px]">Active Retention</span>
+</div>
+<div>
+<span class="font-display-hero text-secondary text-4xl block mb-2">1M+</span>
+<span class="font-label-caps text-outline uppercase tracking-widest text-[10px]">Deployments</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<!-- Pillar 1 -->
+<div class="p-8 border border-outline-variant hover:border-primary transition-colors flex flex-col justify-between aspect-square">
+<span class="font-display-hero text-on-surface-variant text-sm tracking-widest">01</span>
+<h4 class="font-headline-lg text-xl text-on-surface uppercase">Learn by Doing</h4>
+<p class="text-outline text-sm font-body-main mt-4">Theory without practice is data without drive. We prioritize active simulation.</p>
+</div>
+<!-- Pillar 2 -->
+<div class="p-8 border border-outline-variant hover:border-secondary transition-colors flex flex-col justify-between aspect-square">
+<span class="font-display-hero text-on-surface-variant text-sm tracking-widest">02</span>
+<h4 class="font-headline-lg text-xl text-on-surface uppercase">EN + বাংলা</h4>
+<p class="text-outline text-sm font-body-main mt-4">High-tech education shouldn't have a language barrier. Full bilingual support.</p>
+</div>
+<!-- Pillar 3 -->
+<div class="p-8 border border-outline-variant hover:border-primary transition-colors flex flex-col justify-between aspect-square">
+<span class="font-display-hero text-on-surface-variant text-sm tracking-widest">03</span>
+<h4 class="font-headline-lg text-xl text-on-surface uppercase">Any Device</h4>
+<p class="text-outline text-sm font-body-main mt-4">Optimized for phones, tablets, and low-bandwidth rickshaws. Zero lag.</p>
+</div>
+<!-- Pillar 4 -->
+<div class="p-8 border border-outline-variant hover:border-secondary transition-colors flex flex-col justify-between aspect-square">
+<span class="font-display-hero text-on-surface-variant text-sm tracking-widest">04</span>
+<h4 class="font-headline-lg text-xl text-on-surface uppercase">National Scale</h4>
+<p class="text-outline text-sm font-body-main mt-4">Built for 170 million futures. From Dhaka to Dinajpur, the lab is open.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Vision Section -->
+<section class="relative min-h-[600px] flex items-center justify-center py-24 overflow-hidden" id="vision">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center opacity-30 grayscale hover:grayscale-0 transition-all duration-1000" data-alt="A cinematic, ultra-detailed wide shot of a futuristic laboratory overlooking a rain-drenched neon cityscape at dusk. The palette is dominated by deep teals and mango-leaf greens with brilliant marigold yellow lights reflecting on wet pavement. The style is Rickshaw Neon Science, blending gritty textures with high-precision holographic interfaces." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDp6jTe5bW77zDPUfwsY2IfbgeGRCvzz8L2g99rcGsZQMSLsKviD8Q5vZmbUS1PnL8AvpO_QiC7eDslFvSG5ZfltxT2mkz6tjUJccSfoFc4y0YnhvEJFSUwpGnu3xvOefg1ZY08ViDi4sv0pP3wScJsXJP8LBnjZifqUaf74BWCOQlACX8d27Rvyg2CypOvvfcpuWwxTuk84SEHubMyHBVFW5Pi-Ql7Pxsn1EDlNI6_LvDslBt9AjK3WQ')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background"></div>
+</div>
+<div class="relative z-10 text-center max-w-4xl px-4">
+<span class="text-secondary font-label-caps tracking-[0.5em] uppercase block mb-6">Final Transmission</span>
+<h2 class="font-display-hero text-5xl md:text-8xl text-primary leading-tight mb-8">The Future is<br/>Hands-On</h2>
+<p class="text-on-surface-variant text-2xl font-body-main mb-12 italic">"Empowering the next generation of Bangladeshi innovators through the power of play."</p>
+<button class="bg-primary text-on-primary px-12 py-5 font-ui-action-lg uppercase tracking-widest hover:scale-105 transition-all shadow-[0_0_30px_rgba(113,218,167,0.3)]">
+                    Join the Mission
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant py-12">
+<div class="flex flex-col items-center justify-center gap-6 w-full text-center max-w-container-max mx-auto px-4">
+<div class="flex items-center gap-4 mb-4">
+<span class="font-display-hero text-2xl text-primary opacity-50 uppercase tracking-widest">GyanQuest</span>
+</div>
+<p class="text-outline font-label-caps text-[10px] tracking-widest max-w-md uppercase">
+                © 2024 GyanQuest Monsoon Lab. High-Tech Education for the Bold.
+            </p>
+<div class="flex gap-8">
+<a class="text-outline hover:text-primary transition-colors font-label-caps text-[10px] uppercase" href="#">Privacy</a>
+<a class="text-outline hover:text-primary transition-colors font-label-caps text-[10px] uppercase" href="#">Terms</a>
+<a class="text-outline hover:text-primary transition-colors font-label-caps text-[10px] uppercase" href="#">Research</a>
+</div>
+<div class="mt-8 pt-8 border-t border-outline-variant/30 w-full flex flex-col items-center">
+<span class="text-outline font-label-caps text-[10px] mb-2 opacity-40">POWERED BY</span>
+<span class="font-display-hero text-on-surface text-xl tracking-tighter">IMPACTX</span>
+<p class="text-outline-variant font-label-caps text-[9px] mt-1 italic uppercase tracking-[0.2em]">Catalyzing National Change through Interactive Intelligence</p>
+</div>
+</div>
+</footer>
+<!-- SideNavBar (Coach Dock) -->
+<aside class="fixed right-unit bottom-unit w-80 rounded-xl bg-surface-container border border-primary/20 shadow-lg shadow-primary/20 flex flex-col p-4 gap-unit z-50 transform translate-y-20 opacity-0 transition-all duration-500 hover:translate-y-0 hover:opacity-100 group" id="coach-dock">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-primary/40">
+<span class="material-symbols-outlined text-on-primary-container">psychology</span>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-primary tracking-widest uppercase">Commander</p>
+<p class="font-body-main text-sm text-on-surface-variant">Lab Status: <span class="text-primary">Active</span></p>
+</div>
+</div>
+<div class="space-y-2">
+<button class="w-full flex items-center gap-3 p-2 rounded-lg bg-secondary text-on-secondary hover:scale-[0.98] transition-all">
+<span class="material-symbols-outlined text-sm">assignment</span>
+<span class="font-body-main text-xs font-bold uppercase tracking-widest">Mission</span>
+</button>
+<button class="w-full flex items-center gap-3 p-2 rounded-lg text-on-surface-variant hover:bg-surface-bright hover:text-primary transition-all">
+<span class="material-symbols-outlined text-sm">psychology</span>
+<span class="font-body-main text-xs uppercase tracking-widest">Intel</span>
+</button>
+<button class="w-full flex items-center gap-3 p-2 rounded-lg text-on-surface-variant hover:bg-surface-bright hover:text-primary transition-all">
+<span class="material-symbols-outlined text-sm">history</span>
+<span class="font-body-main text-xs uppercase tracking-widest">Log</span>
+</button>
+</div>
+<button class="mt-4 bg-primary text-on-primary py-2 rounded-lg font-ui-action-lg text-sm uppercase tracking-widest">
+            Deploy Intel
+        </button>
+</aside>
+<script>
+        // Micro-interaction for Coach Dock
+        window.addEventListener('scroll', () => {
+            const dock = document.getElementById('coach-dock');
+            if (window.scrollY > 300) {
+                dock.style.opacity = '1';
+                dock.style.transform = 'translateY(0)';
+            }
+        });
+
+        // Interactive tiles hover effect
+        document.querySelectorAll('.wet-asphalt-reflection').forEach(tile => {
+            tile.addEventListener('mousemove', (e) => {
+                const rect = tile.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                tile.style.setProperty('--mouse-x', `${x}px`);
+                tile.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>

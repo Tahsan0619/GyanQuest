@@ -1,0 +1,38 @@
+# Dependencies / env
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+
+# Composer / PHP local installers
+composer.phar
+composer-setup.php
+/vendor/
+backend/vendor/
+backend/node_modules/
+backend/.env
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Large / local-only (keep repo pushable)
+3D Assets/
+audio/
+_gq_old_bundle/
+ImpactX.zip
+*.zip
+*.wav
+*.mp3
+*.ogg
+
+# Cursor / local agent junk
+.cursor/
+agent-transcripts/

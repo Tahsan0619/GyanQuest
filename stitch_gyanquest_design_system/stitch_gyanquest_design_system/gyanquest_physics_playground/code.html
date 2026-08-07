@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GyanQuest | Force Fighter Sandbox</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&amp;family=Sora:wght@400;600;700&amp;family=Noto+Sans+Bengali&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-primary {
+            box-shadow: 0 0 20px rgba(113, 218, 167, 0.4);
+        }
+        .glow-secondary {
+            box-shadow: 0 0 20px rgba(248, 189, 69, 0.4);
+        }
+        .wet-asphalt {
+            background: linear-gradient(180deg, #1c201f 0%, #101413 100%);
+            border: 1px solid rgba(113, 218, 167, 0.1);
+        }
+        .mechanical-button {
+            transition: transform 0.1s, box-shadow 0.1s;
+            box-shadow: 0 4px 0 0 #5e4200;
+        }
+        .mechanical-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 0 #5e4200;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #181c1b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3e4942;
+            border-radius: 10px;
+        }
+    </style>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#006c47",
+                      "on-secondary-fixed": "#271900",
+                      "on-tertiary-fixed-variant": "#364955",
+                      "outline": "#87948b",
+                      "on-error": "#690005",
+                      "surface-container-low": "#181c1b",
+                      "on-primary-fixed": "#002113",
+                      "secondary-fixed-dim": "#f8bd45",
+                      "on-primary": "#003823",
+                      "surface": "#101413",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary": "#20333e",
+                      "on-secondary-container": "#392600",
+                      "surface-container-highest": "#313635",
+                      "on-surface-variant": "#bdcac0",
+                      "secondary-container": "#bc8709",
+                      "inverse-surface": "#e0e3e1",
+                      "surface-tint": "#71daa7",
+                      "on-tertiary-fixed": "#091e29",
+                      "surface-dim": "#101413",
+                      "surface-bright": "#363a39",
+                      "on-tertiary-container": "#192c37",
+                      "on-surface": "#e0e3e1",
+                      "on-primary-container": "#00311e",
+                      "surface-container-high": "#272b2a",
+                      "error": "#ffb4ab",
+                      "secondary": "#f8bd45",
+                      "tertiary-fixed-dim": "#b5c9d8",
+                      "tertiary": "#b5c9d8",
+                      "inverse-on-surface": "#2d3130",
+                      "tertiary-container": "#8093a1",
+                      "primary-container": "#35a373",
+                      "tertiary-fixed": "#d1e5f5",
+                      "on-secondary": "#412d00",
+                      "on-background": "#e0e3e1",
+                      "on-primary-fixed-variant": "#005235",
+                      "primary-fixed-dim": "#71daa7",
+                      "background": "#101413",
+                      "outline-variant": "#3e4942",
+                      "surface-container-lowest": "#0b0f0e",
+                      "on-secondary-fixed-variant": "#5e4200",
+                      "error-container": "#93000a",
+                      "surface-container": "#1c201f",
+                      "secondary-fixed": "#ffdea7",
+                      "primary": "#71daa7",
+                      "primary-fixed": "#8ef7c1",
+                      "surface-variant": "#313635"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "margin-desktop": "64px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Sora"],
+                      "body-main": ["Sora"],
+                      "ui-action-lg": ["Sora"],
+                      "bengali-support": ["Noto Sans Bengali"],
+                      "headline-lg": ["Syne"],
+                      "headline-lg-mobile": ["Syne"],
+                      "display-hero": ["Syne"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "body-main": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "ui-action-lg": ["18px", {"lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "bengali-support": ["16px", {"lineHeight": "1.8", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col overflow-hidden font-body-main selection:bg-primary/30">
+<!-- Top Navigation Bar (Game Shell Variant) -->
+<header class="flex justify-between items-center w-full px-margin-mobile h-16 z-50 bg-surface-container-lowest bg-gradient-to-b from-surface-variant/30 to-transparent">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary hover:bg-primary/10 rounded-full p-2 transition-all active:translate-y-0.5">arrow_back</button>
+<div class="flex flex-col">
+<span class="font-display-hero text-headline-lg text-primary leading-none">GyanQuest</span>
+<span class="font-label-caps text-label-caps text-outline uppercase">Force Fighter Sandbox</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="bg-surface-container flex items-center px-4 py-1.5 rounded-xl border border-primary/20">
+<span class="material-symbols-outlined text-secondary mr-2" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+<span class="font-label-caps text-label-caps text-on-surface">XP: 2,450</span>
+</div>
+<button class="material-symbols-outlined text-outline hover:bg-primary/10 rounded-full p-2 transition-all active:translate-y-0.5">videogame_asset</button>
+<button class="material-symbols-outlined text-outline hover:bg-primary/10 rounded-full p-2 transition-all active:translate-y-0.5">settings</button>
+</div>
+</header>
+<main class="flex-grow flex relative overflow-hidden">
+<!-- Environmental Controls (Left Sidebar) -->
+<aside class="w-72 bg-surface-container-low border-r border-outline-variant/30 p-6 flex flex-col gap-8 z-20">
+<div class="space-y-6">
+<div>
+<h3 class="font-label-caps text-label-caps text-primary mb-4 flex items-center">
+<span class="material-symbols-outlined text-[18px] mr-2">public</span>
+                        WORLD PHYSICS
+                    </h3>
+<div class="space-y-6">
+<!-- Gravity Control -->
+<div class="space-y-2">
+<div class="flex justify-between text-[11px] font-bold text-outline">
+<span>GRAVITY</span>
+<span class="text-secondary" id="gravity-val">9.8 m/s²</span>
+</div>
+<input class="w-full accent-primary h-1.5 bg-surface-container-highest rounded-full appearance-none cursor-pointer" max="25" min="0" oninput="document.getElementById('gravity-val').innerText = this.value + ' m/s²'" step="0.1" type="range" value="9.8"/>
+</div>
+<!-- Friction Control -->
+<div class="space-y-2">
+<div class="flex justify-between text-[11px] font-bold text-outline">
+<span>FRICTION</span>
+<span class="text-secondary" id="friction-val">0.3 μ</span>
+</div>
+<input class="w-full accent-primary h-1.5 bg-surface-container-highest rounded-full appearance-none cursor-pointer" max="1" min="0" oninput="document.getElementById('friction-val').innerText = this.value + ' μ'" step="0.01" type="range" value="0.3"/>
+</div>
+<!-- Air Density Control -->
+<div class="space-y-2">
+<div class="flex justify-between text-[11px] font-bold text-outline">
+<span>AIR DENSITY</span>
+<span class="text-secondary" id="air-val">1.2 kg/m³</span>
+</div>
+<input class="w-full accent-primary h-1.5 bg-surface-container-highest rounded-full appearance-none cursor-pointer" max="5" min="0" oninput="document.getElementById('air-val').innerText = this.value + ' kg/m³'" step="0.1" type="range" value="1.2"/>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant/20">
+<h3 class="font-label-caps text-label-caps text-primary mb-4 flex items-center">
+<span class="material-symbols-outlined text-[18px] mr-2">visibility</span>
+                        VISUALIZATIONS
+                    </h3>
+<div class="flex flex-col gap-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container text-primary focus:ring-primary/20" type="checkbox"/>
+<span class="text-[13px] font-medium text-on-surface-variant group-hover:text-on-surface transition-colors">Show Force Vectors</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline-variant bg-surface-container text-primary focus:ring-primary/20" type="checkbox"/>
+<span class="text-[13px] font-medium text-on-surface-variant group-hover:text-on-surface transition-colors">Show Collision Meshes</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container text-primary focus:ring-primary/20" type="checkbox"/>
+<span class="text-[13px] font-medium text-on-surface-variant group-hover:text-on-surface transition-colors">Trajectory Tracing</span>
+</label>
+</div>
+</div>
+</div>
+<div class="mt-auto">
+<button class="w-full py-4 bg-error-container text-on-error-container rounded-xl font-label-caps text-label-caps flex items-center justify-center gap-2 hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined">restart_alt</span>
+                    RESET SANDBOX
+                </button>
+</div>
+</aside>
+<!-- Main 3D Viewport -->
+<section class="flex-grow relative bg-black">
+<!-- Simulated 3D Lab Viewport -->
+<div class="absolute inset-0 z-0">
+
+<!-- Fallback/Overlay texture for high-contrast lab feel -->
+<div class="absolute inset-0 pointer-events-none opacity-20 mix-blend-overlay" style="background-image: radial-gradient(#71daa7 1px, transparent 1px); background-size: 32px 32px;"></div>
+</div>
+<!-- UI Overlays in Viewport -->
+<div class="absolute top-6 right-6 flex flex-col gap-2 items-end z-10">
+<div class="bg-surface/80 backdrop-blur-md px-4 py-2 rounded-lg border border-primary/20 flex flex-col items-end">
+<span class="text-[10px] font-bold text-primary tracking-widest uppercase">Simulation Engine</span>
+<span class="text-2xl font-display-hero text-on-surface">60.0 FPS</span>
+</div>
+<div class="bg-surface/80 backdrop-blur-md px-4 py-2 rounded-lg border border-primary/20 flex flex-col items-end">
+<span class="text-[10px] font-bold text-primary tracking-widest uppercase">Active Objects</span>
+<span class="text-2xl font-display-hero text-on-surface" id="object-count">0</span>
+</div>
+</div>
+<!-- Spawn Rail (Bottom Toolbar) -->
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-end gap-6 z-30">
+<div class="wet-asphalt p-3 rounded-2xl flex gap-3 shadow-2xl">
+<button class="spawn-btn group flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-primary/10 transition-all border border-transparent hover:border-primary/20">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">table_bar</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant">DESK</span>
+</button>
+<button class="spawn-btn group flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-primary/10 transition-all border border-transparent hover:border-primary/20">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">local_drink</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant">BOTTLE</span>
+</button>
+<button class="spawn-btn group flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-primary/10 transition-all border border-transparent hover:border-primary/20">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">landslide</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant">ROCK</span>
+</button>
+<button class="spawn-btn group flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-primary/10 transition-all border border-transparent hover:border-primary/20">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">qr_code_2</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant">MAGNET</span>
+</button>
+<div class="w-px bg-outline-variant/30 h-16 my-auto mx-2"></div>
+<button class="mechanical-button bg-secondary text-on-secondary px-6 rounded-xl font-ui-action-lg text-ui-action-lg flex items-center gap-2">
+<span class="material-symbols-outlined">play_arrow</span>
+                        SIMULATE
+                    </button>
+</div>
+</div>
+</section>
+<!-- Coach Dock (Right Sidebar) -->
+<aside class="fixed right-unit bottom-unit w-80 rounded-xl flex flex-col p-4 gap-unit bg-surface-container border border-primary/20 shadow-lg shadow-primary/20 z-40 transform transition-transform" id="coach-dock">
+<div class="flex items-center gap-3 border-b border-outline-variant/20 pb-3">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary glow-primary flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A futuristic laboratory commander avatar with neon green glowing eyes and sleek tactical equipment, set against a dark rainy Dhaka street backdrop, stylized as high-detail digital concept art." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkbgIbv5B5VVi-FPKX9vcM5U49ei5fEP9LnKUfBsaP_PbaiUdoT2nisfhSPNQNiXSgwI1rGORC2at2LHhG7hJYvRlU9PcYXmR-_9Fr7yRntTnJ5qF9bxsY_zcNyjQzePDZtnjoDsZ2T7rug6WVyzHdcNg9mJ2i49fSTBjxo1fVXJaY50PsivpMd7s-JrHFxaoMWaiYVlNwtFaEXJ9vMlUBWrbPamq6PMSrBRtWVqNmTuT3zQ5hEa_75w"/>
+</div>
+<div>
+<h4 class="font-display-hero text-primary text-sm leading-tight">Commander</h4>
+<p class="font-label-caps text-[10px] text-on-surface-variant">Lab Status: Active</p>
+</div>
+<button class="ml-auto material-symbols-outlined text-outline hover:text-primary transition-colors" onclick="document.getElementById('coach-dock').style.transform = 'translateY(120%)'">close</button>
+</div>
+<div class="py-2">
+<p class="text-on-surface text-[14px] leading-relaxed">
+                    Welcome to the <span class="text-secondary font-bold">Sandbox</span>! Experiment with forces to see what happens. Drag props into the lab and adjust the world physics on the left.
+                </p>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-secondary text-on-secondary rounded-lg p-2 font-label-caps text-[10px] hover:bg-secondary-fixed transition-colors active:scale-95">DEPLOY INTEL</button>
+<button class="flex-1 bg-surface-bright text-primary border border-primary/20 rounded-lg p-2 font-label-caps text-[10px] hover:bg-primary/10 transition-colors active:scale-95">VIEW LOGS</button>
+</div>
+</aside>
+</main>
+<!-- Footer Meta-Bar -->
+<footer class="bg-surface-container-lowest h-10 border-t border-outline-variant/30 px-margin-mobile flex items-center justify-between z-50">
+<div class="flex items-center gap-6">
+<span class="font-label-caps text-[10px] text-outline">© 2024 GYANQUEST MONSOON LAB</span>
+<div class="flex gap-4">
+<a class="font-label-caps text-[10px] text-outline hover:text-primary transition-colors" href="#">RESEARCH</a>
+<a class="font-label-caps text-[10px] text-outline hover:text-primary transition-colors" href="#">SECURITY</a>
+</div>
+</div>
+<div class="flex items-center gap-4 text-outline font-label-caps text-[10px]">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> SYSTEM OPTIMAL</span>
+<span>LATENCY: 12MS</span>
+</div>
+</footer>
+<script>
+        // Simple Interaction Script
+        let count = 0;
+        const countDisplay = document.getElementById('object-count');
+        const spawnButtons = document.querySelectorAll('.spawn-btn');
+
+        spawnButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                count++;
+                countDisplay.innerText = count;
+                
+                // Add a small temporary highlight to the count
+                countDisplay.classList.add('text-primary');
+                setTimeout(() => countDisplay.classList.remove('text-primary'), 500);
+            });
+        });
+
+        // Initialize world with some 'gravity' effect on labels
+        window.addEventListener('load', () => {
+            console.log("Force Fighter Sandbox Initialized.");
+        });
+    </script>
+</body></html>

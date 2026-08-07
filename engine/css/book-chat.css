@@ -1,0 +1,134 @@
+/* Floating explain-chat */
+.gq-chat {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 13000;
+  font-family: Sora, system-ui, sans-serif;
+}
+
+.gq-chat__fab {
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 189, 69, 0.45);
+  background: linear-gradient(145deg, #1d4ed8, #0f766e);
+  color: #fff;
+  font: 700 0.85rem/1 Sora, system-ui, sans-serif;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+.gq-chat__panel {
+  position: absolute;
+  right: 0;
+  bottom: 4rem;
+  width: min(360px, calc(100vw - 1.5rem));
+  height: min(460px, 70vh);
+  display: flex;
+  flex-direction: column;
+  background: #121816;
+  border: 1px solid rgba(113, 218, 167, 0.28);
+  border-radius: 0.85rem;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.gq-chat__panel.hidden {
+  display: none !important;
+}
+
+.gq-chat__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 0.85rem;
+  background: #1a221e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #e7e5e4;
+}
+
+.gq-chat__head strong {
+  display: block;
+  font-size: 0.92rem;
+}
+
+.gq-chat__sub {
+  margin: 0.2rem 0 0;
+  font-size: 0.72rem;
+  color: #a8b5ad;
+}
+
+.gq-chat__x {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  color: #e7e5e4;
+  border-radius: 0.35rem;
+  padding: 0.25rem 0.5rem;
+  font: 600 0.72rem/1 Sora, system-ui, sans-serif;
+  cursor: pointer;
+  align-self: start;
+}
+
+.gq-chat__msgs {
+  flex: 1;
+  overflow: auto;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.gq-chat__bubble {
+  max-width: 92%;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.65rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.gq-chat__bubble--bot {
+  align-self: flex-start;
+  background: #1f2a26;
+  color: #e8eee9;
+}
+
+.gq-chat__bubble--user {
+  align-self: flex-end;
+  background: #1d4ed8;
+  color: #fff;
+}
+
+.gq-chat__status {
+  align-self: center;
+  font-size: 0.72rem;
+  color: #9ca3af;
+}
+
+.gq-chat__form {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.65rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0e1412;
+}
+
+.gq-chat__form input {
+  flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #18201c;
+  color: #f5f5f4;
+  border-radius: 0.45rem;
+  padding: 0.5rem 0.65rem;
+  font: 500 0.82rem/1.2 Sora, system-ui, sans-serif;
+}
+
+.gq-chat__form button {
+  border: none;
+  border-radius: 0.45rem;
+  background: #71daa7;
+  color: #0b1410;
+  font: 700 0.8rem/1 Sora, system-ui, sans-serif;
+  padding: 0 0.85rem;
+  cursor: pointer;
+}

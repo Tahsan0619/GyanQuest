@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <circle cx="40" cy="56" r="14" fill="#94a3b8"/>
+  <circle cx="64" cy="40" r="14" fill="#94a3b8"/>
+  <circle cx="88" cy="56" r="14" fill="#94a3b8"/>
+  <circle cx="52" cy="76" r="14" fill="#cbd5e1"/>
+  <circle cx="76" cy="76" r="14" fill="#94a3b8"/>
+  <rect x="24" y="96" width="80" height="22" rx="8" fill="#22d3ee"/>
+  <text x="64" y="111" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#082f49">ONE KIND</text>
+</svg>

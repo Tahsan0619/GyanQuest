@@ -1,0 +1,97 @@
+/* Shared engine extras for curriculum games */
+@import url("./mission-hub.css");
+
+.pg-spawn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.lab-quiz__opts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.lab-quiz__q {
+  font-size: 1.05rem;
+  margin: 0.5rem 0;
+}
+
+.quiz-opt.wrong-flash {
+  animation: gq-shake 0.35s ease;
+  border-color: #ef4444 !important;
+}
+
+@keyframes gq-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.intro-card ul {
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.2rem;
+}
+
+.modal-root[aria-hidden="false"] {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: rgba(11, 15, 14, 0.78);
+  backdrop-filter: blur(4px);
+}
+
+.modal-root[aria-hidden="true"] {
+  display: none;
+}
+
+.modal-backdrop {
+  width: min(92vw, 420px);
+}
+
+.modal {
+  background: #1c201f;
+  color: #e0e3e1;
+  font-family: "Sora", system-ui, sans-serif;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(113, 218, 167, 0.2);
+  box-shadow: 0 0 20px rgba(113, 218, 167, 0.12), 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+.modal h3 {
+  margin-top: 0;
+  font-family: "Syne", system-ui, sans-serif;
+  color: #f8bd45;
+}
+
+.toast-root .toast {
+  position: fixed;
+  bottom: 5.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #272b2a;
+  color: #e0e3e1;
+  font-family: "Sora", system-ui, sans-serif;
+  font-weight: 600;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  z-index: 10000;
+  border: 1px solid rgba(113, 218, 167, 0.25);
+  box-shadow: 0 0 15px rgba(113, 218, 167, 0.2);
+}
+
+.app--playground .play-dock__tasks {
+  max-height: 40vh;
+  overflow: auto;
+}
+
+:root {
+  --gq-accent: #71daa7;
+  --gq-accent2: #35a373;
+}

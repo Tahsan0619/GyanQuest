@@ -1,0 +1,477 @@
+/* Interactive concept overlays (gamified 2D) - sit in viewport-hud */
+
+#viewport-hud:has(.cviz-host) {
+  left: 12px;
+  right: auto;
+  bottom: 12px;
+  max-width: min(380px, 46%);
+  align-items: stretch;
+  width: min(380px, 46%);
+}
+
+.cviz-host {
+  width: 100%;
+  pointer-events: auto;
+  z-index: 4;
+}
+
+.cviz {
+  background: linear-gradient(165deg, rgba(15, 23, 42, 0.92), rgba(12, 74, 110, 0.88));
+  border: 1px solid rgba(125, 211, 252, 0.35);
+  border-radius: 16px;
+  padding: 12px 14px;
+  color: #e0f2fe;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.cviz__title {
+  margin: 0 0 4px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #f0f9ff;
+}
+
+.cviz__hint {
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+  opacity: 0.9;
+  line-height: 1.35;
+}
+
+.cviz__readout {
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  color: #bae6fd;
+  min-height: 1.4em;
+}
+
+.cviz__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.cviz__row--wrap {
+  gap: 6px;
+}
+
+.cviz__btn {
+  margin-top: 8px;
+}
+
+.cviz__slider {
+  width: 100%;
+  accent-color: #38bdf8;
+}
+
+/* Atoms */
+.cviz__stage {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 110px;
+  border: 0;
+  border-radius: 12px;
+  background: radial-gradient(circle at 40% 40%, #0ea5e9 0%, #0f172a 70%);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.cviz__particles {
+  position: absolute;
+  inset: 0;
+}
+
+.cviz__dot {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 10px;
+  height: 10px;
+  margin: -5px;
+  border-radius: 50%;
+  background: #7dd3fc;
+  box-shadow: 0 0 8px #38bdf8;
+  animation: cviz-bob var(--d) ease-in-out infinite alternate;
+}
+
+.cviz__dot--flash {
+  background: #fde68a;
+  transform: scale(1.4);
+}
+
+@keyframes cviz-bob {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-6px);
+  }
+}
+
+/* Element flasks */
+.cviz__flask {
+  flex: 1;
+  min-width: 72px;
+  border: 0;
+  border-radius: 12px 12px 18px 18px;
+  padding: 12px 8px 16px;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.15s ease, box-shadow 0.15s;
+}
+
+.cviz__flask span {
+  font-size: 0.65rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.cviz__flask--fe {
+  background: linear-gradient(#64748b, #334155);
+}
+.cviz__flask--cu {
+  background: linear-gradient(#f59e0b, #b45309);
+}
+.cviz__flask--o {
+  background: linear-gradient(#38bdf8, #0369a1);
+}
+
+.cviz__flask.is-on {
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 2px #f0f9ff;
+}
+
+/* Bonds */
+.cviz__bond-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 64px;
+}
+
+.cviz__atom {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: #0f172a;
+  cursor: grab;
+}
+
+.cviz__atom--h {
+  background: #e2e8f0;
+}
+.cviz__atom--o {
+  background: #38bdf8;
+}
+
+.cviz__link {
+  font-size: 1.4rem;
+  color: #fde68a;
+  font-weight: 800;
+}
+
+.cviz--bonded .cviz__atom {
+  box-shadow: 0 0 12px #fde68a;
+}
+
+/* Mixtures beaker */
+.cviz__beaker {
+  position: relative;
+  height: 100px;
+  margin-top: 8px;
+  border: 3px solid rgba(255, 255, 255, 0.35);
+  border-top: 0;
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.cviz__layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  transition: height 0.4s ease, background 0.4s;
+}
+
+.cviz__layer--a {
+  bottom: 0;
+  background: #38bdf8;
+}
+.cviz__layer--b {
+  bottom: 0;
+  background: #f59e0b;
+  opacity: 0.85;
+}
+
+.cviz__beaker[data-mode="mix"] .cviz__layer--a,
+.cviz__beaker[data-mode="mix"] .cviz__layer--b {
+  height: 70%;
+  background: #a16207;
+}
+.cviz__beaker[data-mode="mix"] .cviz__layer--b {
+  opacity: 0;
+}
+
+.cviz__beaker[data-mode="layer"] .cviz__layer--a {
+  height: 40%;
+  background: #0ea5e9;
+}
+.cviz__beaker[data-mode="layer"] .cviz__layer--b {
+  height: 70%;
+  background: #fbbf24;
+  opacity: 0.75;
+}
+
+.cviz__beaker[data-mode="settle"] .cviz__layer--a {
+  height: 55%;
+  background: #67e8f9;
+}
+.cviz__beaker[data-mode="settle"] .cviz__layer--b {
+  height: 22%;
+  background: #78716c;
+}
+
+.cviz__swirl {
+  display: none;
+}
+
+/* Reactions */
+.cviz__react-pan {
+  position: relative;
+  height: 100px;
+  margin: 8px 0;
+  border-radius: 12px 12px 28px 28px;
+  background: linear-gradient(180deg, #64748b 0%, #334155 55%, #1e293b 100%);
+  overflow: hidden;
+  border: 3px solid #94a3b8;
+  box-shadow: inset 0 -18px 0 rgba(0, 0, 0, 0.25);
+}
+
+.cviz__react-pan::before {
+  content: "PAN";
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: rgba(226, 232, 240, 0.55);
+  font-weight: 700;
+}
+
+.cviz__liquid {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: 14px;
+  height: 22%;
+  border-radius: 8px;
+  background: rgba(148, 163, 184, 0.35);
+  transition: background 0.35s, height 0.35s;
+}
+
+.cviz__liquid.has-a {
+  background: #f8fafc;
+  height: 36%;
+}
+.cviz__liquid.has-b {
+  background: #fde68a;
+}
+.cviz__liquid.reacted {
+  background: #86efac;
+  height: 48%;
+}
+
+.cviz__bubbles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cviz__bubbles i {
+  position: absolute;
+  bottom: 20%;
+  left: calc(15% + (var(--i) * 5%));
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.75);
+  animation: cviz-rise 1.1s ease-in infinite;
+  animation-delay: calc(var(--i) * 0.08s);
+}
+
+@keyframes cviz-rise {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-60px);
+    opacity: 0;
+  }
+}
+
+.cviz__react-pan.is-fizzing {
+  box-shadow: inset 0 0 20px rgba(134, 239, 172, 0.5);
+}
+
+/* pH */
+.cviz__ph-strip {
+  height: 28px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: background 0.15s;
+}
+
+/* States */
+.cviz__state-stage {
+  position: relative;
+  height: 90px;
+  margin-top: 8px;
+  border-radius: 12px;
+  background: linear-gradient(#0c4a6e, #082f49);
+  overflow: hidden;
+}
+
+.cviz__ice,
+.cviz__water,
+.cviz__steam {
+  position: absolute;
+  transition: opacity 0.35s, transform 0.35s;
+}
+
+.cviz__ice {
+  left: 40%;
+  bottom: 18px;
+  width: 48px;
+  height: 48px;
+  background: #bae6fd;
+  border-radius: 8px;
+  opacity: 1;
+}
+
+.cviz__water {
+  left: 20%;
+  right: 20%;
+  bottom: 10px;
+  height: 24px;
+  background: #38bdf8;
+  border-radius: 0 0 12px 12px;
+  opacity: 0;
+}
+
+.cviz__steam {
+  left: 30%;
+  right: 30%;
+  top: 8px;
+  height: 40px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.55), transparent 70%);
+  opacity: 0;
+}
+
+.cviz__state-stage[data-state="1"] .cviz__ice {
+  opacity: 0;
+  transform: scale(0.5);
+}
+.cviz__state-stage[data-state="1"] .cviz__water {
+  opacity: 1;
+  height: 36px;
+}
+
+.cviz__state-stage[data-state="2"] .cviz__ice {
+  opacity: 0;
+}
+.cviz__state-stage[data-state="2"] .cviz__water {
+  opacity: 0.35;
+  height: 14px;
+}
+.cviz__state-stage[data-state="2"] .cviz__steam {
+  opacity: 1;
+  animation: cviz-bob 0.9s ease-in-out infinite alternate;
+}
+
+/* Periodic / safety chips */
+.cviz__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.cviz__grid button,
+.cviz__chip {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 8px;
+  background: #0369a1;
+  color: #f0f9ff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cviz__chip.is-good {
+  background: #15803d;
+}
+.cviz__chip.is-bad {
+  background: #b91c1c;
+}
+
+/* Synthesis cook */
+.cviz__cook {
+  height: 56px;
+  margin-top: 8px;
+  border-radius: 12px;
+  background: #334155;
+  border: 2px dashed #94a3b8;
+  transition: background 0.3s;
+}
+
+.cviz__cook[data-step="1"] {
+  background: linear-gradient(90deg, #0ea5e9 33%, #334155 33%);
+}
+.cviz__cook[data-step="2"] {
+  background: linear-gradient(90deg, #0ea5e9 33%, #f59e0b 66%, #334155 66%);
+}
+.cviz__cook[data-step="3"],
+.cviz__cook.is-done {
+  background: linear-gradient(90deg, #0ea5e9, #f59e0b, #22c55e);
+  border-style: solid;
+}
+
+.cviz__side {
+  flex: 1;
+  height: 56px;
+  border: 0;
+  border-radius: 12px;
+  background: #1e293b;
+  color: #e2e8f0;
+  font-weight: 800;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.cviz__side.is-on {
+  background: #0369a1;
+}
+
+@media (max-width: 720px) {
+  .cviz-host {
+    max-width: none;
+  }
+  .cviz {
+    padding: 10px;
+  }
+}

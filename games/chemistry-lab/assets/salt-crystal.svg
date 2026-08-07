@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <rect x="28" y="28" width="72" height="72" rx="6" fill="#e2e8f0" stroke="#94a3b8" stroke-width="3"/>
+  <circle cx="48" cy="48" r="8" fill="#38bdf8"/>
+  <circle cx="80" cy="48" r="8" fill="#f87171"/>
+  <circle cx="48" cy="80" r="8" fill="#f87171"/>
+  <circle cx="80" cy="80" r="8" fill="#38bdf8"/>
+  <line x1="56" y1="48" x2="72" y2="48" stroke="#64748b" stroke-width="3"/>
+  <line x1="48" y1="56" x2="48" y2="72" stroke="#64748b" stroke-width="3"/>
+  <line x1="80" y1="56" x2="80" y2="72" stroke="#64748b" stroke-width="3"/>
+  <line x1="56" y1="80" x2="72" y2="80" stroke="#64748b" stroke-width="3"/>
+  <text x="64" y="118" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="14" fill="#0f172a">NaCl</text>
+</svg>

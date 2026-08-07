@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GyanQuest | Mission Control Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Syne:wght@700;800&amp;family=Noto+Sans+Bengali:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..900&amp;family=Syne:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .wet-asphalt {
+            background: linear-gradient(180deg, rgba(49, 54, 53, 0.4) 0%, rgba(16, 20, 19, 1) 100%);
+            border: 1px solid rgba(113, 218, 107, 0.2);
+        }
+
+        .neon-glow-primary {
+            box-shadow: 0 0 15px rgba(113, 218, 167, 0.3);
+        }
+
+        .neon-glow-secondary {
+            box-shadow: 0 0 15px rgba(248, 189, 69, 0.3);
+        }
+
+        .marigold-button {
+            position: relative;
+            background: #f8bd45;
+            color: #412d00;
+            transition: all 0.1s ease;
+            box-shadow: 0 4px 0 #bc8709;
+        }
+
+        .marigold-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #bc8709;
+        }
+
+        .custom-toggle:checked + .toggle-dot {
+            transform: translateX(100%);
+            background-color: #f8bd45;
+        }
+
+        .diegetic-border {
+            border: 1px solid rgba(113, 218, 167, 0.2);
+            position: relative;
+        }
+        
+        .diegetic-border::before {
+            content: "";
+            position: absolute;
+            top: -1px; left: -1px; width: 10px; height: 10px;
+            border-top: 2px solid #71daa7; border-left: 2px solid #71daa7;
+        }
+
+        /* Scanline effect */
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(113, 218, 167, 0.1);
+            position: absolute;
+            top: 0;
+            animation: scan 8s linear infinite;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#101413",
+                      "tertiary-fixed-dim": "#b5c9d8",
+                      "on-tertiary": "#20333e",
+                      "tertiary-container": "#8093a1",
+                      "surface-container-lowest": "#0b0f0e",
+                      "on-primary-container": "#00311e",
+                      "on-tertiary-fixed": "#091e29",
+                      "on-surface": "#e0e3e1",
+                      "inverse-primary": "#006c47",
+                      "on-surface-variant": "#bdcac0",
+                      "secondary-container": "#bc8709",
+                      "surface-container-highest": "#313635",
+                      "surface-tint": "#71daa7",
+                      "inverse-on-surface": "#2d3130",
+                      "on-primary-fixed-variant": "#005235",
+                      "secondary": "#f8bd45",
+                      "primary-fixed": "#8ef7c1",
+                      "primary": "#71daa7",
+                      "on-tertiary-container": "#192c37",
+                      "error": "#ffb4ab",
+                      "secondary-fixed-dim": "#f8bd45",
+                      "on-secondary-fixed": "#271900",
+                      "error-container": "#93000a",
+                      "on-error-container": "#ffdad6",
+                      "tertiary": "#b5c9d8",
+                      "secondary-fixed": "#ffdea7",
+                      "on-primary": "#003823",
+                      "primary-fixed-dim": "#71daa7",
+                      "surface-variant": "#313635",
+                      "on-error": "#690005",
+                      "surface-container-low": "#181c1b",
+                      "outline-variant": "#3e4942",
+                      "on-secondary": "#412d00",
+                      "on-background": "#e0e3e1",
+                      "surface-bright": "#363a39",
+                      "surface": "#101413",
+                      "tertiary-fixed": "#d1e5f5",
+                      "on-secondary-fixed-variant": "#5e4200",
+                      "primary-container": "#35a373",
+                      "inverse-surface": "#e0e3e1",
+                      "surface-container": "#1c201f",
+                      "surface-container-high": "#272b2a",
+                      "outline": "#87948b",
+                      "on-primary-fixed": "#002113",
+                      "surface-dim": "#101413",
+                      "on-secondary-container": "#392600",
+                      "on-tertiary-fixed-variant": "#364955"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "margin-desktop": "64px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Sora"],
+                      "bengali-support": ["Noto Sans Bengali"],
+                      "body-main": ["Sora"],
+                      "ui-action-lg": ["Sora"],
+                      "headline-lg-mobile": ["Syne"],
+                      "display-hero": ["Syne"],
+                      "headline-lg": ["Syne"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "bengali-support": ["16px", {"lineHeight": "1.8", "fontWeight": "400"}],
+                      "body-main": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "ui-action-lg": ["18px", {"lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-surface font-body-main selection:bg-primary selection:text-on-primary-container min-h-screen overflow-x-hidden">
+<!-- Top AppBar (Game Shell Context) -->
+<header class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 z-50 fixed top-0 bg-gradient-to-b from-surface-variant/30 to-transparent">
+<div class="flex items-center gap-4">
+<button class="hover:bg-primary/10 rounded-full transition-all p-2 active:translate-y-0.5">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-display-hero text-headline-lg text-primary tracking-tight">GyanQuest</h1>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-label-caps text-outline px-3 py-1 border border-outline-variant rounded-full">MISSION: SETTINGS</span>
+<div class="flex items-center gap-2 ml-4">
+<span class="material-symbols-outlined text-primary hover:bg-primary/10 p-2 rounded-full cursor-pointer">military_tech</span>
+<span class="material-symbols-outlined text-primary hover:bg-primary/10 p-2 rounded-full cursor-pointer">videogame_asset</span>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-12 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto relative min-h-screen">
+<!-- Background Animation -->
+<div class="fixed inset-0 pointer-events-none opacity-20">
+
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter relative z-10">
+<!-- Left Panel: Sidebar Identity -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<div class="wet-asphalt p-8 rounded-xl diegetic-border">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-16 rounded-lg bg-surface-container-high border border-primary/40 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A futuristic laboratory coach avatar with glowing green neon visors, dark tactical techwear, and a serious yet encouraging expression. The art style is high-contrast digital illustration with a humid, neon-lit lab atmosphere, using deep teals and sharp primary green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZwV9TjuvvtteH65jKAiHPW0Dx_f7NjpjQiNmq6ZMABmvZdI-Ecyu0g3-I6W8uaO7A-BuvApsYtfnUX84p8AyPoY7v1EvP-oER2NpGGwslr4XOTyO020UhWyp_dgIPsbsMqHFQ1ktE0NwjP5NJPg7mj1iGlOq9rfmrcHvwgZob-HVrKSkSdgMct6pmwCGUziPHg50nBZt9yij5fCSL5HKYsXEjWw2txsoSVF8eRK7qTPYmgayyyMGTZg"/>
+</div>
+<div>
+<h2 class="font-display-hero text-headline-lg text-primary uppercase">Commander</h2>
+<p class="font-label-caps text-label-caps text-outline">Lab Status: <span class="text-primary">Active</span></p>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex items-center gap-3 p-3 bg-secondary text-on-secondary rounded-lg font-bold">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-caps">Accessibility</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">volume_up</span>
+<span class="text-label-caps">Audio &amp; Mission Logs</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">security</span>
+<span class="text-label-caps">Data Privacy</span>
+</div>
+</div>
+<button class="marigold-button w-full mt-8 py-4 px-6 rounded font-ui-action-lg uppercase tracking-wider flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+                        Save Configuration
+                    </button>
+</div>
+<!-- Info Card -->
+<div class="bg-surface-container border border-outline-variant p-6 rounded-xl">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-secondary text-sm">info</span>
+<span class="font-label-caps text-label-caps text-secondary">PRO TIP</span>
+</div>
+<p class="text-on-surface-variant text-sm">Adaptive interfaces improve mission success rates by 42%. Tailor your environment for maximum cognitive load management.</p>
+</div>
+</div>
+<!-- Right Panel: Settings Grid -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<!-- Main Settings Container -->
+<div class="wet-asphalt rounded-xl overflow-hidden relative">
+<div class="scanline"></div>
+<div class="p-8 border-b border-outline-variant flex justify-between items-center">
+<div>
+<h3 class="font-display-hero text-headline-lg text-on-surface">Interface Calibration</h3>
+<p class="text-on-surface-variant">Adjust neural-link and visual parameters</p>
+</div>
+<span class="material-symbols-outlined text-4xl text-primary/40">tune</span>
+</div>
+<div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Setting: Dyslexia Font -->
+<div class="bg-surface-container-high p-6 rounded-lg border border-outline-variant hover:border-primary/40 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">font_download</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer custom-toggle" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-outline after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:bg-secondary"></div>
+</label>
+</div>
+<h4 class="font-ui-action-lg text-on-surface mb-1">Dyslexia Friendly Font</h4>
+<p class="text-sm text-on-surface-variant">Swaps display fonts for heavy-weighted baselines to improve character recognition during high-stakes missions.</p>
+</div>
+<!-- Setting: Voiceover -->
+<div class="bg-surface-container-high p-6 rounded-lg border border-outline-variant hover:border-primary/40 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">record_voice_over</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer custom-toggle" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-outline after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:bg-secondary"></div>
+</label>
+</div>
+<h4 class="font-ui-action-lg text-on-surface mb-1">Voiceover Assistance</h4>
+<p class="text-sm text-on-surface-variant">The AI Commander will read all mission intel and lab reports aloud. Best for multi-tasking cadets.</p>
+</div>
+<!-- Setting: Haptic -->
+<div class="bg-surface-container-high p-6 rounded-lg border border-outline-variant hover:border-primary/40 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">vibration</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer custom-toggle" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-outline after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:bg-secondary"></div>
+</label>
+</div>
+<h4 class="font-ui-action-lg text-on-surface mb-1">Haptic Feedback</h4>
+<p class="text-sm text-on-surface-variant">Tactile micro-pulses for button interactions and mission alerts. Requires neural-link hardware (Mobile/Vibration).</p>
+</div>
+<!-- Setting: UI Complexity -->
+<div class="bg-surface-container-high p-6 rounded-lg border border-outline-variant hover:border-primary/40 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">dashboard_customize</span>
+</div>
+<div class="flex bg-surface-container-highest p-1 rounded-full border border-outline-variant">
+<button class="px-4 py-1 text-xs font-bold rounded-full bg-secondary text-on-secondary">DIEGETIC</button>
+<button class="px-4 py-1 text-xs font-bold rounded-full text-on-surface-variant hover:text-on-surface transition-colors">STANDARD</button>
+</div>
+</div>
+<h4 class="font-ui-action-lg text-on-surface mb-1">UI Complexity</h4>
+<p class="text-sm text-on-surface-variant">Toggle between a full 'In-Universe' immersive HUD and a simplified, high-visibility standard interface.</p>
+</div>
+</div>
+<div class="px-8 pb-8">
+<div class="bg-surface-container-low p-6 rounded-lg border border-primary/10">
+<h4 class="font-label-caps text-label-caps text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">visibility</span>
+                                LUMINANCE CALIBRATION
+                            </h4>
+<div class="relative w-full h-12 bg-surface-container-highest rounded-lg flex items-center px-4">
+<div class="absolute left-4 right-4 h-1 bg-outline-variant rounded-full"></div>
+<div class="absolute left-4 w-1/2 h-1 bg-primary rounded-full neon-glow-primary"></div>
+<div class="absolute left-[50%] -ml-3 w-6 h-6 bg-secondary rounded-full border-4 border-surface-container-lowest cursor-pointer shadow-lg"></div>
+<div class="flex justify-between w-full relative z-10 pointer-events-none">
+<span class="text-[10px] text-outline">DUSK</span>
+<span class="text-[10px] text-primary">OPTIMIZED</span>
+<span class="text-[10px] text-outline">NEON</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Section in Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="wet-asphalt p-6 rounded-xl border-secondary/20 flex items-center gap-4">
+<div class="w-12 h-12 flex-shrink-0 bg-secondary/10 rounded-full flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">translate</span>
+</div>
+<div>
+<h5 class="font-ui-action-lg text-on-surface">Language</h5>
+<p class="text-xs text-on-surface-variant">Current: English / Bengali (EN/বাংলা)</p>
+</div>
+<span class="material-symbols-outlined text-outline ml-auto">chevron_right</span>
+</div>
+<div class="wet-asphalt p-6 rounded-xl flex items-center gap-4">
+<div class="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">devices</span>
+</div>
+<div>
+<h5 class="font-ui-action-lg text-on-surface">Sync Status</h5>
+<p class="text-xs text-on-surface-variant">Last backup: 2m ago</p>
+</div>
+<span class="material-symbols-outlined text-primary ml-auto" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+<!-- The Coach Bubble -->
+<div class="fixed bottom-unit right-unit z-50 animate-bounce-slow">
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary to-secondary opacity-30 blur rounded-full group-hover:opacity-50 transition duration-1000"></div>
+<div class="relative bg-surface-container border-2 border-primary p-4 rounded-xl shadow-2xl flex items-center gap-4 max-w-xs md:max-w-md">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-primary/50 flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A close-up profile of a high-tech robotic companion with a friendly digital eye glowing green. The style is industrial science-fiction with visible paneling and micro-LED indicators, reflecting the humid dusk teal and green color scheme of GyanQuest." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABOZLUTJOG4GLXKImeT6JaCRXKKJWChMg3I-OnwgOsoY_eaEjZmKBghaRLhRJ_K73Q80oif0EjamI1RDMknWYp5djkq2AN2dmptCm8dMCbSf2nqbQvdUkdVpHeOfL3nP-5rihg-Uxp-emzSjurfmrEQYHdQ6mke6WSTh2uQ5QAv9KG9_IJpXmZ8eJabvTvSPs21OC3Uno3WjCEwNQX_Ryrgc2WspSRdFFAnlH8Fm66TZ11XifuMMcJMg"/>
+</div>
+<div>
+<p class="text-xs font-bold text-primary uppercase mb-1">System Assistant</p>
+<p class="text-sm text-on-surface leading-tight">Need help with these protocols, Commander? Dyslexia mode is highly recommended for long missions.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-20 border-t border-outline-variant bg-surface-container-lowest py-12 px-margin-mobile md:px-margin-desktop">
+<div class="max-w-container-max mx-auto flex flex-col items-center justify-center gap-6">
+<h2 class="font-display-hero text-headline-lg text-primary opacity-50 tracking-tighter">GyanQuest</h2>
+<div class="flex gap-8">
+<a class="font-label-caps text-label-caps text-outline hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="font-label-caps text-label-caps text-outline hover:text-primary transition-colors" href="#">Terms</a>
+<a class="font-label-caps text-label-caps text-outline hover:text-primary transition-colors" href="#">Research</a>
+</div>
+<p class="font-label-caps text-label-caps text-outline text-center">© 2024 GyanQuest Monsoon Lab. High-Tech Education for the Bold.</p>
+</div>
+</footer>
+<script>
+        // Micro-interaction for toggles
+        document.querySelectorAll('input[type="checkbox"]').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                if(this.checked) {
+                    console.log('Protocol Activated: ' + this.closest('div.group').querySelector('h4').innerText);
+                }
+            });
+        });
+
+        // Diegetic complexity toggle simulation
+        const complexityBtns = document.querySelectorAll('.diegetic-border button, .wet-asphalt button');
+        complexityBtns.forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'translateY(2px)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

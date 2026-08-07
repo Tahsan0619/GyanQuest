@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Civil Basics - GyanQuest</title>
+  <style id="gq-hub-first-paint">
+    #play-chrome, .play-chrome { display: none !important; }
+    #app.app--playing #play-chrome,
+    #app.app--playing .play-chrome { display: flex !important; }
+  </style>
+
+  <link rel="icon" href="/assets/gyanquest-logo.png" type="image/png" />
+  <link rel="stylesheet" href="/css/design-tokens.css" />
+  <link rel="stylesheet" href="/engine/css/styles.css" />
+  <link rel="stylesheet" href="/engine/css/kid-theme.css" />
+  <link rel="stylesheet" href="/engine/css/engine.css" />
+  <link rel="stylesheet" href="/engine/css/concept-viz.css" />
+  <link rel="stylesheet" href="/engine/css/voice.css" />
+  <link rel="stylesheet" href="css/level1.css" />
+  <link rel="stylesheet" href="css/hub.css" />
+  <link rel="stylesheet" href="/engine/css/mission-hub.css?v=playchrome1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&family=Sora:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="app" class="app--mission-hub">
+    <header class="top-bar">
+      <div class="brand">
+        <span class="brand-mark" data-i18n="shell.brandMark">Civil Basics</span>
+        <h1 data-i18n="shell.brandH1">Structures that stand!</h1>
+        <span class="subject-tag" data-i18n="shell.subjectTag">Civil for all</span>
+      </div>
+      <div class="top-actions">
+        <a href="/" class="btn secondary gq-hub-link" data-i18n="shell.hubBack">← GyanQuest</a>
+        <span id="reward-slot" class="reward-slot" aria-live="polite"></span>
+        <label class="lang-picker">
+          <span data-i18n="shell.langLabel">Language</span>
+          <select id="lang-select" aria-label="Choose language">
+            <option value="en">English</option>
+            <option value="bn">বাংলা</option>
+          </select>
+        </label>
+        <button type="button" id="btn-missions" class="btn secondary hidden" title="All missions">☰ Missions</button>
+        <span id="checkpoint-badge" class="checkpoint-badge hidden" title="Bonus quiz"></span>
+      </div>
+    </header>
+
+    <div id="mission-hub-root" class="mission-hub-root" aria-live="polite"></div>
+
+    <div id="play-chrome" class="play-chrome hidden" hidden>
+      <div class="progress-row">
+        <div id="level-title" class="level-title"></div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" role="progressbar">
+          <div id="progress-fill" class="progress-bar__fill"></div>
+        </div>
+        <span id="progress-label" class="progress-bar__label">0 steps left</span>
+      </div>
+      <div id="lab-depth" class="lab-depth" aria-live="polite"></div>
+
+      <main class="stage">
+        <div id="viewport" class="viewport">
+          <canvas id="c3d" aria-label="2D bio animation stage"></canvas>
+          <p id="bio-scene-live" class="chem-scene-live" aria-live="polite"></p>
+          <div id="viewport-hud" class="viewport-hud" aria-live="polite"></div>
+        </div>
+        <div id="play-dock" class="play-dock" aria-label="Coach and activities">
+          <div class="play-dock__head">
+            <div class="play-dock__coach">
+              <span class="coach-inline-avatar" aria-hidden="true">🏗️</span>
+              <div class="coach-inline-meta">
+                <strong class="coach-inline-name" data-i18n="shell.coachName">Coach Beam</strong>
+                <p id="coach-text" class="coach-text"></p>
+                <p id="voice-caption" class="voice-caption" hidden></p>
+              </div>
+            </div>
+            <div class="play-dock__head-actions">
+              <button type="button" id="btn-next-dock" class="btn primary hidden" title="Next">Next ▶</button>
+              <button type="button" id="btn-toggle-panel" class="btn secondary play-dock__toggle" title="Hide panel">−</button>
+              <button type="button" id="btn-try-again" class="btn secondary" title="Try again">↻ Try again</button>
+            </div>
+          </div>
+          <div id="coach-actions" class="coach-actions"></div>
+          <div id="overlay" class="play-dock__tasks"></div>
+        </div>
+      </main>
+
+      <nav id="sub-rail-host" class="chem-sub-rail-host" aria-label="Sub-levels"></nav>
+
+      <footer class="bottom-bar">
+        <div id="scores" class="scores"></div>
+        <div class="footer-actions">
+          <button type="button" id="btn-reset-all" class="btn secondary">↻ Reset all</button>
+          <button type="button" id="btn-hint" class="btn secondary">💡 Hint</button>
+          <button type="button" id="btn-next" class="btn primary hidden">Next step ▶</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <div id="modal-root" class="modal-root" aria-hidden="true"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+
+  <script type="module" src="main.js?v=resume1"></script>
+</body>
+</html>

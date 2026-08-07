@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <rect x="18" y="28" width="36" height="64" rx="6" fill="#0f172a" stroke="#fb923c" stroke-width="3"/>
+  <rect x="74" y="36" width="36" height="56" rx="4" fill="#1e293b" stroke="#fb923c" stroke-width="3"/>
+  <rect x="80" y="44" width="24" height="8" rx="2" fill="#22c55e"/>
+  <rect x="80" y="58" width="24" height="8" rx="2" fill="#22c55e"/>
+  <rect x="80" y="72" width="24" height="8" rx="2" fill="#64748b"/>
+  <path d="M54 56 H74" stroke="#fb923c" stroke-width="3" stroke-dasharray="4 3"/>
+  <text x="64" y="116" text-anchor="middle" font-size="11" font-weight="700" fill="#ffedd5" font-family="Segoe UI">SERVER</text>
+</svg>

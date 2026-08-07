@@ -1,0 +1,379 @@
+/** Chemistry Lab mission hub - matches GyanQuest landing catalog */
+
+.mission-hub-root.hidden,
+.play-chrome.hidden {
+  display: none !important;
+}
+
+/*
+ * Hub scroll: keep #app viewport-sized; scroll INSIDE .mission-hub-root.
+ * (height:auto + overflow:auto on #app does nothing - the box grows with content.)
+ */
+html.chem-hub-scroll,
+html.chem-hub-scroll body {
+  height: 100% !important;
+  max-height: 100% !important;
+  overflow: hidden !important;
+}
+
+#app.app--mission-hub {
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100vh !important;
+  max-height: 100dvh !important;
+  max-width: none !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding-bottom: 0.75rem !important;
+}
+
+#app.app--mission-hub .top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  flex: 0 0 auto;
+  margin: 0 -1rem;
+  padding: 0.85rem 1.25rem 0.75rem;
+  background: rgba(11, 15, 14, 0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--gq-outline-variant, #3e4942);
+}
+
+#app.app--mission-hub .mission-hub-root {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+.mission-hub-root {
+  position: relative;
+  padding: 0 0 2rem;
+  color: var(--gq-text, #e0e3e1);
+  font-family: var(--gq-font, "Sora", system-ui, sans-serif);
+}
+
+.chem-hub__bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 45% at 50% -5%, rgba(113, 218, 167, 0.12), transparent),
+    radial-gradient(ellipse 50% 35% at 100% 60%, rgba(248, 189, 69, 0.08), transparent),
+    radial-gradient(ellipse 40% 30% at 0% 85%, rgba(53, 163, 115, 0.1), transparent),
+    var(--gq-bg, #101413);
+}
+
+.chem-hub {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 4rem;
+}
+
+.chem-hub__head {
+  text-align: center;
+  margin: 0 auto 2rem;
+  max-width: 40rem;
+}
+
+.chem-hub__eyebrow {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: rgba(113, 218, 167, 0.12);
+  color: var(--gq-primary, #71daa7);
+  border: 1px solid rgba(113, 218, 167, 0.25);
+}
+
+.chem-hub__title {
+  margin: 0 0 0.5rem;
+  font-family: var(--gq-font-display, "Syne", system-ui, sans-serif);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gq-text, #e0e3e1);
+}
+
+.chem-hub__sub {
+  margin: 0 auto;
+  color: var(--gq-text-muted, #bdcac0);
+  max-width: 32rem;
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+.chem-hub__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.chem-hub-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 0;
+  padding: 1.25rem;
+  min-height: 160px;
+  border-radius: var(--gq-radius, 0.5rem);
+  border: 1px solid var(--gq-outline-variant, #3e4942);
+  background: var(
+    --gq-wet-asphalt,
+    linear-gradient(180deg, rgba(49, 54, 53, 0.45) 0%, rgba(16, 20, 19, 0.95) 100%)
+  );
+  color: inherit;
+  cursor: pointer;
+  overflow: hidden;
+  font-family: inherit;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.chem-hub-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gq-primary, #71daa7);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.chem-hub-card:hover:not(:disabled):not(.chem-hub-card--locked) {
+  border-color: rgba(113, 218, 167, 0.35);
+  transform: translateY(-2px);
+  box-shadow: var(--gq-glow-primary, 0 0 20px rgba(113, 218, 167, 0.25));
+}
+
+.chem-hub-card:hover:not(:disabled):not(.chem-hub-card--locked)::after {
+  transform: scaleX(1);
+}
+
+.chem-hub-card--live {
+  border-color: rgba(113, 218, 167, 0.3);
+}
+
+.chem-hub-card--live::after {
+  transform: scaleX(0.35);
+}
+
+.chem-hub-card--done {
+  border-color: rgba(113, 218, 167, 0.45);
+}
+
+.chem-hub-card--done::after {
+  transform: scaleX(1);
+  background: var(--gq-primary, #71daa7);
+}
+
+.chem-hub-card--soon:not(.chem-hub-card--locked) {
+  border-color: rgba(248, 189, 69, 0.28);
+}
+
+.chem-hub-card:disabled,
+.chem-hub-card--locked {
+  opacity: 0.65;
+  cursor: default;
+}
+
+.chem-hub-card:disabled:hover,
+.chem-hub-card--locked:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.chem-hub-card__emoji {
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.chem-hub-card__num {
+  margin: 0 0 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gq-text-muted, #bdcac0);
+}
+
+.chem-hub-card__title {
+  margin: 0 0 0.25rem;
+  font-family: var(--gq-font-display, "Syne", system-ui, sans-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--gq-text, #e0e3e1);
+}
+
+.chem-hub-card__hook {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--gq-text-muted, #bdcac0);
+  flex: 1;
+}
+
+.chem-hub-card__badge {
+  align-self: flex-start;
+  margin-top: 0.75rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--gq-radius-sm, 0.25rem);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.chem-hub-card--live .chem-hub-card__badge,
+.chem-hub-card--done .chem-hub-card__badge {
+  background: rgba(113, 218, 167, 0.15);
+  color: var(--gq-primary, #71daa7);
+  border: 1px solid rgba(113, 218, 167, 0.3);
+}
+
+.chem-hub-card--soon:not(.chem-hub-card--locked) .chem-hub-card__badge {
+  background: rgba(248, 189, 69, 0.12);
+  color: var(--gq-secondary, #f8bd45);
+  border: 1px solid rgba(248, 189, 69, 0.35);
+}
+
+.chem-hub-card--locked .chem-hub-card__badge {
+  background: var(--gq-surface-high, #272b2a);
+  color: var(--gq-text-muted, #bdcac0);
+  border: 1px solid var(--gq-outline-variant, #3e4942);
+}
+
+/* Hide decorative SVG icons - landing uses emoji as hero mark */
+.chem-hub-card__icon {
+  display: none;
+}
+
+.chem-hub-card__bg {
+  display: none;
+}
+
+/* Sub-rail (in-mission) - horizontal scroll must be bounded */
+.chem-sub-rail-host {
+  flex-shrink: 0;
+  border-top: 1px solid var(--gq-outline-variant, #3e4942);
+  background: rgba(16, 20, 19, 0.92);
+  padding: 0.55rem 0.75rem 0.65rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.chem-sub-rail {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.25rem;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  min-width: 0;
+  max-width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(113, 218, 167, 0.45) transparent;
+}
+
+.chem-sub-rail__item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 148px;
+  max-width: 200px;
+  padding: 0.5rem 0.7rem;
+  border-radius: var(--gq-radius, 0.5rem);
+  border: 1px solid var(--gq-outline-variant, #3e4942);
+  background: var(--gq-surface-container, #1c201f);
+  color: var(--gq-text, #e0e3e1);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.chem-sub-rail__item.is-current {
+  border-color: rgba(113, 218, 167, 0.45);
+  background: rgba(113, 218, 167, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(113, 218, 167, 0.2);
+}
+
+.chem-sub-rail__item.is-done {
+  border-color: rgba(113, 218, 167, 0.35);
+}
+
+.chem-sub-rail__item.is-locked,
+.chem-sub-rail__item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chem-sub-rail__n {
+  flex: 0 0 auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.35rem;
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  background: rgba(113, 218, 167, 0.18);
+  color: var(--gq-primary, #71daa7);
+}
+
+.chem-sub-rail__item.is-done .chem-sub-rail__n {
+  background: rgba(113, 218, 167, 0.35);
+}
+
+.chem-sub-rail__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chem-sub-rail__lock {
+  margin-left: auto;
+  font-size: 0.75rem;
+}
+
+/* Play chrome fills viewport when not in hub mode */
+.play-chrome {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 720px) {
+  .chem-hub__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chem-sub-rail__item {
+    min-width: 132px;
+  }
+}

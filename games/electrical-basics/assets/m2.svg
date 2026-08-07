@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <rect x="20" y="44" width="36" height="48" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
+  <text x="38" y="74" text-anchor="middle" font-size="16" font-weight="700" fill="#38bdf8" font-family="Segoe UI">V</text>
+  <path d="M64 68 H100" stroke="#facc15" stroke-width="4" stroke-linecap="round"/>
+  <polygon points="96,60 110,68 96,76" fill="#facc15"/>
+  <text x="82" y="52" text-anchor="middle" font-size="14" font-weight="700" fill="#fde68a" font-family="Segoe UI">I</text>
+  <text x="64" y="118" text-anchor="middle" font-size="11" font-weight="700" fill="#fde68a" font-family="Segoe UI">V &amp; I</text>
+</svg>

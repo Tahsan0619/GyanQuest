@@ -1,0 +1,41 @@
+/* Voice listen control + caption under coach */
+
+.voice-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.voice-btn.is-playing {
+  border-color: var(--gq-accent, #38bdf8);
+  color: #e0f2fe;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.45);
+}
+
+.voice-caption {
+  margin: 0.35rem 0 0;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: #cbd5e1;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 10px;
+}
+
+.voice-caption[hidden] {
+  display: none !important;
+}
+
+.play-dock__head-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.coach-inline-meta .voice-caption {
+  max-width: 42rem;
+}
