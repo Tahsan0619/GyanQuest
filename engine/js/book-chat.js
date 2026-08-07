@@ -204,6 +204,15 @@ function logConcept(term, subject, level) {
       if (st.conceptLog.length > 200) st.conceptLog = st.conceptLog.slice(-200);
       window.__gqPersist?.();
     }
+    import("/engine/js/auth-api.js?v=1")
+      .then((m) =>
+        m.postConceptLog?.({
+          term,
+          subject: subject || "",
+          level: typeof level === "number" ? level : 0,
+        }),
+      )
+      .catch(() => {});
   } catch {
     /* ignore */
   }

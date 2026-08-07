@@ -52,6 +52,22 @@ export function saveGame(storageKey, state) {
   } catch {
     /* private */
   }
+  // Optional Sanctum sync — never blocks gameplay (auth-api may be absent offline).
+  try {
+    const gameId = gameIdFromStorageKey(storageKey);
+    if (gameId && typeof window !== "undefined") {
+      import("/engine/js/auth-api.js?v=1")
+        .then((m) => m.syncProgress?.(gameId, state))
+        .catch(() => {});
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
+function gameIdFromStorageKey(storageKey) {
+  const m = String(storageKey || "").match(/^gq-(.+)-save-v\d+$/);
+  return m ? m[1] : null;
 }
 
 export function clearSave(storageKey) {

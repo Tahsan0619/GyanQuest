@@ -1,0 +1,82 @@
+.gq-auth-host {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gq-auth__who {
+  font-size: 0.85rem;
+  color: var(--gq-text, #e0e3e1);
+  opacity: 0.9;
+}
+
+#gq-auth-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+}
+
+#gq-auth-modal.hidden {
+  display: none;
+}
+
+.gq-auth-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.gq-auth-card {
+  position: relative;
+  width: min(420px, 92vw);
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background: #15201c;
+  border: 1px solid #3e4942;
+  color: #e0e3e1;
+  font-family: Sora, system-ui, sans-serif;
+}
+
+.gq-auth-card h3 {
+  margin: 0 0 0.35rem;
+  font-family: Syne, Sora, system-ui, sans-serif;
+}
+
+.gq-auth-note {
+  margin: 0 0 0.85rem;
+  font-size: 0.82rem;
+  color: #b5c4ba;
+}
+
+.gq-auth-card label {
+  display: block;
+  margin: 0.45rem 0;
+  font-size: 0.8rem;
+}
+
+.gq-auth-card input {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.4rem;
+  border: 1px solid #3e4942;
+  background: #0f1613;
+  color: inherit;
+}
+
+.gq-auth-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  justify-content: flex-end;
+  margin-top: 0.85rem;
+}
+
+.gq-auth-msg {
+  min-height: 1.2em;
+  font-size: 0.82rem;
+  color: #f8bd45;
+}

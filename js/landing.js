@@ -346,6 +346,18 @@ function init() {
     applyLocale();
   });
   initUnlockBooksToggle();
+  initAuth();
+}
+
+async function initAuth() {
+  const host = document.getElementById("gq-auth-host");
+  if (!host) return;
+  try {
+    const auth = await import("/engine/js/auth-api.js?v=1");
+    auth.mountAuthControls(host);
+  } catch (err) {
+    console.warn("[auth]", err);
+  }
 }
 
 function initUnlockBooksToggle() {
