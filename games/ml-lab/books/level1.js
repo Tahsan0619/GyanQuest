@@ -1,14 +1,12 @@
 /**
- * Digital book - ML Lab Mission 1: Teach the Model
- * Theory: cognitive load, dual coding, multimedia learning, constructivism,
- * conceptual change, spiral scaffold, retrieval practice.
- * Photos: assets/book-shared ai_data / anatomy themes (see assets/book/CREDITS-m1.json).
+ * Digital book - ML Lab Mission 1: Learn from Data
+ * Unique curriculum book (fit a simple model to points). Not a template fill-in.
  */
 export const BOOK = {
   missionIndex: 0,
-  title: "Teach the Model",
-  subtitle: "train vs test - more good examples",
-  subject: "ML Lab / Teach the Model",
+  title: "Learn from Data",
+  subtitle: "points, patterns, and cautious predictions",
+  subject: "ML Lab / Learn from Data",
   theories: [
     "cognitive-load",
     "dual-coding",
@@ -19,37 +17,35 @@ export const BOOK = {
     "retrieval-practice",
   ],
   cover: {
-    title: "Teach the Model",
-    art: "/games/ml-lab/assets/book/m1-cover.png",
+    title: "Learn from Data",
+    art: "/games/ml-lab/assets/book/m1-cover.jpg",
   },
   glossary: [
-    { id: "model", term: "model" },
-    { id: "train", term: "train" },
-    { id: "test", term: "test" },
-    { id: "example", term: "example" },
+    { id: "dataset", term: "dataset" },
+    { id: "feature", term: "feature" },
     { id: "label", term: "label" },
+    { id: "regression", term: "regression" },
     { id: "overfit", term: "overfit" },
-    { id: "pattern", term: "pattern" },
-    { id: "generalize", term: "generalize" },
+    { id: "train-test", term: "train/test split" },
+    { id: "error", term: "error" },
   ],
   pages: [
     {
-      title: "Learning from examples",
+      title: "Data before drama",
       layout: "text",
-      theory: ["constructivism", "dual-coding", "cognitive-load"],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/ml-lab/assets/book/m1-cover.png",
-              caption: "Figure 1. Brains learn from many experiences - ML models learn from labeled examples.",
-              alt: "Human brain diagram",
+              src: "/games/ml-lab/assets/book/m1-data.jpg",
+              caption: "Figure 1. A dataset is an organized table of examples - rows of cases, columns of measurements.",
+              alt: "Data chart or table",
             },
             {
-              src: "/games/ml-lab/assets/book/m1-hook.jpg",
-              caption: "Systems with many parts need practice signals, not one lucky guess.",
-              alt: "Heart anatomy as complex system metaphor",
+              src: "/games/ml-lab/assets/book/m1-cover.jpg",
+              caption: "Machine learning starts by plotting and cleaning, not by guessing fancy names.",
+              alt: "Scatter plot intro",
             },
           ],
         },
@@ -57,30 +53,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "A model learns from training examples, then we test it on new ones it has not memorized.",
+          text: "A feature is an input column you measure. A label is the answer column you hope to predict.",
         },
         {
           type: "p",
-          text: "More good examples usually beat a few messy ones. Labels must match reality, or the model practices the wrong habit.",
-        },
-        {
-          type: "p",
-          text: "Sorting fruit photos, handwriting samples, and spam vs real mail are everyday train-vs-test stories.",
+          text: "Everyday hook: hours studied (feature) and quiz score (label) can form a tiny dataset.",
         },
       ],
     },
     {
-      title: "Train set vs test set",
+      title: "Fit a line",
       layout: "full-fig",
-      theory: ["multimedia-learning", "dual-coding"],
       figures: [
         {
           place: "full",
           slides: [
             {
               src: "/games/ml-lab/assets/book/m1-model.jpg",
-              caption: "Figure 2. Structure underneath - models fit patterns in data the way scaffolds support a shape.",
-              alt: "Bone structure metaphor",
+              caption: "Figure 2. Regression draws a trend line through points to estimate new labels.",
+              alt: "Regression line on scatter plot",
             },
           ],
         },
@@ -88,35 +79,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Train: examples used to adjust the model. Test: held-out examples used to check whether it generalizes.",
+          text: "Regression is learning a relationship - often a line - that maps features to a number label.",
         },
         {
-          type: "ul",
-          items: [
-            "If test looks exactly like memorized train items, you have not really checked",
-            "If train is tiny, the model guesses wildly on new fruit or new handwriting",
-            "Balanced, honest labels beat huge noisy piles",
-          ],
+          type: "p",
+          text: "Error is the gap between the model's guess and the true label. Smaller average error is better, not perfect.",
         },
       ],
     },
     {
-      title: "Why more good examples help",
+      title: "Train vs test",
       layout: "text",
-      theory: ["cognitive-load", "dual-coding"],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/ml-lab/assets/book/m1-mechanism.jpg",
-              caption: "Figure 3. Many small units work together - lots of clean examples feed better patterns.",
-              alt: "Blood cells metaphor for many examples",
-            },
-            {
-              src: "/games/ml-lab/assets/book/m1-detail.jpg",
-              caption: "Strong signal vs flare noise - quality beats random intensity.",
-              alt: "Solar flare intensity image",
+              src: "/games/ml-lab/assets/book/m1-feature.jpg",
+              caption: "Figure 3. Choose features carefully - garbage columns make confident garbage lines.",
+              alt: "Feature columns concept",
             },
           ],
         },
@@ -124,26 +105,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "A model that only saw yellow bananas may fail on green ones. Variety inside the train set teaches the real pattern.",
+          text: "A train/test split keeps some rows hidden while you fit. Then you score on the hidden rows.",
         },
         {
           type: "p",
-          text: "Spam filters need many spam and many real messages. One weird email is not a curriculum.",
+          text: "If you only check the training rows, you can overfit - memorize noise instead of learning a useful pattern.",
         },
       ],
     },
     {
-      title: "Flow of a fair check",
+      title: "Predict with caution",
       layout: "full-fig",
-      theory: ["multimedia-learning", "spiral-scaffold"],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/ml-lab/assets/book/m1-transfer.jpg",
-              caption: "Figure 4. Keep train and test channels separate - like keeping two water paths from mixing.",
-              alt: "Water imagery for separate flows",
+              src: "/games/ml-lab/assets/book/m1-predict.jpg",
+              caption: "Figure 4. A prediction is an estimate - always ask how far it is from the training world.",
+              alt: "Prediction chart",
             },
           ],
         },
@@ -151,55 +131,49 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Leaking test examples into training makes scores look brilliant and real-world use look broken. Keep the split clean.",
+          text: "Predicting far outside the dataset range is risky. Lines do not get infinite trust.",
         },
       ],
     },
     {
-      title: "Model Mentor route",
+      title: "How the mission connects",
       layout: "text",
-      theory: ["spiral-scaffold", "cognitive-load"],
       blocks: [
         {
           type: "p",
-          text: "You met training, dialed example quality, sorted train vs test, strengthened the train set, and named why models learn from examples.",
+          text: "Meet points → pick features → fit → measure error → explain → rule → stretch → myth → fluency → mastery.",
         },
         {
           type: "ul",
           items: [
-            "Sort: train item vs honest test item",
-            "Lab: add better examples, watch guesses improve",
-            "Rule: train vs test - more good examples",
+            "Plotting first prevents blind fitting",
+            "Error checks keep you honest",
+            "The split fights overfit",
           ],
-        },
-        {
-          type: "p",
-          text: "The canvas kept memory load low. Here is the full teach-and-check habit.",
         },
       ],
     },
     {
-      title: "Fruit, handwriting, mail",
+      title: "Notebook lab",
       layout: "split",
-      theory: ["constructivism", "dual-coding", "retrieval-practice"],
       figures: [
         {
           place: "right",
           slides: [
             {
-              src: "/games/ml-lab/assets/book/m1-cover.png",
-              caption: "Fruit photos - train on many kinds, test on new ones.",
-              alt: "Brain learning metaphor",
+              src: "/games/ml-lab/assets/book/m1-data.jpg",
+              caption: "Collect a tiny dataset.",
+              alt: "Dataset",
             },
             {
               src: "/games/ml-lab/assets/book/m1-model.jpg",
-              caption: "Handwriting - variety beats one perfect sample.",
-              alt: "Structure metaphor",
+              caption: "Sketch a regression line.",
+              alt: "Model fit",
             },
             {
-              src: "/games/ml-lab/assets/book/m1-mechanism.jpg",
-              caption: "Spam vs real - need both classes in training.",
-              alt: "Many examples metaphor",
+              src: "/games/ml-lab/assets/book/m1-predict.jpg",
+              caption: "Test one new prediction.",
+              alt: "Prediction",
             },
           ],
         },
@@ -207,53 +181,47 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "For each everyday task, name five train examples and one test example that must stay unused until check time.",
+          text: "Make eight (x, y) points on paper. Draw a line. Hide two points first - that is your test set.",
         },
         {
           type: "ul",
           items: [
-            "What would a bad label look like?",
-            "What variety is missing?",
-            "How do you keep the test set honest?",
+            "Which feature did you choose for x?",
+            "Where is the biggest error?",
+            "Did you overfit the wiggles?",
           ],
         },
       ],
     },
     {
-      title: "ML myths",
+      title: "Myths to bust",
       layout: "text",
-      theory: ["conceptual-change"],
       blocks: [
         {
           type: "p",
-          text: "Myth: A model that scores 100% on training is ready. Better: it may have memorized; test on fresh examples.",
+          text: "Myth: A fancy model is always smarter. Better: a simple regression with clean features often wins for beginners.",
         },
         {
           type: "p",
-          text: "Myth: More data always helps even if labels are wrong. Better: wrong labels teach the wrong pattern faster.",
+          text: "Myth: Zero training error means success. Better: that can be overfit - test error tells the real story.",
         },
         {
           type: "p",
-          text: "Myth: ML understands fruit like a farmer. Better: it matches patterns from examples you provided.",
-        },
-        {
-          type: "p",
-          text: "Tap train, test, or model in red to talk with the tutor.",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
         },
       ],
     },
     {
-      title: "Model Mentor mastery",
+      title: "Mastery",
       layout: "text",
-      theory: ["retrieval-practice", "spiral-scaffold"],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/ml-lab/assets/book/m1-cover.png",
-              caption: "Figure 5. Teach train vs test with one clear picture.",
-              alt: "Brain image as ML teaching anchor",
+              src: "/games/ml-lab/assets/book/m1-cover.jpg",
+              caption: "Figure 5. Teach ML as data → fit → check error → predict carefully.",
+              alt: "ML teaching anchor",
             },
           ],
         },
@@ -261,14 +229,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Teach in one minute: train on good examples, test on new ones, and never celebrate memorization as understanding.",
+          text: "Teach a friend in one minute: datasets have features and labels; regression fits a trend; watch overfit with a train/test split.",
         },
         {
           type: "ul",
           items: [
-            "Explain train vs test with fruit photos",
-            "Give one overfit warning in plain words",
-            "Use the word generalize correctly once",
+            "Define error in one sentence",
+            "Explain why we hide a test set",
+            "Use the word regression correctly once",
           ],
         },
       ],

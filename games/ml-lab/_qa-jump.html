@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8" />
+ <title>QA jump - Machine Learning</title>
+</head>
+<body>
+ <p>Setting save and redirecting…</p>
+ <script>
+ const params = new URLSearchParams(location.search);
+ const level = Math.max(0, Math.min(9, Number(params.get("level") || 0)));
+ const sub = Math.max(0, Math.min(9, Number(params.get("sub") || 0)));
+ const key = "gq-ml-lab-save-v2";
+ const completed = Array.from({ length: 10 }, () => Array(10).fill(false));
+ for (let i = 0; i < sub; i++) completed[level][i] = true;
+ if (level >= 1) completed[0] = Array(10).fill(true);
+ if (level >= 2) completed[1] = Array(10).fill(true);
+ const introSeen = Array(10).fill(false);
+ introSeen[level] = true;
+ localStorage.setItem(key, JSON.stringify({
+ level, sub, completed,
+ rewards: Array.from({ length: 10 }, () => ({ earned: false, stars: 0 })),
+ introSeen, inHub: false,
+ }));
+ sessionStorage.setItem("gq-qa-jump", "1");
+ location.replace("/games/ml-lab/index.html?v=mlqa1");
+ </script>
+</body>
+</html>

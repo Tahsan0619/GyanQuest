@@ -2,5 +2,5 @@
 export const SCENE_MOTION_MULT = 1;
 
 export function scaledDwellMs(base = 2200) {
-  return Math.max(900, Math.round(base * 0.85));
+ return Math.max(900, Math.round(base * 0.85));
 }

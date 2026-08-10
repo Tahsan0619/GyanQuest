@@ -1,44 +1,44 @@
 [
-  {
-    "file": "m1-cover.jpg",
-    "src": "/games/os-hardware/assets/book/m1-cover.jpg",
-    "from_shared": "Integrated_circuit.jpg",
-    "theme": "computing",
-    "bytes": 1410135
-  },
-  {
-    "file": "m1-hook.jpg",
-    "src": "/games/os-hardware/assets/book/m1-hook.jpg",
-    "from_shared": "electrical/nasa-battery-3.jpg",
-    "theme": "computing",
-    "bytes": 142893
-  },
-  {
-    "file": "m1-model.jpg",
-    "src": "/games/os-hardware/assets/book/m1-model.jpg",
-    "from_shared": "physics/nasa-iss-5.jpg",
-    "theme": "computing",
-    "bytes": 218548
-  },
-  {
-    "file": "m1-mechanism.jpg",
-    "src": "/games/os-hardware/assets/book/m1-mechanism.jpg",
-    "from_shared": "physics/nasa-astronaut-push-4.jpg",
-    "theme": "computing",
-    "bytes": 133881
-  },
-  {
-    "file": "m1-detail.jpg",
-    "src": "/games/os-hardware/assets/book/m1-detail.jpg",
-    "from_shared": "physics/skateboard-motion-2.jpg",
-    "theme": "computing",
-    "bytes": 445840
-  },
-  {
-    "file": "m1-transfer.webp",
-    "src": "/games/os-hardware/assets/book/m1-transfer.webp",
-    "from_shared": "physics/pushing-cart-3.webp",
-    "theme": "computing",
-    "bytes": 300400
-  }
+ {
+ "file": "m1-cover.jpg",
+ "src": "/games/os-hardware/assets/book/m1-cover.jpg",
+ "from_shared": "Integrated_circuit.jpg",
+ "theme": "computing",
+ "bytes": 1410135
+ },
+ {
+ "file": "m1-hook.jpg",
+ "src": "/games/os-hardware/assets/book/m1-hook.jpg",
+ "from_shared": "electrical/nasa-battery-3.jpg",
+ "theme": "computing",
+ "bytes": 142893
+ },
+ {
+ "file": "m1-model.jpg",
+ "src": "/games/os-hardware/assets/book/m1-model.jpg",
+ "from_shared": "physics/nasa-iss-5.jpg",
+ "theme": "computing",
+ "bytes": 218548
+ },
+ {
+ "file": "m1-mechanism.jpg",
+ "src": "/games/os-hardware/assets/book/m1-mechanism.jpg",
+ "from_shared": "physics/nasa-astronaut-push-4.jpg",
+ "theme": "computing",
+ "bytes": 133881
+ },
+ {
+ "file": "m1-detail.jpg",
+ "src": "/games/os-hardware/assets/book/m1-detail.jpg",
+ "from_shared": "physics/skateboard-motion-2.jpg",
+ "theme": "computing",
+ "bytes": 445840
+ },
+ {
+ "file": "m1-transfer.webp",
+ "src": "/games/os-hardware/assets/book/m1-transfer.webp",
+ "from_shared": "physics/pushing-cart-3.webp",
+ "theme": "computing",
+ "bytes": 300400
+ }
 ]

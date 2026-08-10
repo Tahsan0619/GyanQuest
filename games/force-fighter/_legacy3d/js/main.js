@@ -1842,7 +1842,26 @@ function startGame() {
 
   updateProgressUI();
   wireForceVoiceButton();
-  showForceHub();
+  if (wantsDirectPlayground()) openPlaygroundDirect();
+  else showForceHub();
+}
+
+/** Deep link target: ?playground=1 opens the free-play lab instead of the locked hub. */
+function wantsDirectPlayground() {
+  try {
+    return new URLSearchParams(location.search).has("playground");
+  } catch {
+    return false;
+  }
+}
+
+function openPlaygroundDirect() {
+  inHub = false;
+  setMissionHubMode(false, { hubRoot, btnMissions, playChrome });
+  document.getElementById("btn-playground")?.classList.remove("hidden");
+  populateLevelSelect();
+  updateProgressUI();
+  enterPlaygroundMode();
 }
 
 function showForceHub() {

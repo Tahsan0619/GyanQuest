@@ -1,21 +1,63 @@
+/* GyanQuest auth - matches landing neon dark UI */
 .gq-auth-host {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .gq-auth__who {
-  font-size: 0.85rem;
+  font-family: var(--gq-font, "Sora", system-ui, sans-serif);
+  font-size: 0.8rem;
+  font-weight: 600;
   color: var(--gq-text, #e0e3e1);
-  opacity: 0.9;
+  max-width: 8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gq-auth-host .gq-auth-btn,
+.gq-auth-host button {
+  font-family: var(--gq-font, "Sora", system-ui, sans-serif);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--gq-radius-sm, 0.25rem);
+  border: 1px solid rgba(113, 218, 167, 0.4);
+  background: var(--gq-surface-container, #1a211e);
+  color: var(--gq-primary, #71daa7);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s, color 0.15s;
+}
+
+.gq-auth-host .gq-auth-btn:hover,
+.gq-auth-host button:hover {
+  border-color: var(--gq-primary, #71daa7);
+  box-shadow: 0 0 16px rgba(113, 218, 167, 0.25);
+  background: rgba(113, 218, 167, 0.12);
+}
+
+.gq-auth-host .gq-auth-btn--ghost {
+  border-color: var(--gq-outline-variant, #3e4942);
+  color: var(--gq-text, #e0e3e1);
+  background: transparent;
+}
+
+.gq-auth-host .gq-auth-btn--ghost:hover {
+  border-color: rgba(248, 189, 69, 0.55);
+  color: #f8bd45;
+  background: rgba(248, 189, 69, 0.08);
+  box-shadow: 0 0 14px rgba(248, 189, 69, 0.18);
 }
 
 #gq-auth-modal {
   position: fixed;
   inset: 0;
-  z-index: 80;
+  z-index: 220;
   display: grid;
   place-items: center;
+  padding: 1rem;
 }
 
 #gq-auth-modal.hidden {
@@ -25,58 +67,159 @@
 .gq-auth-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 20%, rgba(113, 218, 167, 0.1), transparent),
+    rgba(6, 10, 9, 0.78);
+  backdrop-filter: blur(6px);
 }
 
 .gq-auth-card {
   position: relative;
-  width: min(420px, 92vw);
-  padding: 1.25rem;
-  border-radius: 0.75rem;
-  background: #15201c;
-  border: 1px solid #3e4942;
-  color: #e0e3e1;
-  font-family: Sora, system-ui, sans-serif;
+  width: min(420px, 94vw);
+  padding: 1.4rem 1.35rem 1.25rem;
+  border-radius: 0.85rem;
+  background:
+    linear-gradient(165deg, rgba(26, 33, 30, 0.98), rgba(16, 20, 19, 0.98));
+  border: 1px solid rgba(113, 218, 167, 0.28);
+  box-shadow:
+    0 0 0 1px rgba(248, 189, 69, 0.08),
+    0 18px 50px rgba(0, 0, 0, 0.55),
+    0 0 40px rgba(113, 218, 167, 0.08);
+  color: var(--gq-text, #e0e3e1);
+  font-family: var(--gq-font, "Sora", system-ui, sans-serif);
+}
+
+.gq-auth-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
 }
 
 .gq-auth-card h3 {
-  margin: 0 0 0.35rem;
-  font-family: Syne, Sora, system-ui, sans-serif;
+  margin: 0;
+  font-family: var(--gq-font-display, "Syne", system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+  color: var(--gq-primary, #71daa7);
+}
+
+.gq-auth-close {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 1px solid var(--gq-outline-variant, #3e4942);
+  background: transparent;
+  color: var(--gq-text-muted, #bdcac0);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.gq-auth-close:hover {
+  border-color: #f8bd45;
+  color: #f8bd45;
 }
 
 .gq-auth-note {
-  margin: 0 0 0.85rem;
+  margin: 0 0 1rem;
   font-size: 0.82rem;
-  color: #b5c4ba;
+  line-height: 1.45;
+  color: var(--gq-text-muted, #b5c4ba);
 }
 
 .gq-auth-card label {
   display: block;
-  margin: 0.45rem 0;
-  font-size: 0.8rem;
+  margin: 0.55rem 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--gq-text-muted, #b5c4ba);
 }
 
 .gq-auth-card input {
   display: block;
   width: 100%;
-  margin-top: 0.25rem;
-  padding: 0.45rem 0.55rem;
-  border-radius: 0.4rem;
-  border: 1px solid #3e4942;
-  background: #0f1613;
-  color: inherit;
+  margin-top: 0.3rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.45rem;
+  border: 1px solid var(--gq-outline-variant, #3e4942);
+  background: rgba(10, 14, 13, 0.9);
+  color: var(--gq-text, #e0e3e1);
+  font-family: inherit;
+  font-size: 0.92rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.gq-auth-card input:focus {
+  outline: none;
+  border-color: rgba(113, 218, 167, 0.65);
+  box-shadow: 0 0 0 3px rgba(113, 218, 167, 0.15);
 }
 
 .gq-auth-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
+  gap: 0.5rem;
   justify-content: flex-end;
-  margin-top: 0.85rem;
+  margin-top: 1.05rem;
+}
+
+.gq-auth-actions .gq-auth-action {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 0.45rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.1s, box-shadow 0.15s, background 0.15s, border-color 0.15s;
+}
+
+.gq-auth-actions .gq-auth-action--ghost {
+  background: transparent;
+  color: var(--gq-text, #e0e3e1);
+  border-color: var(--gq-outline-variant, #3e4942);
+}
+
+.gq-auth-actions .gq-auth-action--ghost:hover {
+  border-color: rgba(248, 189, 69, 0.5);
+  color: #f8bd45;
+}
+
+.gq-auth-actions .gq-auth-action--secondary {
+  background: rgba(113, 218, 167, 0.1);
+  color: var(--gq-primary, #71daa7);
+  border-color: rgba(113, 218, 167, 0.35);
+}
+
+.gq-auth-actions .gq-auth-action--secondary:hover {
+  box-shadow: 0 0 16px rgba(113, 218, 167, 0.22);
+}
+
+.gq-auth-actions .gq-auth-action--primary {
+  background: var(--gq-secondary, #f8bd45);
+  color: #1a1408;
+  border-color: transparent;
+  box-shadow: 0 3px 0 #c4922e;
+}
+
+.gq-auth-actions .gq-auth-action--primary:hover {
+  box-shadow: 0 3px 0 #c4922e, 0 0 18px rgba(248, 189, 69, 0.35);
+}
+
+.gq-auth-actions .gq-auth-action--primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #c4922e;
 }
 
 .gq-auth-msg {
   min-height: 1.2em;
+  margin: 0.55rem 0 0;
   font-size: 0.82rem;
+  font-weight: 600;
   color: #f8bd45;
 }

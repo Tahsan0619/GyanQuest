@@ -1,42 +1,26 @@
 [
   {
-    "file": "m2-cover.jpg",
-    "src": "/games/bio-explorer/assets/book/m2-cover.jpg",
-    "from_shared": true
-  },
-  {
     "file": "m2-hook.jpg",
     "src": "/games/bio-explorer/assets/book/m2-hook.jpg",
-    "from_shared": true
+    "commons_title": "File:Onion cells.jpg",
+    "artist": "Berik Bekzhan",
+    "license": "CC BY-SA 4.0",
+    "from_shared": false
   },
   {
-    "file": "m2-model.jpg",
-    "src": "/games/bio-explorer/assets/book/m2-model.jpg",
-    "from_shared": true
+    "file": "m2-organelle.jpg",
+    "src": "/games/bio-explorer/assets/book/m2-organelle.jpg",
+    "commons_title": "File:Mitochondria, mammalian lung - TEM.jpg",
+    "artist": "Louisa Howard",
+    "license": "Public domain",
+    "from_shared": false
   },
   {
-    "file": "m2-mechanism.jpg",
-    "src": "/games/bio-explorer/assets/book/m2-mechanism.jpg",
-    "from_shared": true
-  },
-  {
-    "file": "m2-mechanism.jpg",
-    "src": "/games/bio-explorer/assets/book/m2-mechanism.jpg",
-    "from_shared": true
-  },
-  {
-    "file": "m2-cover.jpg",
-    "src": "/games/bio-explorer/assets/book/m2-cover.jpg",
-    "from_shared": true
-  },
-  {
-    "file": "m2-hook.jpg",
-    "src": "/games/bio-explorer/assets/book/m2-hook.jpg",
-    "from_shared": true
-  },
-  {
-    "file": "m2-model.jpg",
-    "src": "/games/bio-explorer/assets/book/m2-model.jpg",
-    "from_shared": true
+    "file": "m2-nucleus.jpg",
+    "src": "/games/bio-explorer/assets/book/m2-nucleus.jpg",
+    "commons_title": "File:HeLa cells stained with Hoechst 33258.jpg",
+    "artist": "TenOfAllTrades at English Wikipedia",
+    "license": "Public domain",
+    "from_shared": false
   }
 ]

@@ -17,7 +17,8 @@ ok("runL1Sub" in boot and "runL2Sub" in boot and "runL3Sub" in boot, "boot missi
 
 main = (root / "main.js").read_text(encoding="utf-8")
 idx = (root / "index.html").read_text(encoding="utf-8")
-ok("deepen-elec" in main and "deepen-elec" in idx, "cache-bust missing")
+ok("circuit1" in main or "deepen-elec" in main, "cache-bust missing in main")
+ok("circuit1" in idx or "deepen-elec" in idx, "cache-bust missing in index")
 
 lab = (root / "js" / "lab-state.js").read_text(encoding="utf-8")
 ok("electrical-basics/assets/m1.svg" in lab, "LAB_ASSET_PATHS m1")

@@ -3,8 +3,8 @@
  * Locale JSON lives in /locales/{code}.json (bundled fallback if fetch fails).
  */
 
-import enBundled from "../locales/en.json" with { type: "json" };
-import bnBundled from "../locales/bn.json" with { type: "json" };
+import enBundled from "../../locales/en.json" with { type: "json" };
+import bnBundled from "../../locales/bn.json" with { type: "json" };
 
 const BUNDLED_LOCALES = { en: enBundled, bn: bnBundled };
 
@@ -144,7 +144,7 @@ export function applyShellI18n() {
 export async function loadLocale(code) {
   const bundled = BUNDLED_LOCALES[code] || BUNDLED_LOCALES.en;
   try {
-    const res = await fetch(`locales/${code}.json`);
+    const res = await fetch(`../locales/${code}.json`);
     if (res.ok) {
       const fetched = await res.json();
       dict = mergeLocale(bundled, fetched);

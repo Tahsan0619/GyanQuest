@@ -1,14 +1,12 @@
 /**
- * Digital book - Web Dev Studio / JS Click
- * Theory: cognitive load, dual coding, multimedia learning, constructivism,
- * conceptual change, spiral scaffold, retrieval practice.
- * Photos: local verified copies under /games/web-dev-studio/assets/book/ (see CREDITS-m3.json).
+ * Digital book - Web Dev Studio Mission 3: JavaScript Actions
+ * Unique curriculum book (events, DOM, interactivity). Not a template fill-in.
  */
 export const BOOK = {
   missionIndex: 2,
-  title: "JS Click",
-  subtitle: "interaction",
-  subject: "Web Dev Studio / JS Click",
+  title: "JavaScript Actions",
+  subtitle: "make the page respond to people",
+  subject: "Web Dev Studio / JavaScript Actions",
   theories: [
     "cognitive-load",
     "dual-coding",
@@ -19,43 +17,35 @@ export const BOOK = {
     "retrieval-practice",
   ],
   cover: {
-    title: "JS Click",
+    title: "JavaScript Actions",
     art: "/games/web-dev-studio/assets/book/m3-cover.jpg",
   },
   glossary: [
-    { id: "javascript", term: "javascript" },
+    { id: "javascript", term: "JavaScript" },
+    { id: "dom", term: "DOM" },
     { id: "event", term: "event" },
-    { id: "click", term: "click" },
-    { id: "handler", term: "handler" },
     { id: "listener", term: "listener" },
     { id: "function", term: "function" },
-    { id: "button", term: "button" },
-    { id: "interaction", term: "interaction" },
-    { id: "dom", term: "dom" },
-    { id: "feedback", term: "feedback" },
+    { id: "variable", term: "variable" },
+    { id: "state", term: "state" },
   ],
   pages: [
     {
-      title: "Why JS Click?",
+      title: "Behavior layer",
       layout: "text",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "cognitive-load",
-      ],
       figures: [
         {
           place: "top",
           slides: [
-            {
-              src: "/games/web-dev-studio/assets/book/m3-hook.jpg",
-              caption: "Figure 1. Arms move when a signal arrives - pages change when an event fires.",
-              alt: "Robotic arm",
-            },
             {
               src: "/games/web-dev-studio/assets/book/m3-cover.jpg",
-              caption: "Interactive systems live where software meets controls.",
-              alt: "ISS computer",
+              caption: "Figure 1. JavaScript adds behavior - clicks, typing, timers, live updates.",
+              alt: "JavaScript code on laptop",
+            },
+            {
+              src: "/games/web-dev-studio/assets/book/m3-interactive.jpg",
+              caption: "Buttons and inputs only feel alive when scripts handle events.",
+              alt: "Interactive UI controls",
             },
           ],
         },
@@ -63,33 +53,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "A click is an event. JavaScript runs code that changes the page - Start buttons, quiz taps, and ticket kiosks wake up.",
+          text: "HTML structures, CSS styles, JavaScript decides what happens when a user acts.",
         },
         {
           type: "p",
-          text: "HTML alone is a still house. CSS dresses it. JS makes doors open when you knock.",
-        },
-        {
-          type: "p",
-          text: "Everyday hook: a BD ticket kiosk that lights a seat after a tap is event then change.",
+          text: "A function is a named set of steps you can run when needed. A variable remembers a value while the page runs.",
         },
       ],
     },
     {
-      title: "Event then change",
+      title: "The DOM map",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/web-dev-studio/assets/book/m3-model.jpg",
-              caption: "Figure 2. A chip waits for signals - JS waits for events.",
-              alt: "Computer chip",
+              src: "/games/web-dev-studio/assets/book/m3-dom.jpg",
+              caption: "Figure 2. The DOM is the browser's live tree of elements your script can read and change.",
+              alt: "DOM tree diagram",
             },
           ],
         },
@@ -97,38 +79,29 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Listen for an event (click/tap). Run a small clear change (show text, toggle a class, count a score).",
+          text: "When you change text or classes in the DOM, the page updates without a full rewrite of the HTML file.",
         },
         {
           type: "ul",
           items: [
-            "One click can do one clear job",
-            "Forms and quizzes use the same idea as games",
-            "No event means the page stays still",
+            "Select a node (query by id or selector)",
+            "Read or write its content and classes",
+            "Keep state in variables when needed",
           ],
         },
       ],
     },
     {
-      title: "Interaction dial",
+      title: "Events and listeners",
       layout: "text",
-      theory: [
-        "cognitive-load",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/web-dev-studio/assets/book/m3-mechanism.jpg",
-              caption: "Figure 3. Signals travel - clicks travel from finger to code.",
-              alt: "Satellite communication",
-            },
-            {
-              src: "/games/web-dev-studio/assets/book/m3-lab.jpg",
-              caption: "Test each click path like an experiment trial.",
-              alt: "Experiment",
+              src: "/games/web-dev-studio/assets/book/m3-event.jpg",
+              caption: "Figure 3. A click is an event - a moment your listener can answer.",
+              alt: "Mouse click interaction",
             },
           ],
         },
@@ -136,29 +109,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "In the lab you raised interaction until the button felt alive. Alive means: event hooked, change visible, feedback clear.",
+          text: "An event is something that happened (click, keydown, submit). A listener is the function you attach to handle it.",
         },
         {
           type: "p",
-          text: "Keep handlers small. Giant mystery scripts are hard to debug and hard to teach.",
+          text: "State is the current situation - score, open/closed menu, selected tab - that your functions update over time.",
         },
       ],
     },
     {
-      title: "Buttons with jobs",
+      title: "Small scripts win",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/web-dev-studio/assets/book/m3-mastery.jpg",
-              caption: "Figure 4. Ordered boards still need a trigger path - so do interactive pages.",
-              alt: "Circuit board",
+              src: "/games/web-dev-studio/assets/book/m3-script.jpg",
+              caption: "Figure 4. Start with tiny scripts you can read aloud - then grow.",
+              alt: "Programming console or editor",
             },
           ],
         },
@@ -166,62 +135,49 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Game Start, quiz A/B/C, and kiosk Confirm each map to an event plus a change.",
-        },
-        {
-          type: "p",
-          text: "Name the job before you write the code: what should the user see after the tap?",
+          text: "One clear listener that toggles a class beats a giant script you cannot explain.",
         },
       ],
     },
     {
-      title: "How the 10 steps connect",
+      title: "How the mission connects",
       layout: "text",
-      theory: [
-        "spiral-scaffold",
-        "cognitive-load",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Meet click -> dial interaction -> sort event jobs -> stronger lab -> why events -> name the click rule -> stretch kiosks -> myths -> fluency -> mastery.",
+          text: "Meet JS → select DOM nodes → wire events → lab widget → explain → rule → stretch → myth → fluency → mastery.",
         },
         {
           type: "ul",
           items: [
-            "Sorting shows HTML cannot react alone",
-            "Labs prove event + change",
-            "Rule: a click is an event; JS runs the change",
+            "Wiring one button proves the event loop idea",
+            "Updating the DOM shows behavior vs reload",
+            "The rule sentence is 'listen, then change state'",
           ],
         },
       ],
     },
     {
-      title: "Street lab: button hunt",
+      title: "Widget lab",
       layout: "split",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "retrieval-practice",
-      ],
       figures: [
         {
           place: "right",
           slides: [
             {
-              src: "/games/web-dev-studio/assets/book/m3-hook.jpg",
-              caption: "Motion after signal.",
-              alt: "Arm",
+              src: "/games/web-dev-studio/assets/book/m3-interactive.jpg",
+              caption: "Pick one control to animate.",
+              alt: "UI control",
             },
             {
-              src: "/games/web-dev-studio/assets/book/m3-mechanism.jpg",
-              caption: "Signal path.",
-              alt: "Satellite",
+              src: "/games/web-dev-studio/assets/book/m3-event.jpg",
+              caption: "Attach a click listener.",
+              alt: "Event",
             },
             {
-              src: "/games/web-dev-studio/assets/book/m3-cover.jpg",
-              caption: "Control surface.",
-              alt: "Computer",
+              src: "/games/web-dev-studio/assets/book/m3-dom.jpg",
+              caption: "Update a DOM node.",
+              alt: "DOM update",
             },
           ],
         },
@@ -229,14 +185,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Find three tappable things today (app, site, kiosk). For each, say the event and the visible change.",
+          text: "Build a counter: a button, a number on screen, a function that adds one to state and writes it into the DOM.",
         },
         {
           type: "ul",
           items: [
-            "Sketch event -> change as two boxes",
-            "Invent a quiz button behavior in one sentence",
-            "Flip carousel: arm motion vs signal path",
+            "Where is the listener attached?",
+            "Which variable holds state?",
+            "What DOM text changes after each click?",
           ],
         },
       ],
@@ -244,21 +200,14 @@ export const BOOK = {
     {
       title: "Myths to bust",
       layout: "text",
-      theory: [
-        "conceptual-change",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Myth: pages never need clicks. Better: many pages wake up when you click or tap.",
+          text: "Myth: JavaScript is only for huge apps. Better: even one listener can make a page helpful.",
         },
         {
           type: "p",
-          text: "Myth: HTML alone makes buttons react. Better: a reaction needs an event plus code.",
-        },
-        {
-          type: "p",
-          text: "Myth: JavaScript is only for games. Better: forms, quizzes, and switches use it too.",
+          text: "Myth: Changing HTML files is the only way to update a page. Better: DOM updates change the live tree.",
         },
         {
           type: "p",
@@ -269,18 +218,14 @@ export const BOOK = {
     {
       title: "Mastery",
       layout: "text",
-      theory: [
-        "retrieval-practice",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/web-dev-studio/assets/book/m3-mastery.jpg",
-              caption: "Figure 5. Trigger paths - your JS goal.",
-              alt: "Circuit anchor",
+              src: "/games/web-dev-studio/assets/book/m3-cover.jpg",
+              caption: "Figure 5. Teach JS as events that change state and the DOM.",
+              alt: "JavaScript mastery anchor",
             },
           ],
         },
@@ -288,14 +233,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Teach a friend: event then change. Keep each click's job small and visible.",
+          text: "Teach a friend in one minute: JavaScript listens for events; functions update state; the DOM shows the new result.",
         },
         {
           type: "ul",
           items: [
-            "Name one event besides click (e.g. tap, submit)",
-            "Describe a before/after for a Start button",
-            "Use the word handler correctly once",
+            "Name one event and one listener job",
+            "Point to where state lives in your counter",
+            "Use the word DOM correctly once",
           ],
         },
       ],

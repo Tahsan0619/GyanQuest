@@ -1,38 +1,38 @@
 [
-  {
-    "file": "m3-cover.jpg",
-    "source_shared": "general\\nasa-laboratory-4.jpg",
-    "bytes": 67386,
-    "sha1": "ad51fd2f4e16"
-  },
-  {
-    "file": "m3-hook.jpg",
-    "source_shared": "ai_data\\nasa-autonomous-3.jpg",
-    "bytes": 109140,
-    "sha1": "ac77aa4da8ab"
-  },
-  {
-    "file": "m3-model.png",
-    "source_shared": "Human_brain_NIH.png",
-    "bytes": 138261,
-    "sha1": "9b843b8c6038"
-  },
-  {
-    "file": "m3-mechanism.jpg",
-    "source_shared": "computing\\nasa-computer-1.jpg",
-    "bytes": 109048,
-    "sha1": "4e7e137443a4"
-  },
-  {
-    "file": "m3-lab.jpg",
-    "source_shared": "general\\nasa-notebook-7.jpg",
-    "bytes": 137892,
-    "sha1": "7e6587f993d3"
-  },
-  {
-    "file": "m3-mastery.jpg",
-    "source_shared": "ai_data\\nasa-robot-1.jpg",
-    "bytes": 162721,
-    "sha1": "cde20e9aee18"
-  }
+ {
+ "file": "m3-cover.jpg",
+ "source_shared": "general\\nasa-laboratory-4.jpg",
+ "bytes": 67386,
+ "sha1": "ad51fd2f4e16"
+ },
+ {
+ "file": "m3-hook.jpg",
+ "source_shared": "ai_data\\nasa-autonomous-3.jpg",
+ "bytes": 109140,
+ "sha1": "ac77aa4da8ab"
+ },
+ {
+ "file": "m3-model.png",
+ "source_shared": "Human_brain_NIH.png",
+ "bytes": 138261,
+ "sha1": "9b843b8c6038"
+ },
+ {
+ "file": "m3-mechanism.jpg",
+ "source_shared": "computing\\nasa-computer-1.jpg",
+ "bytes": 109048,
+ "sha1": "4e7e137443a4"
+ },
+ {
+ "file": "m3-lab.jpg",
+ "source_shared": "general\\nasa-notebook-7.jpg",
+ "bytes": 137892,
+ "sha1": "7e6587f993d3"
+ },
+ {
+ "file": "m3-mastery.jpg",
+ "source_shared": "ai_data\\nasa-robot-1.jpg",
+ "bytes": 162721,
+ "sha1": "cde20e9aee18"
+ }
 ]

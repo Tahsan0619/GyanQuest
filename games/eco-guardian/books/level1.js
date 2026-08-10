@@ -1,14 +1,12 @@
 /**
- * Digital book - Eco Guardian Mission 1: Waste Watch
- * Theory: cognitive load, dual coding, multimedia learning, constructivism,
- * conceptual change, spiral scaffold, retrieval practice.
- * Photos: forest, river, plant, and Earth JPGs under assets/book/.
+ * Digital book - Eco Guardian Mission 1: Planet Balance
+ * Unique curriculum book (ecosystems and human impact). Not a template fill-in.
  */
 export const BOOK = {
   missionIndex: 0,
-  title: "Waste Watch",
-  subtitle: "reduce, reuse, recycle",
-  subject: "Eco Guardian / Waste Watch",
+  title: "Planet Balance",
+  subtitle: "living systems and the choices that tip them",
+  subject: "Eco Guardian / Planet Balance",
   theories: [
     "cognitive-load",
     "dual-coding",
@@ -19,37 +17,35 @@ export const BOOK = {
     "retrieval-practice",
   ],
   cover: {
-    title: "Waste Watch",
+    title: "Planet Balance",
     art: "/games/eco-guardian/assets/book/m1-cover.jpg",
   },
   glossary: [
-    { id: "reduce", term: "reduce" },
-    { id: "reuse", term: "reuse" },
+    { id: "ecosystem", term: "ecosystem" },
+    { id: "habitat", term: "habitat" },
+    { id: "pollution", term: "pollution" },
     { id: "recycle", term: "recycle" },
-    { id: "compost", term: "compost" },
-    { id: "landfill", term: "landfill" },
-    { id: "waste", term: "waste" },
-    { id: "sort", term: "sort" },
-    { id: "plastic", term: "plastic" },
+    { id: "renewable", term: "renewable" },
+    { id: "biodiversity", term: "biodiversity" },
+    { id: "conservation", term: "conservation" },
   ],
   pages: [
     {
-      title: "Kitchen peels, school paper, market bags",
+      title: "A system, not a postcard",
       layout: "text",
-      theory: ["constructivism", "dual-coding", "cognitive-load"],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/eco-guardian/assets/book/m1-hook.jpg",
-              caption: "Figure 1. Rivers and streets feel every bag that escapes a bin.",
-              alt: "Amazon River landscape",
+              src: "/games/eco-guardian/assets/book/m1-forest.jpg",
+              caption: "Figure 1. A forest canopy is an ecosystem - plants, animals, soil, and weather linked together.",
+              alt: "Forest canopy",
             },
             {
               src: "/games/eco-guardian/assets/book/m1-cover.jpg",
-              caption: "Healthy green cover needs less waste dumped carelessly.",
-              alt: "Forest from space",
+              caption: "Balance means the links still work after we take what we need.",
+              alt: "Planet care theme",
             },
           ],
         },
@@ -57,30 +53,29 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Kitchen peels can become compost. School paper can often be recycled. Market plastic bags clog drains if they blow away - reduce them first when you can.",
+          text: "An ecosystem is a living neighborhood plus its nonliving stage: light, water, air, and soil.",
         },
         {
           type: "p",
-          text: "Waste Watch means sorting smart: recycle what belongs there, compost food scraps when possible, and send only true leftovers to landfill.",
+          text: "A habitat is the address inside that system where a species finds food, shelter, and space.",
         },
         {
           type: "p",
-          text: "Earn Waste Watcher by putting reduce before the other Rs.",
+          text: "Everyday hook: your street is a tiny system - trees, drains, birds, trash bins, and people all affect each other.",
         },
       ],
     },
     {
-      title: "Three bins, one priority order",
+      title: "When waste tips the scale",
       layout: "full-fig",
-      theory: ["multimedia-learning", "dual-coding"],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/eco-guardian/assets/book/m1-model.jpg",
-              caption: "Figure 2. Model: living systems prefer less trash in the first place.",
-              alt: "Sunflower - living system",
+              src: "/games/eco-guardian/assets/book/m1-cover.jpg",
+              caption: "Figure 2. Plastic on a shoreline is pollution - matter in the wrong place that harms living links.",
+              alt: "Ocean or beach pollution cleanup context",
             },
           ],
         },
@@ -88,35 +83,29 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "The 3R order matters:",
+          text: "Pollution is not only smoke. Plastic, oil, noise, and excess fertilizer can all break habitat links.",
         },
         {
           type: "ul",
           items: [
-            "Reduce - make less waste (skip the bag if you have a tote)",
-            "Reuse - use again before throwing (jar, notebook back)",
-            "Recycle - remake materials when reuse is done",
+            "Reduce: use less of what becomes trash",
+            "Reuse: give an item a second job",
+            "Recycle: turn materials into new products when systems exist",
           ],
         },
       ],
     },
     {
-      title: "Why reduce comes first",
+      title: "Energy choices",
       layout: "text",
-      theory: ["cognitive-load", "dual-coding"],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/eco-guardian/assets/book/m1-ocean.jpg",
-              caption: "Figure 3. Plastic that reaches water is hard to pull back - prevention wins.",
-              alt: "Ocean surface",
-            },
-            {
-              src: "/games/eco-guardian/assets/book/m1-compost.jpg",
-              caption: "Peels and leaves can return nutrients as compost instead of landfill.",
-              alt: "Leaf for compost idea",
+              src: "/games/eco-guardian/assets/book/m1-energy.jpg",
+              caption: "Figure 3. Solar panels harvest renewable energy from sunlight.",
+              alt: "Solar panels",
             },
           ],
         },
@@ -124,31 +113,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Recycling helps, but it still uses collection trucks and energy. If you never took the plastic bag, there is nothing to haul.",
+          text: "Renewable sources can refill on human timescales - sun, wind, flowing water. Fossil fuels do not refill quickly.",
         },
         {
           type: "p",
-          text: "Mission clean-up labs fill a recycle goal on purpose - then the book reminds you: sorting is step two; reducing is step one.",
+          text: "Choosing cleaner energy protects air and slows some kinds of climate stress on ecosystems.",
         },
       ],
     },
     {
-      title: "Sort: recycle, compost, landfill",
+      title: "Biodiversity is backup",
       layout: "full-fig",
-      theory: ["multimedia-learning", "spiral-scaffold"],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/eco-guardian/assets/book/m1-plant.jpg",
-              caption: "Figure 4. Representation: green waste can feed plants via compost.",
-              alt: "Plant",
-            },
-            {
-              src: "/games/eco-guardian/assets/book/m1-earth.jpg",
-              caption: "Earth's thin living layer is where our trash decisions land.",
-              alt: "Earth atmosphere view",
+              src: "/games/eco-guardian/assets/book/m1-water.jpg",
+              caption: "Figure 4. Clean freshwater habitats support many species - biodiversity is a living safety net.",
+              alt: "Clean river or freshwater habitat",
             },
           ],
         },
@@ -156,51 +139,53 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Canvas bins are models. Real streets need the same sort: paper and clean bottles to recycle; peels to compost; dirty mixed trash to landfill.",
+          text: "Biodiversity means many kinds of life in a place. More kinds often means the system can survive shocks better.",
+        },
+        {
+          type: "p",
+          text: "Conservation is the work of protecting habitats and species so the net does not tear.",
         },
       ],
     },
     {
-      title: "How the 10 steps connect",
+      title: "How the mission connects",
       layout: "text",
-      theory: ["spiral-scaffold", "cognitive-load"],
       blocks: [
         {
           type: "p",
-          text: "Meet the bins -> fill recycle goal -> sort the litter -> clean-up lab -> why reduce first -> name the 3R rule -> stretch to BD places -> myth bust -> fluency -> Waste Watcher mastery.",
+          text: "Meet the system → spot damage → sort choices → cleanup lab → explain → rule → stretch → myth → fluency → mastery.",
         },
         {
           type: "ul",
           items: [
-            "Sorting trains recycle vs compost vs landfill",
-            "Clean-up lab makes the habit active",
-            "The rule sentence: reduce first, then reuse, then recycle",
+            "Sorting actions shows help vs harm clearly",
+            "The lab makes pollution feel local, not abstract",
+            "The rule sentence ties choice → habitat → balance",
           ],
         },
       ],
     },
     {
-      title: "Home and school transfer",
+      title: "Home audit lab",
       layout: "split",
-      theory: ["constructivism", "dual-coding", "retrieval-practice"],
       figures: [
         {
           place: "right",
           slides: [
             {
-              src: "/games/eco-guardian/assets/book/m1-hook.jpg",
-              caption: "Keep bags out of waterways.",
-              alt: "River",
+              src: "/games/eco-guardian/assets/book/m1-recycle.jpg",
+              caption: "Sort waste where recycling exists.",
+              alt: "Recycling bins",
             },
             {
-              src: "/games/eco-guardian/assets/book/m1-compost.jpg",
-              caption: "Kitchen peels -> compost when you can.",
-              alt: "Leaf compost cue",
+              src: "/games/eco-guardian/assets/book/m1-energy.jpg",
+              caption: "Notice where energy comes from.",
+              alt: "Renewable energy",
             },
             {
-              src: "/games/eco-guardian/assets/book/m1-cover.jpg",
-              caption: "Protect green cover by making less trash.",
-              alt: "Forest from space",
+              src: "/games/eco-guardian/assets/book/m1-forest.jpg",
+              caption: "Protect living cover nearby.",
+              alt: "Trees and habitat",
             },
           ],
         },
@@ -208,14 +193,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Pick three items near you: a peel, a notebook page, a plastic wrapper. Say reduce, reuse, recycle, compost, or landfill for each.",
+          text: "Walk your home or school yard. List one pollution risk, one habitat helper, and one energy habit you can change this week.",
         },
         {
           type: "ul",
           items: [
-            "Which item could you refuse next time?",
-            "Which item has a second life already?",
-            "Drag the photos to flip examples",
+            "What living thing depends on that habitat?",
+            "What waste could be reduced first?",
+            "Which choice is conservation in action?",
           ],
         },
       ],
@@ -223,15 +208,14 @@ export const BOOK = {
     {
       title: "Myths to bust",
       layout: "text",
-      theory: ["conceptual-change"],
       blocks: [
         {
           type: "p",
-          text: "Myth: Recycling fixes everything, so buy and toss freely. Better: reduce first; recycling is helpful, not magic.",
+          text: "Myth: One bottle does not matter. Better: millions of 'one bottles' become pollution loads ecosystems cannot digest.",
         },
         {
           type: "p",
-          text: "Myth: All trash is the same. Better: peels, paper, and plastic need different homes.",
+          text: "Myth: Recycling alone fixes everything. Better: reduce and reuse come first; recycle is the last helpful step.",
         },
         {
           type: "p",
@@ -240,17 +224,16 @@ export const BOOK = {
       ],
     },
     {
-      title: "Waste Watcher mastery",
+      title: "Mastery",
       layout: "text",
-      theory: ["retrieval-practice", "spiral-scaffold"],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/eco-guardian/assets/book/m1-cover.jpg",
-              caption: "Figure 5. Teaching anchor: less waste, smarter bins, greener cover.",
-              alt: "Forest teaching anchor",
+              src: "/games/eco-guardian/assets/book/m1-water.jpg",
+              caption: "Figure 5. Teach with water habitat: links, threats, and care.",
+              alt: "Freshwater teaching anchor",
             },
           ],
         },
@@ -258,14 +241,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Teach a friend in one minute: reduce makes less trash; reuse gives items another life; recycle remakes materials; compost feeds soil; landfill is last.",
+          text: "Teach a friend in one minute: ecosystems link life and place; pollution breaks links; conservation and smart energy help restore balance.",
         },
         {
           type: "ul",
           items: [
-            "Sort three real items correctly",
-            "Name why reduce is first",
-            "Use the word compost correctly once",
+            "Define ecosystem in one sentence",
+            "Give one local conservation action",
+            "Use the word biodiversity correctly once",
           ],
         },
       ],

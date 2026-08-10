@@ -1,14 +1,12 @@
 /**
- * Digital book - AI Lab / What is AI?
- * Theory: cognitive load, dual coding, multimedia learning, constructivism,
- * conceptual change, spiral scaffold, retrieval practice.
- * Photos: local verified copies under /games/ai-lab/assets/book/ (see CREDITS-m1.json).
+ * Digital book - AI Lab Mission 1: Smart Patterns
+ * Unique curriculum book (what AI can and cannot do). Not a template fill-in.
  */
 export const BOOK = {
   missionIndex: 0,
-  title: "What is AI?",
-  subtitle: "patterns from examples, not magic",
-  subject: "AI Lab / What is AI?",
+  title: "Smart Patterns",
+  subtitle: "machines that learn from examples",
+  subject: "AI Lab / Smart Patterns",
   theories: [
     "cognitive-load",
     "dual-coding",
@@ -19,43 +17,35 @@ export const BOOK = {
     "retrieval-practice",
   ],
   cover: {
-    title: "What is AI?",
+    title: "Smart Patterns",
     art: "/games/ai-lab/assets/book/m1-cover.jpg",
   },
   glossary: [
-    { id: "pattern", term: "pattern" },
-    { id: "examples", term: "examples" },
-    { id: "guess", term: "guess" },
-    { id: "data", term: "data" },
+    { id: "artificial-intelligence", term: "artificial intelligence" },
+    { id: "training-data", term: "training data" },
     { id: "model", term: "model" },
+    { id: "prediction", term: "prediction" },
     { id: "bias", term: "bias" },
-    { id: "automation", term: "automation" },
-    { id: "feedback", term: "feedback" },
-    { id: "input", term: "input" },
-    { id: "output", term: "output" },
+    { id: "classify", term: "classify" },
+    { id: "feature", term: "feature" },
   ],
   pages: [
     {
-      title: "Why What is AI?",
+      title: "Not magic - patterns",
       layout: "text",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "cognitive-load",
-      ],
       figures: [
         {
           place: "top",
           slides: [
-            {
-              src: "/games/ai-lab/assets/book/m1-hook.jpg",
-              caption: "Figure 1. Rovers and robots follow sensed patterns - a concrete cousin of AI guessing.",
-              alt: "NASA rover on rocky terrain",
-            },
             {
               src: "/games/ai-lab/assets/book/m1-cover.jpg",
-              caption: "Lab robots remind us: machines act on data, not feelings.",
-              alt: "Industrial-style robot",
+              caption: "Figure 1. Artificial intelligence systems look for patterns in examples, not wishes.",
+              alt: "AI pattern visualization",
+            },
+            {
+              src: "/games/ai-lab/assets/book/m1-robot.jpg",
+              caption: "A robot body is hardware; the 'smart' part is the learned model.",
+              alt: "Educational robot",
             },
           ],
         },
@@ -63,72 +53,59 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Your phone tags a cat photo. A voice helper guesses your next word. A map app suggests a faster road home.",
+          text: "Artificial intelligence here means software that finds useful patterns in data so it can act on new cases.",
         },
         {
           type: "p",
-          text: "None of those tools is a tiny person living in the silicon. They are systems that spot patterns in examples - then guess on new cases.",
+          text: "It does not understand like a friend. It estimates from what it saw in training data.",
         },
         {
           type: "p",
-          text: "Everyday hook in Bangladesh: a shop camera that flags empty shelves learns from many past shelf photos, not from magic.",
+          text: "Everyday hook: a photo app that tags 'cat' learned from thousands of labeled cat pictures.",
         },
       ],
     },
     {
-      title: "Examples fuel patterns",
+      title: "Train, then predict",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/ai-lab/assets/book/m1-model.png",
-              caption: "Figure 2. Brains inspire metaphors - but AI is statistics over examples, not a human mind.",
-              alt: "Human brain illustration",
+              src: "/games/ai-lab/assets/book/m1-train.jpg",
+              caption: "Figure 2. Training data is the example set the model studies before it is tested.",
+              alt: "Training dataset concept",
             },
           ],
         },
       ],
       blocks: [
         {
-          type: "p",
-          text: "Feed many labeled examples. Patterns emerge. New inputs get a guess.",
-        },
-        {
           type: "ul",
           items: [
-            "More varied examples usually mean sturdier patterns",
-            "Messy or biased examples can bend the guess",
-            "A light switch is automation - not pattern learning",
+            "Training data: labeled examples used to learn",
+            "Model: the saved pattern rules after training",
+            "Prediction: the model's answer on a new input",
           ],
+        },
+        {
+          type: "p",
+          text: "If the training set is narrow, predictions get shaky outside that narrow world.",
         },
       ],
     },
     {
-      title: "Pattern dial in the lab",
+      title: "Features and labels",
       layout: "text",
-      theory: [
-        "cognitive-load",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/ai-lab/assets/book/m1-mechanism.jpg",
-              caption: "Figure 3. Autonomous systems stack sensors + patterns + checks.",
-              alt: "Autonomous system hardware",
-            },
-            {
-              src: "/games/ai-lab/assets/book/m1-lab.jpg",
-              caption: "A lab bench is where you test guesses against fresh cases.",
-              alt: "Laboratory workspace",
+              src: "/games/ai-lab/assets/book/m1-pattern.jpg",
+              caption: "Figure 3. A feature is a measurable clue - shape, color, word count, sensor reading.",
+              alt: "Pattern recognition shapes",
             },
           ],
         },
@@ -136,29 +113,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "In the mission you raised a pattern dial. Clarity went up until the guess looked solid.",
+          text: "To classify means to put an item into a category. The model weighs features to choose a label.",
         },
         {
           type: "p",
-          text: "Think of that dial as how cleanly the examples line up. Sparse, noisy data keeps the dial low.",
+          text: "Bad features or messy labels make confident-looking mistakes.",
         },
       ],
     },
     {
-      title: "Sort: AI, not AI, tricky",
+      title: "Bias is a data story",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/ai-lab/assets/book/m1-mastery.jpg",
-              caption: "Figure 4. A robotic arm repeats trained motions - still pattern + control, not human thought.",
-              alt: "Robotic arm",
+              src: "/games/ai-lab/assets/book/m1-decide.jpg",
+              caption: "Figure 4. Decision paths inherit bias if training examples were unfair or incomplete.",
+              alt: "Decision flowchart",
             },
           ],
         },
@@ -166,62 +139,53 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Photo taggers, voice helpers, and route suggesters lean on learned patterns.",
+          text: "Bias here means systematic error - the model favors some groups or cases because the data did.",
         },
         {
           type: "p",
-          text: "Plain calculators and wall clocks follow fixed rules. A scripted FAQ bot can look smart yet only replay canned lines - tricky.",
+          text: "Good AI use includes checking who is missing from the training data before trusting predictions.",
         },
       ],
     },
     {
-      title: "How the 10 steps connect",
+      title: "How the mission connects",
       layout: "text",
-      theory: [
-        "spiral-scaffold",
-        "cognitive-load",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Meet -> dial clarity -> sort tools -> stronger lab -> order the guess story -> name the rule -> stretch places -> myth bust -> fluency -> mastery.",
+          text: "Meet AI → sort examples → train a tiny model → test → explain → rule → stretch → myth → fluency → mastery.",
         },
         {
           type: "ul",
           items: [
-            "Sorting teaches what counts as AI",
-            "The dial links data quality to guess strength",
-            "The rule sentence locks: AI learns patterns from examples",
+            "Sorting examples shows why labels matter",
+            "Testing after training proves prediction is not memory only",
+            "The rule sentence separates pattern tools from human judgment",
           ],
         },
       ],
     },
     {
-      title: "Street lab: photo tags",
+      title: "Example lab",
       layout: "split",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "retrieval-practice",
-      ],
       figures: [
         {
           place: "right",
           slides: [
             {
-              src: "/games/ai-lab/assets/book/m1-hook.jpg",
-              caption: "Field rover - sensing then deciding.",
-              alt: "Rover",
+              src: "/games/ai-lab/assets/book/m1-train.jpg",
+              caption: "Gather fair training data.",
+              alt: "Training data",
             },
             {
-              src: "/games/ai-lab/assets/book/m1-lab.jpg",
-              caption: "Bench testing - check before you trust.",
-              alt: "Lab",
+              src: "/games/ai-lab/assets/book/m1-pattern.jpg",
+              caption: "Name the features you use.",
+              alt: "Features",
             },
             {
-              src: "/games/ai-lab/assets/book/m1-cover.jpg",
-              caption: "Robot hardware - patterns in motion.",
-              alt: "Robot",
+              src: "/games/ai-lab/assets/book/m1-decide.jpg",
+              caption: "Check predictions for bias.",
+              alt: "Decision check",
             },
           ],
         },
@@ -229,14 +193,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Open a gallery app that suggests names. Ask: what examples trained this? What would confuse it?",
+          text: "Sort ten photos into two labels you invent. Then try a new photo. Where would a short-sighted model fail?",
         },
         {
           type: "ul",
           items: [
-            "Name one AI tool and one non-AI tool at home",
-            "Explain why a wrong tag might happen",
-            "Drag the photos to flip lab vs field views",
+            "What features did you actually use?",
+            "What is missing from your training set?",
+            "Is a wrong prediction bias or bad luck?",
           ],
         },
       ],
@@ -244,21 +208,14 @@ export const BOOK = {
     {
       title: "Myths to bust",
       layout: "text",
-      theory: [
-        "conceptual-change",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Myth: AI is a magic brain that thinks like humans. Better: AI spots statistical patterns in examples.",
+          text: "Myth: AI is always right because it is a computer. Better: it copies patterns - including human mistakes in data.",
         },
         {
           type: "p",
-          text: "Myth: AI never needs data. Better: good examples are the fuel for pattern learning.",
-        },
-        {
-          type: "p",
-          text: "Myth: every automated button is AI. Better: simple switches and fixed scripts are not AI.",
+          text: "Myth: If it sounds fluent, it understands. Better: fluent text can still be a wrong prediction.",
         },
         {
           type: "p",
@@ -269,18 +226,14 @@ export const BOOK = {
     {
       title: "Mastery",
       layout: "text",
-      theory: [
-        "retrieval-practice",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/ai-lab/assets/book/m1-mastery.jpg",
-              caption: "Figure 5. Keep this arm as your teaching anchor: trained motion, checked outcomes.",
-              alt: "Robotic arm anchor",
+              src: "/games/ai-lab/assets/book/m1-robot.jpg",
+              caption: "Figure 5. Teach AI as learned patterns plus careful human checks.",
+              alt: "AI teaching anchor",
             },
           ],
         },
@@ -288,14 +241,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Teach a friend in one minute: AI learns patterns from examples, then guesses on new cases - and guesses can be wrong until data and checks improve.",
+          text: "Teach a friend in one minute: AI learns from training data; models make predictions; bias can hide in the examples.",
         },
         {
           type: "ul",
           items: [
-            "Say the rule out loud once",
-            "Point to a phone feature that uses patterns",
-            "Name one myth you can bust",
+            "Define model in one sentence",
+            "Give one example of classify",
+            "Use the word feature correctly once",
           ],
         },
       ],

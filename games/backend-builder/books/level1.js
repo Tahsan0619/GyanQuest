@@ -1,14 +1,12 @@
 /**
- * Digital book - Backend Builder / Server Basics
- * Theory: cognitive load, dual coding, multimedia learning, constructivism,
- * conceptual change, spiral scaffold, retrieval practice.
- * Photos: local verified copies under /games/backend-builder/assets/book/ (see CREDITS-m1.json).
+ * Digital book - Backend Builder Mission 1: Server Requests
+ * Unique curriculum book (client, server, routes, JSON). Not a template fill-in.
  */
 export const BOOK = {
   missionIndex: 0,
-  title: "Server Basics",
-  subtitle: "request response",
-  subject: "Backend Builder / Server Basics",
+  title: "Server Requests",
+  subtitle: "what happens after you hit Send",
+  subject: "Backend Builder / Server Requests",
   theories: [
     "cognitive-load",
     "dual-coding",
@@ -19,43 +17,35 @@ export const BOOK = {
     "retrieval-practice",
   ],
   cover: {
-    title: "Server Basics",
+    title: "Server Requests",
     art: "/games/backend-builder/assets/book/m1-cover.jpg",
   },
   glossary: [
-    { id: "client", term: "client" },
     { id: "server", term: "server" },
+    { id: "client", term: "client" },
     { id: "request", term: "request" },
     { id: "response", term: "response" },
-    { id: "status", term: "status" },
-    { id: "http", term: "http" },
-    { id: "browser", term: "browser" },
-    { id: "api", term: "api" },
-    { id: "endpoint", term: "endpoint" },
-    { id: "error", term: "error" },
+    { id: "route", term: "route" },
+    { id: "json", term: "JSON" },
+    { id: "status-code", term: "status code" },
   ],
   pages: [
     {
-      title: "Why Server Basics?",
+      title: "Two roles",
       layout: "text",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "cognitive-load",
-      ],
       figures: [
         {
           place: "top",
           slides: [
-            {
-              src: "/games/backend-builder/assets/book/m1-hook.jpg",
-              caption: "Figure 1. Local machines ask; distant machines answer.",
-              alt: "Computer",
-            },
             {
               src: "/games/backend-builder/assets/book/m1-cover.jpg",
-              caption: "Signals carry requests and responses across distance.",
-              alt: "Satellite communication",
+              caption: "Figure 1. Servers wait for work - racks of machines answering many clients.",
+              alt: "Server rack",
+            },
+            {
+              src: "/games/backend-builder/assets/book/m1-route.jpg",
+              caption: "Your browser is a client sending a request across the network.",
+              alt: "Browser to server request",
             },
           ],
         },
@@ -63,33 +53,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "A client asks. A server answers. Request goes in - response comes back with data and a status.",
+          text: "A client asks. A server answers. That pair is the heart of backend work.",
         },
         {
           type: "p",
-          text: "Phone weather apps, school portal pages, and shop checkouts all ride this ask/answer loop.",
-        },
-        {
-          type: "p",
-          text: "Everyday hook: opening weather on your phone sends a request; the cloud replies with today's forecast.",
+          text: "A request carries a method and a path. A response carries a status code and a body.",
         },
       ],
     },
     {
-      title: "Client is not server",
+      title: "Routes are doors",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/backend-builder/assets/book/m1-model.jpg",
-              caption: "Figure 2. Earth-scale networks - your app still uses the same ask/answer idea.",
-              alt: "Earth from space",
+              src: "/games/backend-builder/assets/book/m1-api.jpg",
+              caption: "Figure 2. An API exposes routes - named doors that accept certain requests.",
+              alt: "API request response diagram",
             },
           ],
         },
@@ -97,38 +79,29 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "The browser is usually the client. The server lives elsewhere and sends data - not just pretty colors (CSS handles look).",
+          text: "A route maps a URL path (and method) to code that runs on the server.",
         },
         {
           type: "ul",
           items: [
-            "Request: what you ask for",
-            "Response: status + body of data",
-            "Useful apps wait for an answer or a clear error",
+            "GET often reads data",
+            "POST often creates or submits data",
+            "Wrong door or method → error status code",
           ],
         },
       ],
     },
     {
-      title: "Request dial",
+      title: "JSON bodies",
       layout: "text",
-      theory: [
-        "cognitive-load",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/backend-builder/assets/book/m1-mechanism.jpg",
-              caption: "Figure 3. Boards route signals - servers route responses.",
-              alt: "Circuit board",
-            },
-            {
-              src: "/games/backend-builder/assets/book/m1-lab.jpg",
-              caption: "Test ask/answer like an experiment trial.",
-              alt: "Experiment",
+              src: "/games/backend-builder/assets/book/m1-json.jpg",
+              caption: "Figure 3. JSON is a text format for structured data - keys and values browsers and servers both understand.",
+              alt: "JSON data example",
             },
           ],
         },
@@ -136,29 +109,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "In the lab you dialed request clarity until a sensible response returned.",
+          text: "Many APIs speak JSON in the response body so apps can parse fields reliably.",
         },
         {
           type: "p",
-          text: "Cake is not a valid HTTP response. Status codes and data are.",
+          text: "Status codes tell the short story: 200-ish success, 400-ish client mistake, 500-ish server trouble.",
         },
       ],
     },
     {
-      title: "Status matters",
+      title: "Follow one call",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/backend-builder/assets/book/m1-mastery.jpg",
-              caption: "Figure 4. Mission machines that talk in request/response loops.",
-              alt: "ISS computer",
+              src: "/games/backend-builder/assets/book/m1-server.jpg",
+              caption: "Figure 4. Server code receives the request, runs the route handler, returns a response.",
+              alt: "Server code terminal",
             },
           ],
         },
@@ -166,62 +135,49 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "A good response says whether the ask worked. Silent failure confuses users; clear status helps everyone.",
-        },
-        {
-          type: "p",
-          text: "Kids can learn: client asks, server answers.",
+          text: "Backend builders write those handlers: validate input, talk to storage, shape JSON, set the status code.",
         },
       ],
     },
     {
-      title: "How the 10 steps connect",
+      title: "How the mission connects",
       layout: "text",
-      theory: [
-        "spiral-scaffold",
-        "cognitive-load",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Meet servers -> dial requests -> sort client/server -> stronger lab -> why responses -> name the loop rule -> stretch apps -> myths -> fluency -> mastery.",
+          text: "Meet client/server → hit a route → read JSON → lab errors → explain → rule → stretch → myth → fluency → mastery.",
         },
         {
           type: "ul",
           items: [
-            "Sorting kills the myth that the browser is the server",
-            "Labs show request then response",
-            "Rule: client asks; server answers",
+            "Calling a real route makes request/response concrete",
+            "Reading status codes prevents 'it just broke' thinking",
+            "The rule sentence is 'ask a door, get a coded answer'",
           ],
         },
       ],
     },
     {
-      title: "Street lab: weather ask",
+      title: "Route lab",
       layout: "split",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "retrieval-practice",
-      ],
       figures: [
         {
           place: "right",
           slides: [
             {
-              src: "/games/backend-builder/assets/book/m1-cover.jpg",
-              caption: "Carry the ask.",
-              alt: "Satellite",
+              src: "/games/backend-builder/assets/book/m1-route.jpg",
+              caption: "Write the path you call.",
+              alt: "Route path",
             },
             {
-              src: "/games/backend-builder/assets/book/m1-model.jpg",
-              caption: "Big network.",
-              alt: "Earth",
+              src: "/games/backend-builder/assets/book/m1-json.jpg",
+              caption: "Read the JSON fields.",
+              alt: "JSON body",
             },
             {
-              src: "/games/backend-builder/assets/book/m1-hook.jpg",
-              caption: "Client machine.",
-              alt: "Computer",
+              src: "/games/backend-builder/assets/book/m1-api.jpg",
+              caption: "Note the status code.",
+              alt: "API status",
             },
           ],
         },
@@ -229,14 +185,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Open a weather app with a grown-up. Say out loud: request sent, response received, data shown.",
+          text: "Trace one login or search action: client request, route, server work, JSON response, status code.",
         },
         {
           type: "ul",
           items: [
-            "Name client and server in that story",
-            "Guess what a failed response might look like",
-            "Flip carousel: dish vs earth-scale net",
+            "What path was the route?",
+            "Was the body JSON?",
+            "What would a 404 mean here?",
           ],
         },
       ],
@@ -244,21 +200,14 @@ export const BOOK = {
     {
       title: "Myths to bust",
       layout: "text",
-      theory: [
-        "conceptual-change",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Myth: the browser is the server. Better: browser is the client - server answers elsewhere.",
+          text: "Myth: The frontend is the whole app. Better: without a server route, many apps cannot load real data.",
         },
         {
           type: "p",
-          text: "Myth: a request never needs a response. Better: useful apps wait for a response (or a clear error).",
-        },
-        {
-          type: "p",
-          text: "Myth: cake is a valid HTTP response. Better: responses are status and data - not snacks.",
+          text: "Myth: Any text response is fine forever. Better: JSON contracts let clients parse safely.",
         },
         {
           type: "p",
@@ -269,18 +218,14 @@ export const BOOK = {
     {
       title: "Mastery",
       layout: "text",
-      theory: [
-        "retrieval-practice",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/backend-builder/assets/book/m1-mastery.jpg",
-              caption: "Figure 5. Talking machines - your server goal.",
-              alt: "ISS computer anchor",
+              src: "/games/backend-builder/assets/book/m1-cover.jpg",
+              caption: "Figure 5. Teach backends as servers answering routed requests with status + body.",
+              alt: "Backend mastery anchor",
             },
           ],
         },
@@ -288,14 +233,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Teach a friend with a shop checkout: client sends order request; server responds with confirmation or error.",
+          text: "Teach a friend in one minute: clients send requests; servers expose routes; responses carry status codes and often JSON.",
         },
         {
           type: "ul",
           items: [
-            "Draw arrows: client -> server -> client",
-            "Name one piece of data in a response",
-            "Use the word request correctly once",
+            "Define route in one sentence",
+            "Name one success and one error status code",
+            "Use the word client correctly once",
           ],
         },
       ],

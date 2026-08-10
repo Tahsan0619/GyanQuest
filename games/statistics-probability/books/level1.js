@@ -1,14 +1,12 @@
 /**
- * Digital book - Statistics Probability / Mean & Mode
- * Theory: cognitive load, dual coding, multimedia learning, constructivism,
- * conceptual change, spiral scaffold, retrieval practice.
- * Photos: local verified copies under /games/statistics-probability/assets/book/ (see CREDITS-m1.json).
+ * Digital book - Statistics Probability Mission 1: Chance & Data
+ * Unique curriculum book (mean, samples, probability). Not a template fill-in.
  */
 export const BOOK = {
   missionIndex: 0,
-  title: "Mean & Mode",
-  subtitle: "averages / typical values",
-  subject: "Statistics Probability / Mean & Mode",
+  title: "Chance & Data",
+  subtitle: "fair questions for messy numbers",
+  subject: "Statistics Probability / Chance & Data",
   theories: [
     "cognitive-load",
     "dual-coding",
@@ -19,43 +17,35 @@ export const BOOK = {
     "retrieval-practice",
   ],
   cover: {
-    title: "Mean & Mode",
+    title: "Chance & Data",
     art: "/games/statistics-probability/assets/book/m1-cover.jpg",
   },
   glossary: [
+    { id: "probability", term: "probability" },
+    { id: "sample", term: "sample" },
+    { id: "population", term: "population" },
     { id: "mean", term: "mean" },
-    { id: "mode", term: "mode" },
-    { id: "average", term: "average" },
     { id: "outlier", term: "outlier" },
-    { id: "data", term: "data" },
-    { id: "value", term: "value" },
-    { id: "count", term: "count" },
-    { id: "sum", term: "sum" },
-    { id: "typical", term: "typical" },
     { id: "distribution", term: "distribution" },
+    { id: "fairness", term: "fairness" },
   ],
   pages: [
     {
-      title: "Why Mean & Mode?",
+      title: "Data is a story with noise",
       layout: "text",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "cognitive-load",
-      ],
       figures: [
         {
           place: "top",
           slides: [
-            {
-              src: "/games/statistics-probability/assets/book/m1-hook.jpg",
-              caption: "Figure 1. Counting tools make totals honest before you average.",
-              alt: "Abacus",
-            },
             {
               src: "/games/statistics-probability/assets/book/m1-cover.jpg",
-              caption: "Graphs show where typical values sit.",
-              alt: "Graph",
+              caption: "Figure 1. Dice make probability visible - repeated trials reveal patterns in chance.",
+              alt: "Dice probability",
+            },
+            {
+              src: "/games/statistics-probability/assets/book/m1-chart.jpg",
+              caption: "Charts turn raw lists into a distribution you can compare.",
+              alt: "Bar chart",
             },
           ],
         },
@@ -63,33 +53,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Mean balances all values into one typical number. Mode is the value that appears most.",
+          text: "Probability measures how likely an event is, from 0 (impossible) to 1 (certain).",
         },
         {
           type: "p",
-          text: "Class mark lists, cricket run totals, and shop price tags in BD markets all invite averages.",
-        },
-        {
-          type: "p",
-          text: "Everyday hook: if three snacks cost 10, 10, and 40, mode is 10 while mean is pulled upward.",
+          text: "Fairness means each outcome in a fair game gets an equal chance - a fair die is not stuck on six.",
         },
       ],
     },
     {
-      title: "Balance vs popularity",
+      title: "Sample vs population",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/statistics-probability/assets/book/m1-model.jpg",
-              caption: "Figure 2. Another graph view - spot the cluster (mode) vs the balance point (mean).",
-              alt: "Graph alternate",
+              src: "/games/statistics-probability/assets/book/m1-sample.jpg",
+              caption: "Figure 2. A sample is the slice you actually measure; the population is the whole group you care about.",
+              alt: "Survey sample collection",
             },
           ],
         },
@@ -97,38 +79,21 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Mean adds then divides by the count. Mode crowns the most common value. They can differ.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Outliers can pull the mean",
-            "Mode allows ties",
-            "Kids use both for marks, scores, and prices",
-          ],
+          text: "We rarely measure everyone. A careful sample lets us estimate the population - if the sample is not wildly biased.",
         },
       ],
     },
     {
-      title: "Average dial",
+      title: "Mean and outliers",
       layout: "text",
-      theory: [
-        "cognitive-load",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/statistics-probability/assets/book/m1-mechanism.jpg",
-              caption: "Figure 3. Measurement sheets feed averages.",
-              alt: "Measurement",
-            },
-            {
-              src: "/games/statistics-probability/assets/book/m1-lab.jpg",
-              caption: "Write the list before you compute.",
-              alt: "Notebook",
+              src: "/games/statistics-probability/assets/book/m1-mean.jpg",
+              caption: "Figure 3. The mean is a balance point - useful, but sensitive to extreme values.",
+              alt: "Average calculation",
             },
           ],
         },
@@ -136,29 +101,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "In the lab you dialed until mean and mode stories felt different on purpose.",
+          text: "The mean is the average: sum divided by count. An outlier is a value far from the others that can yank the mean.",
         },
         {
           type: "p",
-          text: "Mean never ignores how many values you have - the count is the divider.",
+          text: "Always glance at the distribution before trusting a single summary number.",
         },
       ],
     },
     {
-      title: "Watch the outlier",
+      title: "See the spread",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/statistics-probability/assets/book/m1-mastery.jpg",
-              caption: "Figure 4. Patterns in lists - clusters hint at mode.",
-              alt: "Pattern",
+              src: "/games/statistics-probability/assets/book/m1-spread.jpg",
+              caption: "Figure 4. A histogram shows distribution - clustered, spread out, or lopsided.",
+              alt: "Histogram distribution",
             },
           ],
         },
@@ -166,62 +127,49 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "One huge score can drag the mean while the mode stays with the crowd.",
-        },
-        {
-          type: "p",
-          text: "Say which average you mean before you compare classes or shops.",
+          text: "Two classes can share a mean yet look different if one is tightly packed and the other is wildly spread.",
         },
       ],
     },
     {
-      title: "How the 10 steps connect",
+      title: "How the mission connects",
       layout: "text",
-      theory: [
-        "spiral-scaffold",
-        "cognitive-load",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Meet averages -> dial typical -> sort mean/mode -> stronger lab -> why outliers -> name the average rule -> stretch markets -> myths -> fluency -> mastery.",
+          text: "Meet chance → run trials → sample data → chart → explain → rule → stretch → myth → fluency → mastery.",
         },
         {
           type: "ul",
           items: [
-            "Sorting separates balance from popularity",
-            "Labs show mean move when an outlier appears",
-            "Rule: mean balances; mode is most common",
+            "Trials make probability feel empirical",
+            "Charts expose outliers the mean hides",
+            "The rule sentence is 'show the distribution, then summarize'",
           ],
         },
       ],
     },
     {
-      title: "Street lab: mark list",
+      title: "Dice-and-survey lab",
       layout: "split",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "retrieval-practice",
-      ],
       figures: [
         {
           place: "right",
           slides: [
             {
-              src: "/games/statistics-probability/assets/book/m1-hook.jpg",
-              caption: "Total first.",
-              alt: "Abacus",
-            },
-            {
               src: "/games/statistics-probability/assets/book/m1-cover.jpg",
-              caption: "See the typical.",
-              alt: "Graph",
+              caption: "Run 30 dice trials.",
+              alt: "Dice trials",
             },
             {
-              src: "/games/statistics-probability/assets/book/m1-lab.jpg",
-              caption: "Write the list.",
-              alt: "Notebook",
+              src: "/games/statistics-probability/assets/book/m1-chart.jpg",
+              caption: "Build a bar chart.",
+              alt: "Chart",
+            },
+            {
+              src: "/games/statistics-probability/assets/book/m1-mean.jpg",
+              caption: "Compute the mean carefully.",
+              alt: "Mean",
             },
           ],
         },
@@ -229,14 +177,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Use five class marks. Compute mean. Circle the mode. Add one huge outlier and recompute mean.",
+          text: "Roll a die 30 times. Chart the faces. Compare your frequencies to the fair probability of 1/6.",
         },
         {
           type: "ul",
           items: [
-            "Did mode change?",
-            "Explain the pull in one sentence",
-            "Flip carousel: abacus totals vs graph shape",
+            "Is your sample big enough to look fair?",
+            "Any outlier count that looks weird?",
+            "What population are you estimating?",
           ],
         },
       ],
@@ -244,21 +192,14 @@ export const BOOK = {
     {
       title: "Myths to bust",
       layout: "text",
-      theory: [
-        "conceptual-change",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Myth: mean and mode are always the same number. Better: they can differ - mean balances; mode is most common.",
+          text: "Myth: After five heads, tails is 'due'. Better: independent fair flips ignore the past streak.",
         },
         {
           type: "p",
-          text: "Myth: one outlier never moves the mean. Better: a very large or small value can pull the mean.",
-        },
-        {
-          type: "p",
-          text: "Myth: mean ignores how many values you have. Better: mean divides by the count of values.",
+          text: "Myth: The mean is always the best summary. Better: outliers can fool the mean - check the distribution.",
         },
         {
           type: "p",
@@ -269,18 +210,14 @@ export const BOOK = {
     {
       title: "Mastery",
       layout: "text",
-      theory: [
-        "retrieval-practice",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/statistics-probability/assets/book/m1-mastery.jpg",
-              caption: "Figure 5. Spot clusters - your average goal.",
-              alt: "Pattern anchor",
+              src: "/games/statistics-probability/assets/book/m1-spread.jpg",
+              caption: "Figure 5. Teach stats as probability + honest pictures of data.",
+              alt: "Stats mastery anchor",
             },
           ],
         },
@@ -288,14 +225,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Teach a friend with three prices: show mean vs mode and why shoppers might care about each.",
+          text: "Teach a friend in one minute: probability measures chance; samples estimate populations; means need distribution checks.",
         },
         {
           type: "ul",
           items: [
-            "Compute both on a 5-number list",
-            "Point to an outlier effect",
-            "Use the word average carefully (say mean or mode)",
+            "Define sample vs population",
+            "Spot one outlier in a tiny list",
+            "Use the word fairness correctly once",
           ],
         },
       ],

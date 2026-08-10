@@ -1,14 +1,12 @@
 /**
- * Digital book - Web Dev Studio / CSS Style
- * Theory: cognitive load, dual coding, multimedia learning, constructivism,
- * conceptual change, spiral scaffold, retrieval practice.
- * Photos: local verified copies under /games/web-dev-studio/assets/book/ (see CREDITS-m2.json).
+ * Digital book - Web Dev Studio Mission 2: CSS Style Lab
+ * Unique curriculum book (selectors, box model, layout). Not a template fill-in.
  */
 export const BOOK = {
   missionIndex: 1,
-  title: "CSS Style",
-  subtitle: "look & layout",
-  subject: "Web Dev Studio / CSS Style",
+  title: "CSS Style Lab",
+  subtitle: "paint and spacing without breaking structure",
+  subject: "Web Dev Studio / CSS Style Lab",
   theories: [
     "cognitive-load",
     "dual-coding",
@@ -19,43 +17,35 @@ export const BOOK = {
     "retrieval-practice",
   ],
   cover: {
-    title: "CSS Style",
+    title: "CSS Style Lab",
     art: "/games/web-dev-studio/assets/book/m2-cover.jpg",
   },
   glossary: [
-    { id: "css", term: "css" },
-    { id: "stylesheet", term: "stylesheet" },
+    { id: "css", term: "CSS" },
     { id: "selector", term: "selector" },
-    { id: "color", term: "color" },
+    { id: "declaration", term: "declaration" },
+    { id: "box-model", term: "box model" },
     { id: "margin", term: "margin" },
-    { id: "padding", term: "padding" },
-    { id: "contrast", term: "contrast" },
-    { id: "layout", term: "layout" },
-    { id: "font", term: "font" },
-    { id: "spacing", term: "spacing" },
+    { id: "flexbox", term: "flexbox" },
+    { id: "responsive", term: "responsive" },
   ],
   pages: [
     {
-      title: "Why CSS Style?",
+      title: "Style is a separate layer",
       layout: "text",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "cognitive-load",
-      ],
       figures: [
         {
           place: "top",
           slides: [
-            {
-              src: "/games/web-dev-studio/assets/book/m2-hook.jpg",
-              caption: "Figure 1. Experiments tweak one variable - CSS tweaks look without breaking structure.",
-              alt: "Experiment setup",
-            },
             {
               src: "/games/web-dev-studio/assets/book/m2-cover.jpg",
-              caption: "Chips are dense; good CSS keeps pages breathable.",
-              alt: "Computer chip",
+              caption: "Figure 1. CSS files describe look and layout while HTML keeps meaning.",
+              alt: "CSS code",
+            },
+            {
+              src: "/games/web-dev-studio/assets/book/m2-color.jpg",
+              caption: "Color and type choices are declarations applied through selectors.",
+              alt: "Color palette swatches",
             },
           ],
         },
@@ -63,72 +53,55 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "HTML built the rooms. CSS paints them: color, size, and spacing so a page is clear to read from a phone or a wall screen.",
+          text: "CSS means Cascading Style Sheets. A selector targets elements; a declaration sets a property and value.",
         },
         {
           type: "p",
-          text: "School posters, shop product cards, and rickshaw ads all fail when text is tiny or colors fight.",
-        },
-        {
-          type: "p",
-          text: "Everyday hook: a market flyer that must read from far uses contrast and gap - the same ideas as CSS.",
+          text: "Everyday hook: the same article HTML can look like a newspaper or a neon poster with different CSS.",
         },
       ],
     },
     {
-      title: "Look vs structure",
+      title: "The box model",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/web-dev-studio/assets/book/m2-model.jpg",
-              caption: "Figure 2. Clear signals across distance - pages need the same clarity.",
-              alt: "Satellite communication dish",
+              src: "/games/web-dev-studio/assets/book/m2-box.jpg",
+              caption: "Figure 2. Content, padding, border, then margin - the box model layers around every element.",
+              alt: "CSS box model diagram",
             },
           ],
         },
       ],
       blocks: [
         {
-          type: "p",
-          text: "HTML says what a heading is. CSS says how big, which color, and how much space around it.",
-        },
-        {
           type: "ul",
           items: [
-            "A few clear colors beat a messy rainbow",
-            "Readable size matters on phones",
-            "Gap and margin guide the eye",
+            "Padding: space inside the border",
+            "Margin: space outside the border",
+            "Border: the edge you can color or hide",
           ],
+        },
+        {
+          type: "p",
+          text: "Most 'why is this too wide?' bugs are box model math, not mystery browsers.",
         },
       ],
     },
     {
-      title: "Style dial",
+      title: "Layout tools",
       layout: "text",
-      theory: [
-        "cognitive-load",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/web-dev-studio/assets/book/m2-mechanism.jpg",
-              caption: "Figure 3. Light is a design tool - contrast helps text pop.",
-              alt: "Incandescent light bulb",
-            },
-            {
-              src: "/games/web-dev-studio/assets/book/m2-lab.jpg",
-              caption: "Try changes, then check readability.",
-              alt: "Laboratory",
+              src: "/games/web-dev-studio/assets/book/m2-layout.jpg",
+              caption: "Figure 3. Responsive layouts adapt across phone and desktop widths.",
+              alt: "Responsive design on devices",
             },
           ],
         },
@@ -136,29 +109,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "In the lab you dialed style strength. Too little and the page looks raw; too much noise and nothing stands out.",
+          text: "Flexbox lines up items in a row or column and controls wrapping, gaps, and alignment.",
         },
         {
           type: "p",
-          text: "Aim for hierarchy: one loud headline, quieter body text, steady spacing.",
+          text: "Responsive design means the page stays usable when the viewport shrinks - often with flexible units and media queries.",
         },
       ],
     },
     {
-      title: "Layout that breathes",
+      title: "Cascade and conflict",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/web-dev-studio/assets/book/m2-mastery.jpg",
-              caption: "Figure 4. Ordered hardware still leaves pathways - leave pathways on your page.",
-              alt: "Computer workstation",
+              src: "/games/web-dev-studio/assets/book/m2-style.jpg",
+              caption: "Figure 4. When rules conflict, specificity and order decide the winner - that is the cascade.",
+              alt: "Developer styling a page",
             },
           ],
         },
@@ -166,62 +135,49 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Whitespace is not empty waste. It separates ideas so a shop card or notice can be scanned in a second.",
-        },
-        {
-          type: "p",
-          text: "CSS box ideas - margin, padding, border - are how you carve that air.",
+          text: "More specific selectors beat general ones. Later rules can override earlier ones when specificity ties.",
         },
       ],
     },
     {
-      title: "How the 10 steps connect",
+      title: "How the mission connects",
       layout: "text",
-      theory: [
-        "spiral-scaffold",
-        "cognitive-load",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Meet style -> dial look -> sort style jobs -> stronger layout lab -> why spacing -> name the style rule -> stretch posters -> myths -> fluency -> mastery.",
+          text: "Meet CSS → select elements → box practice → layout lab → explain → rule → stretch → myth → fluency → mastery.",
         },
         {
           type: "ul",
           items: [
-            "Sorting separates structure jobs from look jobs",
-            "Dial practice links contrast to readability",
-            "Rule: CSS paints HTML rooms with color, size, and space",
+            "Selector drills stop random inline styling",
+            "Box labs make spacing visible",
+            "Responsive checks prove layout is not one width only",
           ],
         },
       ],
     },
     {
-      title: "Street lab: poster audit",
+      title: "Style lab",
       layout: "split",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "retrieval-practice",
-      ],
       figures: [
         {
           place: "right",
           slides: [
             {
-              src: "/games/web-dev-studio/assets/book/m2-mechanism.jpg",
-              caption: "Contrast tool.",
-              alt: "Bulb",
+              src: "/games/web-dev-studio/assets/book/m2-color.jpg",
+              caption: "Pick a small palette.",
+              alt: "Palette",
             },
             {
-              src: "/games/web-dev-studio/assets/book/m2-hook.jpg",
-              caption: "Try and check.",
-              alt: "Experiment",
+              src: "/games/web-dev-studio/assets/book/m2-box.jpg",
+              caption: "Tune padding and margin.",
+              alt: "Box model",
             },
             {
-              src: "/games/web-dev-studio/assets/book/m2-cover.jpg",
-              caption: "Dense vs breathable.",
-              alt: "Chip",
+              src: "/games/web-dev-studio/assets/book/m2-layout.jpg",
+              caption: "Test a narrow width.",
+              alt: "Responsive check",
             },
           ],
         },
@@ -229,14 +185,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Pick a school poster or shop sign. Score contrast, text size, and spacing from 1 to 5.",
+          text: "Style a card: background, padding, margin, and a flexbox row for a title plus button. Shrink the window and fix overflow.",
         },
         {
           type: "ul",
           items: [
-            "Suggest one CSS-like fix (bigger type, more gap, fewer colors)",
-            "Name what should stay HTML structure",
-            "Flip carousel: bulb contrast vs chip density",
+            "Which selector did you use?",
+            "Is the gap margin or padding?",
+            "What breaks first when narrow?",
           ],
         },
       ],
@@ -244,21 +200,14 @@ export const BOOK = {
     {
       title: "Myths to bust",
       layout: "text",
-      theory: [
-        "conceptual-change",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Myth: more colors always look better. Better: a few clear colors beat a messy rainbow.",
+          text: "Myth: Inline styles are fine forever. Better: they fight the cascade and make reuse painful.",
         },
         {
           type: "p",
-          text: "Myth: CSS and HTML are the same job. Better: HTML structures; CSS styles the look.",
-        },
-        {
-          type: "p",
-          text: "Myth: spacing does not matter. Better: gap and margin guide the eye.",
+          text: "Myth: Margin and padding are synonyms. Better: one is outside the border, one is inside.",
         },
         {
           type: "p",
@@ -269,18 +218,14 @@ export const BOOK = {
     {
       title: "Mastery",
       layout: "text",
-      theory: [
-        "retrieval-practice",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/web-dev-studio/assets/book/m2-mastery.jpg",
-              caption: "Figure 5. Clear pathways - your CSS goal.",
-              alt: "Computer anchor",
+              src: "/games/web-dev-studio/assets/book/m2-cover.jpg",
+              caption: "Figure 5. Teach CSS as selectors + declarations + honest box math.",
+              alt: "CSS mastery anchor",
             },
           ],
         },
@@ -288,14 +233,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Teach a friend: structure first, then paint with CSS - contrast, size, spacing.",
+          text: "Teach a friend in one minute: CSS styles HTML; selectors target; the box model explains spacing; flexbox helps layout.",
         },
         {
           type: "ul",
           items: [
-            "Say one property you would change on a messy page",
-            "Explain why tiny text fails on phones",
-            "Use the word stylesheet correctly once",
+            "Write one selector with two declarations",
+            "Point to margin vs padding on a sketch",
+            "Use the word responsive correctly once",
           ],
         },
       ],

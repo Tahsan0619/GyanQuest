@@ -1,14 +1,12 @@
 /**
- * Digital book - Database SQL / Tables & Rows
- * Theory: cognitive load, dual coding, multimedia learning, constructivism,
- * conceptual change, spiral scaffold, retrieval practice.
- * Photos: local verified copies under /games/database-sql/assets/book/ (see CREDITS-m1.json).
+ * Digital book - Database SQL Mission 1: Tables & Queries
+ * Unique curriculum book (rows, columns, SELECT). Not a template fill-in.
  */
 export const BOOK = {
   missionIndex: 0,
-  title: "Tables & Rows",
-  subtitle: "rows columns",
-  subject: "Database SQL / Tables & Rows",
+  title: "Tables & Queries",
+  subtitle: "ask a database with precise questions",
+  subject: "Database SQL / Tables & Queries",
   theories: [
     "cognitive-load",
     "dual-coding",
@@ -19,43 +17,35 @@ export const BOOK = {
     "retrieval-practice",
   ],
   cover: {
-    title: "Tables & Rows",
+    title: "Tables & Queries",
     art: "/games/database-sql/assets/book/m1-cover.jpg",
   },
   glossary: [
     { id: "table", term: "table" },
     { id: "row", term: "row" },
     { id: "column", term: "column" },
-    { id: "record", term: "record" },
-    { id: "field", term: "field" },
-    { id: "cell", term: "cell" },
-    { id: "header", term: "header" },
-    { id: "database", term: "database" },
-    { id: "schema", term: "schema" },
-    { id: "value", term: "value" },
+    { id: "primary-key", term: "primary key" },
+    { id: "query", term: "query" },
+    { id: "select", term: "SELECT" },
+    { id: "filter", term: "filter" },
   ],
   pages: [
     {
-      title: "Why Tables & Rows?",
+      title: "Spreadsheets with rules",
       layout: "text",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "cognitive-load",
-      ],
       figures: [
         {
           place: "top",
           slides: [
-            {
-              src: "/games/database-sql/assets/book/m1-hook.jpg",
-              caption: "Figure 1. Counting tools love grids - databases love rows and columns.",
-              alt: "Abacus",
-            },
             {
               src: "/games/database-sql/assets/book/m1-cover.jpg",
-              caption: "Notebook grids preview how tables store facts.",
-              alt: "Notebook",
+              caption: "Figure 1. A database table looks familiar - rows of records, columns of fields.",
+              alt: "Database table rows",
+            },
+            {
+              src: "/games/database-sql/assets/book/m1-row.jpg",
+              caption: "Each row is one record; each column is one kind of fact.",
+              alt: "Spreadsheet rows and columns",
             },
           ],
         },
@@ -63,33 +53,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Phone contacts, class registers, and shop inventory sheets are tables: neat rows and columns.",
+          text: "A table stores one kind of thing - students, orders, books - with the same columns for every row.",
         },
         {
           type: "p",
-          text: "Each row is one record. Each column is one field - like name, city, or stock count.",
-        },
-        {
-          type: "p",
-          text: "Everyday hook: your contacts list is already a tiny database without the scary name.",
+          text: "A primary key uniquely identifies each row so updates and joins do not confuse twins.",
         },
       ],
     },
     {
-      title: "Row vs column",
+      title: "Ask with SELECT",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/database-sql/assets/book/m1-model.jpg",
-              caption: "Figure 2. Graphs summarize table numbers - first you need clean fields.",
-              alt: "Data graph",
+              src: "/games/database-sql/assets/book/m1-query.jpg",
+              caption: "Figure 2. A SELECT query asks for columns from a table, optionally filtered.",
+              alt: "SQL SELECT query",
             },
           ],
         },
@@ -97,38 +79,29 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "A row holds one whole story (one student, one product). A column holds the same kind of fact across stories.",
+          text: "A query is a precise question written in SQL. SELECT names the columns; FROM names the table.",
         },
         {
           type: "ul",
           items: [
-            "id, name, city are columns",
-            "One student across those columns is a row",
-            "Messy piles of notes are not tables yet",
+            "SELECT name, score FROM students;",
+            "WHERE filters which rows survive",
+            "ORDER BY sorts the answer set",
           ],
         },
       ],
     },
     {
-      title: "Table dial",
+      title: "Filter means decide",
       layout: "text",
-      theory: [
-        "cognitive-load",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/database-sql/assets/book/m1-mechanism.jpg",
-              caption: "Figure 3. Computers store tables as structured data, not cake crumbs.",
-              alt: "Computer",
-            },
-            {
-              src: "/games/database-sql/assets/book/m1-lab.jpg",
-              caption: "Class registers are live tables you already read.",
-              alt: "Education setting",
+              src: "/games/database-sql/assets/book/m1-table.jpg",
+              caption: "Figure 3. Schema diagrams show tables, keys, and how columns relate.",
+              alt: "Database schema diagram",
             },
           ],
         },
@@ -136,29 +109,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "In the mission you tightened the grid until rows and columns snapped into place.",
+          text: "To filter is to keep only rows that match a condition - score >= 80, city = 'Dhaka'.",
         },
         {
           type: "p",
-          text: "Clear headers beat mystery scribbles. Same column means same kind of value.",
+          text: "Bad filters return too much or nothing. Good filters match the question you truly meant.",
         },
       ],
     },
     {
-      title: "Read a grid",
+      title: "Keys keep identity",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/database-sql/assets/book/m1-mastery.jpg",
-              caption: "Figure 4. Measurement sheets are tables in the wild.",
-              alt: "Measurement chart",
+              src: "/games/database-sql/assets/book/m1-key.jpg",
+              caption: "Figure 4. Primary keys stop two different people from sharing one identity number by accident.",
+              alt: "Primary key concept",
             },
           ],
         },
@@ -166,62 +135,49 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Practice pointing: this cell is row 3, column city. That habit unlocks every later SQL question.",
-        },
-        {
-          type: "p",
-          text: "Apps store people, products, and scores this way - not only math class worksheets.",
+          text: "Without a primary key, 'update Rahim' might hit the wrong Rahim. Identity matters.",
         },
       ],
     },
     {
-      title: "How the 10 steps connect",
+      title: "How the mission connects",
       layout: "text",
-      theory: [
-        "spiral-scaffold",
-        "cognitive-load",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Meet tables -> dial grid -> sort row/column -> stronger lab -> why records -> name the table rule -> stretch sheets -> myths -> fluency -> mastery.",
+          text: "Meet tables → pick columns → write SELECT → filter lab → explain → rule → stretch → myth → fluency → mastery.",
         },
         {
           type: "ul",
           items: [
-            "Sorting locks row vs column jobs",
-            "Lab grids build reading fluency",
-            "Rule: rows are records; columns are fields",
+            "Reading a table before querying prevents wild guesses",
+            "Filter labs show WHERE power",
+            "The rule sentence is 'ask precisely, get only what matches'",
           ],
         },
       ],
     },
     {
-      title: "Street lab: inventory",
+      title: "Query lab",
       layout: "split",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "retrieval-practice",
-      ],
       figures: [
         {
           place: "right",
           slides: [
             {
-              src: "/games/database-sql/assets/book/m1-hook.jpg",
-              caption: "Count and grid.",
-              alt: "Abacus",
+              src: "/games/database-sql/assets/book/m1-row.jpg",
+              caption: "Count rows in your sample.",
+              alt: "Rows",
             },
             {
-              src: "/games/database-sql/assets/book/m1-cover.jpg",
-              caption: "Write the headers.",
-              alt: "Notebook",
+              src: "/games/database-sql/assets/book/m1-query.jpg",
+              caption: "Write one SELECT.",
+              alt: "SELECT",
             },
             {
-              src: "/games/database-sql/assets/book/m1-model.jpg",
-              caption: "Later: charts from tables.",
-              alt: "Graph",
+              src: "/games/database-sql/assets/book/m1-key.jpg",
+              caption: "Circle the primary key.",
+              alt: "Primary key",
             },
           ],
         },
@@ -229,14 +185,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Make a 3x3 table for a tiny shop: item, price, stock. Fill three rows.",
+          text: "Invent a 5-row students table. Write a SELECT that returns only names with score above 70.",
         },
         {
           type: "ul",
           items: [
-            "Circle one row and one column",
-            "Explain why cake is not a column name here",
-            "Flip carousel: abacus grid vs notebook grid",
+            "Which columns did you select?",
+            "What condition did you filter on?",
+            "Which column is the primary key?",
           ],
         },
       ],
@@ -244,21 +200,14 @@ export const BOOK = {
     {
       title: "Myths to bust",
       layout: "text",
-      theory: [
-        "conceptual-change",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Myth: tables are only for math class. Better: apps store people, products, and scores in tables.",
+          text: "Myth: SQL is only for experts. Better: SELECT with a clear WHERE is a beginner superpower.",
         },
         {
           type: "p",
-          text: "Myth: columns and rows are the same. Better: columns are fields; rows are whole records.",
-        },
-        {
-          type: "p",
-          text: "Myth: cake is a database column. Better: columns are fields like name - not desserts.",
+          text: "Myth: Tables and spreadsheets are identical. Better: databases enforce types, keys, and multi-user rules.",
         },
         {
           type: "p",
@@ -269,18 +218,14 @@ export const BOOK = {
     {
       title: "Mastery",
       layout: "text",
-      theory: [
-        "retrieval-practice",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/database-sql/assets/book/m1-mastery.jpg",
-              caption: "Figure 5. Clean fields - your table goal.",
-              alt: "Measurement anchor",
+              src: "/games/database-sql/assets/book/m1-cover.jpg",
+              caption: "Figure 5. Teach databases as tables you question with SELECT.",
+              alt: "SQL mastery anchor",
             },
           ],
         },
@@ -288,14 +233,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Teach a friend with a contact list: point to a row, a column, and one cell.",
+          text: "Teach a friend in one minute: tables have rows and columns; primary keys identify rows; SELECT queries ask precise questions.",
         },
         {
           type: "ul",
           items: [
-            "Define record and field in one sentence each",
-            "Build a 4-row class register on paper",
-            "Use the word table correctly once",
+            "Sketch one table with a primary key",
+            "Write one filter condition in words",
+            "Use the word query correctly once",
           ],
         },
       ],

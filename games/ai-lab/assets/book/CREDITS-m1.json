@@ -1,38 +1,38 @@
 [
-  {
-    "file": "m1-cover.jpg",
-    "source_shared": "ai_data\\nasa-robot-1.jpg",
-    "bytes": 162721,
-    "sha1": "cde20e9aee18"
-  },
-  {
-    "file": "m1-hook.jpg",
-    "source_shared": "ai_data\\nasa-rover-2.jpg",
-    "bytes": 66043,
-    "sha1": "be66eda90c93"
-  },
-  {
-    "file": "m1-model.png",
-    "source_shared": "Human_brain_NIH.png",
-    "bytes": 138261,
-    "sha1": "9b843b8c6038"
-  },
-  {
-    "file": "m1-mechanism.jpg",
-    "source_shared": "ai_data\\nasa-autonomous-3.jpg",
-    "bytes": 109140,
-    "sha1": "ac77aa4da8ab"
-  },
-  {
-    "file": "m1-lab.jpg",
-    "source_shared": "general\\nasa-laboratory-1.jpg",
-    "bytes": 67386,
-    "sha1": "ad51fd2f4e16"
-  },
-  {
-    "file": "m1-mastery.jpg",
-    "source_shared": "ai_data\\nasa-robotic-arm-5.jpg",
-    "bytes": 48425,
-    "sha1": "50294d868228"
-  }
+ {
+ "file": "m1-cover.jpg",
+ "source_shared": "ai_data\\nasa-robot-1.jpg",
+ "bytes": 162721,
+ "sha1": "cde20e9aee18"
+ },
+ {
+ "file": "m1-hook.jpg",
+ "source_shared": "ai_data\\nasa-rover-2.jpg",
+ "bytes": 66043,
+ "sha1": "be66eda90c93"
+ },
+ {
+ "file": "m1-model.png",
+ "source_shared": "Human_brain_NIH.png",
+ "bytes": 138261,
+ "sha1": "9b843b8c6038"
+ },
+ {
+ "file": "m1-mechanism.jpg",
+ "source_shared": "ai_data\\nasa-autonomous-3.jpg",
+ "bytes": 109140,
+ "sha1": "ac77aa4da8ab"
+ },
+ {
+ "file": "m1-lab.jpg",
+ "source_shared": "general\\nasa-laboratory-1.jpg",
+ "bytes": 67386,
+ "sha1": "ad51fd2f4e16"
+ },
+ {
+ "file": "m1-mastery.jpg",
+ "source_shared": "ai_data\\nasa-robotic-arm-5.jpg",
+ "bytes": 48425,
+ "sha1": "50294d868228"
+ }
 ]

@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gyan Quest: Project Poster</title>
+  <style>
+    @page { size: 36in 24in; margin: 0; }
+    * { box-sizing: border-box; }
+    :root {
+      --navy:#071c35; --ink:#102a43; --muted:#5b7187; --line:#d9e4ee;
+      --sky:#e9f5fb; --blue:#1379b9; --aqua:#20b8ad; --orange:#ffab40; --paper:#f8fbfd;
+    }
+    body { margin:0; background:#dfe8ef; font-family:Arial, Helvetica, sans-serif; color:var(--ink); }
+    .poster {
+      width:36in; height:24in; overflow:hidden; position:relative; padding:.28in .38in .38in;
+      background:#edf3f4;
+    }
+    header { height:3.12in; position:relative; z-index:1; padding:.33in 2.5in .25in; text-align:center; background:var(--navy); border-radius:.18in; color:white; }
+    .eyebrow { margin:0 0 .08in; color:#63ded3; font-weight:800; letter-spacing:.07in; font-size:.17in; text-transform:uppercase; }
+    h1 { margin:0; font-size:.82in; letter-spacing:-.035in; line-height:1; color:#fff; }
+    .accent { color:#63ded3; }
+    .subtitle { margin:.1in auto 0; width:auto; font-size:.28in; line-height:1.25; color:#f1f7fb; }
+    .team { position:static; width:auto; padding:.1in 0 0; text-align:center; border:0; color:#d5e5f1; font-size:.17in; line-height:1.35; }
+    .team strong { color:#fff; font-size:.21in; }
+    .header-qr { position:absolute; right:.35in; top:.33in; width:1.62in; height:1.62in; padding:.06in; background:#fff; border-radius:.08in; }
+    .grid { display:grid; grid-template-columns:1fr 1.35fr 1fr; gap:.22in; height:19.95in; padding-top:.2in; }
+    .column { min-width:0; display:flex; flex-direction:column; gap:.16in; counter-reset:section; }
+    .column + .column { border:0; padding-left:0; }
+    .card { counter-increment:section; background:#fff; border:1px solid #cbd9df; border-radius:.13in; padding:.18in .22in; box-shadow:0 .025in .06in rgba(22,59,88,.05); }
+    .card.tint { background:#f2f8fa; border-color:#c7dce5; }
+    h2 { position:relative; min-height:.38in; margin:0 0 .09in; padding-right:.54in; color:var(--navy); font-size:.29in; letter-spacing:.005in; line-height:1.1; }
+    h2:before { content:counter(section) "."; display:inline; width:auto; height:auto; border-radius:0; background:none; color:var(--navy); margin:0 .09in 0 0; font-weight:900; }
+    h2:after { position:absolute; right:0; top:-.05in; width:.4in; height:.4in; display:grid; place-items:center; border:1px solid #9fc8df; border-radius:50%; background:#e9f5fb; color:#1379b9; font-size:.25in; line-height:1; }
+    .column:nth-child(1) .card:nth-child(1) h2:after { content:"⌘"; }
+    .column:nth-child(1) .card:nth-child(2) h2:after { content:"◎"; }
+    .column:nth-child(1) .card:nth-child(3) h2:after { content:"⌕"; }
+    .column:nth-child(1) .card:nth-child(4) h2:after { content:"✦"; }
+    .column:nth-child(1) .card:nth-child(5) h2:after { content:"▦"; }
+    .column:nth-child(1) .card:nth-child(6) h2:after { content:"⚙"; }
+    .column:nth-child(1) .card:nth-child(7) h2:after { content:"▣"; }
+    .column:nth-child(2) .card:nth-child(1) h2:after { content:"⇄"; }
+    .column:nth-child(2) .card:nth-child(2) h2:after { content:"✦"; }
+    .column:nth-child(2) .card:nth-child(3) h2:after { content:"▦"; }
+    .column:nth-child(2) .card:nth-child(4) h2:after { content:"⌘"; }
+    .column:nth-child(2) .card:nth-child(5) h2:after { content:"⇢"; }
+    .column:nth-child(2) .card:nth-child(6) h2:after { content:"◫"; }
+    .column:nth-child(2) .card:nth-child(7) h2:after { content:"◇"; }
+    .column:nth-child(3) .card:nth-child(1) h2:after { content:"⌁"; }
+    .column:nth-child(3) .card:nth-child(2) h2:after { content:"↗"; }
+    .column:nth-child(3) .card:nth-child(3) h2:after { content:"⚑"; }
+    .column:nth-child(3) .card:nth-child(4) h2:after { content:"✧"; }
+    .column:nth-child(3) .card:nth-child(5) h2:after { content:"▣"; }
+    .column:nth-child(1) .card:not(:last-child) { padding-left:1.08in; }
+    .column:nth-child(1) .card:not(:last-child) h2 { padding-right:0; }
+    .column:nth-child(1) .card:not(:last-child) h2:after { display:none; }
+    .side-icon { position:absolute; left:.22in; top:.32in; width:.62in; height:.62in; color:#123f5c; stroke:currentColor; fill:none; stroke-width:2.7; stroke-linecap:round; stroke-linejoin:round; }
+    .column:nth-child(1) .card { position:relative; }
+    .column:nth-child(1) .card:nth-child(3) .side-icon { top:.55in; height:.86in; }
+    .column:nth-child(1) .card:nth-child(4) .side-icon { top:.45in; }
+    .column:nth-child(1) .card:nth-child(5) .side-icon { top:.42in; }
+    .column:nth-child(1) .card:last-child { min-height:1.15in; padding-left:1.4in; }
+    .column:nth-child(1) .card:last-child h2:after { display:none; }
+    .column:nth-child(1) .card:last-child .qr { position:absolute; left:.2in; top:.2in; float:none; width:1.02in; height:1.02in; margin:0; }
+    h3 { margin:.15in 0 .09in; font-size:.235in; color:var(--blue); }
+    p, li { font-size:.19in; line-height:1.31; }
+    p { margin:.05in 0; } ul { margin:.1in 0 0; padding-left:.29in; } li { margin:.06in 0; }
+    .goal-list { display:grid; grid-template-columns:repeat(3,1fr); gap:.12in; margin-top:.17in; }
+    .goal { border-top:.06in solid var(--aqua); background:#f2fbfa; padding:.13in .11in; min-height:1.12in; font-size:.19in; line-height:1.25; border-radius:.06in; }
+    .goal b { display:block; color:var(--navy); font-size:.23in; margin-bottom:.05in; }
+    .steps { counter-reset:step; display:grid; gap:.12in; }
+    .step { position:relative; padding:.12in .12in .12in .78in; min-height:.67in; background:#f5f9fc; border-radius:.09in; font-size:.19in; line-height:1.27; }
+    .step:before { counter-increment:step; content:counter(step); position:absolute; left:.16in; top:.13in; width:.39in; height:.39in; border-radius:50%; text-align:center; padding-top:.04in; background:var(--blue); color:#fff; font-weight:800; font-size:.2in; }
+    .flow { display:flex; align-items:stretch; margin:.17in 0 .05in; }
+    .node { flex:1; padding:.15in .08in; text-align:center; background:#eaf7f6; font-size:.17in; font-weight:bold; line-height:1.2; color:#145d64; }
+    .node:nth-child(2) { background:#ddecf8; color:#19517a; } .node:nth-child(3) { background:#fff0d9; color:#8e5a12; }
+    .arrow { width:.27in; align-self:center; color:var(--aqua); font-size:.38in; text-align:center; }
+    .features { display:grid; grid-template-columns:1fr 1fr; gap:.14in; }
+    .feature { position:relative; min-height:1.05in; padding:.16in .16in .16in .58in; border:1px solid var(--line); border-radius:.1in; background:#fff; }
+    .feature:before { position:absolute; left:.15in; top:.18in; width:.28in; height:.28in; display:grid; place-items:center; border-radius:50%; background:#daf1ee; color:#0e7772; font-size:.16in; font-weight:900; }
+    .feature:nth-child(1):before { content:"⌂"; } .feature:nth-child(2):before { content:"▶"; }
+    .feature:nth-child(3):before { content:"↻"; } .feature:nth-child(4):before { content:"✦"; }
+    .feature b { display:block; color:var(--navy); font-size:.21in; margin-bottom:.05in; } .feature span { color:var(--muted); font-size:.175in; line-height:1.25; }
+    .tech { display:flex; gap:.1in; flex-wrap:wrap; margin-top:.12in; }
+    .tag { padding:.08in .13in; background:#eaf3f9; border:1px solid #c8dfe9; border-radius:.06in; font-size:.17in; color:#24516f; font-weight:bold; }
+    .metric-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.11in; margin-top:.12in; }
+    .metric { padding:.16in .08in; background:var(--navy); color:white; text-align:center; border-radius:.09in; }
+    .metric b { display:block; color:#62ded4; font-size:.43in; line-height:1; } .metric span { font-size:.15in; line-height:1.15; }
+    .result { display:grid; grid-template-columns:1.2fr .8fr; gap:.18in; align-items:center; }
+    .chart { height:1.56in; display:flex; align-items:flex-end; gap:.12in; padding:.1in .13in 0; background:#f3f9fc; border-radius:.09in; }
+    .bar { width:23%; background:linear-gradient(#21b8ad,#1583b8); border-radius:.05in .05in 0 0; text-align:center; color:white; font-size:.14in; font-weight:bold; padding-top:.06in; }
+    .impact { border-left:.07in solid var(--orange); padding:.1in .14in; font-size:.18in; line-height:1.3; background:#fff9f0; }
+    .compare { display:grid; grid-template-columns:1.1fr 1fr 1fr; gap:1px; overflow:hidden; border-radius:.08in; border:1px solid var(--line); margin-top:.1in; }
+    .compare div { padding:.11in .08in; background:#f6fafd; font-size:.15in; line-height:1.2; text-align:center; }
+    .compare div:nth-child(3n+2) { background:#edf6ff; color:#16577f; font-weight:700; }
+    .compare div:nth-child(3n) { background:#e9f8f5; color:#12675e; font-weight:700; }
+    .compare .label { text-align:left; color:#516b7f; font-weight:700; background:#fff; }
+    .mini-flow { display:grid; grid-template-columns:repeat(4, 1fr); gap:.08in; margin-top:.1in; }
+    .mini-flow div { position:relative; min-height:.62in; padding:.1in .06in; background:#edf5fb; border-radius:.07in; font-size:.15in; font-weight:700; text-align:center; color:#20577b; }
+    .mini-flow div:not(:last-child):after { content:"→"; position:absolute; right:-.1in; top:.15in; color:var(--aqua); font-size:.21in; z-index:2; }
+    .subject-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:.08in; margin-top:.1in; }
+    .subject-grid span { padding:.1in .06in; border-radius:.06in; text-align:center; background:#f0f9f8; color:#15635e; font-size:.145in; font-weight:700; }
+    .roadmap { display:flex; gap:.08in; margin-top:.08in; }
+    .roadmap div { flex:1; border-top:.05in solid var(--blue); padding:.09in .06in 0; font-size:.14in; color:#486579; }
+    .roadmap b { display:block; color:var(--navy); font-size:.16in; margin-bottom:.04in; }
+    .workflow-card { min-height:4.85in; padding:.31in .34in; }
+    .workflow-svg { width:100%; height:3.06in; display:block; margin:.14in 0; border-radius:.1in; background:#f4f9fc; }
+    .line-chart { width:100%; height:2.22in; display:block; margin:.1in 0 .06in; border-radius:.08in; background:#f4f9fc; }
+    .graph-card { min-height:3.88in; padding:.28in .32in; }
+    .roadmap-card { min-height:3.15in; padding:.31in .34in; }
+    .roadmap-diagram { position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:.16in; padding-top:.4in; margin-top:.15in; }
+    .roadmap-diagram:before { content:""; position:absolute; left:.18in; right:.18in; top:.74in; height:.06in; background:linear-gradient(90deg,var(--blue),var(--aqua),var(--orange)); }
+    .milestone { position:relative; padding-top:.82in; font-size:.2in; line-height:1.3; color:#4a6577; }
+    .milestone:before { content:""; position:absolute; top:.47in; left:0; width:.3in; height:.3in; background:var(--blue); border:.065in solid #fff; border-radius:50%; box-shadow:0 0 0 .04in var(--blue); }
+    .milestone:nth-child(3):before { background:var(--aqua); box-shadow:0 0 0 .025in var(--aqua); }
+    .milestone:nth-child(4):before { background:var(--orange); box-shadow:0 0 0 .025in var(--orange); }
+    .milestone b { display:block; color:var(--navy); font-size:.25in; margin-bottom:.075in; }
+    .architecture-layout { display:grid; grid-template-columns:1.25fr .75fr; gap:.12in; align-items:center; margin-top:.06in; }
+    .architecture-layout + p { display:none; }
+    .card:has(.hidden-section) { display:none; }
+    .arch-main { display:grid; justify-items:center; gap:.06in; }
+    .arch-node { width:88%; padding:.1in .08in; background:#dcecf3; border:1px solid #9dc5d8; border-radius:.08in; color:#123f5c; font-size:.15in; font-weight:800; text-align:center; line-height:1.16; }
+    .arch-node:after { content:"↓"; display:block; margin-top:.035in; color:#1379b9; font-size:.2in; line-height:.12in; }
+    .arch-node:last-child:after { display:none; }
+    .arch-services { display:grid; gap:.07in; padding-left:.1in; border-left:2px dashed #9bbdcc; }
+    .arch-services span { padding:.08in; border:1px dashed #9bbdcc; border-radius:.06in; background:#f5fafc; color:#315d78; text-align:center; font-size:.135in; font-weight:700; }
+    .impact-icon { float:left; width:.65in; height:.65in; margin:.02in .17in .08in 0; color:#1379b9; stroke:currentColor; fill:none; stroke-width:2.8; stroke-linecap:round; stroke-linejoin:round; }
+    .principle-flow { display:grid; grid-template-columns:repeat(4,1fr); align-items:center; gap:.06in; margin-top:.08in; }
+    .principle-flow div { position:relative; padding:.12in .03in; border-radius:.06in; background:#edf6fa; color:#143f5c; text-align:center; font-size:.15in; font-weight:800; line-height:1.15; }
+    .principle-flow div:not(:last-child):after { content:"→"; position:absolute; right:-.1in; top:.12in; color:#1379b9; font-size:.25in; z-index:2; }
+    .research-icon { float:right; width:.58in; height:.58in; margin:-.06in 0 .05in .12in; color:#123f5c; stroke:currentColor; fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+    .roadmap-diagram { padding:0; gap:.08in; }
+    .roadmap-diagram:before, .milestone:before { display:none; }
+    .milestone { padding:.08in .06in .12in; border-radius:.07in; background:#eaf3f8; border-top:.12in solid #1379b9; font-size:.14in; line-height:1.18; }
+    .milestone:nth-child(2) { border-color:#20b8ad; background:#e7f7f4; }
+    .milestone:nth-child(3) { border-color:#1396a8; background:#e7f4f7; }
+    .milestone:nth-child(4) { border-color:#ffab40; background:#fff2df; }
+    .milestone b { font-size:.17in; margin-bottom:.04in; }
+    .refs { font-size:.155in; color:#50697d; line-height:1.32; padding-left:.26in; margin:0; }
+    footer { position:absolute; left:.38in; right:.38in; bottom:.12in; height:.42in; display:flex; justify-content:space-between; align-items:center; background:var(--navy); border-radius:.08in; color:#fff; font-size:.15in; padding:.06in .22in; }
+    .qr { width:1.18in; height:1.18in; display:block; background:#fff; border:.07in solid #fff; outline:.025in solid var(--navy); float:right; margin-left:.2in; }
+    .note { color:var(--muted); font-size:.16in; font-style:italic; }
+    @media screen { body { padding:24px; } .poster { margin:auto; box-shadow:0 12px 55px #8ba0b1; transform-origin:top center; } @media (max-width:1600px) { .poster { transform:scale(.42); margin-bottom:-13.9in; } } }
+  </style>
+</head>
+<body>
+  <main class="poster">
+    <header>
+      <p class="eyebrow">Team Alpha</p>
+      <h1>Gyan <span class="accent">Quest</span></h1>
+      <p class="subtitle">An interactive, mission-based learning platform that turns school subjects into engaging Canvas 2D games.</p>
+      <div class="team"><strong>Team Alpha</strong><br>Md Tahsan Islam · Mufrid Johanee<br>Shadiya Zaman Tanha · Md Mohaimenul Islam</div>
+      <img class="header-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&amp;data=https%3A%2F%2Fgithub.com%2FTahsan0619%2FGyanQuest" alt="QR code for the Gyan Quest GitHub repository" />
+    </header>
+
+    <section class="grid">
+      <article class="column">
+        <section class="card tint">
+          <svg class="side-icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 10h19v10a7 7 0 1 0 10 0V10h19v19H46a7 7 0 1 0 0 10h10v17H37V46a7 7 0 1 0-10 0v10H8V39h10a7 7 0 1 0 0-10H8z"/></svg>
+          <h2>The Challenge</h2>
+          <p>Students often experience subject learning as passive and repetitive. GyanQuest transforms curriculum practice into active, game-based missions with instant feedback and progress tracking.</p>
+        </section>
+        <section class="card">
+          <svg class="side-icon" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22"/><circle cx="32" cy="32" r="13"/><circle cx="32" cy="32" r="4"/><path d="M40 24l17-17M48 7h9v9"/></svg>
+          <h2>Objectives</h2>
+          <ul>
+            <li>Convert learning objectives into meaningful game missions.</li>
+            <li>Make subject practice interactive through Canvas 2D experiences.</li>
+            <li>Support progress tracking and mission continuity.</li>
+            <li>Provide optional AI guidance without blocking offline gameplay.</li>
+            <li>Create a scalable shared engine for new subjects and lessons.</li>
+          </ul>
+        </section>
+        <section class="card">
+          <svg class="side-icon" viewBox="0 0 64 64" aria-hidden="true"><circle cx="25" cy="24" r="13"/><path d="M35 34l12 12M13 46l9-7M13 54l9-7M42 44c3-5 8-8 14-8 3 0 5 2 5 5v9c0 3-2 5-5 5H43c-3 0-5-2-5-5v-3M49 42v7M46 45h7"/></svg>
+          <h2>Methodology</h2>
+          <div class="steps">
+            <div class="step"><b>Curriculum Mapping:</b> turn learning objectives into focused game missions.</div>
+            <div class="step"><b>Game Design:</b> build levels, rules, rewards, and clear feedback loops.</div>
+            <div class="step"><b>Development:</b> implement reusable Canvas 2D game modules and persistence.</div>
+            <div class="step"><b>Iterate & Improve:</b> assess engagement, progress, and learner feedback.</div>
+          </div>
+        </section>
+        <section class="card">
+          <svg class="side-icon" viewBox="0 0 64 64" aria-hidden="true"><circle cx="31" cy="27" r="16"/><path d="M31 3v5M11 10l4 4M4 28h6M11 46l4-4M31 51v8M51 46l-4-4M58 28h-6M51 10l-4 4M27 26l-7 10 12-3 7-11-12 4z"/></svg>
+          <h2>Why Gyan Quest?</h2>
+          <ul><li>28 subject-based educational games.</li><li>Offline-first: core gameplay works without login.</li><li>Progress resumes exactly where the learner stopped.</li></ul>
+        </section>
+        <section class="card tint">
+          <svg class="side-icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M7 11c11-4 20-1 25 5v39C26 49 17 46 7 50zM57 11c-11-4-20-1-25 5v39c6-6 15-9 25-5zM32 16v39"/></svg>
+          <h2>Curriculum Coverage</h2>
+          <p>Each game package combines a subject, level, mission rules, and learning prompts. This makes new content easier to add without rebuilding the platform.</p>
+          <div class="subject-grid">
+            <span>Mathematics</span><span>Science</span><span>English</span><span>ICT</span>
+            <span>History</span><span>Geography</span><span>Languages</span><span>More…</span>
+          </div>
+        </section>
+        <section class="card">
+          <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&amp;data=https%3A%2F%2Fgithub.com%2FTahsan0619%2FGyanQuest" alt="QR code for the Gyan Quest GitHub repository" />
+          <h2>Project Repository</h2>
+          <p><b>Scan to access Gyan Quest on GitHub.</b></p>
+          <p>Source code, game modules, shared engine, and setup instructions are available at:</p>
+          <p class="note">github.com/Tahsan0619/GyanQuest</p>
+        </section>
+      </article>
+
+      <article class="column">
+        <section class="card workflow-card">
+          <h2>Gyan Quest Workflow</h2>
+          <svg class="workflow-svg" viewBox="0 0 760 330" role="img" aria-label="Gyan Quest workflow from landing page through gameplay to saved progress">
+            <defs><marker id="workflow-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#20b8ad"/></marker></defs>
+            <path d="M205 78 H262 M437 78 H494 M640 128 V165 M540 214 H465 M280 214 H205" fill="none" stroke="#20b8ad" stroke-width="6" marker-end="url(#workflow-arrow)"/>
+            <rect x="20" y="28" width="185" height="100" rx="14" fill="#eaf4fb"/><text x="112" y="68" text-anchor="middle" font-size="25" font-weight="700" fill="#15587a">1. Landing Page</text><text x="112" y="98" text-anchor="middle" font-size="18" fill="#15587a">Learner starts a quest</text>
+            <rect x="262" y="28" width="175" height="100" rx="14" fill="#e8f8f5"/><text x="349" y="68" text-anchor="middle" font-size="25" font-weight="700" fill="#17665e">2. Mission Hub</text><text x="349" y="98" text-anchor="middle" font-size="18" fill="#17665e">Subject and game choice</text>
+            <rect x="494" y="28" width="246" height="100" rx="14" fill="#fff0d9"/><text x="617" y="68" text-anchor="middle" font-size="25" font-weight="700" fill="#8e5a12">3. Canvas 2D Mission</text><text x="617" y="98" text-anchor="middle" font-size="18" fill="#8e5a12">Challenge, feedback, retry</text>
+            <rect x="20" y="165" width="185" height="98" rx="14" fill="#f1f8fc"/><text x="112" y="204" text-anchor="middle" font-size="23" font-weight="700" fill="#315d78">6. Optional Support</text><text x="112" y="231" text-anchor="middle" font-size="17" fill="#315d78">Groq tutor and Laravel sync</text>
+            <rect x="302" y="165" width="175" height="98" rx="14" fill="#eaf4fb"/><text x="389" y="204" text-anchor="middle" font-size="24" font-weight="700" fill="#15587a">5. Continue</text><text x="389" y="233" text-anchor="middle" font-size="18" fill="#15587a">Hub or active mission</text>
+            <rect x="529" y="165" width="211" height="98" rx="14" fill="#e9f8f5"/><text x="634" y="204" text-anchor="middle" font-size="24" font-weight="700" fill="#17665e">4. Save Progress</text><text x="634" y="233" text-anchor="middle" font-size="18" fill="#17665e">localStorage restores state</text>
+          </svg>
+          <p class="note">Core gameplay remains offline-first. Server features enhance support and administration without blocking play.</p>
+        </section>
+        <section class="card tint">
+          <h2>Key Features</h2>
+          <div class="features">
+            <div class="feature"><b>Mission Hub</b><span>Central entry point for game selection and learning paths.</span></div>
+            <div class="feature"><b>Canvas 2D Games</b><span>Interactive subject missions with engaging mechanics.</span></div>
+            <div class="feature"><b>Persistent Progress</b><span>localStorage restores a learner’s game state.</span></div>
+            <div class="feature"><b>AI Tutor</b><span>Optional Groq-powered chat support for learners.</span></div>
+          </div>
+        </section>
+        <section class="card">
+          <h2>Technology Stack</h2>
+          <p>Built as an offline-first web experience with optional server features.</p>
+          <div class="tech">
+            <span class="tag">HTML5 Canvas</span><span class="tag">JavaScript</span><span class="tag">CSS</span><span class="tag">Python</span><span class="tag">Groq API</span><span class="tag">Laravel</span><span class="tag">PHP</span><span class="tag">MySQL / SQLite</span><span class="tag">Sanctum</span><span class="tag">Filament</span>
+          </div>
+        </section>
+        <section class="card">
+          <h2>System Architecture</h2>
+          <div class="architecture-layout">
+            <div class="arch-main">
+              <div class="arch-node">Learner</div>
+              <div class="arch-node">Landing Page + Mission Hub</div>
+              <div class="arch-node">Shared Game Engine<br>UI · Pedagogy · Persistence</div>
+              <div class="arch-node">Game Package<br>Boot Script · Subject Missions · Levels</div>
+              <div class="arch-node">Canvas 2D Gameplay</div>
+              <div class="arch-node">localStorage save-v2</div>
+            </div>
+            <div class="arch-services">
+              <span>Groq Tutor Proxy</span>
+              <span>Laravel Sanctum API</span>
+              <span>Filament Admin Panel</span>
+              <span>MySQL / SQLite</span>
+            </div>
+          </div>
+          <p><b>Learner</b> → <b>Mission Hub</b> → <b>Canvas 2D Games</b> → <b>localStorage</b>. Optional paths: <b>Groq Tutor Proxy</b> for chat assistance and <b>Laravel API</b> for authentication, administration, and synced data.</p>
+        </section>
+        <section class="card tint">
+          <h2 class="hidden-section">Mission Progression Diagram</h2>
+          <div class="mini-flow">
+            <div>Choose<br>subject</div><div>Enter<br>mission</div><div>Solve &<br>receive feedback</div><div>Save<br>progress</div>
+          </div>
+          <p class="note">The saved <b>inHub</b> state returns learners to the right screen after reload.</p>
+        </section>
+        <section class="card tint">
+          <h2>Reusable Game Module</h2>
+          <div class="compare">
+            <div class="label">Layer</div><div>Shared platform</div><div>Per-subject game</div>
+            <div class="label">Interface</div><div>UI & mission hub</div><div>Scene & controls</div>
+            <div class="label">Learning</div><div>Pedagogy patterns</div><div>Questions & rules</div>
+            <div class="label">State</div><div>Persistence system</div><div>Mission progress</div>
+          </div>
+        </section>
+        <section class="card">
+          <h2>Optional AI Learning Support</h2>
+          <p>The Groq tutor proxy keeps the API key on the server while providing an optional help channel. Learners can play every core game even when chat support is unavailable.</p>
+          <div class="mini-flow">
+            <div>Learner<br>question</div><div>Secure<br>proxy</div><div>Groq<br>model</div><div>Guided<br>response</div>
+          </div>
+        </section>
+      </article>
+
+      <article class="column">
+        <section class="card graph-card">
+          <h2>Learning Progression Graph</h2>
+          <svg class="line-chart" viewBox="0 0 600 170" role="img" aria-label="Conceptual line graph showing learning confidence increasing through mission stages">
+            <line x1="48" y1="20" x2="48" y2="138" stroke="#bcd0de" stroke-width="2"/>
+            <line x1="48" y1="138" x2="570" y2="138" stroke="#bcd0de" stroke-width="2"/>
+            <line x1="48" y1="100" x2="570" y2="100" stroke="#dbe9f2" stroke-width="1"/>
+            <line x1="48" y1="62" x2="570" y2="62" stroke="#dbe9f2" stroke-width="1"/>
+            <path d="M70 119 C125 113, 148 101, 190 96 S261 78, 310 80 S393 54, 438 52 S503 28, 550 27" fill="none" stroke="#16aeb0" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="70" cy="119" r="7" fill="#1479b9"/><circle cx="190" cy="96" r="7" fill="#1479b9"/><circle cx="310" cy="80" r="7" fill="#1479b9"/><circle cx="438" cy="52" r="7" fill="#1479b9"/><circle cx="550" cy="27" r="7" fill="#ffab40"/>
+            <text x="5" y="32" fill="#506b80" font-size="13">Higher</text><text x="5" y="139" fill="#506b80" font-size="13">Start</text>
+            <text x="54" y="160" fill="#506b80" font-size="12">Explore</text><text x="164" y="160" fill="#506b80" font-size="12">Attempt</text><text x="283" y="160" fill="#506b80" font-size="12">Feedback</text><text x="405" y="160" fill="#506b80" font-size="12">Retry</text><text x="520" y="160" fill="#506b80" font-size="12">Mastery</text>
+          </svg>
+          <p class="note">Conceptual model: each mission cycle supports confidence through challenge, feedback, and retry. It is not a classroom-test result.</p>
+          <div class="metric-grid">
+            <div class="metric"><b>28</b><span>subject games</span></div>
+            <div class="metric"><b>2D</b><span>Canvas gameplay</span></div>
+            <div class="metric"><b>∞</b><span>mission potential</span></div>
+          </div>
+        </section>
+        <section class="card tint">
+          <svg class="impact-icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 49c16 0 15-27 30-27h11"/><path d="M42 13l12 9-12 9"/><path d="M10 55h44"/></svg>
+          <h2>Impact & Future Work</h2>
+          <ul><li>Make curriculum practice more engaging and memorable.</li><li>Add teacher dashboards and learner analytics.</li><li>Expand subjects, missions, and adaptive learning support.</li></ul>
+        </section>
+        <section class="card">
+          <h2 class="hidden-section">Why Gamified Learning?</h2>
+          <div class="compare">
+            <div class="label">Learning element</div><div>Traditional practice</div><div>Gyan Quest approach</div>
+            <div class="label">Student role</div><div>Receives content</div><div>Acts inside a mission</div>
+            <div class="label">Feedback</div><div>Often delayed</div><div>Immediate in-game cues</div>
+            <div class="label">Motivation</div><div>External task</div><div>Goals, challenge & progress</div>
+            <div class="label">Repetition</div><div>Worksheet reuse</div><div>Safe retry through play</div>
+          </div>
+          <p class="note">Comparison is a learning-design model, not a measured performance claim.</p>
+        </section>
+        <section class="card roadmap-card">
+          <h2>Development Roadmap</h2>
+          <div class="roadmap-diagram">
+            <div class="milestone"><b>Now</b>28 Canvas 2D subject games</div>
+            <div class="milestone"><b>Next</b>Teacher dashboard and analytics</div>
+            <div class="milestone"><b>In Progress</b>Adaptive missions and richer feedback</div>
+            <div class="milestone"><b>Later</b>3D elements inside game lessons</div>
+          </div>
+          <p class="note">3D lesson elements are a planned enhancement, not a current platform feature.</p>
+        </section>
+        <section class="card tint">
+          <h2>Game Design Principles</h2>
+          <div class="principle-flow">
+            <div>◎<br>Clear Goal</div><div>▦<br>Meaningful Choice</div><div>◉<br>Immediate Feedback</div><div>↻<br>Retry & Mastery</div>
+          </div>
+        </section>
+        <section class="card">
+          <svg class="research-icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M5 25L32 11l27 14-27 14zM15 31v13c10 7 24 7 34 0V31M59 25v20"/></svg>
+          <h2>References</h2>
+          <ol class="refs">
+            <li>Gee, J. P. <i>What Video Games Have to Teach Us About Learning and Literacy</i>. 2007.</li>
+            <li>Bruner, J. S. <i>The Process of Education</i>. Harvard University Press, 1960.</li>
+            <li>Vygotsky, L. S. <i>Mind in Society: The Development of Higher Psychological Processes</i>. 1978.</li>
+            <li>Kolb, D. A. <i>Experiential Learning</i>. Prentice Hall, 1984.</li>
+            <li>Deci, E. L. and Ryan, R. M. <i>Self-Determination Theory</i>. 1985.</li>
+            <li>Malone, T. W. <i>What Makes Things Fun to Learn?</i> 1981.</li>
+            <li>Prensky, M. <i>Digital Game-Based Learning</i>. 2001.</li>
+          </ol>
+        </section>
+      </article>
+    </section>
+    <footer><span>GYAN QUEST • Learn by playing, progress by doing.</span><span>Landscape poster • 36 × 24 inches</span></footer>
+  </main>
+</body>
+</html>

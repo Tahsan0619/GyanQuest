@@ -1,14 +1,12 @@
 /**
- * Digital book - Math Quest Mission 1: Number Sense
- * Theory: cognitive load, dual coding, multimedia learning, constructivism,
- * conceptual change, spiral scaffold, retrieval practice.
- * Photos: local JPGs under assets/book/ (abacus + everyday counting scenes).
+ * Digital book - Math Quest Mission 1: Place Value Power
+ * Unique curriculum book (tens and ones). Not a template fill-in.
  */
 export const BOOK = {
   missionIndex: 0,
-  title: "Number Sense",
-  subtitle: "tens and ones place value",
-  subject: "Math Quest / Number Sense",
+  title: "Place Value Power",
+  subtitle: "tens and ones that build bigger numbers",
+  subject: "Math Quest / Place Value Power",
   theories: [
     "cognitive-load",
     "dual-coding",
@@ -19,37 +17,35 @@ export const BOOK = {
     "retrieval-practice",
   ],
   cover: {
-    title: "Number Sense",
+    title: "Place Value Power",
     art: "/games/math-quest/assets/book/m1-cover.jpg",
   },
   glossary: [
+    { id: "digit", term: "digit" },
     { id: "place-value", term: "place value" },
     { id: "tens", term: "tens" },
     { id: "ones", term: "ones" },
-    { id: "digit", term: "digit" },
     { id: "bundle", term: "bundle" },
-    { id: "ten-rod", term: "ten-rod" },
+    { id: "expanded", term: "expanded form" },
     { id: "regroup", term: "regroup" },
-    { id: "base-ten", term: "base ten" },
   ],
   pages: [
     {
-      title: "Eggs, notes, and cricket scores",
+      title: "Why position matters",
       layout: "text",
-      theory: ["constructivism", "dual-coding", "cognitive-load"],
       figures: [
         {
           place: "top",
           slides: [
             {
               src: "/games/math-quest/assets/book/m1-hook.jpg",
-              caption: "Figure 1. An abacus beads tens and ones the way shops still count.",
-              alt: "Wooden abacus with beads",
+              caption: "Figure 1. Beads and blocks make groups of ten easy to see before symbols take over.",
+              alt: "Counting beads or base-ten materials",
             },
             {
-              src: "/games/math-quest/assets/book/m1-everyday.jpg",
-              caption: "Everyday counting - groups of ten travel better than loose ones.",
-              alt: "Person skating - motion that can be counted in steps",
+              src: "/games/math-quest/assets/book/m1-cover.jpg",
+              caption: "The same digit means different amounts in different seats.",
+              alt: "Place value teaching materials",
             },
           ],
         },
@@ -57,66 +53,59 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "A crate of eggs is easier as 3 tens than as 30 loose shells. A 10-taka note is one bundle of ten ones. A cricket score like 47 is four tens and seven ones - not forty-seven mystery marks.",
+          text: "In 25, the 2 is not 'just two'. It sits in the tens place, so it means two groups of ten.",
         },
         {
           type: "p",
-          text: "Place value means a digit's job changes with its seat. The same '4' is four ones or four tens depending on where it sits.",
+          text: "Place value is the rule that a digit's seat decides its worth. Move the seat, change the value.",
         },
         {
           type: "p",
-          text: "Earn the Number Scout badge by saying tens and ones out loud for numbers you meet today.",
+          text: "Everyday hook: house numbers, scores, and money all depend on which digit sits where.",
         },
       ],
     },
     {
-      title: "Tens sit left of ones",
+      title: "Tens and ones",
       layout: "full-fig",
-      theory: ["multimedia-learning", "dual-coding"],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/math-quest/assets/book/m1-model.jpg",
-              caption: "Figure 2. Base-ten model: left column tens, right column ones.",
-              alt: "Abacus columns modeling tens and ones",
+              src: "/games/math-quest/assets/book/m1-tens.jpg",
+              caption: "Figure 2. One rod can stand for a bundle of ten ones.",
+              alt: "Base ten rods",
             },
           ],
         },
       ],
       blocks: [
         {
-          type: "p",
-          text: "In two-digit numbers, the left digit counts tens. The right digit counts ones.",
-        },
-        {
           type: "ul",
           items: [
-            "34 = 3 tens + 4 ones",
-            "70 = 7 tens + 0 ones",
-            "09 is just 9 ones - the zero tens seat is empty",
+            "Ones: single units (1, 2, 3...)",
+            "Tens: each tens digit is worth ten ones",
+            "Bundle: trade ten ones for one ten",
           ],
+        },
+        {
+          type: "p",
+          text: "34 means 3 tens and 4 ones. Say it that way until the digits feel like seats, not decorations.",
         },
       ],
     },
     {
-      title: "Bundle ten ones into a ten",
+      title: "Expanded form",
       layout: "text",
-      theory: ["cognitive-load", "dual-coding"],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/math-quest/assets/book/m1-tens.jpg",
-              caption: "Figure 3. Ten loose ones regroup into one ten-rod (or one ten bead column).",
-              alt: "Abacus showing bundled tens",
-            },
-            {
-              src: "/games/math-quest/assets/book/m1-everyday.jpg",
-              caption: "Trade ten ones for one ten - same total, cleaner packing.",
-              alt: "Motion scene as reminder to count in groups",
+              src: "/games/math-quest/assets/book/m1-place.jpg",
+              caption: "Figure 3. A place-value chart keeps each digit in its seat.",
+              alt: "Place value chart",
             },
           ],
         },
@@ -124,26 +113,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "When ones hit ten, regroup: trade ten ones for one ten. The total stays equal; the writing gets shorter.",
+          text: "Expanded form writes the value of each seat: 47 = 40 + 7. That sentence proves you understand place value.",
         },
         {
           type: "p",
-          text: "That is why 9 + 1 becomes 10, not '91'. You filled the ones seat and rolled a new ten into the tens seat.",
+          text: "When you regroup, you trade ten ones for one ten (or the reverse) so the seats stay honest.",
         },
       ],
     },
     {
-      title: "Chart what you build",
+      title: "Number line check",
       layout: "full-fig",
-      theory: ["multimedia-learning", "spiral-scaffold"],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/math-quest/assets/book/m1-cover.jpg",
-              caption: "Figure 4. Representation: beads (or rods) map to digits on a place chart.",
-              alt: "Abacus as place-value chart",
+              src: "/games/math-quest/assets/book/m1-number.jpg",
+              caption: "Figure 4. On a number line, jumping by tens is a different size jump than hopping by ones.",
+              alt: "Classroom number line",
             },
           ],
         },
@@ -151,51 +139,49 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Canvas rods in the mission are models. Real shops use notes, crates, or beads - same base-ten idea.",
+          text: "If 52 and 25 used the same digits but swapped seats, they land in different places. Seat order is not optional.",
         },
       ],
     },
     {
-      title: "How the 10 steps connect",
+      title: "How the mission connects",
       layout: "text",
-      theory: ["spiral-scaffold", "cognitive-load"],
       blocks: [
         {
           type: "p",
-          text: "Meet tens and ones -> build a number -> sort tens vs ones -> place chart lab -> why place matters -> name the place rule -> transfer to BD money and scores -> myth bust -> fluency -> Number Scout mastery.",
+          text: "Meet digits → build tens → sort values → lab trade → explain → rule → stretch → myth → fluency → mastery.",
         },
         {
           type: "ul",
           items: [
-            "Building makes the seats visible",
-            "Sorting stops mixing tens with ones",
-            "The rule sentence locks the idea in words",
+            "Building with bundles makes the tens seat concrete",
+            "Trading ones for tens practices regroup",
+            "The rule sentence locks 'seat decides worth'",
           ],
         },
       ],
     },
     {
-      title: "Market and scoreboard transfer",
+      title: "Kitchen counter lab",
       layout: "split",
-      theory: ["constructivism", "dual-coding", "retrieval-practice"],
       figures: [
         {
           place: "right",
           slides: [
             {
-              src: "/games/math-quest/assets/book/m1-hook.jpg",
-              caption: "Count change with 10-taka notes as tens.",
-              alt: "Abacus for money place value",
-            },
-            {
-              src: "/games/math-quest/assets/book/m1-everyday.jpg",
-              caption: "Read a cricket score as tens and ones.",
-              alt: "Everyday counting reminder",
+              src: "/games/math-quest/assets/book/m1-bundle.jpg",
+              caption: "Bundle ten ones into one ten.",
+              alt: "Bundled sticks or blocks",
             },
             {
               src: "/games/math-quest/assets/book/m1-tens.jpg",
-              caption: "Egg cartons: full rows of ten.",
-              alt: "Bundled tens on an abacus",
+              caption: "Read the tens seat first.",
+              alt: "Tens materials",
+            },
+            {
+              src: "/games/math-quest/assets/book/m1-place.jpg",
+              caption: "Write expanded form beside the chart.",
+              alt: "Place value chart practice",
             },
           ],
         },
@@ -203,14 +189,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Pick one number from a shop receipt or a match score. Split it into tens and ones. Say the bundle out loud.",
+          text: "Use beans, sticks, or coins. Make 28 two ways: loose ones, then with bundles. Write both in expanded form.",
         },
         {
           type: "ul",
           items: [
-            "Which digit is the tens seat?",
-            "Did you need to regroup any ones?",
-            "Drag the photos to flip examples",
+            "How many tens do you see?",
+            "How many ones are left?",
+            "What changes if you swap the digits?",
           ],
         },
       ],
@@ -218,15 +204,14 @@ export const BOOK = {
     {
       title: "Myths to bust",
       layout: "text",
-      theory: ["conceptual-change"],
       blocks: [
         {
           type: "p",
-          text: "Myth: Bigger digits are always bigger numbers. Better: place beats the digit - 19 is bigger than 91? No. 91 has nine tens.",
+          text: "Myth: Bigger-looking digits are always bigger numbers. Better: seat order beats digit size - 19 is less than 91.",
         },
         {
           type: "p",
-          text: "Myth: Zero means 'nothing important'. Better: zero can hold a tens seat open so 40 is not confused with 4.",
+          text: "Myth: The 0 in 305 does nothing. Better: it holds the tens seat so 3 stays hundreds.",
         },
         {
           type: "p",
@@ -235,17 +220,16 @@ export const BOOK = {
       ],
     },
     {
-      title: "Number Scout mastery",
+      title: "Mastery",
       layout: "text",
-      theory: ["retrieval-practice", "spiral-scaffold"],
       figures: [
         {
           place: "top",
           slides: [
             {
               src: "/games/math-quest/assets/book/m1-cover.jpg",
-              caption: "Figure 5. Teach with the abacus: tens left, ones right.",
-              alt: "Abacus teaching anchor",
+              caption: "Figure 5. Teach with this picture: digits in seats, not floating marks.",
+              alt: "Place value mastery anchor",
             },
           ],
         },
@@ -253,14 +237,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Teach a friend in one minute: every two-digit number is tens plus ones; ten ones become one ten; the seat gives the digit its value.",
+          text: "Teach a friend in one minute: place value means seat worth; tens are bundles of ten ones; expanded form proves it.",
         },
         {
           type: "ul",
           items: [
-            "Write 58 as tens and ones",
-            "Regroup 14 ones into tens and ones",
-            "Use the phrase place value correctly once",
+            "Break 63 into tens and ones",
+            "Write one number in expanded form",
+            "Use the word regroup correctly once",
           ],
         },
       ],

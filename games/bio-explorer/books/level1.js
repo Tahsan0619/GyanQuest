@@ -1,319 +1,277 @@
 /**
- * Digital book - bio-explorer mission 1: Living or Not
- * Theory spine: cognitive load, dual coding, multimedia learning,
- * constructivism, conceptual change, spiral scaffold, retrieval practice.
- * Images: local assets under /games/bio-explorer/assets/book/ (verified downloads).
+ * Digital book - Bio Explorer Mission 1: Living or Not
+ * Unique curriculum book (traits of life). Not a template fill-in.
+ * Photos: Wikimedia Commons (see assets/book/CREDITS-m1.json).
  */
 export const BOOK = {
-  "missionIndex": 0,
-  "title": "Living or Not",
-  "subtitle": "life",
-  "subject": "Bio Explorer / Living or Not",
-  "theories": [
+  missionIndex: 0,
+  title: "Living or Not",
+  subtitle: "traits that mark life",
+  subject: "Bio Explorer / Living or Not",
+  theories: [
     "cognitive-load",
     "dual-coding",
     "multimedia-learning",
     "constructivism",
     "conceptual-change",
     "spiral-scaffold",
-    "retrieval-practice"
+    "retrieval-practice",
   ],
-  "cover": {
-    "title": "Living or Not",
-    "art": "/games/bio-explorer/assets/book/m1-cover.jpg"
+  cover: {
+    title: "Living or Not",
+    art: "/games/bio-explorer/assets/book/m1-cover.jpg",
   },
-  "glossary": [
-    {
-      "id": "life",
-      "term": "life"
-    },
-    {
-      "id": "living",
-      "term": "living"
-    },
-    {
-      "id": "not",
-      "term": "Not"
-    },
-    {
-      "id": "things",
-      "term": "things"
-    },
-    {
-      "id": "grow",
-      "term": "grow"
-    },
-    {
-      "id": "need",
-      "term": "need"
-    },
-    {
-      "id": "energy",
-      "term": "energy"
-    },
-    {
-      "id": "respond",
-      "term": "respond"
-    }
+  glossary: [
+    { id: "organism", term: "organism" },
+    { id: "trait", term: "trait" },
+    { id: "stimulus", term: "stimulus" },
+    { id: "reproduce", term: "reproduce" },
+    { id: "nutrition", term: "nutrition" },
+    { id: "dormant", term: "dormant" },
+    { id: "nonliving", term: "nonliving" },
   ],
-  "pages": [
+  pages: [
     {
-      "title": "Why Living or Not?",
-      "layout": "text",
-      "theory": [
-        "constructivism",
-        "dual-coding",
-        "cognitive-load"
-      ],
-      "figures": [
+      title: "Is a sleeping cat alive?",
+      layout: "text",
+      theory: ["constructivism", "dual-coding", "cognitive-load"],
+      figures: [
         {
-          "place": "top",
-          "slides": [
+          place: "top",
+          slides: [
             {
-              "src": "/games/bio-explorer/assets/book/m1-hook.jpg",
-              "caption": "Figure 1. A real-world door into Living or Not.",
-              "alt": "Living or Not"
+              src: "/games/bio-explorer/assets/book/m1-hook.jpg",
+              caption: "Figure 1. Eyes closed, still an organism - life does not require constant motion.",
+              alt: "Sleeping cat",
             },
             {
-              "src": "/games/bio-explorer/assets/book/m1-cover.jpg",
-              "caption": "Same idea, another angle.",
-              "alt": "Living or Not"
-            }
-          ]
-        }
+              src: "/games/bio-explorer/assets/book/m1-cover.jpg",
+              caption: "A seedling is quiet too, yet it can grow when conditions allow.",
+              alt: "Young seedling in soil",
+            },
+          ],
+        },
       ],
-      "blocks": [
+      blocks: [
         {
-          "type": "p",
-          "text": "Living things grow, need energy, respond, and can make more life - even quiet seeds!"
+          type: "p",
+          text: "A sleeping cat barely moves. A rock never will. Both can sit still - only one is living.",
         },
         {
-          "type": "p",
-          "text": "In the mission you practiced short steps. This book slows down: By the end of this mission, you'll be able to explain life in your own words."
+          type: "p",
+          text: "Biologists look for a bundle of traits: grow, take nutrition, respond to a stimulus, and reproduce when ready.",
         },
         {
-          "type": "p",
-          "text": "Everyday hook: notice A sleeping cat."
-        }
-      ]
+          type: "p",
+          text: "Everyday hook: compare your pet (or a houseplant) with a phone charger on the table.",
+        },
+      ],
     },
     {
-      "title": "The big model",
-      "layout": "full-fig",
-      "theory": [
-        "multimedia-learning",
-        "dual-coding"
-      ],
-      "figures": [
+      title: "Living vs nonliving",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "dual-coding"],
+      figures: [
         {
-          "place": "full",
-          "slides": [
+          place: "full",
+          slides: [
             {
-              "src": "/games/bio-explorer/assets/book/m1-model.jpg",
-              "caption": "Figure 2. Hold this picture of life in your mind.",
-              "alt": "life"
-            }
-          ]
-        }
-      ],
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Theme: life."
-        },
-        {
-          "type": "p",
-          "text": "Point to the photo and say what stays the same vs what can change."
-        }
-      ]
-    },
-    {
-      "title": "What makes it change",
-      "layout": "text",
-      "theory": [
-        "cognitive-load",
-        "dual-coding"
-      ],
-      "figures": [
-        {
-          "place": "top",
-          "slides": [
-            {
-              "src": "/games/bio-explorer/assets/book/m1-mechanism.jpg",
-              "caption": "Figure 3. The process or force that drives the change.",
-              "alt": "Mechanism"
-            }
-          ]
-        }
-      ],
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Ask: what energy, force, or rule turns A sleeping cat into a new situation?"
-        },
-        {
-          "type": "p",
-          "text": "Compare with A mango seed. Name one thing that stayed the same."
-        }
-      ]
-    },
-    {
-      "title": "Look closer",
-      "layout": "full-fig",
-      "theory": [
-        "multimedia-learning",
-        "spiral-scaffold"
-      ],
-      "figures": [
-        {
-          "place": "full",
-          "slides": [
-            {
-              "src": "/games/bio-explorer/assets/book/m1-mechanism.jpg",
-              "caption": "Figure 4. A closer structure or pattern underneath the everyday view.",
-              "alt": "Representation"
-            }
-          ]
-        }
-      ],
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Models are tools, not photographs of every detail. Use them to explain, then check against real life."
-        }
-      ]
-    },
-    {
-      "title": "How the 10 steps connect",
-      "layout": "text",
-      "theory": [
-        "spiral-scaffold",
-        "cognitive-load"
-      ],
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Meet \u2192 try \u2192 sort \u2192 lab \u2192 explain \u2192 rule \u2192 stretch \u2192 myth \u2192 fluency \u2192 mastery."
-        },
-        {
-          "type": "ul",
-          "items": [
-            "Meet Living Clues",
-            "Seed Sprout Lab",
-            "Sort: Living or Not?",
-            "Watch Growth",
-            "Why Seeds Count"
-          ]
-        },
-        {
-          "type": "p",
-          "text": "Each game step added one layer. The book gathers the full story."
-        }
-      ],
-      "figures": []
-    },
-    {
-      "title": "Transfer lab",
-      "layout": "split",
-      "theory": [
-        "constructivism",
-        "dual-coding",
-        "retrieval-practice"
-      ],
-      "figures": [
-        {
-          "place": "right",
-          "slides": [
-            {
-              "src": "/games/bio-explorer/assets/book/m1-cover.jpg",
-              "caption": "Try with A sleeping cat.",
-              "alt": "A sleeping cat"
+              src: "/games/bio-explorer/assets/book/m1-living.jpg",
+              caption: "Figure 2. Green tissue captures light - a living leaf at work.",
+              alt: "Close-up green leaf",
             },
             {
-              "src": "/games/bio-explorer/assets/book/m1-hook.jpg",
-              "caption": "Compare with A mango seed.",
-              "alt": "A mango seed"
+              src: "/games/bio-explorer/assets/book/m1-nonliving.jpg",
+              caption: "Stone can be beautiful and old, but it does not grow or reproduce.",
+              alt: "Granite rock close-up",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Living means the whole set of traits, not one flashy clue. Fire moves and needs fuel - still nonliving.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Organism: a whole living individual (cat, mango tree, bacterium)",
+            "Nonliving: never ran the full life program (rock, plastic cup, flame)",
+            "One trait alone is not enough - check the bundle",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Energy and response",
+      layout: "text",
+      theory: ["cognitive-load", "dual-coding"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/bio-explorer/assets/book/m1-energy.jpg",
+              caption: "Figure 3. Sunflowers track light - a clear response to a stimulus outdoors.",
+              alt: "Sunflowers in a field",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Every organism needs a way to get energy. Plants capture sunlight; animals eat; both use that energy to keep cells working.",
+        },
+        {
+          type: "p",
+          text: "A stimulus is a cue from the world - light, touch, sound, hunger. Living things respond; a textbook does not flinch when you drop it.",
+        },
+      ],
+    },
+    {
+      title: "Quiet is not dead",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "spiral-scaffold", "conceptual-change"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/bio-explorer/assets/book/m1-cover.jpg",
+              caption: "Figure 4. Seeds can stay dormant for months, then sprout when water and warmth arrive.",
+              alt: "Seedling emerging from soil",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Dormant means paused, not fake. A dry seed is still an organism waiting for the right moment to grow.",
+        },
+        {
+          type: "p",
+          text: "That is why the mission sorted sleepy cats and mango seeds with living clues, not with 'is it moving right now?'",
+        },
+      ],
+    },
+    {
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: ["spiral-scaffold", "cognitive-load"],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet clues → sprout lab → sort living/not → watch growth → explain → rule → stretch → myth → fluency → mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sorting forces you to use several traits together",
+            "The seed lab shows dormancy can look like 'not alive'",
+            "The rule sentence locks the bundle of traits in words",
+          ],
+        },
+        {
+          type: "p",
+          text: "Short steps on purpose. This book gathers the full sorting story.",
+        },
+      ],
+    },
+    {
+      title: "Sort lab at home",
+      layout: "split",
+      theory: ["constructivism", "dual-coding", "retrieval-practice"],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/bio-explorer/assets/book/m1-hook.jpg",
+              caption: "Living: responds, needs nutrition, can reproduce later.",
+              alt: "Cat as living example",
             },
             {
-              "src": "/games/bio-explorer/assets/book/m1-model.jpg",
-              "caption": "Find one more example nearby.",
-              "alt": "Transfer"
-            }
-          ]
-        }
-      ],
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Use A sleeping cat as your lab. Drag/flip the photos if more than one appears."
-        },
-        {
-          "type": "ul",
-          "items": [
-            "What changed?",
-            "What stayed the same?",
-            "What rule explains it?"
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Myths to bust",
-      "layout": "text",
-      "theory": [
-        "conceptual-change"
-      ],
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Myth: Living or Not is just a fancy word. Better: it names a rule you can test with examples."
-        },
-        {
-          "type": "p",
-          "text": "Myth: if I memorized a sentence, I understand. Better: I can show an example and a counter-example."
-        },
-        {
-          "type": "p",
-          "text": "Red words are glossary terms. Tap one to ask the tutor."
-        }
-      ],
-      "figures": []
-    },
-    {
-      "title": "Mastery",
-      "layout": "text",
-      "theory": [
-        "retrieval-practice",
-        "spiral-scaffold"
-      ],
-      "figures": [
-        {
-          "place": "top",
-          "slides": [
+              src: "/games/bio-explorer/assets/book/m1-nonliving.jpg",
+              caption: "Nonliving: no growth program, no offspring.",
+              alt: "Rock as nonliving example",
+            },
             {
-              "src": "/games/bio-explorer/assets/book/m1-cover.jpg",
-              "caption": "Figure 5. Teach Living or Not using this picture as your anchor.",
-              "alt": "Living or Not"
-            }
-          ]
-        }
+              src: "/games/bio-explorer/assets/book/m1-living.jpg",
+              caption: "Living plant tissue - slow change still counts.",
+              alt: "Leaf tissue",
+            },
+          ],
+        },
       ],
-      "blocks": [
+      blocks: [
         {
-          "type": "p",
-          "text": "Teach a friend in one minute: what Living or Not means, one example (A sleeping cat), and one myth to avoid."
+          type: "p",
+          text: "Pick three objects nearby. For each, name two traits you can observe or infer, then decide living or nonliving.",
         },
         {
-          "type": "ul",
-          "items": [
-            "Sketch the idea behind life",
-            "Point to A sleeping cat in real life",
-            "Use one glossary word correctly"
-          ]
-        }
-      ]
-    }
-  ]
+          type: "ul",
+          items: [
+            "Which traits did you actually see?",
+            "Which did you infer (like 'can reproduce')?",
+            "Flip the photos and sort again out loud",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Myths to bust",
+      layout: "text",
+      theory: ["conceptual-change"],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: If it does not move, it is dead. Better: dormancy and sleep are still life.",
+        },
+        {
+          type: "p",
+          text: "Myth: Fire is alive because it grows and needs fuel. Better: fire does not reproduce as an organism or keep organized cells.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor - each mark appears once on purpose.",
+        },
+      ],
+    },
+    {
+      title: "Mastery",
+      layout: "text",
+      theory: ["retrieval-practice", "spiral-scaffold"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/bio-explorer/assets/book/m1-energy.jpg",
+              caption: "Figure 5. Teach with this picture: stimulus, response, and energy in one scene.",
+              alt: "Sunflowers facing light",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend in one minute: life is a bundle of traits; sleeping and dormant still count; rocks and flames fail the test.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Name four traits of an organism",
+            "Give one living and one nonliving example",
+            "Use the word stimulus correctly once",
+          ],
+        },
+      ],
+    },
+  ],
 };
 
 export default BOOK;

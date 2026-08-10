@@ -45,14 +45,47 @@ SYSTEM = (
     "You are a friendly GyanQuest tutor for school kids (roughly ages 9-14). "
     "Explain ideas from the root in simple, clear English. Use short paragraphs. "
     "Avoid jargon unless you define it. When a specific word/term is given, explain "
-    "that word in the subject context first. End every reply with the exact question: "
-    '"Do you want to learn more?"'
+    "that word in the subject context first. "
+    "Finish every reply with exactly one question, on its own line, with nothing after it."
+)
+
+# First tap on a book word: full explanation, then the fixed opt-in question.
+FIRST_TURN_RULE = (
+    " This is the learner's first tap on this word, so give the whole picture: 5 to 7 sentences "
+    "covering what the word means, one everyday Bangladesh-friendly example, and why it matters "
+    "in this topic. Do not stop at a one-line hint. "
+    'End with exactly this line: "Do you want to learn more?"'
+)
+
+# Every later turn: the closing question is generated from the conversation, never canned.
+FOLLOW_UP_RULE = (
+    " The learner already got the first explanation and has just replied. Build on what they "
+    "actually said about this word - go one step deeper, or clear up whatever they sound unsure "
+    "about - in 5 to 7 sentences. Then end with ONE question you compose yourself that names the "
+    "specific idea you just taught and pushes their thinking forward. "
+    'Never ask "Do you want to learn more?" again, and never reword it as "want to know more", '
+    '"shall I explain more", "learn more?" or anything similar. Ask about the idea itself.'
 )
 
 
-def local_explain(term: str, subject: str) -> str:
+def follow_up_question(term: str, subject: str) -> str:
+    t = (term or "this idea").strip() or "this idea"
+    sub = (subject or "your topic").strip()
+    return f'Where in {sub} do you think "{t}" would change what happens?'
+
+
+def local_explain(term: str, subject: str, phase: str = "explain") -> str:
     t = (term or "this idea").strip() or "this idea"
     sub = (subject or "this school topic").strip()
+    if phase == "followup":
+        return (
+            f'Good - let\'s push "{t}" a bit further in {sub}.\n\n'
+            f'The next layer is where "{t}" shows up when things change: watch what happens '
+            f"before, during, and after, and notice which part the word is naming. That is the "
+            f"part you can point to in the mission book pictures.\n\n"
+            f"(Online tutor briefly unavailable - local helper used.)\n\n"
+            f"{follow_up_question(t, sub)}"
+        )
     return (
         f'Let\'s start from the root with "{t}" in {sub}.\n\n'
         f'A simple way to think about it: "{t}" is a building-block idea you use to understand '
@@ -126,23 +159,19 @@ class Handler(SimpleHTTPRequestHandler):
 
         # Cap history
         messages = messages[-12:]
-        system = SYSTEM
+
+        # Phase drives the closing question: fixed opt-in first, AI-generated after that.
+        phase = (body.get("phase") or "").strip().lower()
+        if phase not in ("explain", "followup"):
+            answered_before = any(
+                isinstance(m, dict) and m.get("role") == "assistant" for m in messages
+            )
+            phase = "explain" if term and not answered_before else "followup"
+
+        system = SYSTEM + (FIRST_TURN_RULE if phase == "explain" else FOLLOW_UP_RULE)
+        if tier >= 3:
+            system += " Point to a book diagram if one would help."
         max_tokens = 700
-        if tier <= 1:
-            system = (
-                SYSTEM
-                + " For this turn: reply with ONE short nudge sentence only (max 20 words)."
-            )
-            max_tokens = 80
-        elif tier == 2:
-            system = SYSTEM + " For this turn: keep the explanation to 2-3 short sentences."
-            max_tokens = 280
-        else:
-            system = (
-                SYSTEM
-                + " For this turn: give a direct answer and mention a book diagram if helpful."
-            )
-            max_tokens = 500
 
         payload = {
             "model": body.get("model") or GROQ_MODEL,
@@ -172,7 +201,7 @@ class Handler(SimpleHTTPRequestHandler):
                 hint = term or user
                 if not hint and messages:
                     hint = str(messages[-1].get("content") or "")
-                fallback = local_explain(hint, subject)
+                fallback = local_explain(hint, subject, phase)
                 self._json(
                     200,
                     {
@@ -186,7 +215,7 @@ class Handler(SimpleHTTPRequestHandler):
             self._json(e.code, {"error": "Groq API error", "detail": err_body[:800]})
             return
         except Exception as e:
-            fallback = local_explain(term or user, subject)
+            fallback = local_explain(term or user, subject, phase)
             self._json(
                 200,
                 {

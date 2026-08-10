@@ -1,38 +1,38 @@
 [
-  {
-    "file": "m1-cover.jpg",
-    "source_shared": "civil_mech\\nasa-gear-1.jpg",
-    "bytes": 191975,
-    "sha1": "e071d6d09992"
-  },
-  {
-    "file": "m1-hook.jpg",
-    "source_shared": "physics\\skateboard-motion-2.jpg",
-    "bytes": 445840,
-    "sha1": "e56be9e0d8e2"
-  },
-  {
-    "file": "m1-model.jpg",
-    "source_shared": "civil_mech\\nasa-gear-4.jpg",
-    "bytes": 191975,
-    "sha1": "e071d6d09992"
-  },
-  {
-    "file": "m1-mechanism.webp",
-    "source_shared": "physics\\newton-cradle-1.webp",
-    "bytes": 171708,
-    "sha1": "bfdb2794f3af"
-  },
-  {
-    "file": "m1-lab.webp",
-    "source_shared": "physics\\pushing-cart-3.webp",
-    "bytes": 300400,
-    "sha1": "3d66afdb78b9"
-  },
-  {
-    "file": "m1-mastery.jpg",
-    "source_shared": "civil_mech\\nasa-mechanical-8.jpg",
-    "bytes": 47149,
-    "sha1": "420059ac6e7f"
-  }
+ {
+ "file": "m1-cover.jpg",
+ "source_shared": "civil_mech\\nasa-gear-1.jpg",
+ "bytes": 191975,
+ "sha1": "e071d6d09992"
+ },
+ {
+ "file": "m1-hook.jpg",
+ "source_shared": "physics\\skateboard-motion-2.jpg",
+ "bytes": 445840,
+ "sha1": "e56be9e0d8e2"
+ },
+ {
+ "file": "m1-model.jpg",
+ "source_shared": "civil_mech\\nasa-gear-4.jpg",
+ "bytes": 191975,
+ "sha1": "e071d6d09992"
+ },
+ {
+ "file": "m1-mechanism.webp",
+ "source_shared": "physics\\newton-cradle-1.webp",
+ "bytes": 171708,
+ "sha1": "bfdb2794f3af"
+ },
+ {
+ "file": "m1-lab.webp",
+ "source_shared": "physics\\pushing-cart-3.webp",
+ "bytes": 300400,
+ "sha1": "3d66afdb78b9"
+ },
+ {
+ "file": "m1-mastery.jpg",
+ "source_shared": "civil_mech\\nasa-mechanical-8.jpg",
+ "bytes": 47149,
+ "sha1": "420059ac6e7f"
+ }
 ]

@@ -2,7 +2,7 @@
 
 SVG badges used in coach-panel overlays (same pattern as Tiny Bits).
 
-## Mission 1 — Tiny Bits
+## Mission 1 - Tiny Bits
 | File | Use |
 |------|-----|
 | `atom-orbit.svg` | Atom model badge |
@@ -12,7 +12,7 @@ SVG badges used in coach-panel overlays (same pattern as Tiny Bits).
 | `magnify-atoms.svg` | Meet Tiny Bits zoom |
 | `myth-bust.svg` | Myth bust cards |
 
-## Mission 2 — Element Hunt
+## Mission 2 - Element Hunt
 | File | Use |
 |------|-----|
 | `element-hunt.svg` | Meet Element Hunt / shelf hunt |
@@ -21,7 +21,7 @@ SVG badges used in coach-panel overlays (same pattern as Tiny Bits).
 | `oxygen-pair.svg` | O₂ element lab |
 | `element-rule.svg` | Name the element rule |
 
-## Mission 3 — Bond Buddies
+## Mission 3 - Bond Buddies
 | File | Use |
 |------|-----|
 | `bond-buddies.svg` | Meet Bond Buddies |

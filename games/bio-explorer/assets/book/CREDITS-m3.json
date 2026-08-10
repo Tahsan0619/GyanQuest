@@ -2,41 +2,41 @@
   {
     "file": "m3-cover.jpg",
     "src": "/games/bio-explorer/assets/book/m3-cover.jpg",
-    "from_shared": true
+    "commons_title": "File:Green leaves.jpg",
+    "artist": "Samir Mahendra from San Francisco, USA",
+    "license": "CC BY 2.0",
+    "from_shared": false
   },
   {
     "file": "m3-hook.jpg",
     "src": "/games/bio-explorer/assets/book/m3-hook.jpg",
-    "from_shared": true
+    "commons_title": "File:Forest canopy.jpg",
+    "artist": "Jahnavi L",
+    "license": "CC BY-SA 4.0",
+    "from_shared": false
   },
   {
-    "file": "m3-model.jpg",
-    "src": "/games/bio-explorer/assets/book/m3-model.jpg",
-    "from_shared": true
+    "file": "m3-producer.jpg",
+    "src": "/games/bio-explorer/assets/book/m3-producer.jpg",
+    "commons_title": "File:Lawn grass.jpg",
+    "artist": "MichaelPloujnikov",
+    "license": "CC BY-SA 3.0",
+    "from_shared": false
   },
   {
-    "file": "m3-mechanism.jpg",
-    "src": "/games/bio-explorer/assets/book/m3-mechanism.jpg",
-    "from_shared": true
+    "file": "m3-consumer.jpg",
+    "src": "/games/bio-explorer/assets/book/m3-consumer.jpg",
+    "commons_title": "File:White-tailed deer.jpg",
+    "artist": "USDA photo by Scott Bauer",
+    "license": "Public domain",
+    "from_shared": false
   },
   {
-    "file": "m3-mechanism.jpg",
-    "src": "/games/bio-explorer/assets/book/m3-mechanism.jpg",
-    "from_shared": true
-  },
-  {
-    "file": "m3-cover.jpg",
-    "src": "/games/bio-explorer/assets/book/m3-cover.jpg",
-    "from_shared": true
-  },
-  {
-    "file": "m3-hook.jpg",
-    "src": "/games/bio-explorer/assets/book/m3-hook.jpg",
-    "from_shared": true
-  },
-  {
-    "file": "m3-model.jpg",
-    "src": "/games/bio-explorer/assets/book/m3-model.jpg",
-    "from_shared": true
+    "file": "m3-decomposer.jpg",
+    "src": "/games/bio-explorer/assets/book/m3-decomposer.jpg",
+    "commons_title": "File:Mushrooms.jpg",
+    "artist": "No machine-readable author provided. Volkov assumed (based on copyright claims).",
+    "license": "Public domain",
+    "from_shared": false
   }
 ]

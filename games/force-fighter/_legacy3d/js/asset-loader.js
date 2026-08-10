@@ -7,6 +7,8 @@ const THREE = window.THREE;
 function resolveAssetBase() {
   if (typeof document === "undefined") return "3D%20Assets";
   const path = document.location.pathname.replace(/\\/g, "/");
+  // /games/force-fighter/_legacy3d/ → ../../../3D Assets
+  if (path.includes("/games/force-fighter/_legacy3d")) return "../../../3D%20Assets";
   // /games/force-fighter/ → ../../3D Assets
   if (path.includes("/games/force-fighter")) return "../../3D%20Assets";
   if (path.includes("/force-fighter")) return "../3D%20Assets";

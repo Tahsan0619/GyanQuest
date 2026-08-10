@@ -1,44 +1,44 @@
 [
-  {
-    "file": "m1-cover.jpg",
-    "src": "/games/discrete-math/assets/book/m1-cover.jpg",
-    "from_shared": "general/nasa-education-3.jpg",
-    "theme": "general",
-    "bytes": 141595
-  },
-  {
-    "file": "m1-hook.jpg",
-    "src": "/games/discrete-math/assets/book/m1-hook.jpg",
-    "from_shared": "general/nasa-notebook-7.jpg",
-    "theme": "general",
-    "bytes": 137892
-  },
-  {
-    "file": "m1-model.jpg",
-    "src": "/games/discrete-math/assets/book/m1-model.jpg",
-    "from_shared": "general/nasa-laboratory-1.jpg",
-    "theme": "general",
-    "bytes": 67386
-  },
-  {
-    "file": "m1-mechanism.jpg",
-    "src": "/games/discrete-math/assets/book/m1-mechanism.jpg",
-    "from_shared": "Incandescent_light_bulb.jpg",
-    "theme": "general",
-    "bytes": 158835
-  },
-  {
-    "file": "m1-detail.jpg",
-    "src": "/games/discrete-math/assets/book/m1-detail.jpg",
-    "from_shared": "general/nasa-classroom-science-8.jpg",
-    "theme": "general",
-    "bytes": 124685
-  },
-  {
-    "file": "m1-transfer.webp",
-    "src": "/games/discrete-math/assets/book/m1-transfer.webp",
-    "from_shared": "physics/newton-cradle-1.webp",
-    "theme": "general",
-    "bytes": 171708
-  }
+ {
+ "file": "m1-cover.jpg",
+ "src": "/games/discrete-math/assets/book/m1-cover.jpg",
+ "from_shared": "general/nasa-education-3.jpg",
+ "theme": "general",
+ "bytes": 141595
+ },
+ {
+ "file": "m1-hook.jpg",
+ "src": "/games/discrete-math/assets/book/m1-hook.jpg",
+ "from_shared": "general/nasa-notebook-7.jpg",
+ "theme": "general",
+ "bytes": 137892
+ },
+ {
+ "file": "m1-model.jpg",
+ "src": "/games/discrete-math/assets/book/m1-model.jpg",
+ "from_shared": "general/nasa-laboratory-1.jpg",
+ "theme": "general",
+ "bytes": 67386
+ },
+ {
+ "file": "m1-mechanism.jpg",
+ "src": "/games/discrete-math/assets/book/m1-mechanism.jpg",
+ "from_shared": "Incandescent_light_bulb.jpg",
+ "theme": "general",
+ "bytes": 158835
+ },
+ {
+ "file": "m1-detail.jpg",
+ "src": "/games/discrete-math/assets/book/m1-detail.jpg",
+ "from_shared": "general/nasa-classroom-science-8.jpg",
+ "theme": "general",
+ "bytes": 124685
+ },
+ {
+ "file": "m1-transfer.webp",
+ "src": "/games/discrete-math/assets/book/m1-transfer.webp",
+ "from_shared": "physics/newton-cradle-1.webp",
+ "theme": "general",
+ "bytes": 171708
+ }
 ]

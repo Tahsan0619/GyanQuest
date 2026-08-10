@@ -1,8 +1,6 @@
 /**
  * Digital book - Cyber Shield Mission 1: Password Power
- * Theory: cognitive load, dual coding, multimedia learning, constructivism,
- * conceptual change, spiral scaffold, retrieval practice.
- * Photos: assets/book-shared computing theme (see assets/book/CREDITS-m1.json).
+ * Unique curriculum book (strong unique secrets). Not a template fill-in.
  */
 export const BOOK = {
   missionIndex: 0,
@@ -23,33 +21,26 @@ export const BOOK = {
     art: "/games/cyber-shield/assets/book/m1-cover.jpg",
   },
   glossary: [
-    { id: "password", term: "password" },
-    { id: "unique", term: "unique" },
-    { id: "length", term: "length" },
-    { id: "guess", term: "guess" },
-    { id: "secret", term: "secret" },
+    { id: "credential", term: "credential" },
+    { id: "passphrase", term: "passphrase" },
+    { id: "entropy", term: "entropy" },
+    { id: "phishing", term: "phishing" },
+    { id: "breach", term: "breach" },
     { id: "reuse", term: "reuse" },
-    { id: "login", term: "login" },
-    { id: "strength", term: "strength" },
+    { id: "manager", term: "password manager" },
   ],
   pages: [
     {
-      title: "Locks made of letters",
+      title: "Secrets that guard doors",
       layout: "text",
-      theory: ["constructivism", "dual-coding", "cognitive-load"],
       figures: [
         {
           place: "top",
           slides: [
             {
               src: "/games/cyber-shield/assets/book/m1-cover.jpg",
-              caption: "Figure 1. Accounts live on computers - your password is the first gate.",
-              alt: "Computer workstation",
-            },
-            {
-              src: "/games/cyber-shield/assets/book/m1-hook.jpg",
-              caption: "Even mission machines need careful access control.",
-              alt: "Computer systems used in a complex environment",
+              caption: "Figure 1. A login is a door. Your credential is the key - treat it like one.",
+              alt: "Secure login concept",
             },
           ],
         },
@@ -57,30 +48,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "A password is a secret you prove you know. Attackers do not need magic - they try common words, names, and short number runs.",
+          text: "A credential proves you are you. Short dictionary words are keys anyone can copy from a word list.",
         },
         {
           type: "p",
-          text: "Long unique secrets beat short easy ones. Length multiplies the guess space; uniqueness stops one leaked site from opening every other login.",
-        },
-        {
-          type: "p",
-          text: "School login, a game account, and family email are three doors. Reusing 1234 or your name is like one key for every lock in the house.",
+          text: "A passphrase is a longer secret made of several uncommon words - easier to remember, harder to guess.",
         },
       ],
     },
     {
-      title: "Why length hurts guessers",
+      title: "Length beats clever tricks",
       layout: "full-fig",
-      theory: ["multimedia-learning", "dual-coding"],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/cyber-shield/assets/book/m1-model.jpg",
-              caption: "Figure 2. Tiny chip, huge number of bit patterns - passwords work the same way with characters.",
-              alt: "Computer chip close-up",
+              src: "/games/cyber-shield/assets/book/m1-hook.jpg",
+              caption: "Figure 2. Extra characters raise entropy - the guess-space attackers must search.",
+              alt: "Password strength concept",
             },
           ],
         },
@@ -88,35 +74,29 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Each extra character multiplies how many secrets are possible. Short passwords fall to quick trials; longer passphrases make guessing expensive.",
+          text: "Entropy here means unpredictability. One extra random word can beat a short password stuffed with symbols.",
         },
         {
           type: "ul",
           items: [
-            "name + birth year -> tiny guess list",
-            "four random words or a long mixed string -> huge guess list",
-            "same secret on five sites -> one leak opens five doors",
+            "Longer unique secrets resist guessing",
+            "Reuse lets one breach open many accounts",
+            "A password manager stores unique secrets safely",
           ],
         },
       ],
     },
     {
-      title: "Unique beats clever",
+      title: "Tricks and traps",
       layout: "text",
-      theory: ["cognitive-load", "dual-coding"],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/cyber-shield/assets/book/m1-mechanism.jpg",
-              caption: "Figure 3. Boards and paths - separate circuits, separate risks.",
-              alt: "Circuit board with many paths",
-            },
-            {
-              src: "/games/cyber-shield/assets/book/m1-detail.jpg",
-              caption: "Friction against attack: make guessing slow and reuse impossible.",
-              alt: "Surface texture suggesting resistance",
+              src: "/games/cyber-shield/assets/book/m1-model.jpg",
+              caption: "Figure 3. Phishing pages fake a real login to steal your credential.",
+              alt: "Phishing awareness",
             },
           ],
         },
@@ -124,83 +104,40 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "A fancy short password that you reuse is weaker than a long unique phrase you never share across sites.",
+          text: "Phishing is fake trust - a message that pushes you to type secrets on a look-alike site.",
         },
         {
           type: "p",
-          text: "Think separate circuits: school, games, and email should not share the same secret current.",
+          text: "After a breach, leaked passwords get tested everywhere. That is why reuse is so dangerous.",
         },
       ],
     },
     {
-      title: "Order in the secret",
-      layout: "full-fig",
-      theory: ["multimedia-learning", "spiral-scaffold"],
-      figures: [
-        {
-          place: "full",
-          slides: [
-            {
-              src: "/games/cyber-shield/assets/book/m1-transfer.jpg",
-              caption: "Figure 4. Clear structure helps humans remember; random mush is hard for you and still short for attackers if it is tiny.",
-              alt: "Ordered crystal structure",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Memorable length beats forgettable chaos. A passphrase you can recall safely is stronger than a four-digit pin written on a sticky note.",
-        },
-      ],
-    },
-    {
-      title: "How Password Pro was trained",
+      title: "How the mission connects",
       layout: "text",
-      theory: ["spiral-scaffold", "cognitive-load"],
       blocks: [
         {
           type: "p",
-          text: "You met passwords, watched a strength dial, sorted strong vs weak, built a stronger secret, then named why length helps.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Dial: feel strength jump as length grows",
-            "Sort: weak patterns vs strong habits",
-            "Lab: craft a longer unique secret",
-            "Rule: long unique secrets beat short easy ones",
-          ],
-        },
-        {
-          type: "p",
-          text: "The game kept each idea small. The book gathers the security spine.",
+          text: "Meet weak secrets → build length → stop reuse → phishing lab → explain → rule → stretch → myth → fluency → mastery.",
         },
       ],
     },
     {
-      title: "Three-door practice",
+      title: "Secret lab",
       layout: "split",
-      theory: ["constructivism", "dual-coding", "retrieval-practice"],
       figures: [
         {
           place: "right",
           slides: [
             {
-              src: "/games/cyber-shield/assets/book/m1-cover.jpg",
-              caption: "School login - treat it as a real gate.",
-              alt: "Computer for school work",
-            },
-            {
               src: "/games/cyber-shield/assets/book/m1-hook.jpg",
-              caption: "Game account - do not recycle the school secret.",
-              alt: "Protected computer systems",
+              caption: "Compare short vs long secrets.",
+              alt: "Length comparison",
             },
             {
-              src: "/games/cyber-shield/assets/book/m1-mechanism.jpg",
-              caption: "Family email - a third unique secret.",
-              alt: "Circuit paths as separate channels",
+              src: "/games/cyber-shield/assets/book/m1-cover.jpg",
+              caption: "One credential per important door.",
+              alt: "Unique credentials",
             },
           ],
         },
@@ -208,53 +145,47 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Without writing the real secrets here, plan three different long passwords for school, games, and email.",
+          text: "Invent a four-word passphrase you would never post online. Do not use it for a real account - practice only.",
         },
         {
           type: "ul",
           items: [
-            "Which old habit is shortest and easiest to guess?",
-            "Where were you reusing one secret?",
-            "What length target will you keep?",
+            "Would a stranger guess it from your bio?",
+            "Is it reused anywhere in your story?",
+            "Would a password manager help you keep it unique?",
           ],
         },
       ],
     },
     {
-      title: "Password myths",
+      title: "Myths to bust",
       layout: "text",
-      theory: ["conceptual-change"],
       blocks: [
         {
           type: "p",
-          text: "Myth: Changing ! to 1 makes a short password safe. Better: length and uniqueness matter more than one symbol swap.",
+          text: "Myth: P@ssw0rd1 is strong because of symbols. Better: length and uniqueness beat tiny letter swaps.",
         },
         {
           type: "p",
-          text: "Myth: Sharing with friends is fine if they are nice. Better: a shared secret is no longer your secret.",
+          text: "Myth: Changing one digit each month is enough. Better: unique passphrases plus a manager beat ritual tweaks.",
         },
         {
           type: "p",
-          text: "Myth: Only hackers on movies care. Better: leaked lists of common passwords are tried automatically every day.",
-        },
-        {
-          type: "p",
-          text: "Red glossary terms such as password or unique can launch a tutor question.",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
         },
       ],
     },
     {
-      title: "Password Pro mastery",
+      title: "Mastery",
       layout: "text",
-      theory: ["retrieval-practice", "spiral-scaffold"],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/cyber-shield/assets/book/m1-cover.jpg",
-              caption: "Figure 5. Teach the gate rule with one clear picture.",
-              alt: "Computer as password gate anchor",
+              src: "/games/cyber-shield/assets/book/m1-model.jpg",
+              caption: "Figure 4. Teach password power as unique long secrets, not clever shortcuts.",
+              alt: "Password mastery",
             },
           ],
         },
@@ -262,14 +193,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Teach a friend: long unique secrets beat short easy ones; never reuse across school, games, and email; guessing loves short names and 1234.",
+          text: "Teach a friend in one minute: long unique passphrases; no reuse; watch phishing; managers help.",
         },
         {
           type: "ul",
           items: [
-            "Compare a 4-character guess list to a 16-character one in words",
-            "Name one reuse danger",
-            "Use the word unique correctly once",
+            "Define entropy in plain words",
+            "Explain why reuse fails after a breach",
+            "Use the word phishing correctly once",
           ],
         },
       ],

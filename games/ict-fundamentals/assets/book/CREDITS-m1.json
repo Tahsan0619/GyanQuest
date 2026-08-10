@@ -1,14 +1,14 @@
 [
-  {
-    "file": "m1-transfer_a.jpg",
-    "src": "/games/ict-fundamentals/assets/book/m1-transfer_a.jpg",
-    "path": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\ict-fundamentals\\assets\\book\\m1-transfer_a.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File%3ANokia-NGage-Motherboard.jpg",
-    "license": "Public domain",
-    "creator": "Evan-Amos",
-    "query": "Phone chip everyday",
-    "bytes": 292173,
-    "provider": "commons",
-    "cached": false
-  }
+ {
+ "file": "m1-transfer_a.jpg",
+ "src": "/games/ict-fundamentals/assets/book/m1-transfer_a.jpg",
+ "path": "C:\\Users\\Tahsan\\Downloads\\ImpactX\\games\\ict-fundamentals\\assets\\book\\m1-transfer_a.jpg",
+ "source": "https://commons.wikimedia.org/wiki/File%3ANokia-NGage-Motherboard.jpg",
+ "license": "Public domain",
+ "creator": "Evan-Amos",
+ "query": "Phone chip everyday",
+ "bytes": 292173,
+ "provider": "commons",
+ "cached": false
+ }
 ]

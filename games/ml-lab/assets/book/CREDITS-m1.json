@@ -1,44 +1,44 @@
 [
-  {
-    "file": "m1-cover.png",
-    "src": "/games/ml-lab/assets/book/m1-cover.png",
-    "from_shared": "Human_brain_NIH.png",
-    "theme": "ai_data",
-    "bytes": 138261
-  },
-  {
-    "file": "m1-hook.jpg",
-    "src": "/games/ml-lab/assets/book/m1-hook.jpg",
-    "from_shared": "anatomy/nasa-heart-1.jpg",
-    "theme": "ai_data",
-    "bytes": 20511
-  },
-  {
-    "file": "m1-model.jpg",
-    "src": "/games/ml-lab/assets/book/m1-model.jpg",
-    "from_shared": "anatomy/nasa-bone-2.jpg",
-    "theme": "ai_data",
-    "bytes": 141418
-  },
-  {
-    "file": "m1-mechanism.jpg",
-    "src": "/games/ml-lab/assets/book/m1-mechanism.jpg",
-    "from_shared": "anatomy/nasa-blood-3.jpg",
-    "theme": "ai_data",
-    "bytes": 153585
-  },
-  {
-    "file": "m1-detail.jpg",
-    "src": "/games/ml-lab/assets/book/m1-detail.jpg",
-    "from_shared": "space/nasa-solar-8.jpg",
-    "theme": "ai_data",
-    "bytes": 119810
-  },
-  {
-    "file": "m1-transfer.jpg",
-    "src": "/games/ml-lab/assets/book/m1-transfer.jpg",
-    "from_shared": "chemistry/nasa-water-3.jpg",
-    "theme": "ai_data",
-    "bytes": 216570
-  }
+ {
+ "file": "m1-cover.png",
+ "src": "/games/ml-lab/assets/book/m1-cover.png",
+ "from_shared": "Human_brain_NIH.png",
+ "theme": "ai_data",
+ "bytes": 138261
+ },
+ {
+ "file": "m1-hook.jpg",
+ "src": "/games/ml-lab/assets/book/m1-hook.jpg",
+ "from_shared": "anatomy/nasa-heart-1.jpg",
+ "theme": "ai_data",
+ "bytes": 20511
+ },
+ {
+ "file": "m1-model.jpg",
+ "src": "/games/ml-lab/assets/book/m1-model.jpg",
+ "from_shared": "anatomy/nasa-bone-2.jpg",
+ "theme": "ai_data",
+ "bytes": 141418
+ },
+ {
+ "file": "m1-mechanism.jpg",
+ "src": "/games/ml-lab/assets/book/m1-mechanism.jpg",
+ "from_shared": "anatomy/nasa-blood-3.jpg",
+ "theme": "ai_data",
+ "bytes": 153585
+ },
+ {
+ "file": "m1-detail.jpg",
+ "src": "/games/ml-lab/assets/book/m1-detail.jpg",
+ "from_shared": "space/nasa-solar-8.jpg",
+ "theme": "ai_data",
+ "bytes": 119810
+ },
+ {
+ "file": "m1-transfer.jpg",
+ "src": "/games/ml-lab/assets/book/m1-transfer.jpg",
+ "from_shared": "chemistry/nasa-water-3.jpg",
+ "theme": "ai_data",
+ "bytes": 216570
+ }
 ]

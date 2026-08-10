@@ -1,44 +1,44 @@
 [
-  {
-    "file": "m1-cover.jpg",
-    "src": "/games/calculus-analysis/assets/book/m1-cover.jpg",
-    "from_shared": "Abacus_6.jpg",
-    "theme": "math",
-    "bytes": 1570067
-  },
-  {
-    "file": "m1-hook.jpg",
-    "src": "/games/calculus-analysis/assets/book/m1-hook.jpg",
-    "from_shared": "math/nasa-graph-1.jpg",
-    "theme": "math",
-    "bytes": 43524
-  },
-  {
-    "file": "m1-model.jpg",
-    "src": "/games/calculus-analysis/assets/book/m1-model.jpg",
-    "from_shared": "math/nasa-geometry-2.jpg",
-    "theme": "math",
-    "bytes": 179113
-  },
-  {
-    "file": "m1-mechanism.jpg",
-    "src": "/games/calculus-analysis/assets/book/m1-mechanism.jpg",
-    "from_shared": "math/nasa-pattern-3.jpg",
-    "theme": "math",
-    "bytes": 37397
-  },
-  {
-    "file": "m1-detail.jpg",
-    "src": "/games/calculus-analysis/assets/book/m1-detail.jpg",
-    "from_shared": "math/nasa-measurement-7.jpg",
-    "theme": "math",
-    "bytes": 68529
-  },
-  {
-    "file": "m1-transfer.jpg",
-    "src": "/games/calculus-analysis/assets/book/m1-transfer.jpg",
-    "from_shared": "math/nasa-orbit-diagram-8.jpg",
-    "theme": "math",
-    "bytes": 87826
-  }
+ {
+ "file": "m1-cover.jpg",
+ "src": "/games/calculus-analysis/assets/book/m1-cover.jpg",
+ "from_shared": "Abacus_6.jpg",
+ "theme": "math",
+ "bytes": 1570067
+ },
+ {
+ "file": "m1-hook.jpg",
+ "src": "/games/calculus-analysis/assets/book/m1-hook.jpg",
+ "from_shared": "math/nasa-graph-1.jpg",
+ "theme": "math",
+ "bytes": 43524
+ },
+ {
+ "file": "m1-model.jpg",
+ "src": "/games/calculus-analysis/assets/book/m1-model.jpg",
+ "from_shared": "math/nasa-geometry-2.jpg",
+ "theme": "math",
+ "bytes": 179113
+ },
+ {
+ "file": "m1-mechanism.jpg",
+ "src": "/games/calculus-analysis/assets/book/m1-mechanism.jpg",
+ "from_shared": "math/nasa-pattern-3.jpg",
+ "theme": "math",
+ "bytes": 37397
+ },
+ {
+ "file": "m1-detail.jpg",
+ "src": "/games/calculus-analysis/assets/book/m1-detail.jpg",
+ "from_shared": "math/nasa-measurement-7.jpg",
+ "theme": "math",
+ "bytes": 68529
+ },
+ {
+ "file": "m1-transfer.jpg",
+ "src": "/games/calculus-analysis/assets/book/m1-transfer.jpg",
+ "from_shared": "math/nasa-orbit-diagram-8.jpg",
+ "theme": "math",
+ "bytes": 87826
+ }
 ]

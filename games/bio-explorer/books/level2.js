@@ -1,319 +1,273 @@
 /**
- * Digital book - bio-explorer mission 2: Cell City
- * Theory spine: cognitive load, dual coding, multimedia learning,
- * constructivism, conceptual change, spiral scaffold, retrieval practice.
- * Images: local assets under /games/bio-explorer/assets/book/ (verified downloads).
+ * Digital book - Bio Explorer Mission 2: Cell City
+ * Unique curriculum book (cell parts as a working city). Not a template fill-in.
+ * Photos: Wikimedia Commons (see assets/book/CREDITS-m2.json).
  */
 export const BOOK = {
-  "missionIndex": 1,
-  "title": "Cell City",
-  "subtitle": "cells",
-  "subject": "Bio Explorer / Cell City",
-  "theories": [
+  missionIndex: 1,
+  title: "Cell City",
+  subtitle: "tiny parts that keep life running",
+  subject: "Bio Explorer / Cell City",
+  theories: [
     "cognitive-load",
     "dual-coding",
     "multimedia-learning",
     "constructivism",
     "conceptual-change",
     "spiral-scaffold",
-    "retrieval-practice"
+    "retrieval-practice",
   ],
-  "cover": {
-    "title": "Cell City",
-    "art": "/games/bio-explorer/assets/book/m2-cover.jpg"
+  cover: {
+    title: "Cell City",
+    art: "/games/bio-explorer/assets/book/m2-cover.jpg",
   },
-  "glossary": [
-    {
-      "id": "cells",
-      "term": "cells"
-    },
-    {
-      "id": "cell",
-      "term": "cell"
-    },
-    {
-      "id": "city",
-      "term": "city"
-    },
-    {
-      "id": "living",
-      "term": "living"
-    },
-    {
-      "id": "things",
-      "term": "things"
-    },
-    {
-      "id": "made",
-      "term": "made"
-    },
-    {
-      "id": "tiny",
-      "term": "tiny"
-    },
-    {
-      "id": "rooms",
-      "term": "rooms"
-    }
+  glossary: [
+    { id: "organelle", term: "organelle" },
+    { id: "nucleus", term: "nucleus" },
+    { id: "membrane", term: "membrane" },
+    { id: "cytoplasm", term: "cytoplasm" },
+    { id: "mitochondria", term: "mitochondria" },
+    { id: "chloroplast", term: "chloroplast" },
+    { id: "microscope", term: "microscope" },
   ],
-  "pages": [
+  pages: [
     {
-      "title": "Why Cell City?",
-      "layout": "text",
-      "theory": [
-        "constructivism",
-        "dual-coding",
-        "cognitive-load"
-      ],
-      "figures": [
+      title: "A city too small to see",
+      layout: "text",
+      theory: ["constructivism", "dual-coding", "cognitive-load"],
+      figures: [
         {
-          "place": "top",
-          "slides": [
+          place: "top",
+          slides: [
             {
-              "src": "/games/bio-explorer/assets/book/m2-hook.jpg",
-              "caption": "Figure 1. A real-world door into Cell City.",
-              "alt": "Cell City"
+              src: "/games/bio-explorer/assets/book/m2-hook.jpg",
+              caption: "Figure 1. Onion skin under a microscope - real cells, packed like rooms in a wall.",
+              alt: "Onion epidermis cells under microscope",
             },
             {
-              "src": "/games/bio-explorer/assets/book/m2-cover.jpg",
-              "caption": "Same idea, another angle.",
-              "alt": "Cell City"
-            }
-          ]
-        }
+              src: "/games/bio-explorer/assets/book/m2-cover.jpg",
+              caption: "A labeled cell model helps you name parts you cannot see with bare eyes.",
+              alt: "Animal cell model",
+            },
+          ],
+        },
       ],
-      "blocks": [
+      blocks: [
         {
-          "type": "p",
-          "text": "Living things are made of tiny living rooms called cells - the basic units of life."
+          type: "p",
+          text: "Every plant and animal body is built from cells. One cell is a tiny room with jobs happening inside.",
         },
         {
-          "type": "p",
-          "text": "In the mission you practiced short steps. This book slows down: By the end of this mission, you'll be able to explain cells in your own words."
+          type: "p",
+          text: "We call the specialized parts organelles - like shops and offices inside a busy city.",
         },
         {
-          "type": "p",
-          "text": "Everyday hook: notice Skin cells."
-        }
-      ]
+          type: "p",
+          text: "Everyday hook: think of your school. The office, cafeteria, and walls each do a different job so the whole place works.",
+        },
+      ],
     },
     {
-      "title": "The big model",
-      "layout": "full-fig",
-      "theory": [
-        "multimedia-learning",
-        "dual-coding"
-      ],
-      "figures": [
+      title: "Control room and border",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "dual-coding"],
+      figures: [
         {
-          "place": "full",
-          "slides": [
+          place: "full",
+          slides: [
             {
-              "src": "/games/bio-explorer/assets/book/m2-model.jpg",
-              "caption": "Figure 2. Hold this picture of cells in your mind.",
-              "alt": "cells"
-            }
-          ]
-        }
-      ],
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Theme: cells."
-        },
-        {
-          "type": "p",
-          "text": "Point to the photo and say what stays the same vs what can change."
-        }
-      ]
-    },
-    {
-      "title": "What makes it change",
-      "layout": "text",
-      "theory": [
-        "cognitive-load",
-        "dual-coding"
-      ],
-      "figures": [
-        {
-          "place": "top",
-          "slides": [
-            {
-              "src": "/games/bio-explorer/assets/book/m2-mechanism.jpg",
-              "caption": "Figure 3. The process or force that drives the change.",
-              "alt": "Mechanism"
-            }
-          ]
-        }
-      ],
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Ask: what energy, force, or rule turns Skin cells into a new situation?"
-        },
-        {
-          "type": "p",
-          "text": "Compare with Mango leaf cells. Name one thing that stayed the same."
-        }
-      ]
-    },
-    {
-      "title": "Look closer",
-      "layout": "full-fig",
-      "theory": [
-        "multimedia-learning",
-        "spiral-scaffold"
-      ],
-      "figures": [
-        {
-          "place": "full",
-          "slides": [
-            {
-              "src": "/games/bio-explorer/assets/book/m2-mechanism.jpg",
-              "caption": "Figure 4. A closer structure or pattern underneath the everyday view.",
-              "alt": "Representation"
-            }
-          ]
-        }
-      ],
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Models are tools, not photographs of every detail. Use them to explain, then check against real life."
-        }
-      ]
-    },
-    {
-      "title": "How the 10 steps connect",
-      "layout": "text",
-      "theory": [
-        "spiral-scaffold",
-        "cognitive-load"
-      ],
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Meet \u2192 try \u2192 sort \u2192 lab \u2192 explain \u2192 rule \u2192 stretch \u2192 myth \u2192 fluency \u2192 mastery."
-        },
-        {
-          "type": "ul",
-          "items": [
-            "Meet Cell City",
-            "Zoom Lab",
-            "Sort: Cell Stories",
-            "Membrane Peek",
-            "Cell Jobs"
-          ]
-        },
-        {
-          "type": "p",
-          "text": "Each game step added one layer. The book gathers the full story."
-        }
-      ],
-      "figures": []
-    },
-    {
-      "title": "Transfer lab",
-      "layout": "split",
-      "theory": [
-        "constructivism",
-        "dual-coding",
-        "retrieval-practice"
-      ],
-      "figures": [
-        {
-          "place": "right",
-          "slides": [
-            {
-              "src": "/games/bio-explorer/assets/book/m2-cover.jpg",
-              "caption": "Try with Skin cells.",
-              "alt": "Skin cells"
+              src: "/games/bio-explorer/assets/book/m2-nucleus.jpg",
+              caption: "Figure 2. The nucleus is the control room - it holds the instructions for the cell.",
+              alt: "Cell nucleus microscopy",
             },
             {
-              "src": "/games/bio-explorer/assets/book/m2-hook.jpg",
-              "caption": "Compare with Mango leaf cells.",
-              "alt": "Mango leaf cells"
+              src: "/games/bio-explorer/assets/book/m2-membrane.jpg",
+              caption: "The membrane is the city border - it chooses what enters and leaves.",
+              alt: "Cell membrane diagram",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "ul",
+          items: [
+            "Nucleus: stores the plan (DNA instructions)",
+            "Membrane: thin border that controls traffic",
+            "Cytoplasm: the jelly-like space where work happens",
+          ],
+        },
+        {
+          type: "p",
+          text: "If the membrane fails, the city floods. If the nucleus is missing, nobody knows what to build next.",
+        },
+      ],
+    },
+    {
+      title: "Power plants inside",
+      layout: "text",
+      theory: ["cognitive-load", "dual-coding"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/bio-explorer/assets/book/m2-organelle.jpg",
+              caption: "Figure 3. Mitochondria release usable energy from food molecules - the cell's power stations.",
+              alt: "Mitochondria electron micrograph",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Mitochondria break down food fuel so the cell can move materials, repair itself, and grow.",
+        },
+        {
+          type: "p",
+          text: "Plant cells add another organelle: the chloroplast, which captures light to make sugar. Animal cells do not have that factory.",
+        },
+      ],
+    },
+    {
+      title: "Why models matter",
+      layout: "full-fig",
+      theory: ["multimedia-learning", "spiral-scaffold"],
+      figures: [
+        {
+          place: "full",
+          slides: [
+            {
+              src: "/games/bio-explorer/assets/book/m2-cover.jpg",
+              caption: "Figure 4. A classroom cell model is a map, not a photograph of every molecule.",
+              alt: "Classroom cell model",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Under a microscope you see outlines and some organelles. Colored models exaggerate size so you can learn the jobs faster.",
+        },
+        {
+          type: "p",
+          text: "In the mission, matching each organelle to a city job trained that map in your head.",
+        },
+      ],
+    },
+    {
+      title: "How the 10 steps connect",
+      layout: "text",
+      theory: ["spiral-scaffold", "cognitive-load"],
+      blocks: [
+        {
+          type: "p",
+          text: "Meet the city → tour parts → match jobs → lab view → explain → rule → stretch → myth → fluency → mastery.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Matching jobs stops you from memorizing names with no meaning",
+            "The microscope step proves cells are real, not cartoon only",
+            "The rule sentence links part → job → whole organism",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Tour lab",
+      layout: "split",
+      theory: ["constructivism", "dual-coding", "retrieval-practice"],
+      figures: [
+        {
+          place: "right",
+          slides: [
+            {
+              src: "/games/bio-explorer/assets/book/m2-nucleus.jpg",
+              caption: "Control room - nucleus.",
+              alt: "Nucleus",
             },
             {
-              "src": "/games/bio-explorer/assets/book/m2-model.jpg",
-              "caption": "Find one more example nearby.",
-              "alt": "Transfer"
-            }
-          ]
-        }
-      ],
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Use Skin cells as your lab. Drag/flip the photos if more than one appears."
-        },
-        {
-          "type": "ul",
-          "items": [
-            "What changed?",
-            "What stayed the same?",
-            "What rule explains it?"
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Myths to bust",
-      "layout": "text",
-      "theory": [
-        "conceptual-change"
-      ],
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Myth: Cell City is just a fancy word. Better: it names a rule you can test with examples."
-        },
-        {
-          "type": "p",
-          "text": "Myth: if I memorized a sentence, I understand. Better: I can show an example and a counter-example."
-        },
-        {
-          "type": "p",
-          "text": "Red words are glossary terms. Tap one to ask the tutor."
-        }
-      ],
-      "figures": []
-    },
-    {
-      "title": "Mastery",
-      "layout": "text",
-      "theory": [
-        "retrieval-practice",
-        "spiral-scaffold"
-      ],
-      "figures": [
-        {
-          "place": "top",
-          "slides": [
+              src: "/games/bio-explorer/assets/book/m2-organelle.jpg",
+              caption: "Power station - mitochondria.",
+              alt: "Mitochondria",
+            },
             {
-              "src": "/games/bio-explorer/assets/book/m2-cover.jpg",
-              "caption": "Figure 5. Teach Cell City using this picture as your anchor.",
-              "alt": "Cell City"
-            }
-          ]
-        }
+              src: "/games/bio-explorer/assets/book/m2-membrane.jpg",
+              caption: "City border - membrane.",
+              alt: "Membrane",
+            },
+          ],
+        },
       ],
-      "blocks": [
+      blocks: [
         {
-          "type": "p",
-          "text": "Teach a friend in one minute: what Cell City means, one example (Skin cells), and one myth to avoid."
+          type: "p",
+          text: "Point to each photo and say the organelle name plus one job. Then invent a new city metaphor of your own.",
         },
         {
-          "type": "ul",
-          "items": [
-            "Sketch the idea behind cells",
-            "Point to Skin cells in real life",
-            "Use one glossary word correctly"
-          ]
-        }
-      ]
-    }
-  ]
+          type: "ul",
+          items: [
+            "Which part is the border?",
+            "Which part holds the plan?",
+            "Which part makes usable energy?",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Myths to bust",
+      layout: "text",
+      theory: ["conceptual-change"],
+      blocks: [
+        {
+          type: "p",
+          text: "Myth: Only animals have cells. Better: plants, fungi, and many tiny organisms are also built from cells.",
+        },
+        {
+          type: "p",
+          text: "Myth: The nucleus is a tiny brain that thinks. Better: it stores instructions; thinking happens in networks of many cells.",
+        },
+        {
+          type: "p",
+          text: "Red words are glossary terms. Tap one to ask the tutor.",
+        },
+      ],
+    },
+    {
+      title: "Mastery",
+      layout: "text",
+      theory: ["retrieval-practice", "spiral-scaffold"],
+      figures: [
+        {
+          place: "top",
+          slides: [
+            {
+              src: "/games/bio-explorer/assets/book/m2-hook.jpg",
+              caption: "Figure 5. Teach from this microscope view: walls of cells, each with jobs inside.",
+              alt: "Onion cells teaching anchor",
+            },
+          ],
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Teach a friend in one minute: cells are living rooms; organelles do jobs; nucleus, membrane, and mitochondria are three you must know.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Sketch a cell and label three organelles",
+            "Give one plant-only organelle (chloroplast)",
+            "Use the word cytoplasm correctly once",
+          ],
+        },
+      ],
+    },
+  ],
 };
 
 export default BOOK;

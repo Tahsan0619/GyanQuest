@@ -1,14 +1,12 @@
 /**
- * Digital book - Mechanical Basics / Levers & Gears
- * Theory: cognitive load, dual coding, multimedia learning, constructivism,
- * conceptual change, spiral scaffold, retrieval practice.
- * Photos: local verified copies under /games/mechanical-basics/assets/book/ (see CREDITS-m1.json).
+ * Digital book - Mechanical Basics Mission 1: Simple Machines
+ * Unique curriculum book (lever, pulley, wheel, incline). Not a template fill-in.
  */
 export const BOOK = {
   missionIndex: 0,
-  title: "Levers & Gears",
-  subtitle: "simple machines",
-  subject: "Mechanical Basics / Levers & Gears",
+  title: "Simple Machines",
+  subtitle: "trade force and distance to get work done",
+  subject: "Mechanical Basics / Simple Machines",
   theories: [
     "cognitive-load",
     "dual-coding",
@@ -19,43 +17,35 @@ export const BOOK = {
     "retrieval-practice",
   ],
   cover: {
-    title: "Levers & Gears",
+    title: "Simple Machines",
     art: "/games/mechanical-basics/assets/book/m1-cover.jpg",
   },
   glossary: [
     { id: "lever", term: "lever" },
-    { id: "gear", term: "gear" },
     { id: "fulcrum", term: "fulcrum" },
-    { id: "effort", term: "effort" },
+    { id: "pulley", term: "pulley" },
+    { id: "inclined-plane", term: "inclined plane" },
+    { id: "wheel-axle", term: "wheel and axle" },
+    { id: "mechanical-advantage", term: "mechanical advantage" },
     { id: "load", term: "load" },
-    { id: "force", term: "force" },
-    { id: "torque", term: "torque" },
-    { id: "machine", term: "machine" },
-    { id: "advantage", term: "advantage" },
-    { id: "trade", term: "trade" },
   ],
   pages: [
     {
-      title: "Why Levers & Gears?",
+      title: "Machines that multiply effort",
       layout: "text",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "cognitive-load",
-      ],
       figures: [
         {
           place: "top",
           slides: [
-            {
-              src: "/games/mechanical-basics/assets/book/m1-hook.jpg",
-              caption: "Figure 1. Motion you can feel - machines redirect it.",
-              alt: "Skateboard motion",
-            },
             {
               src: "/games/mechanical-basics/assets/book/m1-cover.jpg",
-              caption: "Gears mesh to trade speed and force.",
-              alt: "Mechanical gears",
+              caption: "Figure 1. Gears and simple machines change how force is applied - they do not erase work.",
+              alt: "Gear mechanism",
+            },
+            {
+              src: "/games/mechanical-basics/assets/book/m1-lever.jpg",
+              caption: "A playground seesaw is a lever with a fulcrum in the middle.",
+              alt: "Seesaw lever",
             },
           ],
         },
@@ -63,33 +53,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Levers and gears make hard jobs easier by trading force, distance, and turn.",
+          text: "A load is what you want to move. Simple machines help you move it by trading larger distance for smaller force - or the reverse.",
         },
         {
           type: "p",
-          text: "Seesaws, bottle openers, and bike gears are everyday simple machines - not only factory toys.",
-        },
-        {
-          type: "p",
-          text: "Everyday hook: a bottle opener is a lever that multiplies your hand force at the cap.",
+          text: "Mechanical advantage is how much the machine multiplies your effort force (ideally, ignoring friction).",
         },
       ],
     },
     {
-      title: "Lever trade",
+      title: "Levers and fulcrums",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/mechanical-basics/assets/book/m1-model.jpg",
-              caption: "Figure 2. Gear teeth - another trade of turn and force.",
-              alt: "Gear close-up",
+              src: "/games/mechanical-basics/assets/book/m1-lever.jpg",
+              caption: "Figure 2. Move the fulcrum and the same lever feels easier or harder.",
+              alt: "Lever and fulcrum",
             },
           ],
         },
@@ -97,38 +79,26 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "A lever pivots on a fulcrum. Move the fulcrum and the push you need changes.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Long effort arm can mean easier lift",
-            "Fulcrum place matters",
-            "Levers do not create magic infinite force",
-          ],
+          text: "A lever is a rigid bar that turns on a fulcrum. Crowbars, scissors, and bottle openers are lever cousins.",
         },
       ],
     },
     {
-      title: "Gear dial",
+      title: "Pulleys and ramps",
       layout: "text",
-      theory: [
-        "cognitive-load",
-        "dual-coding",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/mechanical-basics/assets/book/m1-mechanism.webp",
-              caption: "Figure 3. Newton cradle shows force transfer along a linked path.",
-              alt: "Newton cradle",
+              src: "/games/mechanical-basics/assets/book/m1-pulley.jpg",
+              caption: "Figure 3. A pulley changes force direction - and combined pulleys can share the load.",
+              alt: "Pulley system",
             },
             {
-              src: "/games/mechanical-basics/assets/book/m1-lab.webp",
-              caption: "Pushing a cart - feel effort vs distance.",
-              alt: "Pushing cart",
+              src: "/games/mechanical-basics/assets/book/m1-inclined.jpg",
+              caption: "An inclined plane spreads lifting over a longer path.",
+              alt: "Ramp inclined plane",
             },
           ],
         },
@@ -136,29 +106,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "In the lab you dialed mechanical advantage until the job felt easier.",
+          text: "Ramps are inclined planes. You push a longer distance so each step of force can be smaller.",
         },
         {
           type: "p",
-          text: "Gears change speed and turn direction. Bigger gear does not mean infinite force - pairs trade together.",
+          text: "A wheel and axle lets a small force at the rim create useful turning at the center - think steering wheels and doorknobs.",
         },
       ],
     },
     {
-      title: "Simple machines around you",
+      title: "Work is not free",
       layout: "full-fig",
-      theory: [
-        "multimedia-learning",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/mechanical-basics/assets/book/m1-mastery.jpg",
-              caption: "Figure 4. Mechanical assemblies - trades in metal.",
-              alt: "Mechanical assembly",
+              src: "/games/mechanical-basics/assets/book/m1-wheel.jpg",
+              caption: "Figure 4. Wheels reduce grinding friction so more of your effort moves the load forward.",
+              alt: "Wheel and axle",
             },
           ],
         },
@@ -166,62 +132,49 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Seesaws, crowbars, scissors, and bike gear clusters are lever/gear cousins.",
-        },
-        {
-          type: "p",
-          text: "Name the fulcrum, effort, and load when you can.",
+          text: "Machines redistribute effort. Friction still steals some energy as heat - real life is never perfect.",
         },
       ],
     },
     {
-      title: "How the 10 steps connect",
+      title: "How the mission connects",
       layout: "text",
-      theory: [
-        "spiral-scaffold",
-        "cognitive-load",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Meet levers -> dial advantage -> sort machine parts -> stronger lab -> why fulcrums -> name the trade rule -> stretch bikes -> myths -> fluency -> mastery.",
+          text: "Meet machines → place fulcrums → lift with pulley/ramp → lab tradeoffs → explain → rule → stretch → myth → fluency → mastery.",
         },
         {
           type: "ul",
           items: [
-            "Sorting names fulcrum vs gear roles",
-            "Labs show force/distance trades",
-            "Rule: levers and gears trade force, distance, and turn",
+            "Moving a fulcrum shows mechanical advantage changing",
+            "Ramp labs make the distance trade obvious",
+            "The rule sentence is 'trade force against distance'",
           ],
         },
       ],
     },
     {
-      title: "Street lab: bottle opener",
+      title: "Yard lab",
       layout: "split",
-      theory: [
-        "constructivism",
-        "dual-coding",
-        "retrieval-practice",
-      ],
       figures: [
         {
           place: "right",
           slides: [
             {
-              src: "/games/mechanical-basics/assets/book/m1-hook.jpg",
-              caption: "Everyday motion.",
-              alt: "Skateboard",
+              src: "/games/mechanical-basics/assets/book/m1-lever.jpg",
+              caption: "Find a lever at home.",
+              alt: "Lever",
             },
             {
-              src: "/games/mechanical-basics/assets/book/m1-mechanism.webp",
-              caption: "Transfer chain.",
-              alt: "Cradle",
+              src: "/games/mechanical-basics/assets/book/m1-inclined.jpg",
+              caption: "Spot an inclined plane.",
+              alt: "Ramp",
             },
             {
-              src: "/games/mechanical-basics/assets/book/m1-cover.jpg",
-              caption: "Gear trade.",
-              alt: "Gears",
+              src: "/games/mechanical-basics/assets/book/m1-pulley.jpg",
+              caption: "Sketch a pulley lift.",
+              alt: "Pulley",
             },
           ],
         },
@@ -229,14 +182,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Use a safe bottle opener or a seesaw photo. Point to fulcrum, effort, and load.",
+          text: "Name three tools around you and label each as lever, pulley, wheel and axle, or inclined plane.",
         },
         {
           type: "ul",
           items: [
-            "Predict what happens if the fulcrum moves",
-            "Find one gear on a bicycle",
-            "Flip carousel: skate motion vs cradle transfer",
+            "Where is the fulcrum?",
+            "What is the load?",
+            "Did you gain mechanical advantage?",
           ],
         },
       ],
@@ -244,21 +197,14 @@ export const BOOK = {
     {
       title: "Myths to bust",
       layout: "text",
-      theory: [
-        "conceptual-change",
-      ],
       blocks: [
         {
           type: "p",
-          text: "Myth: levers only make things heavier. Better: levers trade distance for force - they help lift.",
+          text: "Myth: Machines create energy. Better: they rearrange force and distance; work still costs effort.",
         },
         {
           type: "p",
-          text: "Myth: fulcrum position does not matter. Better: fulcrum place changes how hard you push.",
-        },
-        {
-          type: "p",
-          text: "Myth: bigger gear always means infinite force. Better: gear pairs trade speed and force together.",
+          text: "Myth: A longer ramp is cheating. Better: you pay with distance to reduce force.",
         },
         {
           type: "p",
@@ -269,18 +215,14 @@ export const BOOK = {
     {
       title: "Mastery",
       layout: "text",
-      theory: [
-        "retrieval-practice",
-        "spiral-scaffold",
-      ],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/mechanical-basics/assets/book/m1-mastery.jpg",
-              caption: "Figure 5. Mechanical trade - your lever/gear goal.",
-              alt: "Mechanical anchor",
+              src: "/games/mechanical-basics/assets/book/m1-cover.jpg",
+              caption: "Figure 5. Teach simple machines as honest force-distance trades.",
+              alt: "Simple machines mastery",
             },
           ],
         },
@@ -288,14 +230,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Teach a friend: fulcrum + effort + load; gears trade speed and force.",
+          text: "Teach a friend in one minute: levers need a fulcrum; ramps and pulleys help lift; mechanical advantage is the trade.",
         },
         {
           type: "ul",
           items: [
-            "Sketch a lever and label three parts",
-            "Explain one bike gear change",
-            "Use the word fulcrum correctly once",
+            "Sketch a lever with load and fulcrum",
+            "Give one inclined plane example",
+            "Use the word pulley correctly once",
           ],
         },
       ],

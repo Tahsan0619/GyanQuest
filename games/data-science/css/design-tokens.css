@@ -3,66 +3,66 @@
  * Source: stitch_gyanquest_design_system / DESIGN.md
  */
 :root {
-  /* Surfaces */
-  --gq-bg: #101413;
-  --gq-surface: #101413;
-  --gq-surface-dim: #101413;
-  --gq-surface-bright: #363a39;
-  --gq-surface-lowest: #0b0f0e;
-  --gq-surface-low: #181c1b;
-  --gq-surface-container: #1c201f;
-  --gq-surface-high: #272b2a;
-  --gq-surface-highest: #313635;
-  --gq-surface-variant: #313635;
+ /* Surfaces */
+ --gq-bg: #101413;
+ --gq-surface: #101413;
+ --gq-surface-dim: #101413;
+ --gq-surface-bright: #363a39;
+ --gq-surface-lowest: #0b0f0e;
+ --gq-surface-low: #181c1b;
+ --gq-surface-container: #1c201f;
+ --gq-surface-high: #272b2a;
+ --gq-surface-highest: #313635;
+ --gq-surface-variant: #313635;
 
-  /* Text */
-  --gq-text: #e0e3e1;
-  --gq-text-muted: #bdcac0;
-  --gq-outline: #87948b;
-  --gq-outline-variant: #3e4942;
+ /* Text */
+ --gq-text: #e0e3e1;
+ --gq-text-muted: #bdcac0;
+ --gq-outline: #87948b;
+ --gq-outline-variant: #3e4942;
 
-  /* Brand */
-  --gq-primary: #71daa7;
-  --gq-on-primary: #003823;
-  --gq-primary-container: #35a373;
-  --gq-on-primary-container: #00311e;
-  --gq-primary-fixed: #8ef7c1;
+ /* Brand */
+ --gq-primary: #71daa7;
+ --gq-on-primary: #003823;
+ --gq-primary-container: #35a373;
+ --gq-on-primary-container: #00311e;
+ --gq-primary-fixed: #8ef7c1;
 
-  --gq-secondary: #f8bd45;
-  --gq-on-secondary: #412d00;
-  --gq-secondary-container: #bc8709;
-  --gq-secondary-fixed: #ffdea7;
+ --gq-secondary: #f8bd45;
+ --gq-on-secondary: #412d00;
+ --gq-secondary-container: #bc8709;
+ --gq-secondary-fixed: #ffdea7;
 
-  --gq-tertiary: #b5c9d8;
-  --gq-error: #ffb4ab;
-  --gq-on-error: #690005;
-  --gq-error-container: #93000a;
+ --gq-tertiary: #b5c9d8;
+ --gq-error: #ffb4ab;
+ --gq-on-error: #690005;
+ --gq-error-container: #93000a;
 
-  /* Compat aliases used by existing shell CSS */
-  --physics-blue: var(--gq-accent, var(--gq-primary));
-  --bg-deep: var(--gq-bg);
-  --bg-panel: var(--gq-surface-container);
-  --border: var(--gq-outline-variant);
-  --text: var(--gq-text);
-  --muted: var(--gq-text-muted);
-  --accent: var(--gq-accent, var(--gq-primary));
-  --warn: var(--gq-secondary);
-  --danger: var(--gq-error);
-  --success: var(--gq-primary);
-  --font: "Sora", system-ui, sans-serif;
-  --font-display: "Syne", system-ui, sans-serif;
-  --font-bn: "Noto Sans Bengali", "Sora", system-ui, sans-serif;
-  --radius: 0.5rem;
-  --radius-sm: 0.25rem;
-  --radius-lg: 0.75rem;
+ /* Compat aliases used by existing shell CSS */
+ --physics-blue: var(--gq-accent, var(--gq-primary));
+ --bg-deep: var(--gq-bg);
+ --bg-panel: var(--gq-surface-container);
+ --border: var(--gq-outline-variant);
+ --text: var(--gq-text);
+ --muted: var(--gq-text-muted);
+ --accent: var(--gq-accent, var(--gq-primary));
+ --warn: var(--gq-secondary);
+ --danger: var(--gq-error);
+ --success: var(--gq-primary);
+ --font: "Sora", system-ui, sans-serif;
+ --font-display: "Syne", system-ui, sans-serif;
+ --font-bn: "Noto Sans Bengali", "Sora", system-ui, sans-serif;
+ --radius: 0.5rem;
+ --radius-sm: 0.25rem;
+ --radius-lg: 0.75rem;
 
-  /* Effects */
-  --gq-glow-primary: 0 0 15px rgba(113, 218, 167, 0.3);
-  --gq-glow-secondary: 0 0 15px rgba(248, 189, 69, 0.3);
-  --gq-wet-asphalt: linear-gradient(
-    180deg,
-    rgba(49, 54, 53, 0.4) 0%,
-    rgba(16, 20, 19, 0.95) 100%
-  );
-  --gq-border-glow: 1px solid rgba(113, 218, 167, 0.15);
+ /* Effects */
+ --gq-glow-primary: 0 0 15px rgba(113, 218, 167, 0.3);
+ --gq-glow-secondary: 0 0 15px rgba(248, 189, 69, 0.3);
+ --gq-wet-asphalt: linear-gradient(
+ 180deg,
+ rgba(49, 54, 53, 0.4) 0%,
+ rgba(16, 20, 19, 0.95) 100%
+ );
+ --gq-border-glow: 1px solid rgba(113, 218, 167, 0.15);
 }

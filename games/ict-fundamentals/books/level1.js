@@ -1,14 +1,12 @@
 /**
- * Digital book - ICT Fundamentals Mission 1: Computer Bits
- * Theory: cognitive load, dual coding, multimedia learning, constructivism,
- * conceptual change, spiral scaffold, retrieval practice.
- * Photos: chip, computer, and board JPGs under assets/book/.
+ * Digital book - ICT Fundamentals Mission 1: Computer Basics
+ * Unique curriculum book (input-process-output-storage). Not a template fill-in.
  */
 export const BOOK = {
   missionIndex: 0,
-  title: "Computer Bits",
-  subtitle: "CPU, RAM, and storage",
-  subject: "ICT Fundamentals / Computer Bits",
+  title: "Computer Basics",
+  subtitle: "the four jobs every computer repeats",
+  subject: "ICT Fundamentals / Computer Basics",
   theories: [
     "cognitive-load",
     "dual-coding",
@@ -19,37 +17,35 @@ export const BOOK = {
     "retrieval-practice",
   ],
   cover: {
-    title: "Computer Bits",
+    title: "Computer Basics",
     art: "/games/ict-fundamentals/assets/book/m1-cover.jpg",
   },
   glossary: [
-    { id: "cpu", term: "CPU" },
-    { id: "ram", term: "RAM" },
+    { id: "input", term: "input" },
+    { id: "process", term: "process" },
+    { id: "output", term: "output" },
     { id: "storage", term: "storage" },
-    { id: "processor", term: "processor" },
-    { id: "memory", term: "memory" },
-    { id: "file", term: "file" },
-    { id: "power-off", term: "power off" },
-    { id: "chip", term: "chip" },
+    { id: "hardware", term: "hardware" },
+    { id: "software", term: "software" },
+    { id: "cpu", term: "CPU" },
   ],
   pages: [
     {
-      title: "Phone chip, laptop upgrades, saved homework",
+      title: "A machine with a loop",
       layout: "text",
-      theory: ["constructivism", "dual-coding", "cognitive-load"],
       figures: [
         {
           place: "top",
           slides: [
             {
               src: "/games/ict-fundamentals/assets/book/m1-hook.jpg",
-              caption: "Figure 1. Inside a computer, different parts keep different jobs.",
-              alt: "Computer hardware",
+              caption: "Figure 1. Keyboard and mouse are classic input tools - they send signals in.",
+              alt: "Keyboard and mouse on a desk",
             },
             {
               src: "/games/ict-fundamentals/assets/book/m1-cover.jpg",
-              caption: "Chips handle thinking work - but they need short-term and long-term helpers.",
-              alt: "Computer chip",
+              caption: "Inside the case, hardware parts carry out the loop again and again.",
+              alt: "Computer hardware",
             },
           ],
         },
@@ -57,30 +53,29 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "A phone has a chip that thinks. A laptop upgrade might add RAM so more apps stay open. Saving a school file puts it in storage so it survives power off.",
+          text: "Every useful computer task follows a loop: input → process → output, with storage keeping work for later.",
         },
         {
           type: "p",
-          text: "CPU thinks (processes). RAM holds open work. Storage keeps files after you shut down.",
+          text: "Hardware is the physical stuff you can touch. Software is the instructions that tell hardware what to do.",
         },
         {
           type: "p",
-          text: "Earn Bit Scout by naming which part does which job on a device you use.",
+          text: "Everyday hook: typing a chat message - fingers input, the phone processes, the screen shows output, the app stores the chat.",
         },
       ],
     },
     {
-      title: "Three parts, three jobs",
+      title: "Input and process",
       layout: "full-fig",
-      theory: ["multimedia-learning", "dual-coding"],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/ict-fundamentals/assets/book/m1-model.jpg",
-              caption: "Figure 2. Model: dense circuitry is where processing lives - still not the whole story.",
-              alt: "Integrated circuit close-up",
+              src: "/games/ict-fundamentals/assets/book/m1-process.jpg",
+              caption: "Figure 2. The CPU is the main process chip - it follows instructions at high speed.",
+              alt: "CPU processor chip",
             },
           ],
         },
@@ -89,34 +84,33 @@ export const BOOK = {
         {
           type: "ul",
           items: [
-            "CPU - the processor that runs instructions",
-            "RAM - fast working memory for open apps",
-            "Storage - longer-term place for files and programs",
+            "Input devices: keyboard, mouse, mic, camera, touchscreen",
+            "Process: CPU and programs transform data",
+            "Without clear input, process has nothing useful to do",
           ],
         },
         {
           type: "p",
-          text: "Busy PC labs in the mission fill RAM on purpose so you feel why three parts matter.",
+          text: "The CPU does not 'know ideas'. It follows software steps on data that input delivered.",
         },
       ],
     },
     {
-      title: "Why RAM is not storage",
+      title: "Output and storage",
       layout: "text",
-      theory: ["cognitive-load", "dual-coding"],
       figures: [
         {
           place: "top",
           slides: [
             {
-              src: "/games/ict-fundamentals/assets/book/m1-board.jpg",
-              caption: "Figure 3. Boards host CPU and memory chips with different roles.",
-              alt: "Circuit board",
+              src: "/games/ict-fundamentals/assets/book/m1-output.jpg",
+              caption: "Figure 3. A monitor is output - it shows results humans can read.",
+              alt: "Computer monitor",
             },
             {
-              src: "/games/ict-fundamentals/assets/book/m1-signal.jpg",
-              caption: "Saved work must survive when power and signals stop.",
-              alt: "Satellite communication dish",
+              src: "/games/ict-fundamentals/assets/book/m1-storage.jpg",
+              caption: "Drives and chips provide storage so work survives after you close a window.",
+              alt: "Storage drive",
             },
           ],
         },
@@ -124,26 +118,25 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Close a document without saving and RAM forgets it after power off. Storage is what keeps the file for tomorrow.",
+          text: "Output can be screen, speaker, printer, or even a motor in a robot. It is the computer talking back to the world.",
         },
         {
           type: "p",
-          text: "If RAM fills up, the computer feels slow even when storage still has free space - different jobs.",
+          text: "Storage holds files and programs. Fast short-term memory and longer disk storage play different roles, but both keep data.",
         },
       ],
     },
     {
-      title: "Labels on a team diagram",
+      title: "Trace one task",
       layout: "full-fig",
-      theory: ["multimedia-learning", "spiral-scaffold"],
       figures: [
         {
           place: "full",
           slides: [
             {
-              src: "/games/ict-fundamentals/assets/book/m1-cover.jpg",
-              caption: "Figure 4. Representation: chip photo stands for the CPU seat on your mental map.",
-              alt: "Chip as CPU marker",
+              src: "/games/ict-fundamentals/assets/book/m1-input.jpg",
+              caption: "Figure 4. Start any task at input, then name process, output, and storage.",
+              alt: "Input devices",
             },
           ],
         },
@@ -151,51 +144,49 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Game icons are simplified. Real motherboards pack CPU, RAM sticks, and drives - same three-job story.",
+          text: "Example: open a saved drawing. Storage loads the file, software + CPU process edits, the screen outputs pixels, save writes storage again.",
         },
       ],
     },
     {
-      title: "How the 10 steps connect",
+      title: "How the mission connects",
       layout: "text",
-      theory: ["spiral-scaffold", "cognitive-load"],
       blocks: [
         {
           type: "p",
-          text: "Meet the inside team -> busy PC lab -> sort the jobs -> RAM fill lab -> why three parts -> name the bits rule -> stretch to devices -> myth bust -> fluency -> Bit Scout mastery.",
+          text: "Meet parts → sort IPOS → connect cables/ideas → lab task → explain → rule → stretch → myth → fluency → mastery.",
         },
         {
           type: "ul",
           items: [
-            "Sorting keeps CPU, RAM, and storage from blending",
-            "RAM fill lab shows open-work limits",
-            "The rule sentence: CPU thinks, RAM holds open work, storage keeps files",
+            "Sorting devices into IPOS builds the mental model",
+            "Tracing a real task stops memorizing labels only",
+            "The rule sentence is the four-job loop",
           ],
         },
       ],
     },
     {
-      title: "Device transfer",
+      title: "Desk lab",
       layout: "split",
-      theory: ["constructivism", "dual-coding", "retrieval-practice"],
       figures: [
         {
           place: "right",
           slides: [
             {
               src: "/games/ict-fundamentals/assets/book/m1-hook.jpg",
-              caption: "Laptop or PC - find the three jobs in your own words.",
-              alt: "Computer",
+              caption: "Find two input devices.",
+              alt: "Input",
             },
             {
-              src: "/games/ict-fundamentals/assets/book/m1-cover.jpg",
-              caption: "Phone chip - still has CPU, RAM, storage.",
-              alt: "Chip",
+              src: "/games/ict-fundamentals/assets/book/m1-output.jpg",
+              caption: "Name one output device.",
+              alt: "Output",
             },
             {
-              src: "/games/ict-fundamentals/assets/book/m1-signal.jpg",
-              caption: "Cloud saves are still storage somewhere.",
-              alt: "Communication link",
+              src: "/games/ict-fundamentals/assets/book/m1-storage.jpg",
+              caption: "Point to where files live.",
+              alt: "Storage",
             },
           ],
         },
@@ -203,14 +194,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Open two apps, then save a file. Say: CPU ran them, RAM held them open, storage kept the save.",
+          text: "Pick a phone or PC task. Write four short labels: input, process, output, storage. No empty boxes allowed.",
         },
         {
           type: "ul",
           items: [
-            "What disappears if power cuts before save?",
-            "What stays after reboot?",
-            "Drag the photos to flip examples",
+            "Which part is hardware?",
+            "Which part is software?",
+            "Where does the CPU sit in your story?",
           ],
         },
       ],
@@ -218,15 +209,14 @@ export const BOOK = {
     {
       title: "Myths to bust",
       layout: "text",
-      theory: ["conceptual-change"],
       blocks: [
         {
           type: "p",
-          text: "Myth: More storage always makes a slow PC fast. Better: speed often needs CPU and enough RAM; storage mainly holds files.",
+          text: "Myth: The screen is the computer. Better: the screen is mostly output; process happens in chips inside.",
         },
         {
           type: "p",
-          text: "Myth: RAM and storage are the same memory. Better: RAM is short-term working space; storage keeps files after power off.",
+          text: "Myth: Storage and memory are the same word game. Better: both keep data, but they are different hardware jobs.",
         },
         {
           type: "p",
@@ -235,17 +225,16 @@ export const BOOK = {
       ],
     },
     {
-      title: "Bit Scout mastery",
+      title: "Mastery",
       layout: "text",
-      theory: ["retrieval-practice", "spiral-scaffold"],
       figures: [
         {
           place: "top",
           slides: [
             {
               src: "/games/ict-fundamentals/assets/book/m1-cover.jpg",
-              caption: "Figure 5. Teaching anchor: think, hold open, keep saved.",
-              alt: "Chip mastery anchor",
+              caption: "Figure 5. Teach the IPOS loop from this hardware view.",
+              alt: "Computer basics anchor",
             },
           ],
         },
@@ -253,14 +242,14 @@ export const BOOK = {
       blocks: [
         {
           type: "p",
-          text: "Teach a friend in one minute: CPU processes, RAM holds open work, storage keeps files after shutdown.",
+          text: "Teach a friend in one minute: computers loop input-process-output; storage keeps work; hardware runs software.",
         },
         {
           type: "ul",
           items: [
-            "Match three jobs to three parts",
-            "Explain one save vs one open-tab example",
-            "Use RAM and storage correctly once each",
+            "Name one device for each of the four jobs",
+            "Separate hardware from software once",
+            "Use the word CPU correctly once",
           ],
         },
       ],
