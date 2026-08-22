@@ -40,11 +40,11 @@ const COPY = {
  visionLead:
  "From village classrooms to city prep centers: quality labs, local language, and measurable progress - without expensive hardware or foreign-only content.",
     visionCta: "Start with Force Fighter",
-    playgroundTag: "Under development",
-    playgroundTitle: "3D Playground",
+    playgroundTag: "Open now",
+    playgroundTitle: "3D Specimen Lab",
     playgroundNote:
-      "A free play physics lab we are building from scratch. Spawn cars, crates and rocks, drag to push them, then switch the ice lane and friction to see what changes.",
-    playgroundCta: "Open the 3D Playground",
+      "Inspect real Sketchfab models. Numbered pins mark each part. Tap one to zoom a little and read what it is. Place pins yourself if a label sits off.",
+    playgroundCta: "Open the 3D Lab",
     footer: "GyanQuest - Learn. Level Up. Lead.",
  tracks: {
  core: "Core sciences",
@@ -146,11 +146,11 @@ const COPY = {
  visionLead:
  "গ্রামের ক্লাসরুম থেকে শহরের কোচিং - মানসম্মত ল্যাব, স্থানীয় ভাষা, অগ্রগতি মাপা - ব্যয়বহুল হার্ডওয়্যার ছাড়াই।",
     visionCta: "Force Fighter দিয়ে শুরু করুন",
-    playgroundTag: "উন্নয়নাধীন",
-    playgroundTitle: "৩ডি প্লেগ্রাউন্ড",
+    playgroundTag: "এখন খুলুন",
+    playgroundTitle: "৩ডি নমুনা ল্যাব",
     playgroundNote:
-      "নিজেদের হাতে বানানো ফ্রি-প্লে ফিজিক্স ল্যাব। গাড়ি, বাক্স ও পাথর আনুন, টেনে ধাক্কা দিন, তারপর বরফ ও ঘর্ষণ বদলে দেখুন কী হয়।",
-    playgroundCta: "৩ডি প্লেগ্রাউন্ড খুলুন",
+      "Sketchfab মডেল ঘুরিয়ে দেখুন। নম্বর দিয়ে অংশ চিহ্নিত। চাপলে একটু জুম হয়, আর কী সেটা পড়ে নিন। লেবেল সরাতে পিন নিজে বসাতে পারেন।",
+    playgroundCta: "৩ডি ল্যাব খুলুন",
     footer: "GyanQuest - শিখো। লেভেল আপ করো। নেতৃত্ব দাও।",
  tracks: {
  core: "মূল বিজ্ঞান",

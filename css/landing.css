@@ -528,9 +528,9 @@ body.gq-landing.locale-bn {
   margin: 2.25rem auto 0;
   max-width: 44rem;
   padding: 1.5rem 1.25rem;
-  border: 1px dashed rgba(248, 189, 69, 0.4);
+  border: 1px solid rgba(113, 218, 167, 0.35);
   border-radius: var(--gq-radius, 0.5rem);
-  background: rgba(248, 189, 69, 0.05);
+  background: rgba(113, 218, 167, 0.06);
 }
 
 .gq-playground__tag {
@@ -538,9 +538,9 @@ body.gq-landing.locale-bn {
   margin-bottom: 0.6rem;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
-  border: 1px solid rgba(248, 189, 69, 0.45);
-  background: rgba(248, 189, 69, 0.12);
-  color: #f8bd45;
+  border: 1px solid rgba(113, 218, 167, 0.45);
+  background: rgba(113, 218, 167, 0.12);
+  color: #71daa7;
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.08em;

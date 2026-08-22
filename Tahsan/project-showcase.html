@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GyanQuest Project Showcase</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 1536px; height: 1024px; overflow: hidden;
+      background: #071c35;
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      color: #102a43;
+    }
+    .poster {
+      width: 1536px; height: 1024px;
+      background: #edf3f6;
+      display: grid;
+      grid-template-rows: 78px 62px 1fr 118px 28px;
+      gap: 7px;
+      padding: 10px 12px 8px;
+    }
+    header {
+      background: #071c35; color: #fff; border-radius: 8px;
+      display: grid; grid-template-columns: 1fr auto auto;
+      align-items: center; gap: 16px; padding: 8px 16px 8px 18px;
+    }
+    .brand { min-width: 0; }
+    .kicker { color: #63ded3; font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+    h1 { font-size: 30px; line-height: .95; letter-spacing: -.04em; font-weight: 800; }
+    h1 span { color: #63ded3; font-size: 13px; letter-spacing: .08em; margin-left: 10px; font-weight: 800; vertical-align: 8px; }
+    .sub { margin-top: 3px; color: #d7e6f1; font-size: 11px; }
+    .team { text-align: right; font-size: 11px; color: #c5d8e6; line-height: 1.35; }
+    .team b { display: block; color: #fff; font-size: 12px; }
+    .lead { align-self: stretch; display: grid; place-items: center; padding: 0 12px; border-left: 1px solid #1c3d5c; color: #63ded3; font-size: 12px; font-weight: 800; text-align: center; line-height: 1.2; }
+
+    .metrics { display: grid; grid-template-columns: repeat(6, 1fr); gap: 7px; }
+    .metric {
+      background: #fff; border: 1px solid #c9d8e2; border-radius: 7px;
+      display: flex; align-items: center; gap: 8px; padding: 6px 10px;
+    }
+    .metric i {
+      width: 28px; height: 28px; border-radius: 50%; background: #e8f6f4; color: #147a74;
+      display: grid; place-items: center; font-style: normal; font-weight: 800; font-size: 11px; flex: none;
+    }
+    .metric b { display: block; font-size: 16px; color: #071c35; line-height: 1; }
+    .metric span { display: block; font-size: 10px; color: #5b7187; line-height: 1.15; margin-top: 2px; }
+
+    .body { display: grid; grid-template-columns: 1fr 1.12fr 1fr; gap: 7px; min-height: 0; }
+    .col { display: grid; gap: 6px; min-height: 0; }
+    .col-a { grid-template-rows: auto auto auto auto 1fr auto; }
+    .col-b { grid-template-rows: auto auto auto 1fr auto auto; }
+    .col-c { grid-template-rows: auto auto auto 1fr auto auto; }
+
+    .card {
+      background: #fff; border: 1px solid #c9d8e2; border-radius: 7px;
+      padding: 7px 8px 7px 9px; min-height: 0;
+    }
+    .card.tint { background: #f3f8fa; }
+    h2 {
+      font-size: 10.5px; color: #071c35; letter-spacing: .02em; text-transform: uppercase;
+      margin-bottom: 4px; display: flex; align-items: center; gap: 6px;
+    }
+    h2 em {
+      font-style: normal; width: 16px; height: 16px; border-radius: 50%;
+      background: #1379b9; color: #fff; font-size: 9px; font-weight: 800;
+      display: grid; place-items: center; flex: none;
+    }
+    p, li { font-size: 10px; line-height: 1.28; color: #2b4258; }
+    ul { padding-left: 13px; }
+    li { margin: 1px 0; }
+    .note { color: #5b7187; font-size: 9px; }
+
+    .steps { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .step { background: #eef5f9; border-radius: 4px; padding: 3px 5px; font-size: 9.5px; color: #1a4663; }
+    .step b { color: #071c35; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 9.5px; }
+    th, td { padding: 2px 4px; text-align: left; border-bottom: 1px solid #e2ebf1; }
+    th { color: #5b7187; font-weight: 700; font-size: 9px; }
+    td { color: #16324a; }
+    td:last-child, th:last-child { text-align: right; }
+
+    .repo { display: grid; grid-template-columns: 54px 1fr; gap: 8px; align-items: center; }
+    .repo img { width: 54px; height: 54px; background: #fff; border: 2px solid #071c35; border-radius: 4px; }
+
+    .path { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+    .node {
+      background: #e8f4f3; color: #145d64; text-align: center; border-radius: 4px;
+      padding: 5px 3px; font-size: 8.5px; font-weight: 700; line-height: 1.2; position: relative;
+    }
+    .node:nth-child(even) { background: #e4eef8; color: #18517a; }
+    .layers { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .layer { background: #f4f9fb; border: 1px solid #d5e4ec; border-radius: 4px; padding: 5px 6px; }
+    .layer b { display: block; font-size: 9.5px; color: #071c35; }
+    .layer span { display: block; font-size: 9px; color: #4a6577; margin-top: 1px; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 3px; }
+    .tag { background: #eaf3f9; border: 1px solid #c8dfe9; border-radius: 3px; padding: 2px 6px; font-size: 9px; font-weight: 700; color: #24516f; }
+
+    .arch { display: grid; grid-template-columns: 1.3fr .7fr; gap: 6px; }
+    .stack { display: grid; gap: 3px; }
+    .snode { background: #dcecf3; border: 1px solid #9dc5d8; border-radius: 4px; text-align: center; font-size: 9px; font-weight: 800; color: #123f5c; padding: 3px 4px; }
+    .opt { display: grid; gap: 3px; padding-left: 6px; border-left: 2px dashed #9bbdcc; }
+    .opt span { background: #f5fafc; border: 1px dashed #9bbdcc; border-radius: 4px; text-align: center; font-size: 8.5px; font-weight: 700; color: #315d78; padding: 3px 4px; }
+
+    .ai { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+    .ai div { background: #edf5fb; border-radius: 4px; text-align: center; font-size: 8.5px; font-weight: 700; color: #20577b; padding: 5px 3px; }
+
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .split div { background: #f4f9fb; border-radius: 4px; padding: 4px 6px; font-size: 9px; }
+    .split b { display: block; color: #071c35; }
+
+    .ped { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px; }
+    .ped div { background: #eef6f5; border-radius: 4px; padding: 4px 5px; font-size: 8.5px; color: #1a4d55; }
+    .ped b { display: block; color: #071c35; font-size: 9px; }
+
+    .compare { display: grid; grid-template-columns: 1.05fr 1fr 1fr; gap: 1px; background: #c9d8e2; border-radius: 4px; overflow: hidden; }
+    .compare div { background: #f6fafd; padding: 3px 5px; font-size: 8.5px; line-height: 1.2; }
+    .compare div:nth-child(3n+1) { background: #fff; font-weight: 700; color: #516b7f; }
+    .compare div:nth-child(3n+2) { color: #5a6f80; }
+    .compare div:nth-child(3n) { background: #e9f8f5; color: #12675e; font-weight: 700; }
+    .compare .hd { font-weight: 800; color: #071c35; background: #eaf3f9; }
+
+    .road { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .mile { background: #eaf3f8; border-top: 3px solid #1379b9; border-radius: 0 0 4px 4px; padding: 3px 5px; font-size: 8.5px; color: #4a6577; }
+    .mile:nth-child(2) { border-color: #20b8ad; background: #e7f7f4; }
+    .mile:nth-child(3) { border-color: #1396a8; background: #e7f4f7; }
+    .mile:nth-child(4) { border-color: #ffab40; background: #fff2df; }
+    .mile b { display: block; color: #071c35; font-size: 9px; }
+
+    .bottom {
+      display: grid; grid-template-columns: 1.15fr 1.15fr 1.5fr; gap: 7px;
+    }
+    .who { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; }
+    .who div { background: #f4f9fb; border-radius: 4px; padding: 4px 6px; }
+    .who b { display: block; font-size: 9.5px; color: #071c35; }
+    .refs { columns: 2; column-gap: 12px; font-size: 8.5px; color: #50697d; line-height: 1.32; }
+    .refs div { break-inside: avoid; margin-bottom: 2px; }
+
+    footer {
+      background: #071c35; color: #fff; border-radius: 6px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 14px; font-size: 10px;
+    }
+    footer span:nth-child(2) { color: #9fd9d3; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <main class="poster">
+    <header>
+      <div class="brand">
+        <div class="kicker">Team Alpha</div>
+        <h1>GYANQUEST <span>PROJECT SHOWCASE</span></h1>
+        <p class="sub">Interactive mission games for school subjects · Canvas 2D curriculum · 3D playground only · bilingual BN/EN · offline-first</p>
+      </div>
+      <div class="team">
+        <b>Team Alpha</b>
+        Md Tahsan Islam · Mufrid Johanee<br />
+        Shadiya Zaman Tanha · Md Mohaimenul Islam
+      </div>
+      <div class="lead">Learn.<br />Level Up.<br />Lead.</div>
+    </header>
+
+    <section class="metrics">
+      <div class="metric"><i>28</i><div><b>28</b><span>catalog titles</span></div></div>
+      <div class="metric"><i>16</i><div><b>16</b><span>uniqueness-pass games</span></div></div>
+      <div class="metric"><i>25</i><div><b>25</b><span>finished missions</span></div></div>
+      <div class="metric"><i>4</i><div><b>4</b><span>instructional layers</span></div></div>
+      <div class="metric"><i>80</i><div><b>80%</b><span>fluency gate before Mastery</span></div></div>
+      <div class="metric"><i>BN</i><div><b>2</b><span>strict language modes</span></div></div>
+    </section>
+
+    <section class="body">
+      <div class="col col-a">
+        <article class="card tint">
+          <h2><em>1</em> The challenge</h2>
+          <p>Subject practice is often lecture-heavy and low on hands-on STEM. Tools are fragmented, progress is hard to resume, and many Bangladesh labs run on shared phones with flaky internet and no expensive hardware.</p>
+        </article>
+        <article class="card">
+          <h2><em>2</em> Objectives</h2>
+          <ul>
+            <li>Turn learning objectives into playable missions.</li>
+            <li>Keep every lesson on a clear Canvas 2D stage.</li>
+            <li>Restore hub vs in-mission state after reload.</li>
+            <li>Offer optional AI that never blocks offline play.</li>
+            <li>Scale 28 subjects from one shared engine.</li>
+          </ul>
+        </article>
+        <article class="card tint">
+          <h2><em>3</em> Methodology</h2>
+          <div class="steps">
+            <div class="step"><b>1 Map</b> curriculum to one mission idea.</div>
+            <div class="step"><b>2 Design</b> rules, rewards, feedback.</div>
+            <div class="step"><b>3 Build</b> Canvas 2D + save-v2 persist.</div>
+            <div class="step"><b>4 Iterate</b> via LEVEL_QA uniqueness-pass.</div>
+          </div>
+        </article>
+        <article class="card">
+          <h2><em>4</em> Why this product</h2>
+          <ul>
+            <li>28 titles, one engine, one pedagogy layer.</li>
+            <li>Offline-first save-v2; login is optional.</li>
+            <li>Strict বাংলা / English modes, no mixed UI.</li>
+            <li>Mastery stays locked until fluency hits 80%.</li>
+            <li>3D reserved for the Force Fighter playground only.</li>
+          </ul>
+        </article>
+        <article class="card tint">
+          <h2><em>5</em> Curriculum tracks</h2>
+          <table>
+            <thead><tr><th>Track</th><th>Focus</th><th>Titles</th></tr></thead>
+            <tbody>
+              <tr><td>Core sciences</td><td>Force, chem, bio, math, eco</td><td>5</td></tr>
+              <tr><td>CS and tech</td><td>ICT to AI / ML / data</td><td>10</td></tr>
+              <tr><td>Engineering</td><td>Electrical, mech, civil, green</td><td>5</td></tr>
+              <tr><td>Advanced sci.</td><td>Space, earth, health, genetics</td><td>4</td></tr>
+              <tr><td>Math extended</td><td>Stats, geometry, calc, discrete</td><td>4</td></tr>
+            </tbody>
+          </table>
+        </article>
+        <article class="card">
+          <h2><em>6</em> Repository</h2>
+          <div class="repo">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&amp;data=https%3A%2F%2Fgithub.com%2FTahsan0619%2FGyanQuest" alt="GitHub QR" />
+            <div>
+              <p><b>github.com/Tahsan0619/GyanQuest</b></p>
+              <p class="note">Source, engine, games, Laravel admin. Audio and 3D Assets stay local so clones stay small. Scan for the live repo.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="col col-b">
+        <article class="card tint">
+          <h2><em>7</em> Learner path</h2>
+          <div class="path">
+            <div class="node">Landing</div>
+            <div class="node">Mission Hub</div>
+            <div class="node">Canvas 2D mission</div>
+            <div class="node">Coach feedback</div>
+            <div class="node">save-v2 restore</div>
+            <div class="node">Optional Groq / Laravel</div>
+          </div>
+          <p class="note" style="margin-top:4px">Core play needs no login and no internet. The inHub flag returns the learner to hub or mission after reload.</p>
+        </article>
+        <article class="card">
+          <h2><em>8</em> Four layers</h2>
+          <div class="layers">
+            <div class="layer"><b>1 Canvas leads</b><span>Source of truth. Drag, tap, myth-bust. Constructivism · POE.</span></div>
+            <div class="layer"><b>2 Coach follows</b><span>Live setCoach cues. Formative assessment · Flow · ZPD.</span></div>
+            <div class="layer"><b>3 Chatbot on demand</b><span>Groq Llama 3.3 70B, build-then-reveal. Optional.</span></div>
+            <div class="layer"><b>4 Digital book</b><span>Reference shelf. Retrieval · dual coding. Feeds chat.</span></div>
+          </div>
+        </article>
+        <article class="card tint">
+          <h2><em>9</em> Technology stack</h2>
+          <div class="tags">
+            <span class="tag">HTML5 Canvas 2D</span><span class="tag">Vanilla JS</span><span class="tag">engine/</span><span class="tag">CSS</span>
+            <span class="tag">Python groq_proxy</span><span class="tag">Groq API</span><span class="tag">Laravel</span><span class="tag">Sanctum</span>
+            <span class="tag">Filament</span><span class="tag">SQLite</span><span class="tag">Three.js playground only</span>
+          </div>
+          <p class="note" style="margin-top:4px">Chosen for no-install school devices. API keys stay on the server. Games run if chat or admin is down.</p>
+        </article>
+        <article class="card">
+          <h2><em>10</em> System architecture</h2>
+          <div class="arch">
+            <div class="stack">
+              <div class="snode">Learner</div>
+              <div class="snode">Landing + Mission Hub</div>
+              <div class="snode">Shared engine: UI · pedagogy · persist · books</div>
+              <div class="snode">Game package: boot · missions · levels</div>
+              <div class="snode">Canvas 2D arena</div>
+              <div class="snode">localStorage save-v2</div>
+            </div>
+            <div class="opt">
+              <span>Groq tutor proxy</span>
+              <span>Sanctum API</span>
+              <span>Filament admin</span>
+              <span>MySQL / SQLite</span>
+            </div>
+          </div>
+        </article>
+        <article class="card tint">
+          <h2><em>11</em> Optional AI</h2>
+          <div class="ai">
+            <div>Learner question</div>
+            <div>Secure proxy</div>
+            <div>llama-3.3-70b-versatile</div>
+            <div>Guided reply</div>
+          </div>
+          <p class="note" style="margin-top:4px">local-fallback if Groq is unavailable. Tutor is a privilege, not a gate.</p>
+        </article>
+        <article class="card">
+          <h2><em>12</em> Reusable module</h2>
+          <div class="split">
+            <div><b>Shared platform</b>Hub, pedagogy, persist, books, chat mount.</div>
+            <div><b>Per-subject game</b>Scenes, controls, rules, mission books.</div>
+          </div>
+        </article>
+      </div>
+
+      <div class="col col-c">
+        <article class="card tint">
+          <h2><em>13</em> Pedagogy map</h2>
+          <div class="ped">
+            <div><b>POE</b>Predict, then act, then reflect.</div>
+            <div><b>Retrieval</b>Recall prior terms first.</div>
+            <div><b>Mastery</b>80% fluency before Mastery.</div>
+            <div><b>Flow</b>Streak coach, simpler after misses.</div>
+            <div><b>ZPD</b>Tiered hints, then fade.</div>
+            <div><b>Local</b>bdHook + strict BN/EN.</div>
+          </div>
+        </article>
+        <article class="card">
+          <h2><em>14</em> Finished depth</h2>
+          <p>25 uniqueness-pass missions in 16 titles. Deepest (M1 to M3): Force Fighter, Chemistry Lab, Bio Explorer, Web Dev Studio. ICT has M1 to M2. Twelve catalog titles still lack a pass.</p>
+        </article>
+        <article class="card tint">
+          <h2><em>15</em> 2D vs 3D</h2>
+          <p>All graded levels are Canvas 2D for clarity, load time, and scale. Three.js is only the Force Fighter free-play playground (spawn, push, ice/friction). 3D inside lessons is later, not now.</p>
+        </article>
+        <article class="card">
+          <h2><em>16</em> Vs typical EdTech</h2>
+          <div class="compare">
+            <div class="hd">Dimension</div><div class="hd">Typical app</div><div class="hd">GyanQuest</div>
+            <div>Learner role</div><div>Watch + MCQ</div><div>Act in a 2D mission</div>
+            <div>Progress</div><div>Time watched</div><div>80% fluency lock</div>
+            <div>Access</div><div>Cloud required</div><div>Offline-first</div>
+            <div>3D</div><div>Everywhere or none</div><div>Playground only</div>
+          </div>
+        </article>
+        <article class="card tint">
+          <h2><em>17</em> Roadmap</h2>
+          <div class="road">
+            <div class="mile"><b>Now</b>28 2D titles + playground</div>
+            <div class="mile"><b>In progress</b>Remaining uniqueness-pass</div>
+            <div class="mile"><b>Next</b>Teacher dashboard / analytics</div>
+            <div class="mile"><b>Later</b>3D elements inside lessons</div>
+          </div>
+        </article>
+        <article class="card">
+          <h2><em>18</em> Honest limits</h2>
+          <p>Flow Autopilot is streak logic, not full adaptive difficulty. No published RCT. 12 titles are still shallow. Windows PHP admin can be slow on first load.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="bottom">
+      <article class="card tint">
+        <h2><em>19</em> Run, persist, who changes</h2>
+        <p><b>Run:</b> Frontend http://127.0.0.1:5500 · Backend http://127.0.0.1:8000 · Admin /admin. Login optional.</p>
+        <p><b>Persist:</b> save-v2 in localStorage. inHub restores screen. Optional Sanctum sync.</p>
+        <div class="who" style="margin-top:4px">
+          <div><b>Learner</b>Acts, fails safely, must pass fluency.</div>
+          <div><b>Teacher</b>One engine, 28 subjects.</div>
+          <div><b>Bangladesh</b>Village-to-city labs, shared phones.</div>
+        </div>
+      </article>
+      <article class="card">
+        <h2><em>20</em> Security and playground</h2>
+        <p><b>Security:</b> GROQ_API_KEY stays in server .env. Python proxy. local-fallback if chat is down. Filament is separate from the game client.</p>
+        <p style="margin-top:3px"><b>3D playground:</b> Force Fighter only. Spawn cars, crates, rocks. Drag to push. Switch ice and friction. Not used in graded levels.</p>
+      </article>
+      <article class="card tint">
+        <h2><em>21</em> References</h2>
+        <div class="refs">
+          <div>1. Gee, J. P. What Video Games Have to Teach Us About Learning and Literacy. 2007.</div>
+          <div>2. Vygotsky, L. S. Mind in Society. 1978.</div>
+          <div>3. Bloom, B. S. Learning for Mastery.</div>
+          <div>4. White and Gunstone. Predict-Observe-Explain.</div>
+          <div>5. Black and Wiliam. Formative assessment.</div>
+          <div>6. Csíkszentmihályi. Flow.</div>
+          <div>7. Roediger and Karpicke. Retrieval practice.</div>
+          <div>8. Paivio. Dual coding.</div>
+          <div>9. Papert. Constructionism.</div>
+          <div>10. Kolb, D. A. Experiential Learning. 1984.</div>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      <span>GyanQuest · ImpactX · Team Alpha</span>
+      <span>A browser-first learning lab: missions you play, progress you keep, tutoring you can skip.</span>
+      <span>2D curriculum · 3D playground only (Force Fighter)</span>
+    </footer>
+  </main>
+</body>
+</html>

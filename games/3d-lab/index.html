@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Specimen Lab - GyanQuest</title>
+  <link rel="icon" href="/assets/gyanquest-logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+Bengali:wght@400;600;700&family=Sora:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/lab.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./vendor/three.module.js"
+    }
+  }
+  </script>
+</head>
+<body class="lab">
+  <a class="lab-skip" href="#stage">Skip to specimen</a>
+
+  <header class="lab-top">
+    <a class="lab-brand" href="/">
+      <img src="/assets/gyanquest-logo.png" width="36" height="36" alt="" />
+      <span>
+        <em data-i="brandMark">GyanQuest</em>
+        <strong data-i="brandLab">Specimen Lab</strong>
+      </span>
+    </a>
+    <p class="lab-specimen" id="specimen-name"></p>
+    <div class="lab-top__actions">
+      <button type="button" class="lab-iconbtn" id="btn-catalog" aria-expanded="false" aria-controls="rail">Specimens</button>
+      <button type="button" class="lab-lang" id="btn-lang">বাংলা</button>
+      <a class="lab-textlink" href="/" data-i="back">Games</a>
+    </div>
+  </header>
+
+  <div class="lab-shell">
+    <aside class="lab-rail" id="rail">
+      <div class="lab-rail__head">
+        <h1 data-i="catalogTitle">Specimens</h1>
+        <p data-i="catalogHint">Pick a model. Numbers on it are parts - tap one to zoom.</p>
+      </div>
+      <div class="lab-subjects" id="subjects" role="tablist"></div>
+      <div class="lab-list" id="catalog"></div>
+    </aside>
+
+    <main class="lab-stage" id="stage">
+      <div class="lab-well" id="well">
+        <canvas id="c3d"></canvas>
+        <div class="lab-iris" id="iris" aria-hidden="true"></div>
+        <div class="lab-pins" id="pins"></div>
+        <svg class="lab-leader is-off" id="leader" aria-hidden="true">
+          <path id="leader-path" class="lab-leader__path" />
+          <circle id="leader-dot" class="lab-leader__dot" r="3.5" />
+          <circle id="leader-end" class="lab-leader__dot" r="3.5" />
+        </svg>
+        <article class="lab-callout is-off" id="callout" aria-live="polite">
+          <span class="lab-callout__n" id="callout-n"></span>
+          <h3 id="callout-title"></h3>
+          <p id="callout-body"></p>
+        </article>
+        <p class="lab-hint" id="hint" data-i="orbitHint">Drag to orbit · Scroll to zoom · Tap a number</p>
+        <div class="lab-load hidden" id="load" role="status">
+          <span id="load-label" data-i="loading">Loading specimen</span>
+          <div class="lab-load__bar"><i id="load-bar"></i></div>
+          <small id="load-heavy" class="hidden" data-i="heavyWarn">Large file - give it a moment.</small>
+        </div>
+        <p class="lab-fail hidden" id="fail" data-i="webglFail"></p>
+      </div>
+      <div class="lab-stage__tools">
+        <button type="button" class="lab-tool" id="btn-reset" data-i="resetView">Reset view</button>
+        <button type="button" class="lab-tool" id="btn-clear" data-i="clearFocus">Show all</button>
+      </div>
+    </main>
+
+    <aside class="lab-sheet" id="sheet">
+      <section class="lab-credit" id="credit"></section>
+
+      <section class="lab-parts">
+        <header>
+          <h2 data-i="partsTitle">Parts</h2>
+          <button type="button" class="lab-edit-toggle" id="btn-edit" aria-pressed="false" data-i="placePins">Place pins</button>
+        </header>
+        <ol class="lab-partlist" id="partlist"></ol>
+        <p class="lab-empty hidden" id="parts-empty" data-i="partsEmpty"></p>
+      </section>
+
+      <section class="lab-editor hidden" id="editor">
+        <h2 data-i="editorTitle">Pin editor</h2>
+        <p class="lab-editor__lead" data-i="editorLead"></p>
+        <p class="lab-editor__tip" id="edit-tip" data-i="addPin"></p>
+        <label class="lab-field">
+          <span data-i="pinTitle">Name</span>
+          <input id="ed-title" type="text" autocomplete="off" />
+        </label>
+        <label class="lab-field">
+          <span data-i="pinBody">What this is</span>
+          <textarea id="ed-body" rows="4"></textarea>
+        </label>
+        <div class="lab-coords">
+          <span data-i="coords">Local position</span>
+          <code id="ed-xyz"></code>
+          <button type="button" class="lab-textbtn" id="btn-copy" data-i="copyCoords">Copy coordinates</button>
+        </div>
+        <p class="lab-editor__hint" data-i="coordsHint"></p>
+        <p class="lab-snap" id="ed-snap"></p>
+        <div class="lab-editor__row">
+          <button type="button" class="lab-danger" id="btn-del" data-i="deletePin">Delete this pin</button>
+        </div>
+        <div class="lab-editor__row">
+          <button type="button" class="lab-btn" id="btn-export" data-i="exportJson">Download pin file</button>
+          <label class="lab-btn lab-btn--file">
+            <span data-i="importJson">Load pin file</span>
+            <input id="ed-import" type="file" accept="application/json,.json" hidden />
+          </label>
+        </div>
+        <button type="button" class="lab-textbtn" id="btn-restore" data-i="resetPins">Restore original pins</button>
+      </section>
+    </aside>
+  </div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
