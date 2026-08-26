@@ -110,6 +110,18 @@ export const CATALOG = [
     },
   },
   {
+    id: "torso",
+    file: "a_fully__anatomy_stomach_lungs_heart..glb",
+    subject: "anatomy",
+    mb: 2.4,
+    credit: "Joe_Bou_Khalil · CC-BY",
+    title: { en: "Chest organs", bn: "বুকের অঙ্গ" },
+    blurb: {
+      en: "Heart, lungs and stomach in one torso. Starter pins are approximate. Drag them onto the parts.",
+      bn: "এক দেহে হৃৎপিণ্ড, ফুসফুস ও পাকস্থলী। পিন আনুমানিক - টেনে অংশে বসান।",
+    },
+  },
+  {
     id: "kidney",
     file: "free_kidney_3d_model_anatomy.glb",
     subject: "anatomy",
@@ -155,6 +167,18 @@ export const CATALOG = [
     blurb: {
       en: "Globe with first-pass region pins. Nudge them onto continents in the editor.",
       bn: "গ্লোব ও অঞ্চল পিন। মহাদেশে বসাতে এডিটরে সরিয়ে নিন।",
+    },
+  },
+  {
+    id: "solar-system",
+    file: "solar_system_custom.glb",
+    subject: "space",
+    mb: 17.1,
+    credit: "Sketchfab · CC-BY",
+    title: { en: "Solar system", bn: "সৌরজগৎ" },
+    blurb: {
+      en: "Sun, planets and orbits. Pins snap to named meshes. Drag if a world sits off.",
+      bn: "সূর্য, গ্রহ ও কক্ষপথ। পিন নামে আটকে। ভুল হলে টেনে সরিয়ে নিন।",
     },
   },
   {
@@ -219,6 +243,18 @@ export const CATALOG = [
     },
   },
   {
+    id: "chem-lab",
+    file: "basic_chemistry_lab_equipments.glb",
+    subject: "chemistry",
+    mb: 0.4,
+    credit: "miqdadnaduthodi · CC-BY",
+    title: { en: "Lab glassware", bn: "ল্যাব গ্লাসওয়্যার" },
+    blurb: {
+      en: "Beakers, flasks and bottles on a bench. Starter pins sit on mesh centres. Drag onto the right piece.",
+      bn: "বিকার, ফ্লাস্ক ও বোতল। পিন মেশের মাঝে। সঠিক অংশে টেনে বসান।",
+    },
+  },
+  {
     id: "wind-turbine",
     file: "animated_wind_turbine.glb",
     subject: "machines",
@@ -252,6 +288,30 @@ export const CATALOG = [
     blurb: {
       en: "Cars, lights and blocks. Good for talking about motion in a street.",
       bn: "গাড়ি, লাইট ও ব্লক। রাস্তায় গতি বোঝাতে সুবিধা।",
+    },
+  },
+  {
+    id: "electronics",
+    file: "cc0_set_of_electronic_components.glb",
+    subject: "machines",
+    mb: 1.5,
+    credit: "literallylara · CC0",
+    title: { en: "Electronic parts", bn: "ইলেকট্রনিক যন্ত্রাংশ" },
+    blurb: {
+      en: "Resistor, capacitor, LED, transistor and a breadboard. Pins snap to the named parts.",
+      bn: "রেজিস্টর, ক্যাপাসিটর, এলইডি, ট্রানজিস্টর ও ব্রেডবোর্ড। পিন নামে আটকে।",
+    },
+  },
+  {
+    id: "desktop",
+    file: "desktop_computer.glb",
+    subject: "machines",
+    mb: 1.9,
+    credit: "Tytan · CC-BY",
+    title: { en: "Desktop computer", bn: "ডেস্কটপ কম্পিউটার" },
+    blurb: {
+      en: "Tower, monitor, keyboard and mouse as separate meshes.",
+      bn: "টাওয়ার, মনিটর, কিবোর্ড ও মাউস আলাদা মেশ।",
     },
   },
   {
@@ -303,6 +363,18 @@ export const CATALOG = [
     },
   },
   {
+    id: "microscope",
+    file: "binocular_microscope.glb",
+    subject: "measure",
+    mb: 6.0,
+    credit: "Michael Perez · CC-BY",
+    title: { en: "Binocular microscope", bn: "বাইনোকুলার অণুবীক্ষণ" },
+    blurb: {
+      en: "One mesh, so starter pins are placed by height. Drag onto eyepiece, stage and base.",
+      bn: "একটি মেশ। পিন উচ্চতায় বসানো। আইপিস, স্টেজ ও বেসে টেনে নিন।",
+    },
+  },
+  {
     id: "abacus",
     file: "abacus.glb",
     subject: "math",
@@ -324,6 +396,18 @@ export const CATALOG = [
     blurb: {
       en: "A mechanical calculator. Use the editor to number keys and the register.",
       bn: "যান্ত্রিক ক্যালকুলেটর। কি ও রেজিস্টারে নম্বর দিতে এডিটর ব্যবহার করুন।",
+    },
+  },
+  {
+    id: "chess",
+    file: "chess.glb",
+    subject: "math",
+    mb: 12.7,
+    credit: "Sketchfab · CC-BY",
+    title: { en: "Chess", bn: "দাবা" },
+    blurb: {
+      en: "Board and pieces. Starter pins sit on a few meshes. Drag onto king, queen, rook and pawn.",
+      bn: "বোর্ড ও ঘুঁটি। কয়েকটি মেশে পিন। রাজা, রানি, নৌকা ও বোড়ে টেনে বসান।",
     },
   },
 ];

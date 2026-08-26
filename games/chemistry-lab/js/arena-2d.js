@@ -267,6 +267,13 @@ export function createArena2D(canvas, theme = {}) {
  if (dragState) endDrag(e);
  });
 
+ function registerAlias(alias, targetName) {
+ SCENES[alias] = function runAlias() {
+ const fn = SCENES[targetName];
+ if (fn) fn();
+ };
+ }
+
  function registerScene(name, builder) {
  SCENES[name] = function runScene() {
  builder({
@@ -353,6 +360,7 @@ export function createArena2D(canvas, theme = {}) {
  return {
  playExample,
  registerScene,
+ registerAlias,
  tick,
  resize,
  clearExtras: clearScene,

@@ -2,7 +2,7 @@
  * GyanQuest digital book viewer - cover, spreads, page-turn, glossary terms.
  * Pages are fixed (no scroll). Multi-image figures use an auto/drag carousel.
  */
-const BOOK_CSS = "/engine/css/digital-book.css?v=book4";
+const BOOK_CSS = "/engine/css/digital-book.css?v=book7";
 
 function ensureBookCss() {
  if (!document.querySelector('link[data-gq-book-css]')) {

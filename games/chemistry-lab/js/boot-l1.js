@@ -19,20 +19,20 @@ import {
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
 import { createArena2D } from "./arena-2d.js";
-import { registerAtomScenes } from "./atom-scenes.js";
-import { playScene, cancelActiveActivity } from "./chem-activities.js?v=elemhunt6";
-import { runL1Sub, L1_META } from "./level1.js";
-import { runL2Sub, L2_META } from "./level2.js?v=elemhunt3";
+import { registerAtomScenes } from "./atom-scenes.js?v=elemhunt7";
+import { playScene, cancelActiveActivity } from "./chem-activities.js?v=elemhunt7";
+import { runL1Sub, L1_META } from "./level1.js?v=elemhunt7";
+import { runL2Sub, L2_META } from "./level2.js?v=elemhunt7";
 import { runL3Sub, L3_META } from "./level3.js?v=bond1";
 import { MISSIONS } from "./missions-meta.js";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerElementScenes } from "./element-scenes.js?v=elemhunt1";
+import { registerElementScenes } from "./element-scenes.js?v=elemhunt7";
 import { registerBondScenes } from "./bond-scenes.js?v=bond1";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book4";
-import { BOOK as BOOK_L2 } from "../books/level2.js?v=book4";
-import { BOOK as BOOK_L3 } from "../books/level3.js?v=book4";
-import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=tinybits3";
+import { BOOK as BOOK_L2 } from "../books/level2.js?v=elemhunt7";
+import { BOOK as BOOK_L3 } from "../books/level3.js?v=book7";
+import { setupMissionBooks } from "/engine/js/mission-books.js?v=book7";
 
 
 const N_LEVELS = 10;
@@ -257,7 +257,7 @@ try {
  const title = titles[state.sub] || meta.kidTitle;
 
  if (levelTitle) {
- levelTitle.textContent = `Step ${state.sub + 1}/10 · ${title}`;
+ levelTitle.textContent = `Step ${state.sub + 1}/10: ${title}`;
  }
  if (progressBar) {
  progressBar.setAttribute("aria-valuenow", String(doneInLevel));
@@ -273,7 +273,7 @@ try {
  const rw = state.rewards[state.level];
  scoresEl.textContent = rw?.earned
  ? `${REWARD_ICONS[state.level] || "🏅"} ${meta.rewardName}`
- : `Mission ${state.level + 1} · ${meta.kidTitle}`;
+ : `Mission ${state.level + 1}: ${meta.kidTitle}`;
  }
  if (labDepth) {
  const depthMeta =
@@ -365,7 +365,7 @@ try {
  state.level === 0
  ? ["atomsMeet", { phase: "zoom", dwellMs: 3200 }]
  : state.level === 1
- ? ["elemMeet", { phase: "shelf", dwellMs: 3200 }]
+ ? ["elemOpen", { dwellMs: 3200 }]
  : state.level === 2
  ? ["bondMeet", { dwellMs: 3200 }]
  : ["atomsMeet", { phase: "settle", dwellMs: 2400 }];
@@ -386,10 +386,10 @@ try {
  ${
  state.level === 0
  ? `<ul class="chem-intro__hooks">${L1_META.everyday.map((e) => `<li>${e}</li>`).join("")}</ul>
- <p class="chem-intro__brunner"><strong>Bruner path:</strong> do &amp; see → pictures → name the rule.</p>`
+ <p class="chem-intro__brunner"><strong>Bruner path:</strong> four spirals: do &amp; see → pictures → name the rule, each time deeper.</p>`
  : state.level === 1
  ? `<ul class="chem-intro__hooks">${L2_META.everyday.map((e) => `<li>${e}</li>`).join("")}</ul>
- <p class="chem-intro__brunner"><strong>Bruner path:</strong> hunt samples → sort → name the element rule.</p>`
+ <p class="chem-intro__brunner"><strong>Bruner path:</strong> four spirals: do and see → pictures → name the rule, each time deeper. This hunt: protons, then orbits, then orbital shapes, then element personalities.</p>`
  : state.level === 2
  ? `<ul class="chem-intro__hooks">${L3_META.everyday.map((e) => `<li>${e}</li>`).join("")}</ul>
  <p class="chem-intro__brunner"><strong>Bruner path:</strong> attract &amp; snap → water buddies → name the bond rule.</p>`
@@ -473,8 +473,8 @@ try {
  const meta = currentMeta();
  setCoach(`${meta.kidTitle} is on the path - live labs ship mission by mission.`);
  const preview =
- state.level === 1 ? "elemMeet" : state.level === 2 ? "bondMeet" : "atomsMeet";
- playScene(preview, { phase: state.level === 1 ? "shelf" : "settle" });
+ state.level === 1 ? "elemOpen" : state.level === 2 ? "bondMeet" : "atomsMeet";
+ playScene(preview, { phase: state.level === 1 ? "open" : "settle" });
  overlay.innerHTML = `
  <div class="chem-card">
  <h3>${meta.emoji} ${meta.kidTitle}</h3>
@@ -581,28 +581,28 @@ try {
  });
  btnHint?.addEventListener("click", () => {
  const l1 = [
- "Drag the salt shaker and grain on the canvas - watch the story respond.",
- "Salt’s cube is an ordered Na⁺ / Cl⁻ ionic lattice - not one giant atom.",
- "Drag cards on the canvas into Matter vs Not matter zones.",
- "Drag the orange heat handle or use +/− until ice becomes settled liquid.",
- "Steam = fastest H₂O molecules escaping the pan (same substance).",
- "Build the rule, then scrub scale: grain → ions → optional shells.",
- "Drag stretch objects; pencil tip holds the graphite layers.",
- "Claim first - bust the myth to reveal the truth on the canvas.",
- "Score about 80% on the drill; retry if needed.",
- "Order: meet → sort → melt/steam → rule → stretch/myths.",
+ "Tap Zoom In, then click + until the counter hits ×10,000,000 and the dots fill the screen.",
+ "Watch ice, water, and steam. Optional: drag the water-panel temperature slider.",
+ "False: ice, water, and steam are the same atoms, moving differently.",
+ "Sort red, blue, and grey bits into matching bins, then snap two blue + one red into the bent outline.",
+ "Watch the joined-unit gallery, then tap to reveal O₂ and CO₂.",
+ "Build Hydrogen (1p 1e), Helium (2p 2n 2e), then Carbon (6p 6n 6e). Protons decide the element.",
+ "Tap an element icon to crack it open. Carbon’s atomic number is always 6.",
+ "Drag heat to ice, liquid, and steam, then click Spark ⚡ to rearrange H₂ and O₂ into water.",
+ "Read 2H₂ + O₂ → 2H₂O: a before, an arrow, and an after.",
+ "Last screen is a recap map. Tap a numbered stop to replay, then tap Finish Tiny Bits on the canvas or in the panel.",
  ];
  const l2 = [
- "Drag the yellow magnifier over Fe / Cu / O₂ bottles - particles match that sample.",
- "Tap the iron lattice to pack more Fe atoms - all the same kind.",
- "Sort into Element, Compound, or Mixture - three zones.",
- "Stretch the copper wire; atom kind stays Cu.",
- "Tap O₂ pairs - still element oxygen (one atom kind).",
- "Build: One kind of atom makes an ELEMENT.",
- "Tap gold, foil, charcoal, helium, graphite - same rule, new objects.",
- "Bust myths about water, air, salt, rust, and O₂.",
- "Hit about 80% on the element drill.",
- "Order the Element Hunt path, then finish the Scout checks.",
+ "Tap Begin on the glowing tile in the wall of 118 squares.",
+ "Drag protons to 1, 2, 6, 8, 10, 11, 17, then 18. Electrons match. The name is the proton count.",
+ "Tap the four colored families: alkali metals, noble gases, halogens, transition metals.",
+ "Carbon is atomic number 6, Period 2, Group 14. 11 protons is Sodium, left side, Period 3.",
+ "Drop 11 electrons on Sodium's rings until you have 2, then 8, then 1. A full ring bounces extras off.",
+ "Watch the rings smear, then take about 30 snapshots until the cloud rebuilds. Orbit is a path. Orbital is a region.",
+ "Open s, p, and d. Drag to spin, or leave auto-rotate on. Toggle p lobes. Cycle the five d shapes. f is optional.",
+ "Scrub Hydrogen to Iron if you want. Iron's line is 1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d⁶. Optional: try to break the two filling rules.",
+ "Tap Neon (full and calm), Sodium (one lonely electron), Chlorine (one open spot). Then the heat map and valence 1+7.",
+ "Last screen is a recap map. Tap a numbered stop to replay, then tap Finish Element Hunt on the canvas or in the panel.",
  ];
  const l3 = [
  "Tap lonely atoms A and B so a bond link appears.",
@@ -644,6 +644,11 @@ try {
 
  document.documentElement.classList.add("chem-l1-live");
 
- // Always open the mission levels hub first (do not auto-resume mid-mission).
+ // Always open the mission levels hub first, unless a QA jump asked to resume play.
+ const wantPlay = new URLSearchParams(location.search).get("play") === "1";
+ if (wantPlay && state.inHub === false && MISSIONS[state.level]?.playable) {
+ resumePlaySession();
+ } else {
  showHub();
+ }
 }

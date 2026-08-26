@@ -1,649 +1,325 @@
 /**
- * Chemistry Lab - Mission 1: Tiny Bits
- * 10 sub-levels, Bruner spiral: enactive -> iconic -> symbolic.
- * Target: 45-60 minutes. Accurate: molecules, ions, particles of matter.
+ * Chemistry Lab Mission 1: Tiny Bits
+ * Script: Opening + 4 Bruner spirals (enactive → iconic → symbolic) + closing zoom-out.
+ * Packed into the shared 10-step mission engine (N_SUBS = 10).
  */
-import { ATOM_ASSET_PATHS, chemLabState } from "./atom-scenes.js";
+import { chemLabState, resetTinyBitsState, ATOM_ASSET_PATHS } from "./atom-scenes.js?v=elemhunt7";
 import {
- mountMotionChain,
  mountDragSort,
  mountHeatLab,
  mountRevealSteps,
- mountEquationBuild,
- mountQuiz,
- mountSpeedDrill,
- mountOrderSteps,
- mountMythCards,
  mountTapContinue,
- mountScaleLab,
- mountMultiQuiz,
- playScene,
+ mountGate,
+ mountZoomTool,
+ mountTrueFalse,
+ mountGhostBuild,
+ mountFormulaReveal,
+ mountAtomBuilder,
+ mountSparkLab,
+ mountSpiralMap,
+ mountTempPreview,
  badgeHtml,
-} from "./chem-activities.js";
+} from "./chem-activities.js?v=elemhunt7";
 
 export const L1_META = {
- objective: "By the end of this mission, you'll be able to explain particles of matter in your own words.",
- bdHook: "Bangladesh everyday: notice particles of matter around you - then connect it to Tiny Bits.",
+ objective:
+ "By the end of this mission, you'll be able to explain that everything is built from tiny bits called atoms, that atoms join into molecules, and that chemistry is those bits moving, joining, and rearranging.",
+ bdHook: "Start with a glass of water, then shrink smaller than anything you can see.",
  predict: {
- q: "Before we start - what do you think matters most in Tiny Bits?",
+ q: "Before we start: what do you think everything around you is made of?",
  options: [
- "Guessing without checking",
- "Looking for a clear pattern or rule",
- "Skipping the practice steps",
+ "Totally different ingredients with nothing in common",
+ "The same basic ingredients, just arranged differently",
+ "Only solids are made of anything; air is empty",
  ],
  ok: 1,
  },
-
  kidTitle: "Tiny Bits",
- theme: "particles of matter",
+ theme: "particles, atoms & molecules",
  emoji: "⚗️",
  rewardName: "Tiny Rookie",
  intro:
- "Everything you can touch (and even air) is made of tiny moving particles. We start with salt, ice, and steam - then name a clear rule you can reuse anywhere.",
+ "Everything you can see (a chair, the air, this screen, your hand) is built from the same basic ingredients, arranged differently. Today we shrink down to find those Tiny Bits.",
  everyday: [
- "Salt grains next to the oil bottle",
- "Ice melting in a cup on the desk",
- "Steam rising above a hot pan",
+ "A glass of water on a sunlit table",
+ "Ice, water, and steam: same bits, different dance",
+ "A spark that joins hydrogen and oxygen into water",
  ],
  subTitles: [
- "Meet Tiny Bits",
- "Salt Crystal Pattern",
- "Sort: Matter or Not?",
- "Ice Melting Lab",
- "Why Steam Rises",
- "Name the Particle Rule",
- "Stretch: New Contexts",
- "Myth Bust",
- "Fluency Drill",
- "Tiny Bits Mastery",
+ "Zoom In",
+ "Same bits, three dances",
+ "This bit has a name",
+ "Sort & join",
+ "Molecules & formulas",
+ "Crack open an atom",
+ "Periodic IDs",
+ "Heat & spark",
+ "The equation",
+ "The big zoom-out",
  ],
 };
 
-/**
- * @param {{
- * overlay: HTMLElement,
- * setCoach: (html: string, aside?: string) => void,
- * completeSub: () => void,
- * registerTryAgain: (fn: () => void) => void,
- * }} api
- */
 export function runL1Sub(subIndex, api) {
  const { registerTryAgain } = api;
- chemLabState.reveal = false;
- chemLabState.tokenProgress = 0;
- chemLabState.masteryStep = 0;
- chemLabState.sortPlaced = 0;
- chemLabState.placed = {};
- chemLabState.selectedId = null;
- chemLabState.mythBusted = false;
- chemLabState.mythPhase = "claim";
- chemLabState.scale = 0;
- chemLabState.mode = "balloon";
- chemLabState.phase = "zoom";
+ resetTinyBitsState();
 
  const runners = [
- sub1_meet,
- sub2_salt,
- sub3_sort,
- sub4_ice,
- sub5_steam,
- sub6_rule,
- sub7_stretch,
- sub8_myths,
- sub9_drill,
- sub10_mastery,
+ sub1_openingZoom,
+ sub2_states,
+ sub3_atomName,
+ sub4_sortJoin,
+ sub5_molecules,
+ sub6_atomBuilder,
+ sub7_periodic,
+ sub8_heatSpark,
+ sub9_equation,
+ sub10_closing,
  ];
  const fn = runners[subIndex] || runners[0];
  registerTryAgain(() => {
  api.overlay.innerHTML = "";
+ resetTinyBitsState();
  fn(api);
  });
  fn(api);
 }
 
-function sub1_meet({ overlay, setCoach, completeSub }) {
- setCoach(
- "Hook + light enactive: pour salt, magnify a grain, and meet a particle model - not what your eyes see.",
- );
- mountMotionChain(overlay, {
- title: "Meet Tiny Bits",
- beats: [
- {
- scene: "atomsMeet",
- sceneArgs: { phase: "zoom" },
- dwellMs: 4200,
- html: `${badgeHtml(ATOM_ASSET_PATHS.magnify, "magnify")}
- <p><strong>Act 1 - Everyday salt:</strong> Tap the shaker on the canvas (or watch) as grains pile on the desk.</p>
- <p>One grain looks solid and still. That is our starting object.</p>`,
- },
- {
- scene: "atomsMeet",
- sceneArgs: { phase: "cloud" },
- dwellMs: 4500,
- html: `<p><strong>Act 2 - Zoom model:</strong> A lens magnifies the grain into moving colored spheres.</p>
- <p>Those spheres are a <strong>toy model</strong> of tiny particles - not literal photographs.</p>`,
- },
- {
- scene: "atomsMeet",
- sceneArgs: { phase: "predict" },
- dwellMs: 3800,
- html: `<p><strong>Act 3 - Predict:</strong> Are those tiny bits frozen still, or always moving?</p>
- <p>Watch the highlighted grain and decide before we reveal the big idea.</p>`,
- },
- {
- scene: "atomsMeet",
- sceneArgs: { phase: "settle" },
- dwellMs: 4200,
- html: `<p><strong>Act 4 - Big idea:</strong> Salt, cool water, steam, and the desk connect to one claim.</p>
- <p>Ordinary matter is packed with tiny moving particles (later we will name atoms and molecules).</p>`,
- },
- ],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "atomsMeet",
- sceneArgs: { phase: "cloud" },
- title: "Exit check",
- q: "What did the zoom model suggest about everyday stuff?",
- opts: [
- "It is packed with tiny moving particles we model as spheres",
- "Salt is empty space with no bits",
- "We can see real atoms with our bare eyes",
- "Only salt has particles; water does not",
- ],
- ok: 0,
- onDone: () => {
- mountTapContinue(overlay, {
- scene: "atomsMeet",
- sceneArgs: { phase: "settle" },
- badge: ATOM_ASSET_PATHS.orbit,
- html: `<h3>You met Tiny Bits</h3><p>Next we look inside a salt crystal - ordered ions, not one giant atom.</p>`,
- onDone: completeSub,
- advanceAfterDone: true,
+function sub1_openingZoom({ overlay, setCoach, completeSub }) {
+ setCoach("Look around you. Then zoom in, past anything the eye can see.");
+ mountGate(overlay, {
+ scene: "tinyOpen",
+ badge: "Opening",
+ title: "Tiny Bits",
+ pulse: true,
+ doneLabel: "Zoom In →",
+ html: `${badgeHtml(ATOM_ASSET_PATHS.magnify, "zoom")}
+ ${n(
+ "Look around you right now. Your chair. The air you’re breathing. This screen. Your own hand. They all look completely solid and completely different from each other. But what if I told you that every single one of them (the chair, the air, the screen, your hand) is built out of the exact same basic ingredients, just arranged differently? Today we’re going to shrink ourselves down, smaller than anything you’ve ever imagined, and go find those ingredients. We’re calling them Tiny Bits. Ready to zoom in?",
+ )}`,
+ bind(_host, _api) {
+ const arena = window.__arena;
+ arena?.setIntentHandler?.((intent) => {
+ if (intent.type === "CANVAS_TAP" && intent.meta?.action === "zoomIn") {
+ document.getElementById("tiny-gate-go")?.click();
+ }
  });
  },
+ onDone: () => {
+ mountZoomTool(overlay, { onDone: completeSub });
+ },
+ });
+}
+
+function sub2_states({ overlay, setCoach, completeSub }) {
+ setCoach("Watch ice, water, and steam side by side: same dots, three dances.");
+ mountTempPreview(overlay, {
+ scene: "tinyStates",
+ badge: "Spiral 1: Iconic",
+ title: "Same bits, three dances",
+ html: n(
+ "Here’s the twist: ice, water, and steam are made of the exact same tiny bits. Nothing was added or removed. The only thing that changed is how those tiny bits are moving and how close together they’re packed. Solid, liquid, gas: it’s the same ingredients, just a different dance.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function sub3_atomName({ overlay, setCoach, completeSub }) {
+ setCoach("Scientists gave these tiny bits a name: atom.");
+ mountGate(overlay, {
+ scene: "tinyAtomName",
+ badge: "Spiral 1: Symbolic",
+ title: "This tiny bit has a name: an atom.",
+ html: n(
+ "Scientists gave these tiny bits a name over two thousand years ago: atom, from an old Greek word, atomos, meaning ‘that which cannot be cut.’ They believed if you kept slicing matter smaller and smaller, you’d eventually hit a piece so small it couldn’t be cut any further: an atom. They were mostly right, and it’s still the word we use today.",
+ ),
+ onDone: () => {
+ mountTrueFalse(overlay, {
+ scene: "tinyAtomName",
+ badge: "Quick check",
+ title: "True or false",
+ q: "True or false: ice, water, and steam are made of different ingredients.",
+ answerIsTrue: false,
+ explain: "False: same atoms, different motion and spacing.",
+ onDone: completeSub,
  });
  },
  });
 }
 
-function sub2_salt({ overlay, setCoach, completeSub }) {
- setCoach("Iconic view: table salt is an ordered ionic lattice (Na⁺ and Cl⁻), not magic powder.");
- mountMotionChain(overlay, {
- title: "Salt Crystal Pattern",
- beats: [
- {
- scene: "atomsSalt",
- sceneArgs: { assemble: false },
- dwellMs: 3800,
- html: `${badgeHtml(ATOM_ASSET_PATHS.salt, "salt")}
- <p><strong>Act 1:</strong> Oil bottle and salt bowl on the desk. Grains look simple from far away.</p>`,
- },
- {
- scene: "atomsSalt",
- sceneArgs: { assemble: "oil" },
- dwellMs: 4200,
- html: `<p><strong>Act 2 - Oil comparison:</strong> Tap or drag the oil bottle and notice the spilled drop.</p>
- <p>Oil also has particles, but they are <strong>not arranged in a rigid Na+/Cl- crystal</strong>. We show a loose molecular picture instead.</p>`,
- },
- {
- scene: "atomsSalt",
- sceneArgs: { assemble: true },
- dwellMs: 5200,
- html: `<p><strong>Act 3 - Lattice assemble:</strong> Blue = Na⁺ (sodium ion), red = Cl⁻ (chloride ion).</p>
- <p>They lock into a repeating cube. Real salt has billions of these; we show a tiny model.</p>`,
- },
- ],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "atomsSalt",
- sceneArgs: { assemble: true },
- title: "Quick check",
- q: "What did the growing cube show about salt grains?",
- opts: [
- "Salt is a neat pattern of many ions stuck together",
- "Salt is one giant solid atom",
- "Salt is empty space with no bits",
- "Salt only exists as a liquid",
- ],
- ok: 0,
- onDone: () => {
- mountQuiz(overlay, {
- scene: "atomsSalt",
- sceneArgs: { assemble: true },
- title: "Ion check",
- q: "In this intro model, Na⁺ and Cl⁻ are best described as...",
- opts: [
- "Charged particles (ions) in an ionic lattice",
- "Photons of light",
- "Heat energy packets",
- "Thoughts, not matter",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
- },
- });
-}
-
-function sub3_sort({ overlay, setCoach, completeSub }) {
- setCoach("Enactive sort: matter occupies space and has mass. Light and ideas are not matter.");
- chemLabState.reveal = false;
- mountTapContinue(overlay, {
- scene: "atomsSort",
- html: `<h3>Matter vs not-matter</h3>
- <p><strong>Matter</strong> is stuff made of particles (atoms, often bonded as molecules or ions).</p>
- <p><strong>Not matter:</strong> light and heat are energy; a thought is information - not a pile of atoms on the desk.</p>
- <p>Next: sort eight cases on the canvas or with chips.</p>`,
+function sub4_sortJoin({ overlay, setCoach, completeSub }) {
+ setCoach("Spiral back: these dots aren’t all the same. Sort them, then join three into one unit.");
+ mountGate(overlay, {
+ scene: "tinyCrowd",
+ badge: "Spiral 2: Enactive",
+ title: "Wait: these dots aren’t all the same color…",
+ html: "<p class=\"tiny-onscreen\">Next you’ll sort the tiny bits by color. No chemistry names yet.</p>",
  onDone: () => {
  mountDragSort(overlay, {
- scene: "atomsSort",
- title: "Sort: Matter or not?",
- instructions: "Drag into Matter vs Not matter.",
+ scene: "tinySort",
+ title: "Sort the Tiny Bits",
+ instructions: "Drag each ball into the matching-color bin (canvas or chips).",
+ successText: "You just discovered something huge: there isn’t just one kind of atom. There are many kinds.",
  chips: [
- { id: "salt", text: "Salt grains", short: "Salt", color: 0xe2e8f0 },
- { id: "ice", text: "Ice in the cup", short: "Ice", color: 0x7dd3fc },
- { id: "steam", text: "Steam above the pan", short: "Steam", color: 0xf97316 },
- { id: "air", text: "Air in the room", short: "Air", color: 0x93c5fd },
- { id: "bottle", text: "Plastic water bottle", short: "Bottle", color: 0x38bdf8 },
- { id: "light", text: "A flashlight beam", short: "Light", color: 0xfbbf24 },
- { id: "idea", text: "A thought in your head", short: "Idea", color: 0xc084fc },
- { id: "heat", text: "Heat from a stove", short: "Heat", color: 0xfb7185 },
+ { id: "r1", text: "Red bit", short: "Red", color: 0xf87171 },
+ { id: "r2", text: "Red bit", short: "Red", color: 0xf87171 },
+ { id: "r3", text: "Red bit", short: "Red", color: 0xf87171 },
+ { id: "b1", text: "Blue bit", short: "Blue", color: 0x60a5fa },
+ { id: "b2", text: "Blue bit", short: "Blue", color: 0x60a5fa },
+ { id: "b3", text: "Blue bit", short: "Blue", color: 0x60a5fa },
+ { id: "g1", text: "Grey bit", short: "Grey", color: 0x94a3b8 },
+ { id: "g2", text: "Grey bit", short: "Grey", color: 0x94a3b8 },
+ { id: "g3", text: "Grey bit", short: "Grey", color: 0x94a3b8 },
  ],
  zones: [
- {
- id: "yes",
- label: "Matter (particles)",
- accept: ["salt", "ice", "steam", "air", "bottle"],
- },
- {
- id: "no",
- label: "Not matter",
- accept: ["light", "idea", "heat"],
- },
+ { id: "red", label: "Red", accept: ["r1", "r2", "r3"] },
+ { id: "blue", label: "Blue", accept: ["b1", "b2", "b3"] },
+ { id: "grey", label: "Grey", accept: ["g1", "g2", "g3"] },
  ],
  onDone: () => {
- mountQuiz(overlay, {
- scene: "atomsSort",
- sceneArgs: {},
- title: "Justify",
- q: "Why is a flashlight beam NOT matter?",
- opts: [
- "It is energy (light), not a pile of particles sitting on the desk",
- "Because it is invisible in the dark only",
- "Because beams are made of steam",
- "Because light is a type of salt crystal",
- ],
- ok: 0,
- onDone: completeSub,
- });
+ mountGhostBuild(overlay, { onDone: completeSub });
  },
  });
  },
  });
 }
 
-function sub4_ice({ overlay, setCoach, completeSub }) {
- setCoach("Enactive KMT: heat H₂O molecules - same substance, freer motion. Drag the heat handle on the canvas too.");
+function sub5_molecules({ overlay, setCoach, completeSub }) {
+ setCoach("Hundreds of joined trios, then the grown-up labels: H₂O, O₂, CO₂.");
+ mountGate(overlay, {
+ scene: "tinyGallery",
+ badge: "Spiral 2: Iconic",
+ title: "Joined units everywhere",
+ html: `${n(
+ "Different types of atoms, joined in different combinations and different numbers, is the entire secret behind why the world has so much variety, even though it’s all built from a small set of basic ingredients.",
+ )}<p class="tiny-onscreen">Different combinations of tiny bits build everything: water, the air you breathe, even sugar.</p>`,
+ onDone: () => {
+ mountFormulaReveal(overlay, { onDone: completeSub });
+ },
+ });
+}
+
+function sub6_atomBuilder({ overlay, setCoach, completeSub }) {
+ setCoach("Atoms were named ‘that which cannot be cut.’ Let’s crack one open.");
+ mountAtomBuilder(overlay, { onDone: completeSub });
+}
+
+function sub7_periodic({ overlay, setCoach, completeSub }) {
+ setCoach("Every element is a different proton count. Carbon is always 6.");
+ chemLabState.explodeZ = 0;
+ mountGate(overlay, {
+ scene: "tinyPeriodic",
+ badge: "Spiral 3: Iconic",
+ title: "A mini periodic table",
+ html: `${n(
+ "Every single element you’ve ever heard of (gold, oxygen, carbon, helium in a balloon) is just a different number of protons packed into a nucleus, with electrons orbiting around it. Scientists have organized all known elements into a chart called the periodic table. You just built the first few entries in it yourself.",
+ )}<p class="tiny-onscreen">Optional: tap an icon to explode it back into the proton / neutron / electron view.</p>`,
+ bind() {
+ const arena = window.__arena;
+ arena?.setIntentHandler?.((intent) => {
+ if (intent.type === "CANVAS_TAP" && intent.meta?.action === "explode") {
+ chemLabState.explodeZ = intent.meta.z || 0;
+ }
+ });
+ },
+ onDone: () => {
+ mountGate(overlay, {
+ scene: "tinyCarbon",
+ badge: "Spiral 3: Symbolic",
+ title: "Atomic number",
+ html: n(
+ "Chemists call the number of protons an atom has its atomic number: it’s basically an atom’s ID number, and no two elements share one. Carbon is always atomic number 6, everywhere in the universe. You’ve now learned the actual rule that the entire periodic table is built on.",
+ ),
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+function sub8_heatSpark({ overlay, setCoach, completeSub }) {
+ setCoach("You already found ice, water, and steam. Now you cause it, then spark a reaction.");
  mountHeatLab(overlay, {
- scene: "atomsIce",
+ scene: "tinyHeat",
  badge: ATOM_ASSET_PATHS.ice,
- title: "Ice Melting Lab",
- html: `<p>Ice is <strong>H₂O molecules</strong> locked in a stiff pattern. Add heat - they jiggle free into liquid water. Nothing “vanishes.”</p>
- <p>Use the slider, +/−, or drag the orange heat handle on the canvas.</p>`,
- goalText: "Goal: melt past ~80% and watch the liquid settle (brief vapor only when very hot).",
- startHeat: 0.1,
- threshold: 0.78,
- doneLabel: "Ice melted - continue ▶",
- onDone: () => {
- mountQuiz(overlay, {
- scene: "atomsIce",
- title: "Conservation check",
- q: "When ice melts, what happens to the water particles?",
- opts: [
- "They stay the same kind of particles (H₂O) but move more freely",
- "They disappear into nothing",
- "They turn into pure heat atoms",
- "They become light beams",
- ],
- ok: 0,
- onDone: () => {
- mountRevealSteps(overlay, {
- scene: "atomsIce",
- title: "Solid -> liquid story",
- steps: [
- "Cold: molecules vibrate in place in a crystal lattice.",
- "Heat arrives: motion increases; attractions struggle to hold the lattice.",
- "Melt: lattice breaks; molecules slide as liquid - same H₂O.",
- "Lesson: phase change rearranges motion/arrangement, not “making new stuff.”",
- ],
- onDone: completeSub,
- });
+ title: "Heat Lab",
+ html: n(
+ "You already discovered back at the start that ice, water, and steam are the same tiny bits moving differently. Now you know why they move differently: heat. Heat doesn’t create new tiny bits, it just makes the ones you built move faster and spread further apart.",
+ ),
+ sliderLabel: "cold ❄ to hot 🔥",
+ goalText: "Drag to the cold end, the middle, and the hot end so you cause ice, liquid, and steam.",
+ startHeat: 0.62,
+ threshold: 1,
+ mustVisit: ["cold", "liquid", "simmer"],
+ readoutLabels: {
+ cold: "Cold: molecules lock into a tight, still grid (ice)",
+ melting: "Warming: the grid is loosening",
+ liquid: "Middle: molecules slide and bump (liquid)",
+ simmer: "Hot: molecules fly apart and escape upward (gas/steam)",
  },
- });
+ doneLabel: "I caused all three ▶",
+ onDone: () => {
+ mountSparkLab(overlay, { onDone: completeSub });
  },
  });
 }
 
-function sub5_steam({ overlay, setCoach, completeSub }) {
- setCoach("Explain: hot pan -> fast H₂O molecules -> vapor. No extra bottle - focus on the stove and pan.");
- mountHeatLab(overlay, {
- scene: "atomsSteam",
- badge: ATOM_ASSET_PATHS.steam,
- title: "Why Steam Rises",
- html: `<p>Steam is not magic smoke. The <strong>fastest water molecules</strong> leave the liquid as vapor. Visible mist is tiny droplets or cooling vapor.</p>`,
- goalText: "Goal: crank energy until molecules clearly boil upward (~72%).",
- startHeat: 0.35,
- threshold: 0.72,
- doneLabel: "I can explain steam ▶",
+function sub9_equation({ overlay, setCoach, completeSub }) {
+ setCoach("The same reaction powers a rocket. Then chemistry writes it as one line.");
+ mountGate(overlay, {
+ scene: "tinyRocket",
+ badge: "Spiral 4: Iconic",
+ title: "The same idea, out in the world",
+ html: n(
+ "This exact reaction (hydrogen and oxygen combining into water) is one of the reactions that powers rocket engines. Every chemical reaction you’ll ever learn about, from digesting your lunch to rusting metal to photosynthesis in a leaf, is really just this same idea: atoms letting go of old partners and grabbing new ones.",
+ ),
  onDone: () => {
+ chemLabState.eqStep = 0;
  mountRevealSteps(overlay, {
- scene: "atomsSteam",
- title: "Causal chain",
+ scene: "tinyEquation",
+ title: "Chemistry’s shorthand",
  steps: [
- "Heat increases molecular motion in the pan water.",
- "Some molecules move fast enough to escape into the air (evaporation / boiling).",
- "That gas is still H₂O - same substance as ice and liquid water.",
- "Cooling vapor can form tiny droplets we see as “steam clouds.”",
+ "2H₂: two hydrogen molecules (the pairs you sparked)",
+ "+ O₂: plus one oxygen molecule",
+ "The arrow (→) means they react",
+ "2H₂O: two water molecules. The same atoms, rearranged.",
  ],
  onStep: (i) => {
- const energy = 0.4 + i * 0.15;
- chemLabState.energy = energy;
- chemLabState.energyTarget = energy;
- chemLabState.heat = energy;
- chemLabState.heatTarget = energy;
+ chemLabState.eqStep = i + 1;
  },
- onDone: () => {
- mountQuiz(overlay, {
- scene: "atomsSteam",
- title: "Same substance?",
- q: "Ice, liquid water, and steam are...",
- opts: [
- "Different forms of the same substance (H₂O) with different particle motion",
- "Three unrelated elements",
- "Proof that atoms vanish when heated",
- "Only steam has molecules",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
- },
- });
-}
-
-function sub6_rule({ overlay, setCoach, completeSub }) {
- setCoach(
- "Symbolic: build the matter-particle rule. Shell diagram is an optional simplified electron model - separate from “bits always move.”",
- );
- mountEquationBuild(overlay, {
- scene: "atomsRule",
- title: "Name the Particle Rule",
- instructions: "Tap tokens in order to build the Tiny Bits rule.",
- tokens: [
- { id: "a", html: "Ordinary matter" },
- { id: "b", html: "is made of tiny bits" },
- { id: "c", html: "called atoms (often as molecules)" },
- { id: "d", html: "that are always moving" },
- ],
- correctIds: ["a", "b", "c", "d"],
- onDone: () => {
- mountScaleLab(overlay, {
- scene: "atomsRule",
- title: "Scale scrubber",
- html: `<p>Slide from everyday grain -> ion crystal model -> optional simplified shells.</p>
- <p>Shells show a later idea (electrons). The Tiny Bits rule is about <strong>particles of matter always moving</strong>.</p>`,
- start: 0,
- threshold: 0.85,
- onDone: () => {
- mountQuiz(overlay, {
- scene: "atomsRule",
- title: "Model check",
- q: "What is the main Tiny Bits rule?",
- opts: [
- "Matter is made of tiny moving particles (atoms / molecules)",
- "Atoms are big enough to see without tools",
- "Heat is made of atoms stacked in a pan",
- "Only solids contain particles",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
- },
- });
-}
-
-function sub7_stretch({ overlay, setCoach, completeSub }) {
- setCoach("Transfer: same particle rule in balloon air, graphite, water, glass, and steel.");
- const modes = [
- {
- mode: "balloon",
- html: `${badgeHtml(ATOM_ASSET_PATHS.orbit, "air")}<p><strong>Balloon:</strong> Squishy air is mostly N₂ and O₂ <em>molecules</em> bouncing inside the skin.</p>`,
- },
- {
- mode: "pencil",
- html: `<p><strong>Pencil tip:</strong> Graphite layers are carbon atoms that slide - that is why it writes.</p>`,
- },
- {
- mode: "water",
- html: `<p><strong>Water drop:</strong> Same H₂O molecules as ice and steam, clustered as a liquid.</p>`,
- },
- {
- mode: "phone",
- html: `<p><strong>Phone glass:</strong> Tightly packed particles make a hard, transparent solid - still matter.</p>`,
- },
- {
- mode: "steel",
- html: `<p><strong>Steel spoon:</strong> Metal atoms packed in a lattice - cold to the touch, still buzzing microscopically.</p>`,
- },
- ];
- let step = 0;
-
- function show() {
- if (step >= modes.length) {
- mountQuiz(overlay, {
- scene: "atomsStretch",
- sceneArgs: { mode: "water" },
- title: "Stretch check",
- q: "Which statement fits balloon air, graphite, water, glass, and steel?",
- opts: [
- "They are all made of moving particles of matter",
- "Only solids have particles",
- "Gases are empty of particles",
- "Particles only exist in chemistry class",
- ],
- ok: 0,
- onDone: completeSub,
- });
- return;
- }
- const m = modes[step];
- chemLabState.mode = m.mode;
- mountTapContinue(overlay, {
- scene: "atomsStretch",
- sceneArgs: { mode: m.mode },
- html: `<div class="lab-demo__badge">Context ${step + 1} of ${modes.length}</div>${m.html}`,
- onDone: () => {
- step++;
- show();
- },
- });
- }
- show();
-}
-
-function sub8_myths({ overlay, setCoach, completeSub }) {
- setCoach("Misconceptions: claim first on canvas; truth appears only after you bust the myth.");
- mountMythCards(overlay, {
- myths: [
- {
- sceneMyth: 0,
- title: "“I can see atoms with my eyes”",
- claim: "Atoms are little balls you can spot on the table.",
- truth: "Atoms are far too small - we use models and instruments.",
- },
- {
- sceneMyth: 1,
- title: "“Atoms sit perfectly still”",
- claim: "Once something is solid, its particles freeze forever.",
- truth: "Particles always jiggle. Heat = faster jiggle.",
- },
- {
- sceneMyth: 2,
- title: "“Empty air has no atoms”",
- claim: "If I cannot see stuff, there are no particles.",
- truth: "Air is full of molecules (mostly N₂ and O₂) zooming around.",
- },
- {
- sceneMyth: 3,
- title: "“Steam is a new substance”",
- claim: "Boiling creates a brand-new kind of matter.",
- truth: "Steam is still H₂O - same substance, more motion / different arrangement.",
- },
- {
- sceneMyth: 4,
- title: "“Heat is made of atoms”",
- claim: "Heat is a pile of tiny heat-atoms you can sort.",
- truth: "Heat is energy transferred - it is not a material you scoop like salt.",
- },
- ],
- onDone: completeSub,
- });
-}
-
-function sub9_drill({ overlay, setCoach, completeSub }) {
- setCoach("Fluency: quick application checks. Need about 80% to unlock Continue.");
- mountSpeedDrill(overlay, {
- passRatio: 0.8,
- items: [
- {
- prompt: "Salt crystal",
- q: "A salt grain is...",
- opts: ["A crystal of many ions", "One huge atom", "Pure energy", "A myth"],
- ok: 0,
- },
- {
- prompt: "Ice -> water",
- q: "When ice melts, H₂O molecules...",
- opts: ["Disappear", "Stay H₂O but move freer", "Turn into light", "Stop existing"],
- ok: 1,
- },
- {
- prompt: "Steam / vapor",
- q: "Steam rising means...",
- opts: ["Molecules got faster and escaped", "The pan created new atoms", "Gravity flipped", "Color left the water"],
- ok: 0,
- },
- {
- prompt: "Air / balloon",
- q: "Air in a balloon...",
- opts: ["Has no particles", "Is packed with moving molecules", "Is one atom", "Is only heat"],
- ok: 1,
- },
- {
- prompt: "Molecule vs atom",
- q: "Water is best described as...",
- opts: ["H₂O molecules (atoms bonded)", "A single oxygen atom only", "A flashlight beam", "Frozen heat"],
- ok: 0,
- },
- {
- prompt: "Not matter",
- q: "Which is NOT matter?",
- opts: ["Heat from a stove", "Ice cubes", "Salt grains", "Air"],
- ok: 0,
- },
- {
- prompt: "Tiny Bits rule",
- q: "Best Tiny Bits rule?",
- opts: [
- "Matter is made of tiny moving particles",
- "Only metals have particles",
- "Particles are visible glitter",
- "Particles hate moving",
- ],
- ok: 0,
- },
- {
- prompt: "Ion lattice",
- q: "In table salt’s lattice we modeled...",
- opts: ["Na⁺ and Cl⁻ ions in a pattern", "Photons stacked in cubes", "Thoughts crystallized", "Empty space only"],
- ok: 0,
- },
- ],
- onDone: completeSub,
- });
-}
-
-function sub10_mastery({ overlay, setCoach, completeSub }) {
- setCoach("Mastery: rebuild the path, transfer to iced tea + kettle, then prove it.");
- playScene("atomsMastery");
- mountOrderSteps(overlay, {
- scene: "atomsMastery",
- title: "Tiny Bits Mastery - learning path",
- instructions: "Tap Brunner order: meet -> sort -> melt/steam -> rule -> stretch/myths.",
- items: [
- { id: "1", html: "Meet particles in salt (concrete)" },
- { id: "2", html: "Sort matter vs not-matter" },
- { id: "3", html: "Melt ice / watch steam (do it)" },
- { id: "4", html: "Name the moving-particle rule" },
- { id: "5", html: "Stretch + bust myths" },
- ],
- correctIds: ["1", "2", "3", "4", "5"],
  onDone: () => {
  mountTapContinue(overlay, {
- scene: "atomsMastery",
- html: `<h3>Mixed case</h3>
- <p><strong>Iced tea + kettle:</strong> Cold drink has slower H₂O motion; kettle steam is faster H₂O leaving as vapor - same substance family, different motion.</p>
- <p>Ready for the final checks?</p>`,
- onDone: () => {
- mountMultiQuiz(overlay, {
- scene: "atomsMastery",
- title: "Final mastery",
- doneTitle: "Tiny Rookie ready",
- items: [
- {
- q: "Salt, melting ice, and steam all teach the same idea because...",
- opts: [
- "They are forms of matter made of moving particles",
- "They are unrelated magic tricks",
- "Only steam has particles",
- "Particles only appear when we heat things",
- ],
- ok: 0,
- },
- {
- q: "A correct statement about atoms vs molecules here is...",
- opts: [
- "Water is H₂O molecules; atoms are the bonded building blocks",
- "Molecules and atoms are identical words with no difference",
- "Molecules are a type of light",
- "Atoms only exist inside myths",
- ],
- ok: 0,
- },
- {
- q: "Which belongs in “not matter”?",
- opts: ["A flashlight beam", "Air", "Ice", "A plastic bottle"],
- ok: 0,
- },
- ],
- onDone: () => {
- mountTapContinue(overlay, {
- scene: "atomsMastery",
- badge: ATOM_ASSET_PATHS.orbit,
- html: `<h3>Mission 1 complete path</h3>
- <p>You earned the story arc from concrete salt to a reusable rule. Use step dots to replay any weak spot. Press <strong>Next</strong> in the dock to claim <strong>Tiny Rookie</strong>.</p>`,
+ scene: "tinyEquation",
+ html: `${n(
+ "This line is chemistry’s shorthand for everything you just watched happen: two hydrogen molecules plus one oxygen molecule react to form two water molecules. Every chemical equation you’ll ever see is really just this same story: a before, an arrow, and an after, for a bunch of tiny bits rearranging themselves.",
+ )}<p class="tiny-onscreen">2H₂ + O₂ → 2H₂O</p>`,
  onDone: completeSub,
- advanceAfterDone: true,
  });
  },
  });
  },
  });
+}
+
+ function sub10_closing({ overlay, setCoach, completeSub }) {
+ setCoach("We started at a glass of water. Watch the zoom-out, then open your recap map.");
+ chemLabState.scale = 0;
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "tinyZoomOut",
+ badge: "Closing",
+ title: "The big zoom-out",
+ html: n(
+ "We started at a glass of water and shrank ourselves down past anything the eye can see. Along the way you discovered that everything is built from tiny bits called atoms, that atoms join into molecules, that atoms themselves are built from even tinier protons, neutrons, and electrons, and that all of chemistry (melting, boiling, burning, even breathing) is really just tiny bits moving, joining, and rearranging. Next time you drink a glass of water, you’ll know exactly what you’re really looking at.",
+ ),
+ ready: () => chemLabState.scale >= 0.95 || Date.now() - t0 > 9000,
+ readyText: "Back at the sunlit window.",
+ doneLabel: "Open the spiral map ▶",
+ onDone: () => {
+ setCoach("Last screen: a recap map of the four spirals you just finished. Tap a number to replay, then tap Finish Tiny Bits.");
+ mountSpiralMap(overlay, { onDone: completeSub });
  },
  });
+}
+
+function n(text) {
+ return `<p class="tiny-narration">${text}</p>`;
 }

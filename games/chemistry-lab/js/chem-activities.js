@@ -9,7 +9,10 @@ import {
  setHeatTarget,
  pulseFailFeedback,
  pulseSuccessFeedback,
-} from "./atom-scenes.js";
+ ZOOM_LEVEL_LABELS,
+ elementForProtons,
+} from "./atom-scenes.js?v=elemhunt7";
+import { HUNT_PROTON_SEQ, configString, valenceCount, familyOf, fillingOrbital, sampleSnap } from "./element-scenes.js?v=elemhunt7";
 import { createActivitySession, stopActivitySession, heatPhase } from "./activity-controller.js";
 
 let activeCleanup = null;
@@ -215,7 +218,7 @@ export function mountDragSort(host, cfg) {
  host.innerHTML = `
  <div class="lab-drag chem-card">
  <h3>${cfg.title}</h3>
- <p class="lab-drag__hint">${cfg.instructions} Drag on the <strong>canvas</strong> or use chips here - both stay in sync.</p>
+ <p class="lab-drag__hint">${cfg.instructions} Drag on the <strong>canvas</strong> or use chips here. Both stay in sync.</p>
  <div class="dz-row">${zoneHtml}</div>
  <div class="chip-bank" id="chip-bank" role="listbox" aria-label="Chips">${chipsHtml}</div>
  <p id="lab-drag-status" class="drag-hint" aria-live="polite">0 of ${chips.length} placed</p>
@@ -272,7 +275,7 @@ export function mountDragSort(host, cfg) {
  if (!id || !zoneId) return;
  const zdef = cfg.zones.find((z) => z.id === zoneId);
  if (!zdef?.accept.includes(id)) {
- status.textContent = "Hmm - that belongs in another bin.";
+ status.textContent = "Hmm, that belongs in another bin.";
  pulseFailFeedback(480);
  return;
  }
@@ -286,7 +289,7 @@ export function mountDragSort(host, cfg) {
  status.textContent = `${chemLabState.sortPlaced} of ${chips.length} placed`;
  if (!finished && checkComplete()) {
  finished = true;
- status.textContent = cfg.successText || "Nice sort - all chips placed!";
+ status.textContent = cfg.successText || "Nice sort: all chips placed!";
  chemLabState.reveal = true;
  session.dispatch({ type: "SET_REVEAL", value: true });
  pulseSuccessFeedback(400);
@@ -308,7 +311,7 @@ export function mountDragSort(host, cfg) {
  selectedId = chemLabState.selectedId;
  if (!finished && checkComplete()) {
  finished = true;
- status.textContent = cfg.successText || "Nice sort - all chips placed!";
+ status.textContent = cfg.successText || "Nice sort: all chips placed!";
  chemLabState.reveal = true;
  session.dispatch({ type: "SET_REVEAL", value: true });
  pulseSuccessFeedback(400);
@@ -368,7 +371,7 @@ export function mountDragSort(host, cfg) {
  arena?.setIntentHandler?.((intent) => {
  if (intent.type === "CANVAS_TAP" && intent.meta?.chipId) {
  selectChip(intent.meta.chipId);
- status.textContent = `Selected ${intent.meta.chipId} - drop on a bin or Place here.`;
+ status.textContent = `Selected ${intent.meta.chipId}. Drop on a bin or Place here.`;
  }
  if (intent.type === "CANVAS_UP" && intent.meta?.chipId) {
  const zoneId = intent.dropMeta?.zoneId;
@@ -422,6 +425,8 @@ export function mountHeatLab(host, cfg) {
  const read = host.querySelector("#chem-heat-read");
  const btn = host.querySelector("#chem-heat-go");
  let cancelled = false;
+ const mustVisit = cfg.mustVisit || null;
+ const visited = new Set();
 
  function applyHeat(raw) {
  const pct = Math.max(0, Math.min(100, Math.round(Number(raw) || 0)));
@@ -436,15 +441,20 @@ export function mountHeatLab(host, cfg) {
  session.dispatch({ type: "SET_HEAT", value: h });
  const phase = heatPhase(h);
  const labels = cfg.readoutLabels || {
- cold: "Cold - molecules locked / slow",
- melting: "Melting - lattice softening",
- liquid: "Liquid - free to slide",
- simmer: "Hot - vapor escaping",
+ cold: "Cold: molecules locked / slow",
+ melting: "Melting: lattice softening",
+ liquid: "Liquid: free to slide",
+ simmer: "Hot: vapor escaping",
  };
+ visited.add(phase);
  read.textContent = labels[phase] || "Working…";
- if (h >= threshold) {
+ if (mustVisit) {
+ const ok = mustVisit.every((p) => visited.has(p));
+ btn.disabled = !ok;
+ if (ok) read.textContent += ": ice, liquid, and steam visited";
+ } else if (h >= threshold) {
  btn.disabled = false;
- read.textContent += " - Goal reached";
+ read.textContent += ". Goal reached";
  } else btn.disabled = true;
  }
 
@@ -474,7 +484,7 @@ export function mountHeatLab(host, cfg) {
 
  const iv = setInterval(() => {
  if (cancelled) return;
- if (chemLabState.heat >= threshold) {
+ if (!mustVisit && chemLabState.heat >= threshold) {
  btn.disabled = false;
  applyHeat(chemLabState.heat * 100);
  }
@@ -533,7 +543,7 @@ export function mountRevealSteps(host, cfg) {
  i++;
  if (i >= cfg.steps.length) {
  finished = true;
- btn.textContent = "I get it - continue ▶";
+ btn.textContent = "I get it. Continue ▶";
  }
  };
  btn.click();
@@ -969,4 +979,975 @@ export function mountMultiQuiz(host, cfg) {
  }
  render();
  return trackCleanup(() => {});
+}
+
+function narrationHtml(text) {
+ return `<p class="tiny-narration">${text}</p>`;
+}
+
+export function mountGate(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ window.__arena?.setIntentHandler?.(null);
+ });
+ playScene(cfg.scene, cfg.sceneArgs || {});
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ ${cfg.badge ? `<div class="lab-demo__badge">${cfg.badge}</div>` : ""}
+ ${cfg.title ? `<h3>${cfg.title}</h3>` : ""}
+ ${cfg.html || ""}
+ ${cfg.controlsHtml || ""}
+ <p id="tiny-gate-status" class="drag-hint" aria-live="polite">${cfg.status || ""}</p>
+ <button type="button" class="btn primary ${cfg.pulse ? "tiny-pulse" : ""}" id="tiny-gate-go" ${cfg.ready ? "disabled" : ""}>${cfg.doneLabel || "Continue ▶"}</button>
+ </div>`;
+ const btn = host.querySelector("#tiny-gate-go");
+ const status = host.querySelector("#tiny-gate-status");
+ iv = cfg.ready
+ ? setInterval(() => {
+ if (cancelled) return;
+ if (cfg.ready()) {
+ btn.disabled = false;
+ if (cfg.readyText && status) status.textContent = cfg.readyText;
+ }
+ }, 120)
+ : null;
+ if (cfg.bind) cfg.bind(host, { finish, button: btn, status, playScene });
+ btn.onclick = () => {
+ if (btn.disabled) return;
+ finish();
+ };
+}
+
+export function mountZoomTool(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ chemLabState.zoomClick = 0;
+ playScene("tinyZoom");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 1: Enactive</div>
+ <h3>The Infinite Zoom Tool</h3>
+ ${narrationHtml("Each click or drag-tick zooms 10× further into the water.")}
+ <p class="tiny-onscreen">Use <strong>+</strong> on the canvas or here. Watch the corner counter grow.</p>
+ <div class="tiny-zoom-row">
+ <button type="button" class="btn secondary" id="tiny-zoom-minus" aria-label="Zoom out">−</button>
+ <input id="tiny-zoom" class="chem-heat__range" type="range" min="0" max="5" step="1" value="0" />
+ <button type="button" class="btn primary tiny-pulse" id="tiny-zoom-plus" aria-label="Zoom in">+</button>
+ </div>
+ <p class="tiny-zoom-read" id="tiny-zoom-read" aria-live="polite">Zoom ${ZOOM_LEVEL_LABELS[0]}</p>
+ <p id="tiny-zoom-cap" class="tiny-narration" hidden></p>
+ <button type="button" class="btn primary" id="tiny-zoom-go" disabled>Continue ▶</button>
+ </div>`;
+ const range = host.querySelector("#tiny-zoom");
+ const read = host.querySelector("#tiny-zoom-read");
+ const cap = host.querySelector("#tiny-zoom-cap");
+ const go = host.querySelector("#tiny-zoom-go");
+
+ function setZoom(n) {
+ const prev = chemLabState.zoomClick || 0;
+ const next = Math.max(0, Math.min(5, Math.round(n)));
+ if (prev < 4 && next >= 4) chemLabState.zoomFlashUntil = performance.now() + 1800;
+ chemLabState.zoomClick = next;
+ range.value = String(next);
+ read.textContent = `Zoom ${ZOOM_LEVEL_LABELS[next]}`;
+ if (next >= 5) {
+ cap.hidden = false;
+ cap.textContent =
+ "You just did something no human eye can ever actually do: you zoomed in past the point where water stops looking smooth and starts looking like… this. Countless tiny dots, packed together, constantly jiggling. You didn’t just learn this. You found it, by zooming in yourself.";
+ go.disabled = false;
+ pulseSuccessFeedback(320);
+ }
+ }
+
+ host.querySelector("#tiny-zoom-plus").onclick = () => setZoom((chemLabState.zoomClick || 0) + 1);
+ host.querySelector("#tiny-zoom-minus").onclick = () => setZoom((chemLabState.zoomClick || 0) - 1);
+ range.oninput = () => setZoom(Number(range.value));
+ go.onclick = () => finish();
+
+ const arena = window.__arena;
+ arena?.setIntentHandler?.((intent) => {
+ if (intent.type === "CANVAS_TAP" && intent.meta?.action === "zoom") {
+ setZoom((chemLabState.zoomClick || 0) + 1);
+ }
+ });
+ return trackCleanup(() => arena?.setIntentHandler?.(null));
+}
+
+export function mountTrueFalse(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ playScene(cfg.scene, cfg.sceneArgs || {});
+ host.innerHTML = `
+ <div class="chem-card tiny-card chem-quiz">
+ <div class="lab-demo__badge">${cfg.badge || "Quick check"}</div>
+ <h3>${cfg.title || "True or false"}</h3>
+ <p class="chem-quiz__q">${cfg.q}</p>
+ <div class="btn-row tiny-tf">
+ <button type="button" class="btn secondary" data-tf="true">True</button>
+ <button type="button" class="btn secondary" data-tf="false">False</button>
+ </div>
+ <p id="tf-status" class="drag-hint" aria-live="polite"></p>
+ <button type="button" class="btn primary hidden" id="tf-go">Continue ▶</button>
+ </div>`;
+ const status = host.querySelector("#tf-status");
+ const go = host.querySelector("#tf-go");
+ host.querySelectorAll("[data-tf]").forEach((btn) => {
+ btn.onclick = () => {
+ const saidTrue = btn.dataset.tf === "true";
+ const ok = saidTrue === !!cfg.answerIsTrue;
+ host.querySelectorAll("[data-tf]").forEach((b) => {
+ b.disabled = true;
+ });
+ if (ok) {
+ btn.classList.add("chem-opt--ok");
+ pulseSuccessFeedback(350);
+ } else {
+ btn.classList.add("chem-opt--bad");
+ pulseFailFeedback(400);
+ }
+ status.textContent = cfg.explain;
+ go.classList.remove("hidden");
+ };
+ });
+ go.onclick = () => finish();
+ return trackCleanup(() => {});
+}
+
+export function mountGhostBuild(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ chemLabState.build = { o: false, hL: false, hR: false, snapped: false };
+ playScene("tinyBuild");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 2: Enactive</div>
+ <h3>Build a water unit</h3>
+ ${narrationHtml("Drag the two blue bits and one red bit into the bent ghost outline.")}
+ <p id="build-status" class="drag-hint" aria-live="polite">Drop each bit onto its matching outline.</p>
+ <button type="button" class="btn primary" id="build-go" disabled>Continue ▶</button>
+ </div>`;
+ const status = host.querySelector("#build-status");
+ const go = host.querySelector("#build-go");
+ go.onclick = () => finish();
+
+ function snapIfClose(id, x, y) {
+ const arena = window.__arena;
+ const w = arena?.width || 640;
+ const h = arena?.height || 360;
+ const ox = w * 0.58;
+ const oy = h * 0.46;
+ const slots = {
+ o: { x: ox, y: oy, r: 30 },
+ hL: { x: ox - 38, y: oy + 28, r: 24 },
+ hR: { x: ox + 38, y: oy + 28, r: 24 },
+ };
+ const b = chemLabState.build;
+ function near(slot) {
+ return Math.hypot(x - slot.x, y - slot.y) < slot.r;
+ }
+ if (id === "o" && near(slots.o)) b.o = true;
+ else if (id === "hL" || id === "hR") {
+ if (!b.hL && near(slots.hL)) b.hL = true;
+ else if (!b.hR && near(slots.hR)) b.hR = true;
+ else if (!b.hL && near(slots.hR)) b.hL = true;
+ else if (!b.hR && near(slots.hL)) b.hR = true;
+ }
+ if (b.o && b.hL && b.hR && !b.snapped) {
+ b.snapped = true;
+ pulseSuccessFeedback(420);
+ status.textContent =
+ "Look what just happened: you took three separate tiny bits and joined them into one connected unit. That’s not an accident; that’s exactly what’s happening inside every drop of water you’ve ever touched.";
+ go.disabled = false;
+ }
+ chemLabState.build = { ...b };
+ }
+
+ const arena = window.__arena;
+ arena?.setIntentHandler?.((intent) => {
+ if (intent.type === "CANVAS_UP" && intent.meta?.piece) {
+ snapIfClose(intent.meta.piece, intent.x, intent.y);
+ }
+ });
+ void cfg;
+ return trackCleanup(() => arena?.setIntentHandler?.(null));
+}
+
+export function mountFormulaReveal(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ chemLabState.formulaStep = 0;
+ playScene("tinyFormula");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 2: Symbolic</div>
+ <h3>Names for what you built</h3>
+ ${narrationHtml(
+ "Chemists have names and one- or two-letter symbols for every type of atom: hydrogen is ‘H,’ oxygen is ‘O.’ And when atoms join together like you just did, the joined group has its own name too: a molecule. The little number after a letter (that ‘2’ in H₂O) just tells you how many of that atom are in the group. You already built one. This is just the label for what you built.",
+ )}
+ <p id="formula-status" class="tiny-onscreen">blue ball → Hydrogen (H). red ball → Oxygen (O). joined = H₂O, a molecule</p>
+ <button type="button" class="btn primary" id="formula-go">Show O₂</button>
+ </div>`;
+ const btn = host.querySelector("#formula-go");
+ const status = host.querySelector("#formula-status");
+ btn.onclick = () => {
+ const step = chemLabState.formulaStep || 0;
+ if (step === 0) {
+ chemLabState.formulaStep = 1;
+ playScene("tinyFormula");
+ status.textContent = "O₂: the oxygen pair you saw in the gallery.";
+ btn.textContent = "Show CO₂";
+ pulseSuccessFeedback(280);
+ } else if (step === 1) {
+ chemLabState.formulaStep = 2;
+ playScene("tinyFormula");
+ status.textContent = "CO₂: grey + two reds, a straight line.";
+ btn.textContent = "Continue ▶";
+ pulseSuccessFeedback(280);
+ } else {
+ finish();
+ }
+ };
+ void cfg;
+ return trackCleanup(() => {});
+}
+
+export function mountAtomBuilder(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ chemLabState.protons = 0;
+ chemLabState.neutrons = 0;
+ chemLabState.electrons = 0;
+ chemLabState.builderChallenge = 1;
+ playScene("tinyBuilder");
+ const prompts = [
+ "",
+ "Add 1 proton and 1 electron. What did you just build?",
+ "Now add 1 more proton, 2 neutrons, and 1 more electron. What is it now?",
+ "Try 6 protons, 6 neutrons, 6 electrons.",
+ "Free play: add or remove pieces and watch the name change (Oxygen is 8 protons, Nitrogen is 7).",
+ ];
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 3: Enactive</div>
+ <h3>Atom Builder</h3>
+ ${narrationHtml("Remember, atoms were named ‘that which cannot be cut’? Turns out that name is a little wrong. Let’s crack one open and see what’s really inside.")}
+ <p class="tiny-builder-read" id="ab-read" aria-live="polite"></p>
+ <p id="ab-prompt" class="tiny-onscreen">${prompts[1]}</p>
+ <p id="ab-note" class="drag-hint"></p>
+ <div class="btn-row">
+ <button type="button" class="btn secondary" id="ab-reset">Clear pieces</button>
+ <button type="button" class="btn primary" id="ab-go" disabled>Continue ▶</button>
+ </div>
+ </div>`;
+ const read = host.querySelector("#ab-read");
+ const prompt = host.querySelector("#ab-prompt");
+ const note = host.querySelector("#ab-note");
+ const go = host.querySelector("#ab-go");
+ let cancelled = false;
+ let toldCarbon = false;
+
+ function refresh() {
+ const p = chemLabState.protons || 0;
+ const n = chemLabState.neutrons || 0;
+ const e = chemLabState.electrons || 0;
+ const el = elementForProtons(p);
+ read.textContent = `Protons: ${p} | Element: ${el.name} | This is now: ${p ? el.name : "?"}`;
+ let ch = chemLabState.builderChallenge || 1;
+ if (ch === 1 && p === 1 && e === 1) {
+ chemLabState.builderChallenge = 2;
+ prompt.textContent = prompts[2];
+ note.textContent = "You built Hydrogen.";
+ pulseSuccessFeedback(280);
+ } else if (ch <= 2 && p === 2 && n === 2 && e === 2) {
+ chemLabState.builderChallenge = 3;
+ prompt.textContent = prompts[3];
+ note.textContent = "You built Helium.";
+ pulseSuccessFeedback(280);
+ } else if (ch <= 3 && p === 6 && n === 6 && e === 6) {
+ chemLabState.builderChallenge = 4;
+ prompt.textContent = prompts[4];
+ if (!toldCarbon) {
+ toldCarbon = true;
+ note.textContent =
+ "Carbon: this is the atom in your pencil, and in you. Notice what’s actually deciding which element you’re building: it’s not the neutrons, and it’s not the electrons. It’s the number of protons. That one number is what makes carbon carbon and not something else.";
+ }
+ go.disabled = false;
+ pulseSuccessFeedback(320);
+ }
+ }
+
+ host.querySelector("#ab-reset").onclick = () => {
+ chemLabState.protons = 0;
+ chemLabState.neutrons = 0;
+ chemLabState.electrons = 0;
+ note.textContent = "Pieces cleared. Try the prompt again.";
+ };
+ go.onclick = () => finish();
+ const iv = setInterval(() => {
+ if (!cancelled) refresh();
+ }, 200);
+ refresh();
+ void cfg;
+ return trackCleanup(() => {
+ cancelled = true;
+ clearInterval(iv);
+ });
+}
+
+export function mountSparkLab(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ chemLabState.sparkAt = 0;
+ chemLabState.sparkDone = false;
+ playScene("tinyReact");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 4: Enactive</div>
+ <h3>Reaction Lab</h3>
+ ${narrationHtml("Two hydrogen pairs and one oxygen pair sit ready. Click Spark.")}
+ <button type="button" class="btn primary tiny-pulse" id="tiny-spark">Spark ⚡</button>
+ <p id="spark-status" class="tiny-onscreen" aria-live="polite"></p>
+ <button type="button" class="btn primary" id="spark-go" disabled>Continue ▶</button>
+ </div>`;
+ const spark = host.querySelector("#tiny-spark");
+ const status = host.querySelector("#spark-status");
+ const go = host.querySelector("#spark-go");
+ spark.onclick = () => {
+ chemLabState.sparkAt = performance.now();
+ chemLabState.sparkDone = false;
+ spark.disabled = true;
+ status.textContent = "Bonds breaking… atoms swirling…";
+ };
+ const iv = setInterval(() => {
+ if (chemLabState.sparkDone) {
+ status.textContent = "Nothing was created. Nothing was destroyed. The same atoms, just rearranged and rejoined.";
+ go.disabled = false;
+ }
+ }, 120);
+ go.onclick = () => finish();
+ void cfg;
+ return trackCleanup(() => clearInterval(iv));
+}
+
+export function mountSpiralMap(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ const arena = window.__arena;
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ arena?.setIntentHandler?.(null);
+ });
+ chemLabState.spiralStop = 0;
+ chemLabState.spiralUntil = 0;
+ chemLabState.spiralFinish = false;
+ playScene(cfg.scene || "tinySpiral");
+ const stops = cfg.stops || [
+ { n: 1, label: "1: Tiny bits" },
+ { n: 2, label: "2: Many kinds" },
+ { n: 3, label: "3: Inside" },
+ { n: 4, label: "4: At work" },
+ ];
+ const finishLabel = cfg.finishLabel || "Finish Tiny Bits ▶";
+ const statusIdle = cfg.statusIdle || "Tap a number to replay, or finish now.";
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">${cfg.badge || "Closing"}</div>
+ <h3>${cfg.title || "Your spiral map"}</h3>
+ ${narrationHtml(
+ cfg.narration ||
+ "This last screen is a recap, not a new puzzle. The four numbers are the four loops you already finished. Tap a number (on the canvas or here) to replay a short highlight. When you are ready, tap Finish Tiny Bits.",
+ )}
+ <div class="tiny-spiral-stops">
+ ${stops.map((s) => `<button type="button" class="btn secondary" data-stop="${s.n}">${s.label}</button>`).join("")}
+ </div>
+ <p id="spiral-status" class="drag-hint">${statusIdle}</p>
+ <button type="button" class="btn primary tiny-pulse" id="spiral-go">${finishLabel}</button>
+ </div>`;
+ function playStop(n) {
+ if (cancelled) return;
+ chemLabState.spiralStop = n;
+ chemLabState.spiralUntil = performance.now() + 4500;
+ const status = host.querySelector("#spiral-status");
+ if (status) status.textContent = `Replaying spiral ${n}. Tap another number, or ${finishLabel.replace(" ▶", "")}.`;
+ }
+ host.querySelectorAll("[data-stop]").forEach((btn) => {
+ btn.onclick = () => playStop(Number(btn.dataset.stop));
+ });
+ host.querySelector("#spiral-go").onclick = () => finish();
+ arena?.setIntentHandler?.((intent) => {
+ if (intent.type !== "CANVAS_TAP") return;
+ if (intent.meta?.action === "spiral") playStop(intent.meta.stop);
+ if (intent.meta?.action === "spiralFinish") finish();
+ });
+ iv = setInterval(() => {
+ if (!cancelled && chemLabState.spiralFinish) finish();
+ }, 80);
+}
+
+export function mountTempPreview(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ chemLabState.panelTemp = 0.45;
+ playScene(cfg.scene || "tinyStates");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">${cfg.badge || "Spiral 1: Iconic"}</div>
+ <h3>${cfg.title || "Same bits, three dances"}</h3>
+ ${cfg.html || ""}
+ <label class="chem-heat__label" for="tiny-temp">Temperature under the water panel (optional)</label>
+ <input id="tiny-temp" class="chem-heat__range" type="range" min="0" max="100" value="45" />
+ <p class="chem-heat__readout" id="tiny-temp-read">Close &amp; sliding</p>
+ <button type="button" class="btn primary" id="tiny-temp-go">${cfg.doneLabel || "Continue ▶"}</button>
+ </div>`;
+ const range = host.querySelector("#tiny-temp");
+ const read = host.querySelector("#tiny-temp-read");
+ range.oninput = () => {
+ const v = Number(range.value) / 100;
+ chemLabState.panelTemp = v;
+ read.textContent = v < 0.28 ? "Packed & still" : v > 0.78 ? "Far apart & fast" : "Close & sliding";
+ };
+ host.querySelector("#tiny-temp-go").onclick = () => finish();
+ return trackCleanup(() => {});
+}
+
+const HUNT_SEQ_NAME = {
+ 1: "Hydrogen (H)",
+ 2: "Helium (He)",
+ 6: "Carbon (C)",
+ 8: "Oxygen (O)",
+ 10: "Neon (Ne)",
+ 11: "Sodium (Na)",
+ 17: "Chlorine (Cl)",
+ 18: "Argon (Ar)",
+};
+
+export function mountHuntProtonCounter(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ const arena = window.__arena;
+ let cancelled = false;
+ let reached = 0;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ arena?.setIntentHandler?.(null);
+ });
+ chemLabState.builderMode = "hunt";
+ chemLabState.protons = 0;
+ chemLabState.electrons = 0;
+ chemLabState.neutrons = 0;
+ playScene("tinyBuilder");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 1: Enactive</div>
+ <h3>Proton Counter</h3>
+ ${narrationHtml("Drag protons one at a time into the nucleus. Electrons match automatically. The only thing that decides an element's identity is its number of protons.")}
+ <p class="tiny-builder-read" id="hunt-p-read" aria-live="polite"></p>
+ <p id="hunt-p-prompt" class="tiny-onscreen">Try 1.</p>
+ <p id="hunt-p-note" class="drag-hint"></p>
+ <div class="btn-row">
+ <button type="button" class="btn secondary" id="hunt-p-reset">Clear protons</button>
+ <button type="button" class="btn primary" id="hunt-p-go" disabled>Continue ▶</button>
+ </div>
+ </div>`;
+ const read = host.querySelector("#hunt-p-read");
+ const prompt = host.querySelector("#hunt-p-prompt");
+ const note = host.querySelector("#hunt-p-note");
+ const go = host.querySelector("#hunt-p-go");
+ function refresh() {
+ const p = chemLabState.protons || 0;
+ const el = elementForProtons(p);
+ read.textContent = `Protons: ${p} → Element: ${p ? el.name : "?"} (${p ? el.symbol : "?"})`;
+ while (reached < HUNT_PROTON_SEQ.length && p >= HUNT_PROTON_SEQ[reached]) {
+ const z = HUNT_PROTON_SEQ[reached];
+ note.textContent = `That's ${HUNT_SEQ_NAME[z]}.`;
+ pulseSuccessFeedback(220);
+ reached += 1;
+ }
+ const next = HUNT_PROTON_SEQ[reached];
+ if (next) prompt.textContent = `Now try ${next}.`;
+ else {
+ prompt.textContent = "You never needed a neutron count to change the element.";
+ note.textContent =
+ "Change the proton count by even one, and you have a completely different element, with completely different properties.";
+ go.disabled = false;
+ }
+ }
+ host.querySelector("#hunt-p-reset").onclick = () => {
+ chemLabState.protons = 0;
+ chemLabState.electrons = 0;
+ reached = 0;
+ go.disabled = true;
+ prompt.textContent = "Try 1.";
+ note.textContent = "Pieces cleared. Try the prompt again.";
+ };
+ go.onclick = () => finish();
+ iv = setInterval(() => {
+ if (!cancelled) refresh();
+ }, 180);
+ refresh();
+}
+
+export function mountFamilyExplorer(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ const arena = window.__arena;
+ let cancelled = false;
+ const seen = { alkali: false, noble: false, halogen: false, transition: false };
+ trackCleanup(() => {
+ cancelled = true;
+ arena?.setIntentHandler?.(null);
+ });
+ chemLabState.huntFamily = "";
+ playScene("elemFamilies");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 1: Iconic</div>
+ <h3>Family Explorer</h3>
+ ${narrationHtml("The periodic table isn’t just a chart for memorizing. It’s a map. Elements in the same column tend to behave alike, because they arrange their electrons in strikingly similar patterns. Rows tell you something too: each new row means the atom just gained a whole new layer of space for electrons to live in.")}
+ <p id="hunt-fam-status" class="tiny-onscreen">Tap a colored family on the canvas: Alkali Metals, Noble Gases, Halogens, Transition Metals.</p>
+ <button type="button" class="btn primary" id="hunt-fam-go" disabled>Continue ▶</button>
+ </div>`;
+ const status = host.querySelector("#hunt-fam-status");
+ const go = host.querySelector("#hunt-fam-go");
+ function check() {
+ const n = Object.values(seen).filter(Boolean).length;
+ status.textContent =
+ n >= 4
+ ? "You’ve met the four named families. Continue when you’re ready."
+ : `Families visited: ${n} / 4. Tap the violet, teal, orange, and blue-grey blocks.`;
+ go.disabled = n < 4;
+ }
+ arena?.setIntentHandler?.((intent) => {
+ if (cancelled || intent.type !== "CANVAS_TAP" || intent.meta?.action !== "tile") return;
+ const fam = intent.meta.family || familyOf(intent.meta.z);
+ chemLabState.huntFamily = fam;
+ if (seen[fam] === false) {
+ seen[fam] = true;
+ pulseSuccessFeedback(220);
+ }
+ check();
+ });
+ go.onclick = () => finish();
+ check();
+}
+
+export function mountShellFill(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ });
+ chemLabState.huntShells = [0, 0, 0];
+ chemLabState.huntBounce = null;
+ playScene("elemShells");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 2: Enactive</div>
+ <h3>Fill the Shells</h3>
+ ${narrationHtml("This is the orbit model: electrons pictured as tiny planets circling a sun. It’s simple, and it correctly predicts how many electrons fit in each layer. Drag 11 electrons onto Sodium’s rings. If a ring is full, the extra electron bounces off. Fill 2, then 8, then 1.")}
+ <p id="hunt-sh-read" class="tiny-builder-read">Shell 1: 0/2. Shell 2: 0/8. Shell 3: 0/8 (for now).</p>
+ <p id="hunt-sh-note" class="drag-hint"></p>
+ <div class="btn-row">
+ <button type="button" class="btn secondary" id="hunt-sh-reset">Clear electrons</button>
+ <button type="button" class="btn primary" id="hunt-sh-go" disabled>Continue ▶</button>
+ </div>
+ </div>`;
+ const read = host.querySelector("#hunt-sh-read");
+ const note = host.querySelector("#hunt-sh-note");
+ const go = host.querySelector("#hunt-sh-go");
+ let told = false;
+ iv = setInterval(() => {
+ if (cancelled) return;
+ const s = chemLabState.huntShells || [0, 0, 0];
+ read.textContent = `Shell 1: ${s[0]}/2 max. Shell 2: ${s[1]}/8 max. Shell 3: ${s[2]}/8 max (for now).`;
+ if (s[0] === 2 && s[1] === 8 && s[2] === 1) {
+ go.disabled = false;
+ if (!told) {
+ told = true;
+ note.textContent =
+ "Locked: 2, 8, 1. Useful for counting. But real electrons don’t travel in neat circular paths. Next we find out what they actually do.";
+ pulseSuccessFeedback(280);
+ }
+ }
+ }, 160);
+ host.querySelector("#hunt-sh-reset").onclick = () => {
+ chemLabState.huntShells = [0, 0, 0];
+ told = false;
+ go.disabled = true;
+ note.textContent = "Rings cleared. Fill 2, then 8, then 1.";
+ };
+ go.onclick = () => finish();
+}
+
+export function mountSnapshots(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ const arena = window.__arena;
+ let cancelled = false;
+ let stage = "smear";
+ trackCleanup(() => {
+ cancelled = true;
+ clearInterval(iv);
+ arena?.setIntentHandler?.(null);
+ });
+ chemLabState.huntSnaps = [];
+ chemLabState.huntSmear = 0;
+ playScene("elemCloud", { phase: "ring" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 2: Iconic</div>
+ <h3>Probability Reveal</h3>
+ <div id="hunt-snap-body"></div>
+ <button type="button" class="btn primary" id="hunt-snap-go" disabled>Continue ▶</button>
+ </div>`;
+ const body = host.querySelector("#hunt-snap-body");
+ const go = host.querySelector("#hunt-snap-go");
+ function render() {
+ if (stage === "smear") {
+ body.innerHTML = narrationHtml(
+ "Watch the neat orbiting rings smear. Real electrons don’t travel in neat circular paths. The fuzzy cloud is probability: denser near the nucleus, fading out, with no fixed path.",
+ );
+ go.disabled = true;
+ go.textContent = "Continue ▶";
+ } else if (stage === "snaps") {
+ body.innerHTML = `${narrationHtml(
+ "That fuzzy cloud is called an orbital, not to be confused with orbit. An orbit is a path. An orbital is a region of space where an electron is likely to be found. Tap Take snapshot on the canvas (about 30 times) until the dots rebuild the cloud.",
+ )}<p id="hunt-snap-count" class="tiny-onscreen">Snapshots: 0</p>
+ <button type="button" class="btn secondary" id="hunt-snap-tap">Take snapshot</button>`;
+ host.querySelector("#hunt-snap-tap").onclick = () => {
+ if ((chemLabState.huntSnaps || []).length >= 40) return;
+ chemLabState.huntSnaps = (chemLabState.huntSnaps || []).concat([sampleSnap()]);
+ };
+ go.disabled = true;
+ } else {
+ body.innerHTML = `${narrationHtml(
+ "Keep these two words straight. Chemists use both, for different reasons: orbit as an easy mental picture for counting electrons, and orbital for what’s actually, physically true. From here on, we’re only talking about real orbitals.",
+ )}<p class="tiny-onscreen">Orbit: an imagined fixed circular path (useful for counting, not physically real).</p>
+ <p class="tiny-onscreen">Orbital: a real, probability-based region of space where an electron is most likely to be found.</p>`;
+ go.disabled = false;
+ go.textContent = "Continue ▶";
+ }
+ }
+ render();
+ go.onclick = () => {
+ if (stage === "snaps") {
+ stage = "words";
+ chemLabState.phase = "words";
+ render();
+ return;
+ }
+ if (stage === "words") finish();
+ };
+ const iv = setInterval(() => {
+ if (cancelled) return;
+ if (stage === "smear" && (chemLabState.huntSmear || 0) >= 1) {
+ stage = "snaps";
+ chemLabState.phase = "snaps";
+ render();
+ }
+ if (stage === "snaps") {
+ const n = (chemLabState.huntSnaps || []).length;
+ const count = host.querySelector("#hunt-snap-count");
+ if (count) count.textContent = `Snapshots: ${n}`;
+ if (n >= 30) go.disabled = false;
+ }
+ }, 120);
+}
+
+export function mountOrbitalGallery(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ const seen = { s: false, p: false, d: false };
+ const dwell = { s: 0, p: 0, d: 0 };
+ trackCleanup(() => {
+ cancelled = true;
+ clearInterval(iv);
+ });
+ chemLabState.huntOrbital = "s";
+ chemLabState.huntRotX = 0.35;
+ chemLabState.huntRotY = 0.4;
+ chemLabState.huntPLobes = [true, false, false];
+ chemLabState.huntDIndex = 0;
+ chemLabState.huntSpun = { s: false, p: false, d: false };
+ chemLabState.huntAutoRotate = true;
+ playScene("elemOrbitals");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 3: Enactive</div>
+ <h3>Orbital Shape Gallery</h3>
+ ${narrationHtml("s is a sphere (a circle from every angle). p is a dumbbell: two round lobes pinched at the nucleus, and they come as a set of three along x, y, and z. d is a four-leaf clover (five orientations; one of them is a dumbbell with a ring). f is optional. Drag to spin, or leave auto-rotate on.")}
+ <div class="btn-row hunt-orb-row">
+ <button type="button" class="btn secondary" data-orb="s">s sphere</button>
+ <button type="button" class="btn secondary" data-orb="p">p dumbbell</button>
+ <button type="button" class="btn secondary" data-orb="d">d clover</button>
+ <button type="button" class="btn secondary" data-orb="f">f (optional)</button>
+ </div>
+ <label class="hunt-check"><input type="checkbox" id="hunt-auto" checked /> Auto-rotate</label>
+ <div id="hunt-orb-extra"></div>
+ <p id="hunt-orb-note" class="drag-hint">Spin (or auto-rotate) s, p, and d.</p>
+ <button type="button" class="btn primary" id="hunt-orb-go" disabled>Continue ▶</button>
+ </div>`;
+ const extra = host.querySelector("#hunt-orb-extra");
+ const note = host.querySelector("#hunt-orb-note");
+ const go = host.querySelector("#hunt-orb-go");
+ function extras() {
+ const k = chemLabState.huntOrbital;
+ if (k === "p") {
+ extra.innerHTML = `<p class="tiny-onscreen">A dumbbell along x is on. Toggle y and z to add the other two directions.</p>
+ <div class="btn-row">${[0, 1, 2]
+ .map(
+ (i) =>
+ `<label class="hunt-check"><input type="checkbox" data-lobe="${i}" ${chemLabState.huntPLobes[i] ? "checked" : ""} /> ${["x", "y", "z"][i]}</label>`,
+ )
+ .join("")}</div>`;
+ extra.querySelectorAll("[data-lobe]").forEach((box) => {
+ box.onchange = () => {
+ const lobes = chemLabState.huntPLobes.slice();
+ lobes[Number(box.dataset.lobe)] = box.checked;
+ chemLabState.huntPLobes = lobes;
+ };
+ });
+ } else if (k === "d") {
+ extra.innerHTML = `<p class="tiny-onscreen">Four of the five d shapes are clovers. One is a dumbbell with a ring. Cycle to see each.</p>
+ <button type="button" class="btn secondary" id="hunt-d-next">Next d shape (${(chemLabState.huntDIndex || 0) + 1} / 5)</button>`;
+ extra.querySelector("#hunt-d-next").onclick = () => {
+ chemLabState.huntDIndex = ((chemLabState.huntDIndex || 0) + 1) % 5;
+ extras();
+ };
+ } else if (k === "f") {
+ extra.innerHTML = `<p class="tiny-onscreen">Seven in a set. Notice the escalating complexity. You don’t need to memorize all seven.</p>`;
+ } else {
+ extra.innerHTML = `<p class="tiny-onscreen">A sphere. Spin it: it stays a circle from every angle.</p>`;
+ }
+ }
+ host.querySelectorAll("[data-orb]").forEach((btn) => {
+ btn.onclick = () => {
+ chemLabState.huntOrbital = btn.dataset.orb;
+ if (seen[btn.dataset.orb] === false) seen[btn.dataset.orb] = true;
+ extras();
+ };
+ });
+ host.querySelector("#hunt-auto").onchange = (ev) => {
+ chemLabState.huntAutoRotate = !!ev.target.checked;
+ };
+ go.onclick = () => finish();
+ extras();
+ const iv = setInterval(() => {
+ if (cancelled) return;
+ const k = chemLabState.huntOrbital;
+ if (k === "s" || k === "p" || k === "d") {
+ seen[k] = true;
+ dwell[k] += 120;
+ if (chemLabState.huntAutoRotate && dwell[k] >= 900) chemLabState.huntSpun[k] = true;
+ }
+ const spun = chemLabState.huntSpun || {};
+ const ok =
+ seen.s &&
+ seen.p &&
+ seen.d &&
+ (spun.s || chemLabState.huntAutoRotate) &&
+ (spun.p || chemLabState.huntAutoRotate) &&
+ (spun.d || chemLabState.huntAutoRotate);
+ go.disabled = !ok;
+ note.textContent = ok
+ ? "s, p, and d are in. f is optional. Every atom fills shapes like these, simplest first."
+ : "Visit and spin s, p, and d (auto-rotate counts).";
+ }, 120);
+}
+
+export function mountBuildupScrub(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let stage = "play";
+ let auto = true;
+ trackCleanup(() => {
+ cancelled = true;
+ clearInterval(iv);
+ });
+ chemLabState.huntFillZ = 1;
+ playScene("elemBuildup");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 3: Iconic</div>
+ <h3 id="hunt-bu-title">Orbital fill order</h3>
+ <div id="hunt-bu-body"></div>
+ <button type="button" class="btn primary" id="hunt-bu-go" disabled>Continue ▶</button>
+ </div>`;
+ const title = host.querySelector("#hunt-bu-title");
+ const body = host.querySelector("#hunt-bu-body");
+ const go = host.querySelector("#hunt-bu-go");
+ function render() {
+ if (stage === "play") {
+ title.textContent = "Orbital fill order";
+ body.innerHTML = `${narrationHtml(
+ "This is the real reason the periodic table has the shape it does. The tall columns on the left and right are elements filling s and p orbitals. The wide block in the middle, the transition metals, is filling d orbitals. The shape of the periodic table is a direct map of orbital filling.",
+ )}<label class="chem-heat__label" for="hunt-z">Scrub through Hydrogen to Iron (optional)</label>
+ <input id="hunt-z" class="chem-heat__range" type="range" min="1" max="26" value="${chemLabState.huntFillZ || 1}" />
+ <p id="hunt-z-read" class="chem-heat__readout"></p>`;
+ const range = host.querySelector("#hunt-z");
+ range.oninput = () => {
+ auto = false;
+ chemLabState.huntFillZ = Number(range.value);
+ };
+ go.disabled = (chemLabState.huntFillZ || 1) < 26;
+ go.textContent = "See iron’s map ▶";
+ } else if (stage === "config") {
+ title.textContent = "Electron configuration";
+ body.innerHTML = `${narrationHtml(
+ "This string of letters and numbers is called an electron configuration, and you can now actually read it: the number is the shell, the letter is the orbital shape, and the small number on top is how many electrons are packed into that shape. This one line is a complete, precise map of exactly where every one of iron’s 26 electrons lives.",
+ )}<p class="tiny-onscreen">${configString(26)}</p>`;
+ chemLabState.huntFillZ = 26;
+ go.disabled = false;
+ go.textContent = "Ground rules (optional) ▶";
+ } else {
+ title.textContent = "Two ground rules";
+ body.innerHTML = `${narrationHtml(
+ "Two ground rules you can try to break: electrons fill the lowest energy orbital available first, and no two electrons in the same atom can be in the exact identical state.",
+ )}<div class="btn-row">
+ <button type="button" class="btn secondary" id="hunt-break-low">Try skipping 1s</button>
+ <button type="button" class="btn secondary" id="hunt-break-same">Try three in one identical state</button>
+ </div>
+ <p id="hunt-pauli-note" class="drag-hint">Optional. Tap a rule, or skip.</p>
+ <button type="button" class="btn secondary" id="hunt-pauli-skip">Skip this note ▶</button>`;
+ host.querySelector("#hunt-break-low").onclick = () => {
+ pulseFailFeedback(360);
+ host.querySelector("#hunt-pauli-note").textContent =
+ "Bounced. Electrons fill the lowest energy orbital available first.";
+ };
+ host.querySelector("#hunt-break-same").onclick = () => {
+ pulseFailFeedback(360);
+ host.querySelector("#hunt-pauli-note").textContent =
+ "Bounced. No two electrons in the same atom can be in the exact identical state.";
+ };
+ host.querySelector("#hunt-pauli-skip").onclick = () => finish();
+ go.disabled = false;
+ go.textContent = "Continue ▶";
+ }
+ }
+ render();
+ go.onclick = () => {
+ if (stage === "play") {
+ stage = "config";
+ render();
+ return;
+ }
+ if (stage === "config") {
+ stage = "pauli";
+ render();
+ return;
+ }
+ finish();
+ };
+ const iv = setInterval(() => {
+ if (cancelled || stage !== "play") return;
+ if (auto && (chemLabState.huntFillZ || 1) < 26) {
+ chemLabState.huntFillZ = Math.min(26, (chemLabState.huntFillZ || 1) + 1);
+ const range = host.querySelector("#hunt-z");
+ if (range) range.value = String(chemLabState.huntFillZ);
+ }
+ const z = chemLabState.huntFillZ || 1;
+ const el = elementForProtons(z);
+ const read = host.querySelector("#hunt-z-read");
+ if (read) read.textContent = `${el.name} (${el.symbol}), electrons ${z}. Now filling: ${fillingOrbital(z)}.`;
+ if (z >= 26) go.disabled = false;
+ }, 280);
+}
+
+export function mountInspector(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ const arena = window.__arena;
+ let cancelled = false;
+ let stage = "inspect";
+ trackCleanup(() => {
+ cancelled = true;
+ arena?.setIntentHandler?.(null);
+ });
+ chemLabState.huntInspectZ = 0;
+ chemLabState.huntInspectAt = 0;
+ chemLabState.huntStops = { ne: false, na: false, cl: false };
+ chemLabState.phase = "inspect";
+ chemLabState.huntPLobes = [true, false, false];
+ chemLabState.huntDIndex = 0;
+ chemLabState.huntAutoRotate = false;
+ playScene("elemMood", { phase: "inspect" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 4</div>
+ <h3 id="hunt-in-title">Element Inspector</h3>
+ <div id="hunt-in-body"></div>
+ <p id="hunt-in-status" class="tiny-onscreen"></p>
+ <button type="button" class="btn primary" id="hunt-in-go" disabled>Continue ▶</button>
+ </div>`;
+ const title = host.querySelector("#hunt-in-title");
+ const body = host.querySelector("#hunt-in-body");
+ const status = host.querySelector("#hunt-in-status");
+ const go = host.querySelector("#hunt-in-go");
+ function render() {
+ if (stage === "inspect") {
+ title.textContent = "Element Inspector";
+ body.innerHTML = narrationHtml(
+ "Tap any element. The whole table blurs, then your pick pops sharp with a red cross around it so you can actually see the symbol. Neon, Sodium, and Chlorine keep gold rings until you visit them. Look at how full or empty that outermost orbital is: that is why some elements sit quietly and others react.",
+ );
+ go.disabled = true;
+ go.textContent = "See the heat map ▶";
+ tickStatus();
+ } else if (stage === "heat") {
+ title.textContent = "Electron moods";
+ chemLabState.phase = "heat";
+ body.innerHTML = narrationHtml(
+ "Zoom out, and the entire periodic table starts to look less like a memorization chart and more like a map of electron moods: calm, eager to give an electron away, or eager to grab one. Every reaction you’ll ever study in chemistry, at its heart, comes down to atoms trying to fill or empty that outermost orbital shape.",
+ );
+ status.textContent = "Cool blue: already full. Hot orange: one electron to give or grab.";
+ go.disabled = false;
+ go.textContent = "Count valence electrons ▶";
+ } else {
+ title.textContent = "Valence electrons";
+ chemLabState.phase = "valence";
+ body.innerHTML = `${narrationHtml(
+ "Chemists call these outer electrons valence electrons, and counting them is often all you need to predict how an element will behave. Sodium’s one lone electron and chlorine’s one open spot are a perfect match, and that exact pairing is the beginning of our very next hunt: how atoms actually bond together.",
+ )}<p class="tiny-onscreen">Valence electrons: electrons in an atom’s outermost occupied shell, the ones involved in reactions.</p>
+ <p class="tiny-onscreen">Na: 1 valence electron. Cl: 7 valence electrons. Together they can reach a full 8.</p>`;
+ status.textContent = "";
+ go.disabled = false;
+ go.textContent = "Continue ▶";
+ }
+ }
+ function tickStatus() {
+ if (stage !== "inspect") return;
+ const st = chemLabState.huntStops || {};
+ const z = chemLabState.huntInspectZ;
+ const el = elementForProtons(z);
+ const extra = z ? ` Showing ${el.symbol} (${el.name}): ${configString(z)}, valence ${valenceCount(z)}.` : "";
+ status.textContent = `Neon ${st.ne ? "yes" : "not yet"}. Sodium ${st.na ? "yes" : "not yet"}. Chlorine ${st.cl ? "yes" : "not yet"}.${extra}`;
+ }
+ render();
+ arena?.setIntentHandler?.((intent) => {
+ if (cancelled || stage !== "inspect" || intent.type !== "CANVAS_TAP" || intent.meta?.action !== "tile") return;
+ const z = intent.meta.z;
+ chemLabState.huntInspectZ = z;
+ chemLabState.huntInspectAt = performance.now();
+ if (z === 10) chemLabState.huntStops.ne = true;
+ if (z === 11) chemLabState.huntStops.na = true;
+ if (z === 17) chemLabState.huntStops.cl = true;
+ pulseSuccessFeedback(180);
+ const st = chemLabState.huntStops;
+ go.disabled = !(st.ne && st.na && st.cl);
+ const el = elementForProtons(z);
+ const extra = ` Showing ${el.symbol} (${el.name}): ${configString(z)}, valence ${valenceCount(z)}.`;
+ status.textContent = `Neon ${st.ne ? "yes" : "not yet"}. Sodium ${st.na ? "yes" : "not yet"}. Chlorine ${st.cl ? "yes" : "not yet"}.${extra}`;
+ });
+ go.onclick = () => {
+ if (stage === "inspect") {
+ stage = "heat";
+ chemLabState.huntInspectZ = 0;
+ render();
+ return;
+ }
+ if (stage === "heat") {
+ stage = "valence";
+ render();
+ return;
+ }
+ finish();
+ };
 }

@@ -2,7 +2,7 @@
  * Chemistry Lab - Mission 3: Bond Buddies
  * 10 sub-levels, Bruner spiral. Theme: bonds hold atoms together as buddies.
  */
-import { chemLabState } from "./atom-scenes.js";
+import { chemLabState } from "./atom-scenes.js?v=elemhunt7";
 import { BOND_ASSET_PATHS } from "./bond-scenes.js?v=bond1";
 import {
  mountMotionChain,
@@ -19,7 +19,7 @@ import {
  mountMultiQuiz,
  playScene,
  badgeHtml,
-} from "./chem-activities.js?v=elemhunt6";
+} from "./chem-activities.js?v=elemhunt7";
 
 export const L3_META = {
  objective: "By the end of this mission, you'll be able to explain bonds in your own words.",

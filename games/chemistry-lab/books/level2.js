@@ -1,257 +1,283 @@
 /**
- * Digital book - Chemistry Lab Mission 2: Element Hunt
- * Unique book: one kind of atom = element.
+ * Chemistry Lab Mission 2 book: Element Hunt
+ * Companion to the 4-spiral interactive lesson (identity → orbits → orbitals → personality).
  */
 export const BOOK = {
- missionIndex: 1,
- title: "Element Hunt",
- subtitle: "one kind of atom",
- subject: "Chemistry Lab / Element Hunt",
- theories: [
- "cognitive-load",
- "dual-coding",
- "multimedia-learning",
- "constructivism",
- "conceptual-change",
- "spiral-scaffold",
- "retrieval-practice",
- ],
- cover: {
- title: "Element Hunt",
- art: "/games/chemistry-lab/assets/book/m2-cover.jpg",
- },
- glossary: [
- { id: "element", term: "element" },
- { id: "atom", term: "atom" },
- { id: "metal", term: "metal" },
- { id: "oxygen", term: "oxygen" },
- { id: "iron", term: "iron" },
- { id: "copper", term: "copper" },
- { id: "compound", term: "compound" },
- { id: "mixture", term: "mixture" },
- ],
- pages: [
- {
- title: "Hunt one kind of atom",
- layout: "text",
- figures: [
- {
- place: "top",
- slides: [
- {
- src: "/games/chemistry-lab/assets/book/m2-hook.jpg",
- caption: "Crystals under a microscope - still built from repeating atom kinds.",
- alt: "Salt crystals microscope",
- },
- {
- src: "/games/chemistry-lab/assets/book/m2-a.jpg",
- caption: "Cubic salt crystals you can grow - a compound made from two element kinds bonded.",
- alt: "Home-grown salt crystals",
- },
- ],
- },
- ],
- blocks: [
- {
- type: "p",
- text: "Some everyday stuff is made of only one kind of atom - that is an element. Hunt iron-like metal, copper wire, and oxygen in air, then name a rule you can reuse anywhere.",
- },
- {
- type: "p",
- text: "In the lab bottles: grey hints iron-like metal, amber hints copper-like wire metal, blue hints oxygen in air. Each bottle story points at a pure element idea.",
- },
- ],
- },
- {
- title: "Element vs compound vs mixture",
- layout: "full-fig",
- figures: [
- {
- place: "full",
- slides: [
- {
- src: "/games/chemistry-lab/assets/book/m2-cover.jpg",
- caption: "Ordered crystals remind us that 'pure' can still mean carefully arranged atoms.",
- alt: "Sodium chloride crystals",
- },
- ],
- },
- ],
- blocks: [
- {
- type: "ul",
- items: [
- "Element: one atom kind (iron, copper, oxygen)",
- "Compound: bonded different atom kinds (salt, water)",
- "Mixture: different pieces side by side (air, salty water)",
- ],
- },
- {
- type: "p",
- text: "Stretching copper wire does not invent a new atom kind - it is still copper element.",
- },
- ],
- },
- {
- title: "Metals and oxygen stories",
- layout: "text",
- figures: [
- {
- place: "top",
- slides: [
- {
- src: "/games/chemistry-lab/assets/book/m2-model.jpg",
- caption: "Chips pack repeating units - a reminder that bulk stuff is built from tiny identical pieces.",
- alt: "Integrated circuit",
- },
- {
- src: "/games/chemistry-lab/assets/book/m2-b.jpg",
- caption: "A glowing bulb needs a metal filament path - metals are elements we meet as wires and tools.",
- alt: "Light bulb",
- },
- ],
- },
- ],
- blocks: [
- {
- type: "p",
- text: "Iron and copper are metallic elements you can often touch as solids. Oxygen is an element you meet as a gas in air - still one atom kind, even when paired as O2.",
- },
- {
- type: "p",
- text: "Air itself is a mixture. Oxygen in air is the element hiding inside that mixture.",
- },
- ],
- },
- {
- title: "The scout rule",
- layout: "full-fig",
- figures: [
- {
- place: "full",
- slides: [
- {
- src: "/games/chemistry-lab/assets/book/m2-a.jpg",
- caption: "If you can name 'only one atom kind,' you found an element story.",
- alt: "Salt crystal cluster",
- },
- ],
- },
- ],
- blocks: [
- {
- type: "p",
- text: "Rule to keep: one kind of atom makes an element. When you sort Element / Compound / Mixture cards, ask that question first.",
- },
- ],
- },
- {
- title: "How Element Hunt steps fit",
- layout: "text",
- blocks: [
- {
- type: "p",
- text: "Meet hunt → magnifier bottles → sort three zones → stretch copper → tap O2 pairs → build the element rule → stretch objects → myths → fluency → Element Scout mastery.",
- },
- {
- type: "ul",
- items: [
- "Bottle stories make atom kinds visible without jargon first",
- "Sorting locks the three-way distinction",
- "Myths catch 'air is an element' mistakes early",
- ],
- },
- ],
- },
- {
- title: "Kitchen and tool hunt",
- layout: "split",
- figures: [
- {
- place: "right",
- slides: [
- {
- src: "/games/chemistry-lab/assets/book/m2-b.jpg",
- caption: "Metal parts in tools and bulbs.",
- alt: "Bulb",
- },
- {
- src: "/games/chemistry-lab/assets/book/m2-c.jpg",
- caption: "Water boiling - compound H2O, not an element.",
- alt: "Boiling water",
- },
- {
- src: "/games/chemistry-lab/assets/book/m2-hook.jpg",
- caption: "Crystals - ask how many atom kinds.",
- alt: "Microscope crystals",
- },
- ],
- },
- ],
- blocks: [
- {
- type: "p",
- text: "Point around you: foil, wire, charcoal, helium balloon stories, graphite pencil. Which are element tales?",
- },
- {
- type: "ul",
- items: [
- "Name one metal element you can touch",
- "Name one gas element in air",
- "Name one compound that is NOT an element",
- ],
- },
- ],
- },
- {
- title: "Element myths",
- layout: "text",
- blocks: [
- {
- type: "p",
- text: "Myth: Water is an element because it feels 'pure.' Better: water is a compound of hydrogen and oxygen.",
- },
- {
- type: "p",
- text: "Myth: Air is an element. Better: air is a mixture; oxygen inside it is an element.",
- },
- {
- type: "p",
- text: "Myth: O2 pairs mean a compound. Better: O2 is still one atom kind - element oxygen.",
- },
- ],
- },
- {
- title: "Element Scout check",
- layout: "text",
- figures: [
- {
- place: "top",
- slides: [
- {
- src: "/games/chemistry-lab/assets/book/m2-cover.jpg",
- caption: "Teach with this crystal photo, then contrast it with a true element example.",
- alt: "Crystal anchor",
- },
- ],
- },
- ],
- blocks: [
- {
- type: "p",
- text: "Teach a friend: element = one atom kind. Give iron, copper, and oxygen examples. Call out one compound impostor.",
- },
- {
- type: "ul",
- items: [
- "Say the element rule aloud",
- "Sort one object into element/compound/mixture",
- "Bust the water-or-air myth",
- ],
- },
- ],
- },
- ],
+  missionIndex: 1,
+  title: "Element Hunt",
+  subtitle: "elements, orbits & the shapes of orbitals",
+  subject: "Chemistry Lab / Element Hunt",
+  theories: [
+    "cognitive-load",
+    "dual-coding",
+    "multimedia-learning",
+    "constructivism",
+    "conceptual-change",
+    "spiral-scaffold",
+    "retrieval-practice",
+  ],
+  cover: {
+    title: "Element Hunt",
+    art: "/games/chemistry-lab/assets/book/m2-cover.jpg",
+  },
+  glossary: [
+    { id: "element", term: "element" },
+    { id: "proton", term: "proton" },
+    { id: "atomic-number", term: "atomic number" },
+    { id: "orbit", term: "orbit" },
+    { id: "orbital", term: "orbital" },
+    { id: "valence", term: "valence electron" },
+    { id: "periodic-table", term: "periodic table" },
+    { id: "electron-configuration", term: "electron configuration" },
+  ],
+  pages: [
+    {
+      title: "118 letters, then a hunt",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/chemistry-lab/assets/book/m2-cover.jpg",
+          caption: "Figure 1. The periodic table is a wall of tiles. This lesson starts with them unlabeled.",
+          alt: "Pictorial periodic table of the elements",
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Every material in the universe is spelled with an alphabet of 118 letters. Chemists call them elements. Tiny Bits already showed that atoms are built from protons, neutrons, and electrons. This hunt asks what makes one element different from another, then goes inside to where electrons actually live.",
+        },
+        {
+          type: "p",
+          text: "The path is a spiral. You do something, you watch a picture of what you just did, then you get the grown-up name. The orbit picture comes first because it is intuitive, then it is taken apart and rebuilt as orbitals, the way the idea actually developed.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Spiral 1: what actually makes an element an element?",
+            "Spiral 2: from orbits (paths) to orbitals (regions of probability).",
+            "Spiral 3: the rooms electrons live in: s, p, d, and f.",
+            "Spiral 4: why this matters: calm versus reactive personalities.",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Protons decide the name",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/chemistry-lab/assets/book/m1-fig3.svg",
+          caption: "Figure 2. Carbon's box. The 6 at the top is the proton count.",
+          alt: "Periodic-table style carbon entry",
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "In the Proton Counter you drag protons into a nucleus. Electrons match so the atom stays simple. The live label is Protons: [count] → Element: [name] ([symbol]). Guided stops are 1, 2, 6, 8, 10, 11, 17, and 18: Hydrogen, Helium, Carbon, Oxygen, Neon, Sodium, Chlorine, Argon.",
+        },
+        {
+          type: "p",
+          text: "You never needed a neutron count or an electron count to change which element you were building. Change the proton number by even one, and you have a completely different element, with completely different properties.",
+        },
+      ],
+    },
+    {
+      title: "The table is a map of families",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/chemistry-lab/assets/book/m2-cover.jpg",
+          caption: "Figure 3. Rows and columns. Same column, similar electron patterns.",
+          alt: "Periodic table of the elements",
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "The unlabeled glowing tiles lock into the real periodic table shape. Families color in as they sit: alkali metals (violet), noble gases (teal), halogens (orange), transition metals (blue-grey).",
+        },
+        {
+          type: "p",
+          text: "The table is not just a chart for memorizing. Elements in the same column tend to behave alike because they arrange their electrons in strikingly similar patterns. Each new row means the atom gained a whole new layer of space for electrons to live in.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Noble gases: already full, calm, barely reactive.",
+            "Alkali metals: one easy-to-lose outer electron, a reactive spark.",
+            "Halogens: one open spot, eager to grab an electron.",
+            "Transition metals: the wide middle block, filling d orbitals.",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Carbon's ID, then Sodium's seat",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/chemistry-lab/assets/book/m1-fig3.svg",
+          caption: "Figure 4. Atomic number 6, symbol C, Period 2, Group 14.",
+          alt: "Carbon periodic table entry",
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Every element has an atomic number (its proton count), a one- or two-letter symbol, a period (its row), and a group (its column). Period and group are a preview of how that element's electrons are arranged.",
+        },
+        {
+          type: "p",
+          text: "Quick check from the lab: if an atom has 11 protons, it is Sodium, on the left side, Period 3.",
+        },
+      ],
+    },
+    {
+      title: "Fill the shells, then break the picture",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/chemistry-lab/assets/atom-orbit.svg",
+          caption: "Figure 5. The orbit model: electrons as tiny planets on circular tracks.",
+          alt: "Atom with electrons on circular orbits",
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Sodium has 11 electrons. Shell 1 holds 2 at most, shell 2 holds 8, shell 3 holds 8 for now. If you try to overfill a ring, the extra electron bounces off and must go to the next ring out. The correct fill is 2, 8, 1.",
+        },
+        {
+          type: "p",
+          text: "This orbit model correctly predicts how many electrons fit in each layer, which is genuinely useful. It is not what is really happening. Real electrons do not travel in neat circular paths.",
+        },
+      ],
+    },
+    {
+      title: "Orbit is a path. Orbital is a region.",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/chemistry-lab/assets/atom-orbit.svg",
+          caption: "Figure 6. Rings smear into a cloud. The cloud is many possible locations stacked up.",
+          alt: "Atom diagram used to contrast orbit and orbital",
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "The neat rings smear into a soft haze of probability: denser near the nucleus, fading toward the edges, with no fixed path. We can never know exactly where an electron is or exactly where it is going next, only how likely it is to be in a given spot.",
+        },
+        {
+          type: "p",
+          text: "Snapshots of one electron, stacked, rebuild the same cloud. That cloud is an orbital. An orbit is an imagined fixed circular path, useful for counting, not physically real. An orbital is a real, probability-based region of space where an electron is most likely to be found. From here on, the lesson talks only about real orbitals.",
+        },
+      ],
+    },
+    {
+      title: "Rooms: s, p, d, and f",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/chemistry-lab/assets/element-hunt.svg",
+          caption: "Figure 7. Spin the shapes. s is a sphere. p is a set of three dumbbells.",
+          alt: "Element hunt badge art",
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Orbitals are not all one shape. s is one simple sphere, identical from every angle. p always comes in a set of three, pointing along three directions like the x, y, and z axes. d comes in a set of five, more twisted. f comes in a set of seven, wilder still (optional look, not a memorization list).",
+        },
+        {
+          type: "p",
+          text: "Every atom is built by electrons filling shapes like these, starting with the simplest, and only using the fancier ones once the simple ones are full. If dragging is hard, auto-rotate still shows the 3D form.",
+        },
+      ],
+    },
+    {
+      title: "Why the table is shaped that way",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/chemistry-lab/assets/book/m2-iron.jpg",
+          caption: "Figure 8. Iron. Filling 3d is why transition metals look different from the simple start of the table.",
+          alt: "Iron metal",
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Electrons fill in this order: 1s → 2s → 2p → 3s → 3p → 4s → 3d, visualized up through iron (26 electrons) so you see s, p, and d genuinely in use on one real atom.",
+        },
+        {
+          type: "p",
+          text: "The tall columns on the left and right are elements filling s and p orbitals. The wide middle block, the transition metals, is filling d orbitals. The shape of the periodic table is a direct map of orbital filling.",
+        },
+        {
+          type: "p",
+          text: "Iron's configuration in this lesson is 1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d⁶. Read it: the number is the shell, the letter is the orbital shape, the small number on top is how many electrons are packed into that shape. Two ground rules you can try to break: electrons fill the lowest energy orbital available first, and no two electrons in the same atom can be in the exact identical state.",
+        },
+      ],
+    },
+    {
+      title: "Personalities: full, lonely, or almost full",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/chemistry-lab/assets/book/m2-cover.jpg",
+          caption: "Figure 9. Reactivity follows how full the outer orbital is, not a random scatter.",
+          alt: "Periodic table",
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Tap Neon: a completely full outer shell, all orbitals evenly filled. Nothing missing, nothing extra. That is why noble gases barely react. Tap Sodium: one lone valence electron in an otherwise empty new shell, easy to lose, which is why sodium reacts violently and eagerly. Tap Chlorine: one missing electron from an otherwise full outer shell, desperate to grab one more, reactive in the opposite direction.",
+        },
+        {
+          type: "p",
+          text: "A heat map of the table: noble gases glow cool blue, alkali metals and halogens glow hot orange, everything else sits in between. Reactivity follows how full each element's outer orbital shape is.",
+        },
+        {
+          type: "p",
+          text: "Valence electrons are the electrons in an atom's outermost occupied shell, the ones involved in reactions. Na has 1. Cl has 7. Together they can reach a full 8. That pairing is the start of the next hunt: how atoms actually bond together.",
+        },
+      ],
+    },
+    {
+      title: "A map you can actually read",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/chemistry-lab/assets/book/m2-cover.jpg",
+          caption: "Figure 10. The same 118 squares, now labeled. Proton count, orbital rooms, outer-shell mood.",
+          alt: "Periodic table of the elements",
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "You started looking at 118 unlabeled glowing squares. Proton count is what separates one from another. Electrons do not really orbit like planets. They live in fuzzy, probability-shaped regions called orbitals: spheres, dumbbells, clovers, and beyond. An element's personality (calm or reactive) comes down to how full its outermost orbital happens to be.",
+        },
+        {
+          type: "p",
+          text: "The recap map at the end of the lab lets you replay any of the four loops: identity, clouds, shapes, moods.",
+        },
+      ],
+    },
+  ],
 };
 
 export default BOOK;

@@ -1,10 +1,134 @@
 /**
- * Chemistry Lab · Mission 2: Element Hunt - Canvas 2D scenes.
- * Pure substances made of one kind of atom (Fe, Cu, O₂, …).
+ * Chemistry Lab Mission 2 Element Hunt: Canvas 2D.
+ * Script: Opening + 4 Bruner spirals (element identity → orbits → orbitals → personality) + recap map.
  */
-import { chemLabState, pulseFailFeedback, pulseSuccessFeedback } from "./atom-scenes.js";
-import { BOTTLE_FOOT, footAlign } from "./scene-layout.js";
-import { pointOnRotatedEllipse, sortSlotPositions, getActiveSession } from "./activity-controller.js";
+import {
+ chemLabState,
+ elementForProtons,
+ pulseFailFeedback,
+ pulseSuccessFeedback,
+} from "./atom-scenes.js?v=elemhunt7";
+
+const SUP = ["⁰", "¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹"];
+const AUFBAU = [
+ [1, "s", 2],
+ [2, "s", 2],
+ [2, "p", 6],
+ [3, "s", 2],
+ [3, "p", 6],
+ [4, "s", 2],
+ [3, "d", 10],
+ [4, "p", 6],
+ [5, "s", 2],
+ [4, "d", 10],
+ [5, "p", 6],
+ [6, "s", 2],
+ [4, "f", 14],
+ [5, "d", 10],
+ [6, "p", 6],
+ [7, "s", 2],
+ [5, "f", 14],
+ [6, "d", 10],
+ [7, "p", 6],
+];
+
+export const HUNT_PROTON_SEQ = [1, 2, 6, 8, 10, 11, 17, 18];
+
+export function supNum(n) {
+ return String(n)
+ .split("")
+ .map((d) => SUP[Number(d)] || d)
+ .join("");
+}
+
+export function configTerms(z) {
+ let left = Math.max(0, Math.round(Number(z) || 0));
+ const terms = [];
+ for (const [n, l, cap] of AUFBAU) {
+ if (left <= 0) break;
+ const take = Math.min(cap, left);
+ terms.push({ n, l, e: take });
+ left -= take;
+ }
+ return terms;
+}
+
+export function configString(z) {
+ return configTerms(z)
+ .map((t) => `${t.n}${t.l}${supNum(t.e)}`)
+ .join(" ");
+}
+
+export function valenceCount(z) {
+ const terms = configTerms(z);
+ if (!terms.length) return 0;
+ const maxN = Math.max(...terms.map((t) => t.n));
+ return terms.filter((t) => t.n === maxN).reduce((s, t) => s + t.e, 0);
+}
+
+export function fillingOrbital(z) {
+ const terms = configTerms(z);
+ const last = terms[terms.length - 1];
+ return last ? `${last.n}${last.l}` : "1s";
+}
+
+export function periodicCell(z) {
+ if (z < 1 || z > 118) return null;
+ if (z >= 57 && z <= 71) return { c: z - 57 + 3, r: 8 };
+ if (z >= 89 && z <= 103) return { c: z - 89 + 3, r: 9 };
+ const main = {
+ 1: [0, 0],
+ 2: [17, 0],
+ 3: [0, 1],
+ 4: [1, 1],
+ 5: [12, 1],
+ 6: [13, 1],
+ 7: [14, 1],
+ 8: [15, 1],
+ 9: [16, 1],
+ 10: [17, 1],
+ 11: [0, 2],
+ 12: [1, 2],
+ 13: [12, 2],
+ 14: [13, 2],
+ 15: [14, 2],
+ 16: [15, 2],
+ 17: [16, 2],
+ 18: [17, 2],
+ };
+ if (main[z]) return { c: main[z][0], r: main[z][1] };
+ if (z >= 19 && z <= 36) return { c: z - 19, r: 3 };
+ if (z >= 37 && z <= 54) return { c: z - 37, r: 4 };
+ if (z >= 55 && z <= 56) return { c: z - 55, r: 5 };
+ if (z >= 72 && z <= 86) return { c: z - 72 + 3, r: 5 };
+ if (z >= 87 && z <= 88) return { c: z - 87, r: 6 };
+ if (z >= 104 && z <= 118) return { c: z - 104 + 3, r: 6 };
+ return { c: (z - 1) % 18, r: 7 };
+}
+
+export function familyOf(z) {
+ if ([2, 10, 18, 36, 54, 86, 118].includes(z)) return "noble";
+ if ([3, 11, 19, 37, 55, 87].includes(z)) return "alkali";
+ if ([9, 17, 35, 53, 85, 117].includes(z)) return "halogen";
+ const cell = periodicCell(z);
+ if (cell && cell.r >= 8) return "other";
+ if (cell && cell.c >= 2 && cell.c <= 11 && z >= 21 && z <= 112) return "transition";
+ return "other";
+}
+
+const FAM_COLOR = {
+ alkali: "#a78bfa",
+ noble: "#2dd4bf",
+ halogen: "#fb923c",
+ transition: "#94a3b8",
+ other: "#1e4970",
+};
+const FAM_LABEL = {
+ alkali: "Alkali Metals",
+ noble: "Noble Gases",
+ halogen: "Halogens",
+ transition: "Transition Metals",
+};
 
 function roundRect(ctx, x, y, w, h, r) {
  const rr = Math.min(r, w / 2, h / 2);
@@ -18,16 +142,16 @@ function roundRect(ctx, x, y, w, h, r) {
 }
 
 function drawLabel(ctx, text, x, y, opts = {}) {
- ctx.font = opts.font || "600 14px Segoe UI, system-ui, sans-serif";
+ ctx.font = opts.font || "600 13px Segoe UI, system-ui, sans-serif";
  const tw = ctx.measureText(text).width;
- const padX = 12;
+ const padX = 10;
  const bw = tw + padX * 2;
- const bh = opts.h || 26;
+ const bh = opts.h || 24;
  ctx.fillStyle = opts.bg || "rgba(8,47,73,0.88)";
- roundRect(ctx, x - bw / 2, y - bh / 2, bw, bh, 10);
+ roundRect(ctx, x - bw / 2, y - bh / 2, bw, bh, 9);
  ctx.fill();
- ctx.strokeStyle = opts.border || "rgba(34,211,238,0.45)";
- ctx.lineWidth = 1.4;
+ ctx.strokeStyle = opts.border || "rgba(45,212,191,0.45)";
+ ctx.lineWidth = 1.3;
  ctx.stroke();
  ctx.fillStyle = opts.color || "#e0f2fe";
  ctx.textAlign = "center";
@@ -35,223 +159,19 @@ function drawLabel(ctx, text, x, y, opts = {}) {
  ctx.fillText(text, x, y + 1);
 }
 
-function drawAtom(ctx, x, y, r, color, t = 0, label = "") {
- const g = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, 1, x, y, r);
- const hex = `#${color.toString(16).padStart(6, "0")}`;
- g.addColorStop(0, "#fff");
- g.addColorStop(0.35, hex);
+function fillNight(ctx, w, h) {
+ const g = ctx.createLinearGradient(0, 0, 0, h);
+ g.addColorStop(0, "#0c4a6e");
+ g.addColorStop(0.45, "#082f49");
  g.addColorStop(1, "#0f172a");
  ctx.fillStyle = g;
- ctx.beginPath();
- ctx.arc(x, y, r, 0, Math.PI * 2);
- ctx.fill();
- ctx.strokeStyle = "rgba(255,255,255,0.35)";
- ctx.lineWidth = 1.2;
- ctx.stroke();
- if (label) {
- ctx.fillStyle = "#0f172a";
- ctx.font = `700 ${Math.max(8, Math.floor(r * 0.85))}px Segoe UI,sans-serif`;
- ctx.textAlign = "center";
- ctx.textBaseline = "middle";
- ctx.fillText(label, x, y + 1);
- }
- if (t) {
- ctx.strokeStyle = "rgba(125,211,252,0.25)";
- ctx.beginPath();
- ctx.ellipse(x, y, r * 1.8, r * 0.7, t * 0.4, 0, Math.PI * 2);
- ctx.stroke();
- }
+ ctx.fillRect(0, 0, w, h);
 }
 
-function drawMagnifier(ctx, x, y, radius) {
- ctx.save();
- ctx.strokeStyle = "#fbbf24";
- ctx.lineWidth = Math.max(5, radius * 0.1);
- ctx.beginPath();
- ctx.arc(x, y, radius, 0, Math.PI * 2);
- ctx.stroke();
- ctx.strokeStyle = "#f59e0b";
- ctx.lineWidth = Math.max(8, radius * 0.15);
- ctx.lineCap = "round";
- ctx.beginPath();
- ctx.moveTo(x + radius * 0.7, y + radius * 0.7);
- ctx.lineTo(x + radius * 1.4, y + radius * 1.4);
- ctx.stroke();
- ctx.fillStyle = "rgba(186,230,253,0.1)";
- ctx.beginPath();
- ctx.arc(x, y, radius - 4, 0, Math.PI * 2);
- ctx.fill();
- ctx.restore();
-}
-
-/** Soft drifting atoms of one kind (Fe / Cu / O) - used in cloud phase. */
-function drawKindCloud(ctx, cx, cy, kind, t, count = 14) {
- const specs = {
- iron: { color: 0x94a3b8, label: "Fe", pair: false },
- copper: { color: 0xf59e0b, label: "Cu", pair: false },
- oxygen: { color: 0x38bdf8, label: "O", pair: true },
- };
- const s = specs[kind] || specs.iron;
- for (let i = 0; i < count; i++) {
- const a = (i / count) * Math.PI * 2 + t * (0.45 + (i % 3) * 0.08);
- const rr = 12 + (i % 5) * 7 + Math.sin(t * 1.2 + i) * 2;
- const x = cx + Math.cos(a) * rr;
- const y = cy + Math.sin(a * 1.1) * rr * 0.62;
- if (s.pair) {
- const gap = 7;
- drawAtom(ctx, x - gap, y, 6, s.color, t, "O");
- drawAtom(ctx, x + gap, y, 6, s.color, t, "O");
- ctx.strokeStyle = "rgba(125,211,252,0.75)";
- ctx.lineWidth = 2;
- ctx.beginPath();
- ctx.moveTo(x - gap + 5, y);
- ctx.lineTo(x + gap - 5, y);
- ctx.stroke();
- } else {
- drawAtom(ctx, x, y, 7, s.color, t, s.label);
- }
- }
-}
-
-/**
- * Orbital peek inside the magnifier: nucleus + shells.
- * Orbiting dots show the element name (Fe / Cu / O), not bare e⁻ balls.
- */
-function drawElementOrbital(ctx, cx, cy, kind, t, maxR) {
- const specs = {
- iron: { color: 0x94a3b8, label: "Fe", shells: [2, 8, 8], dual: false },
- copper: { color: 0xf59e0b, label: "Cu", shells: [2, 8, 8], dual: false },
- oxygen: { color: 0x38bdf8, label: "O", shells: [2, 6], dual: true },
- };
- const s = specs[kind] || specs.iron;
- const scale = Math.max(0.55, Math.min(1, (maxR || 48) / 52));
-
- function oneAtom(ax, ay, localScale) {
- const nucleusR = 11 * localScale;
- drawAtom(ctx, ax, ay, nucleusR, s.color, t, s.label);
- s.shells.forEach((count, oi) => {
- const show = Math.min(count, oi === 0 ? 2 : oi === 1 ? 6 : 6);
- const rx = (18 + oi * 12) * localScale;
- const ry = rx * 0.55;
- const rot = oi * 0.4 + t * 0.08;
- ctx.strokeStyle = `rgba(186,230,253,${0.35 + oi * 0.1})`;
- ctx.lineWidth = 1.5;
- ctx.beginPath();
- for (let a = 0; a <= Math.PI * 2 + 0.05; a += 0.07) {
- const p = pointOnRotatedEllipse(ax, ay, rx, ry, rot, a);
- if (a === 0) ctx.moveTo(p.x, p.y);
- else ctx.lineTo(p.x, p.y);
- }
- ctx.stroke();
- for (let i = 0; i < show; i++) {
- const ang = t * (1.15 - oi * 0.18) + (i / show) * Math.PI * 2;
- const p = pointOnRotatedEllipse(ax, ay, rx, ry, rot, ang);
- // Named element tags instead of anonymous e⁻ balls
- drawAtom(ctx, p.x, p.y, 5.5 * localScale, s.color, t, s.label);
- }
- });
- }
-
- if (s.dual) {
- const gap = 22 * scale;
- oneAtom(cx - gap, cy, scale * 0.78);
- oneAtom(cx + gap, cy, scale * 0.78);
- ctx.strokeStyle = "rgba(125,211,252,0.8)";
- ctx.lineWidth = 2.5;
- ctx.beginPath();
- ctx.moveTo(cx - 8, cy);
- ctx.lineTo(cx + 8, cy);
- ctx.stroke();
- drawLabel(ctx, "O₂ · one atom kind", cx, cy + maxR * 0.72, {
- h: 18,
- font: "700 10px Segoe UI",
- bg: "rgba(8,47,73,0.7)",
- });
- } else {
- oneAtom(cx, cy, scale);
- drawLabel(ctx, `${s.label} atom · orbital model`, cx, cy + maxR * 0.78, {
- h: 18,
- font: "700 10px Segoe UI",
- bg: "rgba(8,47,73,0.7)",
- });
- }
-}
-
-function bottleUnderLens(lensX, lensY, props, lensR) {
- let best = null;
- let bestD = Infinity;
- for (const id of ["iron", "copper", "oxygen"]) {
- const p = props[id];
- if (!p) continue;
- const bx = p.x;
- const by = p.y - 28;
- const d = Math.hypot(lensX - bx, lensY - by);
- if (d < bestD && d < lensR + 62) {
- bestD = d;
- best = id;
- }
- }
- return best;
-}
-
-function drawBottle(ctx, x, footY, fillColor, scale = 1, label = "") {
- ctx.save();
- ctx.translate(x, footAlign(footY, BOTTLE_FOOT * scale));
- ctx.scale(scale, scale);
- ctx.fillStyle = "rgba(2,6,23,0.25)";
- ctx.beginPath();
- ctx.ellipse(0, 48, 22, 6, 0, 0, Math.PI * 2);
- ctx.fill();
- ctx.fillStyle = fillColor;
- roundRect(ctx, -18, -10, 36, 55, 8);
- ctx.fill();
- ctx.fillStyle = "rgba(255,255,255,0.22)";
- roundRect(ctx, -14, 0, 10, 35, 4);
- ctx.fill();
- ctx.fillStyle = "#64748b";
- roundRect(ctx, -10, -28, 20, 18, 4);
- ctx.fill();
- if (label) {
- ctx.fillStyle = "#0f172a";
- ctx.font = "700 11px Segoe UI,sans-serif";
- ctx.textAlign = "center";
- ctx.fillText(label, 0, 18);
- }
- ctx.restore();
-}
-
-function drawWireCoil(ctx, x, y, stretch, t) {
- ctx.save();
- ctx.strokeStyle = "#f59e0b";
- ctx.lineWidth = 4;
- ctx.lineCap = "round";
- const len = 40 + stretch * 90;
- ctx.beginPath();
- for (let i = 0; i < 8; i++) {
- const px = x - len / 2 + (i / 7) * len;
- const py = y + Math.sin(i * 1.2 + t * 2) * (4 - stretch * 2);
- if (i === 0) ctx.moveTo(px, py);
- else ctx.lineTo(px, py);
- }
- ctx.stroke();
- for (let i = 0; i < 6; i++) {
- drawAtom(ctx, x - len / 2 + 8 + i * (len / 7), y, 5, 0xf59e0b, t);
- }
- ctx.restore();
-}
-
-function drawO2Pair(ctx, x, y, split, t) {
- const gap = 10 + split * 36;
- drawAtom(ctx, x - gap / 2, y + Math.sin(t) * 2, 9, 0x38bdf8, t);
- drawAtom(ctx, x + gap / 2, y - Math.sin(t) * 2, 9, 0x38bdf8, t);
- if (split < 0.55) {
- ctx.strokeStyle = "rgba(125,211,252,0.7)";
- ctx.lineWidth = 2.5;
- ctx.beginPath();
- ctx.moveTo(x - gap / 2 + 8, y);
- ctx.lineTo(x + gap / 2 - 8, y);
- ctx.stroke();
- }
+function failShake() {
+ const until = chemLabState.failPulse;
+ if (!until || performance.now() > until) return 0;
+ return Math.sin(performance.now() * 0.08) * 6;
 }
 
 function failFlash(ctx, w, h) {
@@ -266,266 +186,436 @@ function successFlash(ctx, w, h) {
  const until = chemLabState.successPulse;
  if (!until || performance.now() > until) return;
  const a = Math.max(0, (until - performance.now()) / 380) * 0.25;
- ctx.fillStyle = `rgba(52,211,153,${a})`;
+ ctx.fillStyle = `rgba(45,212,191,${a})`;
  ctx.fillRect(0, 0, w, h);
 }
 
-/**
- * Register Element Hunt scenes on the shared 2D arena.
- * @param {ReturnType<import('./arena-2d.js').createArena2D>} arena
- */
+function tableMetrics(w, h) {
+ const padX = 16;
+ const padTop = 44;
+ const padBot = 36;
+ const cols = 18;
+ const rows = 10;
+ const cw = (w - padX * 2) / cols;
+ const ch = (h - padTop - padBot) / rows;
+ return { padX, padTop, cw, ch };
+}
+
+function cellXY(z, w, h) {
+ const pos = periodicCell(z);
+ if (!pos) return null;
+ const m = tableMetrics(w, h);
+ return {
+ x: m.padX + (pos.c + 0.5) * m.cw,
+ y: m.padTop + (pos.r + 0.5) * m.ch,
+ cw: m.cw,
+ ch: m.ch,
+ };
+}
+
+function drawTile(ctx, z, x, y, cw, ch, t, opts = {}) {
+ const labeled = !!opts.labeled;
+ const family = familyOf(z);
+ const hot = opts.heat;
+ let col = opts.unlabeled ? "#38bdf8" : FAM_COLOR[family] || FAM_COLOR.other;
+ if (hot === "calm") col = "#38bdf8";
+ if (hot === "eager") col = "#f97316";
+ if (hot === "mid") col = "#fbbf24";
+ const pulse = 0.55 + Math.sin(t * 2 + z * 0.2) * 0.2;
+ ctx.fillStyle = col;
+ ctx.globalAlpha = opts.unlabeled ? 0.35 + pulse * 0.35 : 0.85;
+ roundRect(ctx, x - cw * 0.42, y - ch * 0.38, cw * 0.84, ch * 0.76, 3);
+ ctx.fill();
+ ctx.globalAlpha = 1;
+ if (opts.selected) {
+ ctx.strokeStyle = "#ef4444";
+ ctx.lineWidth = 2.6;
+ ctx.stroke();
+ }
+ if (labeled) {
+ const el = elementForProtons(z);
+ const sym = el.symbol === "?" ? String(z) : el.symbol;
+ ctx.textAlign = "center";
+ ctx.textBaseline = "middle";
+ if (opts.selected) {
+ ctx.fillStyle = "#7f1d1d";
+ ctx.font = `800 ${Math.max(8, Math.floor(cw * 0.38))}px Segoe UI, sans-serif`;
+ ctx.fillText(sym, x, y);
+ } else {
+ ctx.fillStyle = "#0f172a";
+ ctx.font = `700 ${Math.max(7, Math.floor(cw * 0.28))}px Segoe UI, sans-serif`;
+ ctx.fillText(sym, x, y);
+ }
+ }
+}
+
+function drawTable(ctx, w, h, t, opts = {}) {
+ const hits = [];
+ for (let z = 1; z <= 118; z++) {
+ const p = cellXY(z, w, h);
+ if (!p) continue;
+ const fam = familyOf(z);
+ let heat = null;
+ if (opts.heat) {
+ if (fam === "noble") heat = "calm";
+ else if (fam === "alkali" || fam === "halogen") heat = "eager";
+ else heat = "mid";
+ }
+ const selected = opts.selectedZ === z || opts.family === fam;
+ if (opts.skipZ === z || (opts.skipZs && opts.skipZs.includes(z))) {
+ hits.push({
+ id: `z-${z}`,
+ shape: "rect",
+ x: p.x,
+ y: p.y,
+ w: p.cw,
+ h: p.ch,
+ meta: { action: "tile", z, family: fam },
+ });
+ continue;
+ }
+ drawTile(ctx, z, p.x, p.y, p.cw, p.ch, t, {
+ unlabeled: opts.unlabeled,
+ labeled: opts.labeled,
+ selected,
+ heat,
+ });
+ hits.push({
+ id: `z-${z}`,
+ shape: "rect",
+ x: p.x,
+ y: p.y,
+ w: p.cw,
+ h: p.ch,
+ meta: { action: "tile", z, family: fam },
+ });
+ }
+ return hits;
+}
+
+function project(x, y, z, rotX, rotY, scale) {
+ const cy = Math.cos(rotY);
+ const sy = Math.sin(rotY);
+ const cx = Math.cos(rotX);
+ const sx = Math.sin(rotX);
+ const x1 = x * cy - z * sy;
+ const z1 = x * sy + z * cy;
+ const y1 = y * cx - z1 * sx;
+ const z2 = y * sx + z1 * cx;
+ const persp = 3.2 / (3.2 + z2);
+ return { x: x1 * persp * scale, y: y1 * persp * scale, z: z2, a: persp };
+}
+
+function rgbOfKind(kind) {
+ if (kind === "s") return [56, 189, 248];
+ if (kind === "p") return [167, 139, 250];
+ if (kind === "d") return [251, 146, 60];
+ return [244, 114, 182];
+}
+
+function pOrbitalLobes() {
+ const r = 0.42;
+ const d = 0.4;
+ return [
+ { x: d, y: 0, z: 0, r, axis: 0 },
+ { x: -d, y: 0, z: 0, r, axis: 0 },
+ { x: 0, y: d, z: 0, r, axis: 1 },
+ { x: 0, y: -d, z: 0, r, axis: 1 },
+ { x: 0, y: 0, z: d, r, axis: 2 },
+ { x: 0, y: 0, z: -d, r, axis: 2 },
+ ];
+}
+
+function dOrbitalLobes(dIndex) {
+ const r = 0.36;
+ const d = 0.5;
+ const diag = d / Math.SQRT2;
+ const v = dIndex % 5;
+ if (v === 0) {
+ return [
+ { x: diag, y: diag, z: 0, r },
+ { x: -diag, y: diag, z: 0, r },
+ { x: diag, y: -diag, z: 0, r },
+ { x: -diag, y: -diag, z: 0, r },
+ ];
+ }
+ if (v === 1) {
+ return [
+ { x: diag, y: 0, z: diag, r },
+ { x: -diag, y: 0, z: diag, r },
+ { x: diag, y: 0, z: -diag, r },
+ { x: -diag, y: 0, z: -diag, r },
+ ];
+ }
+ if (v === 2) {
+ return [
+ { x: 0, y: diag, z: diag, r },
+ { x: 0, y: -diag, z: diag, r },
+ { x: 0, y: diag, z: -diag, r },
+ { x: 0, y: -diag, z: -diag, r },
+ ];
+ }
+ if (v === 3) {
+ return [
+ { x: d, y: 0, z: 0, r },
+ { x: -d, y: 0, z: 0, r },
+ { x: 0, y: d, z: 0, r },
+ { x: 0, y: -d, z: 0, r },
+ ];
+ }
+ const ring = [];
+ for (let i = 0; i < 8; i++) {
+ const a = (i / 8) * Math.PI * 2;
+ ring.push({ x: Math.cos(a) * 0.42, y: Math.sin(a) * 0.42, z: 0, r: 0.16 });
+ }
+ return [{ x: 0, y: 0, z: 0.5, r: 0.36 }, { x: 0, y: 0, z: -0.5, r: 0.36 }, ...ring];
+}
+
+function fOrbitalLobes() {
+ const r = 0.26;
+ const d = 0.5;
+ const lobes = [];
+ for (const sx of [-1, 1]) {
+ for (const sy of [-1, 1]) {
+ for (const sz of [-1, 1]) {
+ lobes.push({ x: sx * d * 0.55, y: sy * d * 0.55, z: sz * d * 0.55, r });
+ }
+ }
+ }
+ return lobes;
+}
+
+function drawLobeSphere(ctx, x, y, rad, rgb, a) {
+ if (rad < 1.5) return;
+ const [rr, gg, bb] = rgb;
+ const g = ctx.createRadialGradient(x - rad * 0.3, y - rad * 0.34, rad * 0.08, x, y, rad);
+ g.addColorStop(0, `rgba(255,255,255,${0.55 * a})`);
+ g.addColorStop(0.18, `rgba(${rr},${gg},${bb},${0.92 * a})`);
+ g.addColorStop(0.62, `rgba(${rr},${gg},${bb},${0.4 * a})`);
+ g.addColorStop(1, `rgba(${rr},${gg},${bb},0)`);
+ ctx.beginPath();
+ ctx.arc(x, y, rad, 0, Math.PI * 2);
+ ctx.fillStyle = g;
+ ctx.fill();
+}
+
+function drawOrbitalCloud(ctx, cx, cy, kind, t, optScale) {
+ const rotX = chemLabState.huntRotX || 0.35;
+ const rotY = chemLabState.huntRotY || 0;
+ const scale = optScale != null ? optScale : Math.min(cx, cy) * 0.92;
+ const rgb = rgbOfKind(kind);
+ const on = chemLabState.huntPLobes || [true, false, false];
+ let lobes;
+ if (kind === "s") lobes = [{ x: 0, y: 0, z: 0, r: 0.78, axis: 0 }];
+ else if (kind === "p") {
+ lobes = pOrbitalLobes().filter((l) => on[l.axis]);
+ if (!lobes.length) lobes = pOrbitalLobes().filter((l) => l.axis === 0);
+ }
+ else if (kind === "d") lobes = dOrbitalLobes(chemLabState.huntDIndex || 0);
+ else lobes = fOrbitalLobes();
+
+ const drawn = lobes.map((l) => {
+ const p = project(l.x, l.y, l.z, rotX, rotY, scale);
+ return { ...l, p, rad: l.r * scale * p.a };
+ });
+ drawn.sort((a, b) => a.p.z - b.p.z);
+
+ if (kind === "p") {
+ const byAxis = {};
+ drawn.forEach((l) => {
+ (byAxis[l.axis] ||= []).push(l);
+ });
+ Object.values(byAxis).forEach((pair) => {
+ if (pair.length < 2) return;
+ ctx.strokeStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.4)`;
+ ctx.lineWidth = Math.max(3, scale * 0.045);
+ ctx.lineCap = "round";
+ ctx.beginPath();
+ ctx.moveTo(cx + pair[0].p.x, cy + pair[0].p.y);
+ ctx.lineTo(cx + pair[1].p.x, cy + pair[1].p.y);
+ ctx.stroke();
+ });
+ }
+
+ for (const l of drawn) {
+ const a = 0.55 + l.p.a * 0.45;
+ if (kind === "p") {
+ const ang = Math.atan2(l.p.y, l.p.x);
+ ctx.save();
+ ctx.translate(cx + l.p.x, cy + l.p.y);
+ ctx.rotate(ang);
+ ctx.scale(1.42, 0.66);
+ drawLobeSphere(ctx, 0, 0, l.rad, rgb, a);
+ ctx.restore();
+ } else {
+ drawLobeSphere(ctx, cx + l.p.x, cy + l.p.y, l.rad, rgb, a);
+ }
+ }
+
+ if (kind === "s") {
+ ctx.beginPath();
+ for (let i = 0; i <= 48; i++) {
+ const a = (i / 48) * Math.PI * 2;
+ const p = project(Math.cos(a) * 0.78, 0, Math.sin(a) * 0.78, rotX, rotY, scale);
+ if (i === 0) ctx.moveTo(cx + p.x, cy + p.y);
+ else ctx.lineTo(cx + p.x, cy + p.y);
+ }
+ ctx.strokeStyle = "rgba(186,230,253,0.6)";
+ ctx.lineWidth = 1.5;
+ ctx.stroke();
+ }
+
+ if (kind === "d" && (chemLabState.huntDIndex || 0) % 5 === 4) {
+ ctx.beginPath();
+ for (let i = 0; i <= 48; i++) {
+ const a = (i / 48) * Math.PI * 2;
+ const p = project(Math.cos(a) * 0.42, Math.sin(a) * 0.42, 0, rotX, rotY, scale);
+ if (i === 0) ctx.moveTo(cx + p.x, cy + p.y);
+ else ctx.lineTo(cx + p.x, cy + p.y);
+ }
+ ctx.strokeStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.75)`;
+ ctx.lineWidth = 2.2;
+ ctx.stroke();
+ }
+
+ ctx.fillStyle = "#fb7185";
+ ctx.beginPath();
+ ctx.arc(cx, cy, Math.max(3.2, scale * 0.032), 0, Math.PI * 2);
+ ctx.fill();
+ void t;
+}
+
+function drawRedCross(ctx, x, y, inner, outer) {
+ ctx.save();
+ ctx.strokeStyle = "#ef4444";
+ ctx.lineCap = "round";
+ ctx.lineJoin = "round";
+ ctx.shadowColor = "rgba(127,29,29,0.85)";
+ ctx.shadowBlur = 10;
+ ctx.lineWidth = Math.max(3.2, outer * 0.085);
+ ctx.beginPath();
+ const dirs = [
+ [1, 0],
+ [-1, 0],
+ [0, 1],
+ [0, -1],
+ ];
+ dirs.forEach(([dx, dy]) => {
+ ctx.moveTo(x + dx * inner, y + dy * inner);
+ ctx.lineTo(x + dx * outer, y + dy * outer);
+ });
+ ctx.stroke();
+ ctx.shadowBlur = 8;
+ ctx.lineWidth = Math.max(2.8, outer * 0.07);
+ ctx.beginPath();
+ ctx.arc(x, y, (inner + outer) * 0.5, 0, Math.PI * 2);
+ ctx.stroke();
+ ctx.restore();
+}
+
+function drawGuidedStopMark(ctx, z, w, h, t, stops, opts = {}) {
+ const p = cellXY(z, w, h);
+ if (!p) return;
+ const done = (z === 10 && stops.ne) || (z === 11 && stops.na) || (z === 17 && stops.cl);
+ if (!opts.skipTile) {
+ drawTile(ctx, z, p.x, p.y, p.cw, p.ch, t, { labeled: true });
+ }
+ if (done) {
+ ctx.fillStyle = "#4ade80";
+ ctx.font = `800 ${Math.max(10, Math.floor(p.cw * 0.38))}px Segoe UI, sans-serif`;
+ ctx.textAlign = "center";
+ ctx.textBaseline = "middle";
+ ctx.fillText("✓", p.x + p.cw * 0.32, p.y - p.ch * 0.28);
+ } else {
+ const pulse = 0.55 + Math.sin(t * 3) * 0.45;
+ ctx.strokeStyle = `rgba(250,204,21,${pulse})`;
+ ctx.lineWidth = 2.4;
+ roundRect(ctx, p.x - p.cw * 0.46, p.y - p.ch * 0.42, p.cw * 0.92, p.ch * 0.84, 4);
+ ctx.stroke();
+ }
+}
+
+export function sampleSnap() {
+ let u = 0;
+ let v = 0;
+ while (!u) u = Math.random();
+ while (!v) v = Math.random();
+ const r = Math.sqrt(-2 * Math.log(u)) * 0.28;
+ const th = 2 * Math.PI * v;
+ return { x: r * Math.cos(th), y: r * Math.sin(th) * 0.82 };
+}
+
 export function registerElementScenes(arena) {
  if (!arena?.registerScene) return;
 
- /** Meet Element Hunt - shelf → magnify zoom → same-atom cloud (phase-driven like Tiny Bits) */
- arena.registerScene("elemMeet", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, opts, setHitRegions, setIntentHandler } =
- api;
- const startPhase = opts.phase || chemLabState.elemPhase || chemLabState.phase || "shelf";
- chemLabState.elemPhase = startPhase;
- chemLabState.phase = startPhase;
+ arena.registerScene("elemOpen", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
  const start = performance.now();
- const props = {
- iron: { x: 0, y: 0, ready: false },
- copper: { x: 0, y: 0, ready: false },
- oxygen: { x: 0, y: 0, ready: false },
- };
- const lens = { x: 0, y: 0, ready: false };
- let dragBottle = null;
- const bottles = [
- { id: "iron", color: "#94a3b8", label: "Fe", name: "Iron-like", atom: 0x94a3b8 },
- { id: "copper", color: "#f59e0b", label: "Cu", name: "Copper-like", atom: 0xf59e0b },
- { id: "oxygen", color: "#38bdf8", label: "O₂", name: "Oxygen air", atom: 0x38bdf8 },
- ];
- const descs = {
- shelf: "Drag the sample bottles. Tap one to pick a hunt target.",
- zoom: "Drag the yellow magnifier over each bottle - see Fe, Cu, or O atoms.",
- cloud: "Same-label spheres = same atom kind. That is the element clue.",
- predict: "Predict: can O₂ still be an element when atoms pair up?",
- settle: "Drag bottles - connectors stay tied to the one-kind idea.",
- };
- setDescription(descs[startPhase] || descs.shelf);
-
+ setDescription("118 unlabeled glowing tiles. Tap Begin.");
  setIntentHandler((intent) => {
- if (intent.type === "CANVAS_DOWN" && intent.meta?.propId && intent.meta.propId !== "lens") {
- dragBottle = intent.meta.propId;
- }
- if (intent.type === "CANVAS_DRAG" && dragBottle && props[dragBottle]) {
- props[dragBottle].x = Math.max(40, Math.min(api.width - 40, intent.x));
- props[dragBottle].y = Math.max(50, Math.min(api.layout.deskTop + 6, intent.y));
- }
- if (intent.type === "CANVAS_TAP" && intent.meta?.pick) {
- chemLabState.elemKind = intent.meta.pick;
- chemLabState.huntFound = { ...(chemLabState.huntFound || {}), [intent.meta.pick]: true };
+ if (intent.type === "CANVAS_TAP" && intent.meta?.action === "begin") {
+ chemLabState.huntBegin = true;
  pulseSuccessFeedback(280);
  }
- if (intent.type === "CANVAS_UP") dragBottle = null;
  });
-
  setTick(() => {
  const w = api.width;
  const h = api.height;
- const layout = api.layout;
  const t = (performance.now() - start) / 1000;
- const live = chemLabState.phase || chemLabState.elemPhase || startPhase;
- chemLabState.elemPhase = live;
- if (!props.iron.ready) {
- props.iron = { x: layout.leftProp.x, y: layout.deskTop, ready: true };
- props.copper = { x: layout.midProp.x, y: layout.deskTop, ready: true };
- props.oxygen = { x: layout.rightProp.x, y: layout.deskTop, ready: true };
- }
- if (!lens.ready) {
- // Start above the iron bottle so the first peek is clearly Fe
- lens.x = props.iron.x;
- lens.y = Math.max(70, layout.deskTop - 110);
- lens.ready = true;
- }
- drawBackdrop();
- const hits = [];
-
- if (live === "shelf") {
- for (const b of bottles) {
- const p = props[b.id];
- const found = !!chemLabState.huntFound?.[b.id];
- drawBottle(ctx, p.x, p.y, b.color, found ? 1.12 : 1.05, b.label);
- if (found) {
- ctx.strokeStyle = "rgba(34,211,238,0.85)";
- ctx.lineWidth = 3;
- ctx.beginPath();
- ctx.arc(p.x, p.y - 24, 38, 0, Math.PI * 2);
- ctx.stroke();
- }
- hits.push({
- id: b.id,
- shape: "box",
- x: p.x - 28,
- y: p.y - 70,
- w: 56,
- h: 90,
- meta: { propId: b.id, pick: b.id },
- onDrag(pt) {
- p.x = Math.max(40, Math.min(w - 40, pt.x));
- p.y = Math.max(50, Math.min(layout.deskTop + 6, pt.y));
- },
- });
- drawLabel(ctx, b.name, p.x, layout.deskTop + 28, { font: "600 11px Segoe UI,sans-serif", h: 20 });
- }
- drawLabel(ctx, "Element Hunt · Drag & tap bottles", w * 0.5, layout.labelY);
- } else if (live === "zoom") {
- for (const b of bottles) {
- const p = props[b.id];
- const under = bottleUnderLens(lens.x, lens.y, props, 56) === b.id;
- drawBottle(ctx, p.x, p.y, b.color, under ? 1.05 : 0.85, b.label);
- if (under) {
- ctx.strokeStyle = "rgba(251,191,36,0.9)";
- ctx.lineWidth = 3;
- ctx.beginPath();
- ctx.arc(p.x, p.y - 24, 36, 0, Math.PI * 2);
- ctx.stroke();
- }
- hits.push({
- id: b.id,
- shape: "box",
- x: p.x - 24,
- y: p.y - 58,
- w: 48,
- h: 78,
- meta: { propId: b.id, pick: b.id },
- });
- }
-
- const lensR = 58;
- const overId = bottleUnderLens(lens.x, lens.y, props, lensR);
- if (overId) chemLabState.elemKind = overId;
- const kindMeta = bottles.find((b) => b.id === (overId || chemLabState.elemKind)) || bottles[0];
-
- // Glass contents: orbital model of the bottle under the lens
+ fillNight(ctx, w, h);
  ctx.save();
- ctx.beginPath();
- ctx.arc(lens.x, lens.y, lensR - 5, 0, Math.PI * 2);
- ctx.clip();
- ctx.fillStyle = "rgba(8,47,73,0.9)";
- ctx.fillRect(lens.x - lensR, lens.y - lensR, lensR * 2, lensR * 2);
- if (overId) {
- drawElementOrbital(ctx, lens.x, lens.y, overId, t, lensR - 8);
- } else {
- drawLabel(ctx, "Move over a bottle", lens.x, lens.y, {
- h: 22,
- font: "600 12px Segoe UI",
- bg: "rgba(15,23,42,0.55)",
+ ctx.translate(failShake(), 0);
+ const hits = drawTable(ctx, w, h, t, { unlabeled: true });
+ const mid = cellXY(26, w, h) || { x: w * 0.5, y: h * 0.5 };
+ drawLabel(ctx, "Begin →", mid.x, mid.y, { font: "800 14px Segoe UI, sans-serif", h: 28 });
+ hits.push({
+ id: "begin",
+ shape: "rect",
+ x: mid.x,
+ y: mid.y,
+ w: 120,
+ h: 40,
+ meta: { action: "begin" },
  });
+ ctx.restore();
+ setHitRegions(hits);
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("elemFamilies", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions } = api;
+ const start = performance.now();
+ setDescription("Periodic table families. Tap a colored region.");
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = (performance.now() - start) / 1000;
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const hits = drawTable(ctx, w, h, t, {
+ labeled: false,
+ family: chemLabState.huntFamily,
+ });
+ const fam = chemLabState.huntFamily;
+ if (fam && FAM_LABEL[fam]) {
+ drawLabel(ctx, FAM_LABEL[fam], w * 0.5, 22, { font: "700 14px Segoe UI, sans-serif", h: 28 });
+ if (fam === "noble") {
+ drawLabel(ctx, "Already full. Calm. Barely reacts.", w * 0.5, h - 22);
+ } else if (fam === "alkali") {
+ drawLabel(ctx, "One easy-to-lose outer electron. Reactive spark.", w * 0.5, h - 22);
+ } else if (fam === "halogen") {
+ drawLabel(ctx, "One open spot. Eager to grab an electron.", w * 0.5, h - 22);
+ } else if (fam === "transition") {
+ drawLabel(ctx, "Filling d orbitals. The wide middle block.", w * 0.5, h - 22);
+ }
+ } else {
+ drawLabel(ctx, "Tap a colored family", w * 0.5, 22);
  }
  ctx.restore();
- drawMagnifier(ctx, lens.x, lens.y, lensR);
-
- // Lens last in hit list = highest priority; onDrag moves it (Tiny Bits pattern)
- hits.push({
- id: "lens",
- shape: "ellipse",
- x: lens.x,
- y: lens.y,
- r: lensR + 18,
- meta: { propId: "lens" },
- onDrag(pt) {
- lens.x = Math.max(48, Math.min(w - 48, pt.x));
- lens.y = Math.max(48, Math.min(h - 48, pt.y));
- },
- });
-
- // One coach label only (no overlap)
- const peek = overId
- ? overId === "oxygen"
- ? "On O₂ · orbital O atoms (same kind)"
- : `On ${kindMeta.label} · orbital ${kindMeta.label} atoms`
- : "Drag yellow magnifier over Fe · Cu · O₂";
- drawLabel(ctx, peek, w * 0.5, layout.labelY);
- } else if (live === "predict") {
- for (const b of bottles) {
- drawBottle(ctx, props[b.id].x, props[b.id].y, b.color, 0.7, b.label);
- hits.push({
- id: b.id,
- shape: "box",
- x: props[b.id].x - 24,
- y: props[b.id].y - 60,
- w: 48,
- h: 80,
- meta: { pick: b.id, propId: b.id },
- onDrag(pt) {
- props[b.id].x = Math.max(40, Math.min(w - 40, pt.x));
- props[b.id].y = Math.max(50, Math.min(layout.deskTop + 6, pt.y));
- },
- });
- }
- const cx = w * 0.5;
- const cy = Math.min(h * 0.3, layout.deskTop - 120);
- ctx.fillStyle = "rgba(8,47,73,0.75)";
- roundRect(ctx, cx - 150, cy - 48, 300, 96, 16);
- ctx.fill();
- ctx.strokeStyle = "rgba(251,191,36,0.7)";
- ctx.lineWidth = 2;
- ctx.stroke();
- drawO2Pair(ctx, cx - 40, cy, 0.2, t);
- drawLabel(ctx, "?", cx + 50, cy, { h: 36, font: "700 22px Segoe UI", bg: "rgba(251,191,36,0.35)" });
- drawLabel(ctx, "Predict: paired O atoms - still an element?", w * 0.5, layout.labelY);
- } else if (live === "settle") {
- for (const b of bottles) {
- const p = props[b.id];
- drawBottle(ctx, p.x, p.y, b.color, 0.9, b.label);
- hits.push({
- id: b.id,
- shape: "box",
- x: p.x - 28,
- y: p.y - 70,
- w: 56,
- h: 90,
- meta: { pick: b.id, propId: b.id },
- onDrag(pt) {
- p.x = Math.max(40, Math.min(w - 40, pt.x));
- p.y = Math.max(50, Math.min(layout.deskTop + 6, pt.y));
- },
- });
- }
- const cx = w * 0.5;
- const cy = Math.min(h * 0.28, layout.deskTop - 130);
- drawKindCloud(ctx, cx, cy, chemLabState.elemKind || "iron", t, 12);
- ctx.strokeStyle = "rgba(34,211,238,0.35)";
- ctx.lineWidth = 1.5;
- ctx.setLineDash([4, 4]);
- for (const b of bottles) {
- ctx.beginPath();
- ctx.moveTo(props[b.id].x, props[b.id].y - 50);
- ctx.lineTo(cx, cy + 40);
- ctx.stroke();
- }
- ctx.setLineDash([]);
- drawLabel(ctx, "Element = only one kind of atom", w * 0.5, layout.labelY);
- } else {
- // cloud: particle model above the desk - keep labels at TOP so bottles stay clear
- for (const b of bottles) {
- drawBottle(ctx, props[b.id].x, props[b.id].y, b.color, 0.75, b.label);
- hits.push({
- id: b.id,
- shape: "box",
- x: props[b.id].x - 24,
- y: props[b.id].y - 60,
- w: 48,
- h: 80,
- meta: { pick: b.id, propId: b.id },
- });
- }
- const kind = chemLabState.elemKind || "iron";
- const kindMeta = bottles.find((b) => b.id === kind) || bottles[0];
- const cx = w * 0.5;
- // Keep cloud well above the desk / bottles
- const cy = Math.min(h * 0.28, layout.deskTop - 130);
- drawKindCloud(ctx, cx, cy, kind, t, kind === "oxygen" ? 10 : 16);
- const tip =
- kind === "oxygen"
- ? "O₂ pairs still = element oxygen · tap a bottle to switch"
- : `All ${kindMeta.label} = one atom kind · tap Fe / Cu / O₂ to switch`;
- drawLabel(ctx, tip, w * 0.5, layout.labelY);
- }
-
  setHitRegions(hits);
  failFlash(ctx, w, h);
  successFlash(ctx, w, h);
@@ -533,848 +623,698 @@ export function registerElementScenes(arena) {
  setDispose(() => {});
  });
 
- /** Iron metal - drag bottle + tap lattice to pack identical Fe atoms */
- arena.registerScene("elemIron", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, opts, setHitRegions, setIntentHandler, reducedMotion } =
- api;
- const assemble = opts.assemble !== false;
- const start = performance.now();
- const bottle = { x: 0, y: 0, ready: false };
- setDescription("Drag the iron bottle. Tap metal or lattice to pack more Fe atoms.");
-
- setIntentHandler((intent) => {
- if (intent.type === "CANVAS_TAP" && intent.meta?.action === "pack") {
- chemLabState.scale = Math.min(1, (chemLabState.scale || 0) + 0.12);
- pulseSuccessFeedback(220);
- }
- });
-
+ arena.registerScene("elemCarbon", (api) => {
+ const { ctx, setTick, setDispose, setDescription } = api;
+ setDescription("Carbon’s periodic table entry.");
  setTick(() => {
  const w = api.width;
  const h = api.height;
- const layout = api.layout;
- const t = reducedMotion ? 0 : (performance.now() - start) / 1000;
- if (!bottle.ready) {
- bottle.x = layout.leftProp.x;
- bottle.y = layout.deskTop;
- bottle.ready = true;
- }
- drawBackdrop();
- drawBottle(ctx, bottle.x, bottle.y, "#94a3b8", 1.1, "Fe");
- const progress = assemble ? Math.min(1, (chemLabState.scale || 0.2) + 0.15) : 0.15;
- const cols = 5;
- const rows = 4;
- const ox = w * 0.52;
- const oy = h * 0.32;
- for (let r = 0; r < rows; r++) {
- for (let c = 0; c < cols; c++) {
- if ((r * cols + c) / (rows * cols) > progress) continue;
- const x = ox + c * 22 + (r % 2) * 11;
- const y = oy + r * 20;
- drawAtom(ctx, x, y + Math.sin(t + c) * 1.2, 7, 0x94a3b8, t);
- }
- }
- // Connector from bottle to lattice
- ctx.strokeStyle = "rgba(148,163,184,0.4)";
- ctx.lineWidth = 1.5;
- ctx.setLineDash([4, 4]);
- ctx.beginPath();
- ctx.moveTo(bottle.x + 20, bottle.y - 40);
- ctx.lineTo(ox, oy + 40);
- ctx.stroke();
- ctx.setLineDash([]);
- drawLabel(ctx, "Iron-like metal · one atom kind (Fe)", w * 0.5, layout.labelY);
- drawLabel(ctx, "Drag bottle · tap to pack", bottle.x, layout.deskTop + 30, { h: 22, font: "600 12px Segoe UI" });
- setHitRegions([
- {
- id: "bottle",
- shape: "box",
- x: bottle.x - 40,
- y: bottle.y - 80,
- w: 80,
- h: 100,
- meta: { propId: "ironBottle", action: "pack" },
- onDrag(pt) {
- bottle.x = Math.max(40, Math.min(w * 0.4, pt.x));
- bottle.y = Math.max(50, Math.min(layout.deskTop + 6, pt.y));
- if (assemble) chemLabState.scale = Math.min(1, (chemLabState.scale || 0) + 0.004);
- },
- },
- { id: "lattice", shape: "box", x: ox - 20, y: oy - 20, w: 140, h: 110, meta: { action: "pack" } },
- ]);
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const bw = Math.min(280, w * 0.55);
+ const bh = Math.min(280, h * 0.62);
+ const x = (w - bw) / 2;
+ const y = (h - bh) / 2 + 8;
+ roundRect(ctx, x, y, bw, bh, 16);
+ ctx.fillStyle = "#0ea5e9";
+ ctx.fill();
+ ctx.fillStyle = "#082f49";
+ ctx.font = "700 22px Segoe UI, sans-serif";
+ ctx.textAlign = "left";
+ ctx.fillText("6", x + 18, y + 36);
+ ctx.font = "800 72px Segoe UI, sans-serif";
+ ctx.textAlign = "center";
+ ctx.fillText("C", w * 0.5, y + bh * 0.52);
+ ctx.font = "600 18px Segoe UI, sans-serif";
+ ctx.fillText("Carbon", w * 0.5, y + bh * 0.78);
+ ctx.fillStyle = "#e0f2fe";
+ ctx.font = "600 14px Segoe UI, sans-serif";
+ ctx.fillText("Period 2, Group 14", w * 0.5, y + bh + 28);
+ drawLabel(ctx, "Atomic number 6 (protons)", w * 0.5, 26);
+ ctx.restore();
  failFlash(ctx, w, h);
  successFlash(ctx, w, h);
  });
- setDispose(() => setIntentHandler(null));
+ setDispose(() => {});
  });
 
- /** Sort element / compound / mixture - drag/drop matched to Tiny Bits atomsSort */
- arena.registerScene("elemSort", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler, reducedMotion } = api;
- setDescription("Drag cards into Element, Compound, or Mixture zones.");
-
- const chips = [
- { id: "fe", text: "Iron nail", short: "Fe", color: 0x94a3b8 },
- { id: "cu", text: "Copper wire", short: "Cu", color: 0xf59e0b },
- { id: "o2", text: "Oxygen gas", short: "O₂", color: 0x38bdf8 },
- { id: "h2o", text: "Water H₂O", short: "H₂O", color: 0x60a5fa },
- { id: "nacl", text: "Table salt", short: "NaCl", color: 0xe2e8f0 },
- { id: "air", text: "Room air", short: "Air", color: 0x93c5fd },
- { id: "brass", text: "Brass Cu+Zn", short: "Brass", color: 0xfbbf24 },
- { id: "he", text: "Helium", short: "He", color: 0x67e8f9 },
- ];
- const accept = {
- element: ["fe", "cu", "o2", "he"],
- compound: ["h2o", "nacl"],
- mixture: ["air", "brass"],
- };
- const cardPos = {};
- chips.forEach((c) => {
- cardPos[c.id] = { x: 0, y: 0 };
- });
- let draggingId = null;
- let lastZones = [];
-
- function placeChip(chipId, zoneId) {
- if (!chipId || !zoneId) return false;
- if (!(accept[zoneId] || []).includes(chipId)) {
- pulseFailFeedback(400);
- return false;
- }
- chemLabState.placed = { ...(chemLabState.placed || {}), [chipId]: zoneId };
- chemLabState.sortPlaced = Object.keys(chemLabState.placed).length;
- chemLabState.selectedId = chipId;
- // Keep activity session + right panel in sync (placedVersion drives mirror)
- const session = getActiveSession();
- if (session?.dispatch) {
- session.dispatch({ type: "PLACE_CHIP", chipId, zoneId, accept: accept[zoneId] });
- } else {
- chemLabState._placedVersion = (chemLabState._placedVersion || 0) + 1;
- }
- pulseSuccessFeedback(220);
- return true;
- }
-
- function zoneAt(x, y) {
- for (const z of lastZones) {
- if (x >= z.x && x <= z.x + z.ww && y >= z.y && y <= z.y + z.hh) return z.id;
- }
- for (const z of lastZones) {
- if (x >= z.x - 10 && x <= z.x + z.ww + 10 && y >= z.y - 10 && y <= z.y + z.hh + 10) return z.id;
- }
- return null;
- }
-
+ arena.registerScene("elemShells", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ let drag = null;
+ setDescription("Fill Sodium’s shells: 2, then 8, then 1.");
  setIntentHandler((intent) => {
- if (intent.type === "CANVAS_DOWN" && intent.meta?.chipId) {
- draggingId = intent.meta.chipId;
- chemLabState.selectedId = intent.meta.chipId;
+ const w = api.width;
+ const h = api.height;
+ const cx = w * 0.5;
+ const cy = h * 0.42;
+ const caps = [2, 8, 8];
+ const shells = chemLabState.huntShells || [0, 0, 0];
+ if (intent.type === "CANVAS_DOWN" && intent.meta?.action === "eToken") {
+ drag = { x: intent.x, y: intent.y };
  }
- if (intent.type === "CANVAS_DRAG" && intent.meta?.chipId && cardPos[intent.meta.chipId]) {
- draggingId = intent.meta.chipId;
- cardPos[intent.meta.chipId].x = intent.x;
- cardPos[intent.meta.chipId].y = intent.y;
+ if (intent.type === "CANVAS_DRAG" && drag) {
+ drag.x = intent.x;
+ drag.y = intent.y;
  }
- if (intent.type === "CANVAS_TAP" && intent.meta?.chipId) {
- chemLabState.selectedId = intent.meta.chipId;
+ if (intent.type === "CANVAS_UP" && drag) {
+ const dist = Math.hypot(intent.x - cx, intent.y - cy);
+ let ring = -1;
+ if (dist < 48) ring = 0;
+ else if (dist < 78) ring = 1;
+ else if (dist < 110) ring = 2;
+ if (ring >= 0) {
+ if (shells[ring] >= caps[ring]) {
+ pulseFailFeedback(360);
+ chemLabState.huntBounce = { x: intent.x, y: intent.y, t0: performance.now() };
+ } else {
+ shells[ring] += 1;
+ chemLabState.huntShells = shells.slice();
+ pulseSuccessFeedback(180);
  }
- if (intent.type === "CANVAS_TAP" && intent.meta?.zoneId && chemLabState.selectedId) {
- placeChip(chemLabState.selectedId, intent.meta.zoneId);
  }
- if (intent.type === "CANVAS_UP" && intent.meta?.chipId) {
- const zoneId = intent.dropMeta?.zoneId || zoneAt(intent.x, intent.y);
- if (zoneId) placeChip(intent.meta.chipId, zoneId);
- draggingId = null;
- } else if (intent.type === "CANVAS_UP") {
- draggingId = null;
+ drag = null;
  }
  });
-
  setTick(() => {
  const w = api.width;
  const h = api.height;
- const layout = api.layout;
- drawBackdrop();
-
- const zoneH = Math.max(100, Math.min(h * 0.3, 140));
- const zoneY = Math.max(layout.labelY + 30, h * 0.09);
- const zones = [
- { id: "element", label: "Element", x: w * 0.03, y: zoneY, ww: w * 0.3, hh: zoneH, color: "#22d3ee" },
- { id: "compound", label: "Compound", x: w * 0.35, y: zoneY, ww: w * 0.3, hh: zoneH, color: "#a78bfa" },
- { id: "mixture", label: "Mixture", x: w * 0.67, y: zoneY, ww: w * 0.3, hh: zoneH, color: "#fbbf24" },
- ];
- lastZones = zones;
-
- const hits = [];
- for (const z of zones) {
- ctx.fillStyle = "rgba(15,23,42,0.55)";
- roundRect(ctx, z.x, z.y, z.ww, z.hh, 12);
+ const t = performance.now() / 1000;
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const cx = w * 0.5;
+ const cy = h * 0.42;
+ const radii = [36, 64, 94];
+ const caps = [2, 8, 8];
+ const shells = chemLabState.huntShells || [0, 0, 0];
+ ctx.fillStyle = "#fb7185";
+ ctx.beginPath();
+ ctx.arc(cx, cy, 12, 0, Math.PI * 2);
  ctx.fill();
- ctx.strokeStyle = z.color;
- ctx.lineWidth = 2.5;
+ radii.forEach((r, i) => {
+ ctx.strokeStyle = "rgba(125,211,252,0.4)";
+ ctx.lineWidth = 2;
+ ctx.beginPath();
+ ctx.arc(cx, cy, r, 0, Math.PI * 2);
  ctx.stroke();
- drawLabel(ctx, z.label, z.x + z.ww / 2, z.y + 16, { h: 20, font: "700 12px Segoe UI" });
- hits.push({
- id: "zone-" + z.id,
- shape: "rect",
- x: z.x + z.ww / 2,
- y: z.y + z.hh / 2,
- w: z.ww,
- h: z.hh,
- meta: { zoneId: z.id, accept: accept[z.id] },
- });
- }
-
- const placed = chemLabState.placed || {};
- const byZone = {
- element: chips.filter((c) => placed[c.id] === "element").map((c) => c.id),
- compound: chips.filter((c) => placed[c.id] === "compound").map((c) => c.id),
- mixture: chips.filter((c) => placed[c.id] === "mixture").map((c) => c.id),
- };
- const bankIds = chips.filter((c) => !placed[c.id]).map((c) => c.id);
- const bankTop = zoneY + zoneH + (chemLabState.reveal ? 50 : 30);
-
- chips.forEach((c) => {
- let targetX;
- let targetY;
- const zoneKey = placed[c.id];
- if (zoneKey && byZone[zoneKey]) {
- const z = zones.find((zz) => zz.id === zoneKey);
- const idx = byZone[zoneKey].indexOf(c.id);
- const slot = sortSlotPositions(
- { x: z.x, y: z.y + 18, w: z.ww, h: z.hh - 22 },
- Math.max(byZone[zoneKey].length, 1),
- idx,
- );
- targetX = slot.x;
- targetY = slot.y;
- } else {
- const idx = bankIds.indexOf(c.id);
- const cols = Math.min(4, Math.max(1, bankIds.length));
- const col = idx % cols;
- const row = Math.floor(idx / cols);
- targetX = w * 0.14 + col * (w * 0.22);
- targetY = bankTop + row * 50;
- }
-
- const prev = cardPos[c.id];
- if (!prev.x && !prev.y) {
- prev.x = targetX;
- prev.y = targetY;
- }
- if (draggingId !== c.id) {
- const ease = reducedMotion ? 1 : 0.18;
- prev.x += (targetX - prev.x) * ease;
- prev.y += (targetY - prev.y) * ease;
- }
-
- const selected = chemLabState.selectedId === c.id;
- const hex = "#" + c.color.toString(16).padStart(6, "0");
- ctx.fillStyle = selected ? "rgba(52,211,153,0.4)" : "rgba(30,41,59,0.95)";
- roundRect(ctx, prev.x - 48, prev.y - 20, 96, 40, 10);
+ ctx.fillStyle = "#7dd3fc";
+ ctx.font = "600 11px Segoe UI, sans-serif";
+ ctx.textAlign = "center";
+ ctx.fillText(`${shells[i]}/${caps[i]}`, cx, cy - r - 8);
+ for (let k = 0; k < shells[i]; k++) {
+ const a = t * (1.2 - i * 0.2) + (k / Math.max(1, shells[i])) * Math.PI * 2;
+ ctx.fillStyle = "#38bdf8";
+ ctx.beginPath();
+ ctx.arc(cx + Math.cos(a) * r, cy + Math.sin(a) * r, 5, 0, Math.PI * 2);
  ctx.fill();
- ctx.strokeStyle = selected ? "#34d399" : hex;
- ctx.lineWidth = selected ? 2.5 : 1.6;
+ }
+ });
+ const placed = shells[0] + shells[1] + shells[2];
+ drawLabel(
+ ctx,
+ `Shell 1: 2 max. Shell 2: 8 max. Shell 3: 8 max (for now). Placed ${placed}/11`,
+ w * 0.5,
+ 24,
+ { font: "600 12px Segoe UI, sans-serif", h: 28 },
+ );
+ const tx = w * 0.5;
+ const ty = h - 36;
+ if (placed < 11) {
+ ctx.fillStyle = "#38bdf8";
+ ctx.beginPath();
+ ctx.arc(tx, ty, 10, 0, Math.PI * 2);
+ ctx.fill();
+ drawLabel(ctx, "Drag onto a ring", tx, ty - 22, { h: 20, font: "600 11px Segoe UI, sans-serif" });
+ }
+ if (drag) {
+ ctx.fillStyle = "#38bdf8";
+ ctx.beginPath();
+ ctx.arc(drag.x, drag.y, 10, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ const bounce = chemLabState.huntBounce;
+ if (bounce) {
+ const u = Math.min(1, (performance.now() - bounce.t0) / 380);
+ const bx = bounce.x + (tx - bounce.x) * u;
+ const by = bounce.y + (ty - bounce.y) * u;
+ ctx.fillStyle = "#f87171";
+ ctx.beginPath();
+ ctx.arc(bx, by, 10, 0, Math.PI * 2);
+ ctx.fill();
+ if (u >= 1) chemLabState.huntBounce = null;
+ }
+ ctx.restore();
+ const hits = [];
+ if (placed < 11) hits.push({ id: "e-token", shape: "ellipse", x: tx, y: ty, r: 22, meta: { action: "eToken" } });
+ setHitRegions(hits);
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("elemCloud", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ const start = performance.now();
+ setDescription("Orbit rings smear into an orbital cloud. Tap snapshots.");
+ setIntentHandler((intent) => {
+ if (intent.type !== "CANVAS_TAP" || intent.meta?.action !== "snap") return;
+ if (chemLabState.phase !== "snaps") return;
+ const snaps = chemLabState.huntSnaps || [];
+ if (snaps.length >= 40) return;
+ chemLabState.huntSnaps = snaps.concat([sampleSnap()]);
+ pulseSuccessFeedback(120);
+ });
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = (performance.now() - start) / 1000;
+ const phase = chemLabState.phase || "ring";
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const cx = w * 0.5;
+ const cy = h * 0.48;
+ if (phase === "snaps" || phase === "words") chemLabState.huntSmear = 1;
+ else chemLabState.huntSmear = Math.min(1, (performance.now() - start) / 4000);
+ const smear = chemLabState.huntSmear || 0;
+ if (phase === "words") {
+ roundRect(ctx, w * 0.08, h * 0.22, w * 0.38, h * 0.5, 14);
+ ctx.fillStyle = "rgba(14,165,233,0.25)";
+ ctx.fill();
+ ctx.strokeStyle = "#38bdf8";
+ ctx.beginPath();
+ ctx.arc(w * 0.27, h * 0.42, 48, 0, Math.PI * 2);
  ctx.stroke();
  ctx.fillStyle = "#e0f2fe";
- ctx.font = "700 12px Segoe UI,sans-serif";
+ ctx.font = "700 18px Segoe UI, sans-serif";
+ ctx.textAlign = "center";
+ ctx.fillText("ORBIT", w * 0.27, h * 0.62);
+ roundRect(ctx, w * 0.54, h * 0.22, w * 0.38, h * 0.5, 14);
+ ctx.fillStyle = "rgba(45,212,191,0.22)";
+ ctx.fill();
+ const g = ctx.createRadialGradient(w * 0.73, h * 0.42, 8, w * 0.73, h * 0.42, 70);
+ g.addColorStop(0, "rgba(125,211,252,0.7)");
+ g.addColorStop(1, "rgba(125,211,252,0)");
+ ctx.fillStyle = g;
+ ctx.beginPath();
+ ctx.arc(w * 0.73, h * 0.42, 70, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.fillStyle = "#e0f2fe";
+ ctx.fillText("ORBITAL", w * 0.73, h * 0.62);
+ drawLabel(ctx, "Orbit: imagined path. Orbital: real region of probability.", w * 0.5, 26, {
+ h: 28,
+ font: "600 12px Segoe UI, sans-serif",
+ });
+ setHitRegions([]);
+ } else {
+ ctx.fillStyle = "#fb7185";
+ ctx.beginPath();
+ ctx.arc(cx, cy, 10, 0, Math.PI * 2);
+ ctx.fill();
+ const ringA = 1 - Math.min(1, smear);
+ if (ringA > 0.02) {
+ ctx.globalAlpha = ringA;
+ ctx.strokeStyle = "#38bdf8";
+ ctx.lineWidth = 2;
+ [40, 68, 96].forEach((r, i) => {
+ ctx.beginPath();
+ ctx.arc(cx, cy, r, 0, Math.PI * 2);
+ ctx.stroke();
+ for (let k = 0; k < (i === 0 ? 2 : i === 1 ? 8 : 1); k++) {
+ const a = t * 1.4 + k;
+ ctx.fillStyle = "#38bdf8";
+ ctx.beginPath();
+ ctx.arc(cx + Math.cos(a) * r, cy + Math.sin(a) * r, 4, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ });
+ ctx.globalAlpha = 1;
+ }
+ const cloudA = Math.min(1, smear);
+ if (cloudA > 0.02) {
+ const g = ctx.createRadialGradient(cx, cy, 8, cx, cy, 110);
+ g.addColorStop(0, `rgba(125,211,252,${0.55 * cloudA})`);
+ g.addColorStop(1, "rgba(125,211,252,0)");
+ ctx.fillStyle = g;
+ ctx.beginPath();
+ ctx.arc(cx, cy, 110, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ const snaps = chemLabState.huntSnaps || [];
+ snaps.forEach((s) => {
+ ctx.fillStyle = "rgba(254,240,138,0.9)";
+ ctx.beginPath();
+ ctx.arc(cx + s.x * 110, cy + s.y * 110, 3, 0, Math.PI * 2);
+ ctx.fill();
+ });
+ if (phase === "snaps") {
+ drawLabel(ctx, `Snapshots: ${snaps.length}. Each tap is one possible electron location.`, w * 0.5, 24, {
+ h: 28,
+ font: "600 12px Segoe UI, sans-serif",
+ });
+ const bx = w * 0.5;
+ const by = h - 34;
+ roundRect(ctx, bx - 70, by - 20, 140, 40, 12);
+ ctx.fillStyle = "#0284c7";
+ ctx.fill();
+ ctx.fillStyle = "#f0f9ff";
+ ctx.font = "800 14px Segoe UI, sans-serif";
  ctx.textAlign = "center";
  ctx.textBaseline = "middle";
- ctx.fillText(c.short || c.text, prev.x, prev.y);
-
- hits.push({
- id: c.id,
- shape: "rect",
- x: prev.x,
- y: prev.y,
- w: 100,
- h: 44,
- meta: { chipId: c.id, propId: c.id },
- onDrag(pt) {
- draggingId = c.id;
- prev.x = Math.max(30, Math.min(w - 30, pt.x));
- prev.y = Math.max(30, Math.min(h - 30, pt.y));
- },
- });
- });
-
- drawLabel(ctx, "Drag chips into the three bins", w * 0.5, layout.labelY);
- if (chemLabState.reveal) {
+ ctx.fillText("Take snapshot", bx, by);
+ setHitRegions([{ id: "snap", shape: "rect", x: bx, y: by, w: 140, h: 40, meta: { action: "snap" } }]);
+ } else if (smear >= 1) {
  drawLabel(
  ctx,
- "Elements = one atom kind · Compounds bond · Mixtures mix",
+ "We can never know exactly where an electron is, only how likely it is to be in a given spot.",
  w * 0.5,
- zoneY + zoneH + 16,
- { h: 22, font: "600 11px Segoe UI", bg: "rgba(8,47,73,0.92)" },
+ 24,
+ { h: 32, font: "600 11px Segoe UI, sans-serif" },
  );
- }
-
- setHitRegions(hits);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- });
- setDispose(() => setIntentHandler(null));
- });
-
- /** Copper wire stretch lab */
- arena.registerScene("elemCopper", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler } = api;
- const start = performance.now();
- setDescription("Drag the amber handle to stretch the copper wire - atoms stay Cu.");
-
- setIntentHandler((intent) => {
- if (intent.type === "CANVAS_DRAG" && intent.meta?.action === "stretch") {
- const next = Math.max(0, Math.min(1, (intent.x - api.width * 0.3) / (api.width * 0.4)));
- chemLabState.heat = next;
- chemLabState.heatTarget = next;
- chemLabState.wireStretch = next;
- }
- if (intent.type === "CANVAS_TAP" && intent.meta?.action === "nudge") {
- const next = Math.min(1, (chemLabState.heat || 0) + 0.08);
- chemLabState.heat = next;
- chemLabState.heatTarget = next;
- chemLabState.wireStretch = next;
- }
- });
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const t = (performance.now() - start) / 1000;
- const stretch = chemLabState.heat ?? chemLabState.wireStretch ?? 0;
- chemLabState.wireStretch = stretch;
- drawBackdrop();
- drawBottle(ctx, layout.leftProp.x, layout.deskTop, "#f59e0b", 1, "Cu");
- const wx = w * 0.55;
- const wy = h * 0.36;
- drawWireCoil(ctx, wx, wy, stretch, t);
- const hx = w * 0.3 + stretch * w * 0.4;
- ctx.fillStyle = "#fbbf24";
- ctx.beginPath();
- ctx.arc(hx, wy + 48, 14, 0, Math.PI * 2);
- ctx.fill();
- drawLabel(ctx, "Stretch handle", hx, wy + 72, { h: 20, font: "600 11px Segoe UI" });
- drawLabel(ctx, stretch > 0.7 ? "Still copper atoms - shape changed, not the element" : "Copper wire · pull to stretch", w * 0.5, layout.labelY);
- setHitRegions([
- { id: "handle", shape: "box", x: hx - 24, y: wy + 28, w: 48, h: 48, meta: { action: "stretch" } },
- { id: "wire", shape: "box", x: wx - 80, y: wy - 30, w: 160, h: 60, meta: { action: "nudge" } },
- ]);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- });
- setDispose(() => setIntentHandler(null));
- });
-
- /** Oxygen O2 - drag bottle + tap/drag pairs */
- arena.registerScene("elemOxygen", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler, reducedMotion } =
- api;
- const start = performance.now();
- const bottle = { x: 0, y: 0, ready: false };
- const pairs = [];
- for (let i = 0; i < 5; i++) pairs.push({ x: 0, y: 0, ready: false });
- setDescription("Drag the O₂ bottle or pairs - two oxygen atoms bonded still count as element oxygen.");
-
- setIntentHandler((intent) => {
- if (intent.type === "CANVAS_TAP" && intent.meta?.action === "split") {
- chemLabState.o2Split = Math.min(1, (chemLabState.o2Split || 0) + 0.2);
- if (chemLabState.o2Split >= 0.8) pulseSuccessFeedback(300);
- }
- });
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const t = reducedMotion ? 0 : (performance.now() - start) / 1000;
- const split = chemLabState.o2Split || 0;
- if (!bottle.ready) {
- bottle.x = layout.rightProp.x;
- bottle.y = layout.deskTop;
- bottle.ready = true;
- }
- drawBackdrop();
- drawBottle(ctx, bottle.x, bottle.y, "#38bdf8", 1.1, "O₂");
- const hits = [
- {
- id: "bottle",
- shape: "box",
- x: bottle.x - 40,
- y: bottle.y - 80,
- w: 80,
- h: 100,
- meta: { propId: "o2Bottle", action: "split" },
- onDrag(pt) {
- bottle.x = Math.max(w * 0.55, Math.min(w - 40, pt.x));
- bottle.y = Math.max(50, Math.min(layout.deskTop + 6, pt.y));
- chemLabState.o2Split = Math.min(1, (chemLabState.o2Split || 0) + 0.005);
- },
- },
- ];
- for (let i = 0; i < 5; i++) {
- if (!pairs[i].ready) {
- pairs[i].x = w * 0.25 + i * 70;
- pairs[i].y = h * 0.32;
- pairs[i].ready = true;
- }
- const px = pairs[i].x;
- const py = pairs[i].y + Math.sin(t + i) * 6;
- drawO2Pair(ctx, px, py, split, t + i);
- hits.push({
- id: "pair" + i,
- shape: "box",
- x: px - 28,
- y: py - 20,
- w: 56,
- h: 40,
- meta: { propId: "pair" + i, action: "split" },
- onDrag(pt) {
- pairs[i].x = Math.max(40, Math.min(w - 40, pt.x));
- pairs[i].y = Math.max(60, Math.min(layout.deskTop - 40, pt.y));
- chemLabState.o2Split = Math.min(1, (chemLabState.o2Split || 0) + 0.008);
- },
- });
- }
- drawLabel(
- ctx,
- split > 0.6 ? "Even as separate O atoms, it is still element oxygen" : "O₂ = element (only oxygen atoms)",
- w * 0.5,
- layout.labelY,
- );
- setHitRegions(hits);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- });
- setDispose(() => setIntentHandler(null));
- });
-
- /** Name the rule - identity scale (sample → one kind → ELEMENT), not Tiny Bits grain zoom */
- arena.registerScene("elemRule", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop } = api;
- const start = performance.now();
- setDescription("Build the element rule, then scrub sample → one atom kind → ELEMENT.");
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const t = (performance.now() - start) / 1000;
- const prog = chemLabState.tokenProgress || 0;
- const scale = chemLabState.scale || 0;
- drawBackdrop();
-
- // Equation-build (scale ~0): light rule tokens above the hunt bottles.
- // Identity scrub low band: desk samples only (never Tiny Bits salt-grain zoom).
- if (scale < 0.33) {
- if (scale <= 0.02 && prog > 0) {
- const tokens = ["One kind", "of atom", "makes an", "ELEMENT"];
- tokens.forEach((label, i) => {
- const x = w * 0.18 + i * (w * 0.18);
- const on = i < prog;
- ctx.fillStyle = on ? "rgba(34,211,238,0.35)" : "rgba(30,41,59,0.8)";
- roundRect(ctx, x - 48, h * 0.28 - 18, 96, 36, 10);
- ctx.fill();
- ctx.strokeStyle = on ? "#22d3ee" : "#475569";
- ctx.stroke();
- ctx.fillStyle = on ? "#ecfeff" : "#94a3b8";
- ctx.font = "700 12px Segoe UI,sans-serif";
- ctx.textAlign = "center";
- ctx.fillText(label, x, h * 0.28);
- });
- }
- drawBottle(ctx, layout.leftProp.x, layout.deskTop, "#94a3b8", 1.05, "Fe");
- drawBottle(ctx, layout.midProp.x, layout.deskTop, "#f59e0b", 1.05, "Cu");
- drawBottle(ctx, layout.rightProp.x, layout.deskTop, "#38bdf8", 1.05, "O₂");
- drawLabel(ctx, "Iron-like", layout.leftProp.x, layout.deskTop + 28, { h: 18, font: "600 11px Segoe UI" });
- drawLabel(ctx, "Copper wire", layout.midProp.x, layout.deskTop + 28, { h: 18, font: "600 11px Segoe UI" });
- drawLabel(ctx, "Oxygen air", layout.rightProp.x, layout.deskTop + 28, { h: 18, font: "600 11px Segoe UI" });
- drawLabel(
- ctx,
- scale <= 0.02 && prog > 0
- ? "Build the rule · samples on the desk"
- : "Desk samples - candidates for elements",
- w * 0.5,
- layout.labelY,
- );
- } else if (scale < 0.66) {
- // Mid: only one atom kind in the cloud (identity, not shells)
- const kind = chemLabState.elemKind || "iron";
- drawKindCloud(ctx, w * 0.5, h * 0.38, kind, t, 16);
- const name = kind === "copper" ? "Cu only" : kind === "oxygen" ? "O only (pairs ok)" : "Fe only";
- drawLabel(ctx, `One atom kind: ${name}`, w * 0.5, layout.labelY);
- drawBottle(ctx, layout.midProp.x, layout.deskTop, kind === "copper" ? "#f59e0b" : kind === "oxygen" ? "#38bdf8" : "#94a3b8", 0.85, kind === "oxygen" ? "O₂" : kind === "copper" ? "Cu" : "Fe");
+ setHitRegions([]);
  } else {
- // High: name the classification
- ctx.fillStyle = "rgba(34,211,238,0.22)";
- roundRect(ctx, w * 0.18, h * 0.28, w * 0.64, h * 0.28, 18);
- ctx.fill();
- ctx.strokeStyle = "#22d3ee";
- ctx.lineWidth = 3;
- roundRect(ctx, w * 0.18, h * 0.28, w * 0.64, h * 0.28, 18);
- ctx.stroke();
- ctx.fillStyle = "#ecfeff";
- ctx.font = "800 28px Segoe UI,sans-serif";
- ctx.textAlign = "center";
- ctx.fillText("ELEMENT", w * 0.5, h * 0.4);
- ctx.font = "600 14px Segoe UI,sans-serif";
- ctx.fillStyle = "#a5f3fc";
- ctx.fillText("matter made of only one kind of atom", w * 0.5, h * 0.48);
- const kinds = [
- { c: 0x94a3b8, n: "Fe" },
- { c: 0xf59e0b, n: "Cu" },
- { c: 0x38bdf8, n: "O" },
- ];
- kinds.forEach((k, i) => {
- drawAtom(ctx, w * 0.35 + i * 70, h * 0.68, 11, k.c, t, k.n);
- });
- drawLabel(ctx, "Name it: ELEMENT (not a mixture, not a compound)", w * 0.5, layout.labelY);
+ drawLabel(ctx, "Watch the neat rings smear into a cloud.", w * 0.5, 24);
+ setHitRegions([]);
  }
+ }
+ ctx.restore();
  failFlash(ctx, w, h);
  successFlash(ctx, w, h);
  });
  setDispose(() => {});
  });
 
- /** Stretch contexts - distinct everyday objects, not anonymous atom rings */
- arena.registerScene("elemStretch", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler } = api;
- const start = performance.now();
- const modes = ["gold", "foil", "charcoal", "helium", "graphite"];
- const modeLabels = { gold: "Gold", foil: "Foil", charcoal: "Charcoal", helium: "Helium", graphite: "Graphite" };
- setDescription("Tap each everyday sample. Same rule - one atom kind - new objects.");
-
+ arena.registerScene("elemOrbitals", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ let dragging = false;
+ let last = null;
+ setDescription("Rotate s, p, d, and optional f orbital shapes.");
  setIntentHandler((intent) => {
- if (intent.type === "CANVAS_TAP" && intent.meta?.mode) {
- chemLabState.mode = intent.meta.mode;
- pulseSuccessFeedback(200);
+ if (intent.type === "CANVAS_DOWN") {
+ dragging = true;
+ last = { x: intent.x, y: intent.y };
  }
+ if (intent.type === "CANVAS_DRAG" && dragging && last) {
+ chemLabState.huntRotY += (intent.x - last.x) * 0.01;
+ chemLabState.huntRotX += (intent.y - last.y) * 0.01;
+ last = { x: intent.x, y: intent.y };
+ const k = chemLabState.huntOrbital || "s";
+ if (k === "s" || k === "p" || k === "d") {
+ chemLabState.huntSpun = { ...(chemLabState.huntSpun || {}), [k]: true };
+ }
+ }
+ if (intent.type === "CANVAS_UP") dragging = false;
  });
-
  setTick(() => {
  const w = api.width;
  const h = api.height;
- const layout = api.layout;
- const t = (performance.now() - start) / 1000;
- const mode = chemLabState.mode || api.opts?.mode || "gold";
- drawBackdrop();
- const hits = [];
- modes.forEach((m, i) => {
- const x = w * 0.12 + i * (w * 0.17);
- const y = layout.deskTop;
- const on = m === mode;
- ctx.fillStyle = on ? "rgba(34,211,238,0.35)" : "#1e293b";
- roundRect(ctx, x - 36, y - 36, 72, 48, 10);
- ctx.fill();
- ctx.strokeStyle = on ? "#22d3ee" : "#475569";
- ctx.lineWidth = on ? 2 : 1;
- ctx.stroke();
- ctx.fillStyle = "#e0f2fe";
- ctx.font = "600 11px Segoe UI";
- ctx.textAlign = "center";
- ctx.fillText(modeLabels[m] || m, x, y - 8);
- hits.push({ id: m, x: x - 36, y: y - 36, w: 72, h: 48, meta: { mode: m } });
- });
-
- const cx = w * 0.5;
- const cy = h * 0.34;
-
- if (mode === "gold") {
- // Gold ring
- ctx.strokeStyle = "#fbbf24";
- ctx.lineWidth = 14;
- ctx.beginPath();
- ctx.ellipse(cx, cy, 54, 22, 0, 0, Math.PI * 2);
- ctx.stroke();
- ctx.strokeStyle = "#f59e0b";
- ctx.lineWidth = 6;
- ctx.stroke();
- for (let i = 0; i < 8; i++) {
- const a = (i / 8) * Math.PI * 2 + t * 0.4;
- drawAtom(ctx, cx + Math.cos(a) * 48, cy + Math.sin(a) * 18, 6, 0xfbbf24, t, "Au");
- }
- } else if (mode === "foil") {
- // Crinkled aluminum sheet
- ctx.fillStyle = "rgba(203,213,225,0.85)";
- ctx.beginPath();
- ctx.moveTo(cx - 90, cy - 20);
- for (let i = 0; i <= 8; i++) {
- const x = cx - 90 + i * 22.5;
- const y = cy - 20 + Math.sin(t * 2 + i) * 6 + (i % 2 ? 8 : -4);
- ctx.lineTo(x, y);
- }
- ctx.lineTo(cx + 90, cy + 36);
- ctx.lineTo(cx - 90, cy + 36);
- ctx.closePath();
- ctx.fill();
- for (let i = 0; i < 10; i++) {
- drawAtom(ctx, cx - 70 + i * 15, cy + (i % 3) * 8, 5.5, 0xcbd5e1, t, "Al");
- }
- } else if (mode === "charcoal") {
- // Charcoal lump
- ctx.fillStyle = "#1e293b";
- roundRect(ctx, cx - 50, cy - 36, 100, 72, 18);
- ctx.fill();
- ctx.fillStyle = "#334155";
- roundRect(ctx, cx - 30, cy - 20, 40, 28, 8);
- ctx.fill();
- for (let i = 0; i < 9; i++) {
- const a = (i / 9) * Math.PI * 2 + t * 0.3;
- drawAtom(ctx, cx + Math.cos(a) * 28, cy + Math.sin(a) * 20, 6, 0x64748b, t, "C");
- }
- } else if (mode === "helium") {
- // Helium balloon
- const by = cy - 10;
- ctx.fillStyle = "rgba(103,232,249,0.8)";
- ctx.beginPath();
- ctx.ellipse(cx, by, 48, 58, 0, 0, Math.PI * 2);
- ctx.fill();
- ctx.strokeStyle = "#94a3b8";
- ctx.lineWidth = 2;
- ctx.beginPath();
- ctx.moveTo(cx, by + 58);
- ctx.lineTo(cx, layout.deskTop - 8);
- ctx.stroke();
- for (let i = 0; i < 7; i++) {
- const a = (i / 7) * Math.PI * 2 + t;
- drawAtom(ctx, cx + Math.cos(a) * 22, by + Math.sin(a) * 26, 6, 0x67e8f9, t, "He");
- }
- } else {
- // Pencil graphite tip
- ctx.fillStyle = "#fbbf24";
- roundRect(ctx, cx - 12, cy - 70, 24, 90, 4);
- ctx.fill();
- ctx.fillStyle = "#1e293b";
- ctx.beginPath();
- ctx.moveTo(cx - 14, cy + 20);
- ctx.lineTo(cx + 14, cy + 20);
- ctx.lineTo(cx, cy + 48);
- ctx.closePath();
- ctx.fill();
- for (let row = 0; row < 3; row++) {
- for (let i = 0; i < 5; i++) {
- drawAtom(ctx, cx - 28 + i * 14, cy - 40 + row * 14, 5, 0x475569, t, "C");
- }
- }
- }
-
+ const t = performance.now() / 1000;
+ if (chemLabState.huntAutoRotate && !api.reducedMotion) chemLabState.huntRotY += 0.008;
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const kind = chemLabState.huntOrbital || "s";
+ drawOrbitalCloud(ctx, w * 0.5, h * 0.48, kind, t);
+ const dCaps = [
+ "d orbital: a four-leaf clover, lying in the xy plane.",
+ "d orbital: a four-leaf clover, standing in the xz plane.",
+ "d orbital: a four-leaf clover, standing in the yz plane.",
+ "d orbital: a four-leaf clover, pointing along x and y.",
+ "d orbital: two lobes plus a doughnut ring around the middle.",
+ ];
  const captions = {
- gold: "Gold ring · only Au atoms → element",
- foil: "Aluminum foil · only Al atoms → element",
- charcoal: "Charcoal · carbon atoms (C) → element",
- helium: "Helium balloon · He atoms → element",
- graphite: "Pencil tip · carbon layers (still C) → element",
+ s: "s orbital: a sphere. Spin it: the outline stays a circle from every angle.",
+ p: "p orbital: a dumbbell. Two round lobes with a pinch at the nucleus. Turn on y and z to see the set of three.",
+ d: dCaps[(chemLabState.huntDIndex || 0) % 5],
+ f: "f orbitals: eight lobes, wilder still. Optional look, not a list to memorize.",
  };
- drawLabel(ctx, captions[mode] || "Stretch context", w * 0.5, layout.labelY);
- setHitRegions(hits);
+ drawLabel(ctx, captions[kind] || captions.s, w * 0.5, 26, { h: 30, font: "600 12px Segoe UI, sans-serif" });
+ drawLabel(ctx, "Drag to spin. Auto-rotate is in the panel.", w * 0.5, h - 22, {
+ h: 22,
+ font: "600 11px Segoe UI, sans-serif",
+ });
+ ctx.restore();
+ setHitRegions([{ id: "spin", shape: "rect", x: w * 0.5, y: h * 0.5, w, h, meta: { action: "spin" } }]);
  failFlash(ctx, w, h);
  successFlash(ctx, w, h);
  });
- setDispose(() => setIntentHandler(null));
+ setDispose(() => {});
  });
 
- /** Myths - claim vs truth with element / compound / mixture diagrams */
- arena.registerScene("elemMyth", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop } = api;
- const start = performance.now();
- setDescription("Bust the myth - canvas shows element vs compound vs mixture.");
-
- const myths = [
- { claim: "Water is an element", truth: "H₂O is a compound - two atom kinds", kind: "water" },
- { claim: "Air is an element", truth: "Air is a mixture of many gases", kind: "air" },
- { claim: "Salt is an element", truth: "NaCl is a compound of two ions", kind: "salt" },
- { claim: "Rust is pure iron", truth: "Rust is a compound (iron + oxygen)", kind: "rust" },
- { claim: "O₂ is not an element", truth: "O₂ is still element oxygen (one kind)", kind: "o2" },
- ];
-
+ arena.registerScene("elemBuildup", (api) => {
+ const { ctx, setTick, setDispose, setDescription } = api;
+ setDescription("Electrons fill 1s → 2s → 2p → 3s → 3p → 4s → 3d, up to iron.");
  setTick(() => {
  const w = api.width;
  const h = api.height;
- const layout = api.layout;
- const t = (performance.now() - start) / 1000;
- const idx = chemLabState.myth ?? 0;
- const phase = chemLabState.mythPhase || "claim";
- const m = myths[idx] || myths[0];
- drawBackdrop();
- ctx.fillStyle = phase === "truth" ? "rgba(52,211,153,0.18)" : "rgba(248,113,113,0.16)";
- roundRect(ctx, w * 0.1, h * 0.12, w * 0.8, 44, 12);
- ctx.fill();
- drawLabel(ctx, phase === "truth" ? m.truth : `Myth: ${m.claim}`, w * 0.5, h * 0.14 + 12, {
- h: 28,
- font: "700 14px Segoe UI",
+ const t = performance.now() / 1000;
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const z = Math.max(1, Math.min(26, chemLabState.huntFillZ || 1));
+ const el = elementForProtons(z);
+ const orb = fillingOrbital(z);
+ drawOrbitalCloud(ctx, w * 0.32, h * 0.5, orb.includes("d") ? "d" : orb.includes("p") ? "p" : "s", t);
+ ctx.fillStyle = "#e0f2fe";
+ ctx.textAlign = "left";
+ ctx.font = "700 22px Segoe UI, sans-serif";
+ ctx.fillText(`${el.name} (${el.symbol})`, w * 0.58, h * 0.32);
+ ctx.font = "600 14px Segoe UI, sans-serif";
+ ctx.fillText(`Electrons: ${z}`, w * 0.58, h * 0.42);
+ ctx.fillText(`Now filling: ${orb}`, w * 0.58, h * 0.52);
+ if (orb === "3d") {
+ ctx.fillText("This is why iron looks different", w * 0.58, h * 0.64);
+ ctx.fillText("from the simple start of the table.", w * 0.58, h * 0.72);
+ }
+ drawLabel(ctx, configString(z), w * 0.5, 26, { h: 28, font: "700 13px Segoe UI, sans-serif" });
+ ctx.restore();
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
  });
 
- const cx = w * 0.5;
- const cy = h * 0.42;
- if (phase === "claim") {
- // Vague "single blob" misconception visual
- ctx.fillStyle = "rgba(248,113,113,0.25)";
+ arena.registerScene("elemMood", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions } = api;
+ const start = performance.now();
+ setDescription("Inspect Neon, Sodium, and Chlorine. Then see the reactivity map.");
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = (performance.now() - start) / 1000;
+ const phase = chemLabState.phase || "inspect";
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ if (phase === "valence") {
+ ctx.fillStyle = "#e0f2fe";
+ ctx.textAlign = "center";
+ ctx.font = "700 18px Segoe UI, sans-serif";
+ ctx.fillText("Na: 1 valence electron", w * 0.3, h * 0.28);
+ for (let i = 0; i < 1; i++) {
+ ctx.fillStyle = "#fbbf24";
  ctx.beginPath();
- ctx.arc(cx, cy, 50, 0, Math.PI * 2);
+ ctx.arc(w * 0.3, h * 0.42, 10, 0, Math.PI * 2);
  ctx.fill();
- drawLabel(ctx, "Claim: one simple stuff?", cx, cy + 70, { h: 22, font: "600 12px Segoe UI" });
- } else if (m.kind === "water") {
- drawAtom(ctx, cx - 28, cy, 14, 0xf87171, t, "H");
- drawAtom(ctx, cx + 8, cy - 10, 16, 0x38bdf8, t, "O");
- drawAtom(ctx, cx + 36, cy + 12, 14, 0xf87171, t, "H");
- ctx.strokeStyle = "rgba(226,232,240,0.7)";
+ }
+ ctx.fillStyle = "#e0f2fe";
+ ctx.fillText("Cl: 7 valence electrons", w * 0.7, h * 0.28);
+ for (let i = 0; i < 7; i++) {
+ const a = -Math.PI / 2 + (i / 7) * Math.PI * 2;
+ ctx.fillStyle = "#38bdf8";
+ ctx.beginPath();
+ ctx.arc(w * 0.7 + Math.cos(a) * 34, h * 0.48 + Math.sin(a) * 34, 8, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ ctx.font = "600 14px Segoe UI, sans-serif";
+ ctx.fillText("Together they can reach a full 8.", w * 0.5, h * 0.78);
+ drawLabel(ctx, "Valence electrons: outermost shell, the ones in reactions.", w * 0.5, 26, {
+ h: 28,
+ font: "600 12px Segoe UI, sans-serif",
+ });
+ setHitRegions([]);
+ } else if (phase === "heat") {
+ const hits = drawTable(ctx, w, h, t, { labeled: true, heat: true });
+ drawLabel(ctx, "Cool blue: calm (full). Hot orange: eager to give or grab.", w * 0.5, 22, {
+ h: 26,
+ font: "600 12px Segoe UI, sans-serif",
+ });
+ setHitRegions(hits);
+ } else {
+ const z = chemLabState.huntInspectZ;
+ const stops = chemLabState.huntStops || {};
+ if (z) {
+ const guided = [10, 11, 17];
+ ctx.save();
+ ctx.filter = "blur(8px)";
+ ctx.globalAlpha = 0.5;
+ drawTable(ctx, w, h, t, { labeled: true, skipZs: [z, ...guided] });
+ ctx.restore();
+ const p = cellXY(z, w, h);
+ if (p) {
+ const pop = Math.min(1, (performance.now() - (chemLabState.huntInspectAt || 0)) / 220);
+ const sc = 1.08 + 0.1 * pop;
+ const holeR = Math.max(p.cw, p.ch) * sc * 1.15;
+ const veil = ctx.createRadialGradient(p.x, p.y, holeR * 0.4, p.x, p.y, Math.max(w, h) * 0.92);
+ veil.addColorStop(0, "rgba(4,14,32,0)");
+ veil.addColorStop(0.18, "rgba(4,14,32,0.18)");
+ veil.addColorStop(0.42, "rgba(4,14,32,0.62)");
+ veil.addColorStop(1, "rgba(4,14,32,0.82)");
+ ctx.fillStyle = veil;
+ ctx.fillRect(0, 0, w, h);
+ ctx.save();
+ ctx.translate(p.x, p.y);
+ ctx.scale(sc, sc);
+ ctx.translate(-p.x, -p.y);
+ ctx.shadowColor = "rgba(239,68,68,0.8)";
+ ctx.shadowBlur = 18;
+ drawTile(ctx, z, p.x, p.y, p.cw, p.ch, t, { labeled: true, selected: true });
+ ctx.restore();
+ const inner = Math.max(p.cw, p.ch) * sc * 0.5;
+ drawRedCross(ctx, p.x, p.y, inner, inner * 1.42);
+ guided.forEach((gz) => {
+ if (gz !== z) drawGuidedStopMark(ctx, gz, w, h, t, stops);
+ });
+ }
+ const hits = [];
+ for (let zz = 1; zz <= 118; zz++) {
+ const q = cellXY(zz, w, h);
+ if (!q) continue;
+ hits.push({
+ id: `z-${zz}`,
+ shape: "rect",
+ x: q.x,
+ y: q.y,
+ w: q.cw,
+ h: q.ch,
+ meta: { action: "tile", z: zz, family: familyOf(zz) },
+ });
+ }
+ const el = elementForProtons(z);
+ const val = valenceCount(z);
+ const fam = familyOf(z);
+ const cardH = 104;
+ const tileY = p ? p.y : h * 0.5;
+ const cardY = tileY > h * 0.56 ? 12 : h - cardH - 10;
+ roundRect(ctx, 10, cardY, w - 20, cardH, 12);
+ ctx.fillStyle = "rgba(8, 47, 73, 0.96)";
+ ctx.fill();
+ ctx.strokeStyle = "rgba(239,68,68,0.85)";
+ ctx.lineWidth = 2;
+ ctx.stroke();
+ ctx.fillStyle = "#fef2f2";
+ ctx.font = "800 16px Segoe UI, sans-serif";
+ ctx.textAlign = "left";
+ ctx.textBaseline = "top";
+ const title = `${el.symbol === "?" ? "Z " + z : el.symbol}  ${el.name}`;
+ ctx.fillText(title, 22, cardY + 8);
+ ctx.fillStyle = "#e0f2fe";
+ ctx.font = "600 12px Segoe UI, sans-serif";
+ ctx.fillText(`Atomic number ${z} (protons).  ${configString(z)}`, 22, cardY + 30);
+ ctx.fillText(`Valence electrons: ${val}.  ${FAM_LABEL[fam] || "elsewhere on the table"}`, 22, cardY + 48);
+ let cap = "Outer orbital fullness is why this element behaves the way it does.";
+ if (z === 10) cap = "Nothing missing, nothing extra. Noble gases barely react.";
+ if (z === 11) cap = "One lonely electron, easy to lose. Sodium reacts eagerly.";
+ if (z === 17) cap = "Almost full, desperate to grab one more. Chlorine is reactive too.";
+ ctx.fillStyle = "#fde68a";
+ ctx.fillText(cap, 22, cardY + 68);
+ ctx.fillStyle = "#94a3b8";
+ ctx.font = "600 11px Segoe UI, sans-serif";
+ ctx.fillText("Tap another element to inspect it. Red cross marks this one.", 22, cardY + 86);
+ const orb = fillingOrbital(z);
+ ctx.save();
+ ctx.beginPath();
+ ctx.rect(w - 108, cardY + 6, 88, cardH - 12);
+ ctx.clip();
+ drawOrbitalCloud(ctx, w - 64, cardY + cardH / 2, orb.includes("d") ? "d" : orb.includes("p") ? "p" : "s", t, 36);
+ ctx.restore();
+ setHitRegions(hits);
+ } else {
+ const hits = drawTable(ctx, w, h, t, { labeled: true });
+ [10, 11, 17].forEach((gz) => drawGuidedStopMark(ctx, gz, w, h, t, stops, { skipTile: true }));
+ const all = stops.ne && stops.na && stops.cl;
+ drawLabel(ctx, "Tap any element. The table will blur. A red cross marks the one you picked.", w * 0.5, 22, {
+ h: 28,
+ font: "600 12px Segoe UI, sans-serif",
+ });
+ drawLabel(
+ ctx,
+ all
+ ? "Neon, Sodium, and Chlorine inspected. Open the heat map when you are ready."
+ : "Guided stops (gold ring): Neon, Sodium, Chlorine.",
+ w * 0.5,
+ h - 22,
+ {
+ h: 24,
+ font: "600 12px Segoe UI, sans-serif",
+ },
+ );
+ setHitRegions(hits);
+ }
+ }
+ ctx.restore();
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("elemClose", (api) => {
+ const { ctx, setTick, setDispose, setDescription } = api;
+ const start = performance.now();
+ setDescription("The 118-element map, labeled and color-coded.");
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = (performance.now() - start) / 1000;
+ const u = Math.min(1, t / 6);
+ chemLabState.scale = u;
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ drawTable(ctx, w, h, t, { labeled: u > 0.45, unlabeled: u < 0.25 });
+ drawLabel(ctx, "A map you can actually read.", w * 0.5, 24);
+ ctx.restore();
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("elemSpiral", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ const start = performance.now();
+ const stops = [
+ { id: 1, label: "1 Identity", caption: "Spiral 1: protons decide the element" },
+ { id: 2, label: "2 Clouds", caption: "Spiral 2: orbit to orbital" },
+ { id: 3, label: "3 Shapes", caption: "Spiral 3: s, p, d, and f rooms" },
+ { id: 4, label: "4 Moods", caption: "Spiral 4: full or empty outer shape" },
+ ];
+ setDescription("Recap map of the four Element Hunt spirals.");
+ setIntentHandler((intent) => {
+ if (intent.type !== "CANVAS_TAP") return;
+ if (intent.meta?.action === "spiral") {
+ chemLabState.spiralStop = Number(intent.meta.stop) || 0;
+ chemLabState.spiralUntil = performance.now() + 4500;
+ }
+ if (intent.meta?.action === "spiralFinish") chemLabState.spiralFinish = true;
+ });
+ function polar(s, w, h) {
+ const cx = w * 0.5;
+ const cy = Math.min(h * 0.44, h - 118);
+ const maxR = Math.min(w * 0.36, Math.max(70, h - 140) * 0.42, 150);
+ const a = -0.55 + s * 1.28;
+ const r = maxR * (0.55 + s * 0.15);
+ return { x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r, a, cx, cy };
+ }
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = (performance.now() - start) / 1000;
+ const stop = chemLabState.spiralStop || 0;
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const origin = polar(0, w, h);
+ ctx.strokeStyle = "rgba(45,212,191,0.5)";
  ctx.lineWidth = 3;
  ctx.beginPath();
- ctx.moveTo(cx - 16, cy - 4);
- ctx.lineTo(cx - 2, cy - 8);
- ctx.moveTo(cx + 20, cy - 4);
- ctx.lineTo(cx + 28, cy + 6);
+ for (let s = 0; s <= 3.02; s += 0.04) {
+ const p = polar(s, w, h);
+ if (s === 0) ctx.moveTo(p.x, p.y);
+ else ctx.lineTo(p.x, p.y);
+ }
  ctx.stroke();
- drawLabel(ctx, "Compound: two atom kinds bonded", cx, cy + 70, { h: 22, font: "600 12px Segoe UI" });
- } else if (m.kind === "air") {
- const specs = [
- { n: "N₂", c: 0x94a3b8, x: -70 },
- { n: "O₂", c: 0x38bdf8, x: 0 },
- { n: "Ar", c: 0xa78bfa, x: 70 },
- ];
- specs.forEach((s) => {
- drawAtom(ctx, cx + s.x - 8, cy, 10, s.c, t, s.n.slice(0, 1));
- drawAtom(ctx, cx + s.x + 8, cy, 10, s.c, t, s.n.slice(0, 1));
- drawLabel(ctx, s.n, cx + s.x, cy + 36, { h: 18, font: "600 11px Segoe UI" });
- });
- drawLabel(ctx, "Mixture: several gases side by side", cx, cy + 70, { h: 22, font: "600 12px Segoe UI" });
- } else if (m.kind === "salt") {
- for (let i = 0; i < 4; i++) {
- for (let j = 0; j < 3; j++) {
- const even = (i + j) % 2 === 0;
- drawAtom(ctx, cx - 45 + i * 30, cy - 20 + j * 28, 10, even ? 0xf87171 : 0x38bdf8, t, even ? "Na" : "Cl");
- }
- }
- drawLabel(ctx, "Compound: Na⁺ and Cl⁻ bonded", cx, cy + 70, { h: 22, font: "600 12px Segoe UI" });
- } else if (m.kind === "rust") {
- drawAtom(ctx, cx - 24, cy, 14, 0x94a3b8, t, "Fe");
- drawAtom(ctx, cx + 18, cy - 12, 12, 0x38bdf8, t, "O");
- drawAtom(ctx, cx + 28, cy + 16, 12, 0x38bdf8, t, "O");
- ctx.strokeStyle = "rgba(251,146,60,0.8)";
- ctx.lineWidth = 2;
  ctx.beginPath();
- ctx.moveTo(cx - 12, cy - 4);
- ctx.lineTo(cx + 8, cy - 8);
- ctx.moveTo(cx - 10, cy + 6);
- ctx.lineTo(cx + 16, cy + 12);
- ctx.stroke();
- drawLabel(ctx, "Compound: iron + oxygen (not pure Fe)", cx, cy + 70, { h: 22, font: "600 12px Segoe UI" });
- } else {
- drawO2Pair(ctx, cx - 40, cy, 0.1, t);
- drawO2Pair(ctx, cx + 40, cy, 0.1, t + 1);
- drawLabel(ctx, "Still element oxygen - only O atoms", cx, cy + 70, { h: 22, font: "600 12px Segoe UI" });
+ ctx.arc(origin.cx, origin.cy, 48, 0, Math.PI * 2);
+ ctx.fillStyle = "rgba(8,47,73,0.55)";
+ ctx.fill();
+ if (stop === 1) {
+ for (let i = 0; i < 9; i++) {
+ const col = i % 3;
+ const row = Math.floor(i / 3);
+ ctx.fillStyle = "#38bdf8";
+ ctx.globalAlpha = 0.45 + Math.sin(t * 2 + i) * 0.15;
+ roundRect(ctx, origin.cx - 28 + col * 18, origin.cy - 26 + row * 16, 14, 12, 2);
+ ctx.fill();
  }
-
- drawLabel(ctx, `Myth ${idx + 1} / 5`, w * 0.5, layout.labelY);
+ ctx.globalAlpha = 1;
+ }
+ if (stop === 2) {
+ const g = ctx.createRadialGradient(origin.cx, origin.cy, 6, origin.cx, origin.cy, 50);
+ g.addColorStop(0, "rgba(125,211,252,0.7)");
+ g.addColorStop(1, "rgba(125,211,252,0)");
+ ctx.fillStyle = g;
+ ctx.beginPath();
+ ctx.arc(origin.cx, origin.cy, 50, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ if (stop === 3) drawOrbitalCloud(ctx, origin.cx, origin.cy, "p", t);
+ if (stop === 4) {
+ ctx.fillStyle = "#f97316";
+ ctx.beginPath();
+ ctx.arc(origin.cx - 18, origin.cy, 10, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.fillStyle = "#38bdf8";
+ ctx.beginPath();
+ ctx.arc(origin.cx + 18, origin.cy, 10, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ const hits = [];
+ stops.forEach((s, i) => {
+ const p = polar(i, w, h);
+ ctx.fillStyle = stop === s.id ? "#2dd4bf" : "#0ea5e9";
+ ctx.beginPath();
+ ctx.arc(p.x, p.y, 22, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.fillStyle = "#f0f9ff";
+ ctx.font = "800 16px Segoe UI, sans-serif";
+ ctx.textAlign = "center";
+ ctx.textBaseline = "middle";
+ ctx.fillText(String(s.id), p.x, p.y);
+ const lx = Math.min(w - 70, Math.max(70, p.x + Math.cos(p.a) * 42));
+ const ly = Math.min(h - 88, Math.max(58, p.y + Math.sin(p.a) * 36));
+ drawLabel(ctx, s.label, lx, ly, { font: "600 12px Segoe UI, sans-serif", h: 22 });
+ hits.push({ id: `stop-${s.id}`, shape: "ellipse", x: p.x, y: p.y, r: 36, meta: { action: "spiral", stop: s.id } });
+ });
+ drawLabel(ctx, stop ? stops[stop - 1].caption : "Your four spirals. Tap a number, then Finish Element Hunt.", w * 0.5, 28, {
+ h: 32,
+ font: "700 13px Segoe UI, sans-serif",
+ });
+ const fx = w * 0.5;
+ const fy = h - 34;
+ const fw = Math.min(260, w * 0.72);
+ roundRect(ctx, fx - fw / 2, fy - 22, fw, 44, 12);
+ ctx.fillStyle = "#0f766e";
+ ctx.fill();
+ ctx.fillStyle = "#f0f9ff";
+ ctx.font = "800 16px Segoe UI, sans-serif";
+ ctx.textAlign = "center";
+ ctx.textBaseline = "middle";
+ ctx.fillText("Finish Element Hunt", fx, fy);
+ hits.push({ id: "spiral-finish", shape: "rect", x: fx, y: fy, w: fw, h: 44, meta: { action: "spiralFinish" } });
+ setHitRegions(hits);
+ ctx.restore();
  failFlash(ctx, w, h);
  successFlash(ctx, w, h);
  });
  setDispose(() => {});
  });
 
- /** Drill flash - show the sample identity the prompt is asking about */
- arena.registerScene("elemDrill", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop } = api;
- const start = performance.now();
- setDescription(chemLabState.prompt || "Element Hunt drill");
-
- function drillVisual(prompt) {
- const p = (prompt || "").toLowerCase();
- if (p.includes("iron")) return { label: "Fe", color: 0x94a3b8, tag: "Iron nail", kind: "element" };
- if (p.includes("water")) return { label: "H₂O", color: 0x60a5fa, tag: "Water", kind: "compound" };
- if (p.includes("o₂") || p.includes("o2")) return { label: "O₂", color: 0x38bdf8, tag: "Oxygen gas", kind: "element" };
- if (p.includes("air")) return { label: "Air", color: 0x93c5fd, tag: "Room air", kind: "mixture" };
- if (p.includes("copper")) return { label: "Cu", color: 0xf59e0b, tag: "Copper wire", kind: "element" };
- if (p.includes("brass")) return { label: "Cu+Zn", color: 0xfbbf24, tag: "Brass alloy", kind: "mixture" };
- if (p.includes("helium")) return { label: "He", color: 0x67e8f9, tag: "Helium", kind: "element" };
- if (p.includes("definition")) return { label: "1 kind", color: 0x22d3ee, tag: "Element rule", kind: "rule" };
- return { label: "?", color: 0x22d3ee, tag: "Classify", kind: "rule" };
+ if (typeof arena.registerAlias === "function") {
+ arena.registerAlias("elemMeet", "elemOpen");
+ arena.registerAlias("elemIron", "elemFamilies");
+ arena.registerAlias("elemSort", "elemFamilies");
+ arena.registerAlias("elemCopper", "elemShells");
+ arena.registerAlias("elemOxygen", "elemCloud");
+ arena.registerAlias("elemRule", "elemCarbon");
+ arena.registerAlias("elemStretch", "elemOrbitals");
+ arena.registerAlias("elemMyth", "elemBuildup");
+ arena.registerAlias("elemDrill", "elemMood");
+ arena.registerAlias("elemMastery", "elemSpiral");
  }
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const t = (performance.now() - start) / 1000;
- drawBackdrop();
- const flash = chemLabState.flashColor || 0x22d3ee;
- ctx.fillStyle = `#${flash.toString(16).padStart(6, "0")}33`;
- ctx.fillRect(0, 0, w, h * 0.18);
- drawLabel(ctx, chemLabState.prompt || "Speed drill!", w * 0.5, h * 0.1, { h: 28, font: "700 16px Segoe UI" });
- const vis = drillVisual(chemLabState.prompt);
- const cx = w * 0.5;
- const cy = h * 0.42;
- if (vis.kind === "element") {
- for (let i = 0; i < 7; i++) {
- const a = (i / 7) * Math.PI * 2 + t;
- drawAtom(ctx, cx + Math.cos(a) * 36, cy + Math.sin(a) * 26, 10, vis.color, t, vis.label.slice(0, 2));
- }
- } else if (vis.kind === "compound") {
- drawAtom(ctx, cx - 22, cy, 12, 0xf87171, t, "H");
- drawAtom(ctx, cx + 6, cy - 8, 14, 0x38bdf8, t, "O");
- drawAtom(ctx, cx + 28, cy + 10, 12, 0xf87171, t, "H");
- } else if (vis.kind === "mixture") {
- drawAtom(ctx, cx - 40, cy, 11, 0x94a3b8, t, "N");
- drawAtom(ctx, cx, cy - 16, 11, 0x38bdf8, t, "O");
- drawAtom(ctx, cx + 40, cy + 8, 11, 0xfbbf24, t, "Zn");
- } else {
- ctx.fillStyle = "rgba(34,211,238,0.25)";
- roundRect(ctx, cx - 70, cy - 28, 140, 56, 12);
- ctx.fill();
- ctx.fillStyle = "#ecfeff";
- ctx.font = "800 22px Segoe UI,sans-serif";
- ctx.textAlign = "center";
- ctx.fillText("1 atom kind", cx, cy + 6);
- }
- drawLabel(ctx, `${vis.tag} · pick Element / Compound / Mixture`, w * 0.5, layout.labelY);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- });
- setDispose(() => {});
- });
-
- /** Mastery - path + identity showcase */
- arena.registerScene("elemMastery", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop } = api;
- const start = performance.now();
- setDescription("Element Hunt mastery - apply the one-kind rule.");
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const t = (performance.now() - start) / 1000;
- const locked = chemLabState.masteryStep || 0;
- drawBackdrop();
- const steps = ["Meet", "Iron", "Sort", "Copper", "Oxygen", "Rule"];
- steps.forEach((label, i) => {
- const x = w * 0.1 + i * (w * 0.14);
- ctx.fillStyle = i < locked ? "#22d3ee" : "rgba(148,163,184,0.35)";
- roundRect(ctx, x - 28, h * 0.78 - 12, 56, 24, 8);
- ctx.fill();
- ctx.fillStyle = "#0f172a";
- ctx.font = "600 10px Segoe UI";
- ctx.textAlign = "center";
- ctx.fillText(label, x, h * 0.78);
- });
- // Showcase: element samples vs crossed-out compound
- drawBottle(ctx, layout.leftProp.x, layout.deskTop, "#94a3b8", 0.95, "Fe");
- drawBottle(ctx, layout.midProp.x, layout.deskTop, "#f59e0b", 0.95, "Cu");
- drawBottle(ctx, layout.rightProp.x, layout.deskTop, "#38bdf8", 0.95, "O₂");
- drawKindCloud(ctx, w * 0.5, h * 0.32, "iron", t, 10);
- ctx.fillStyle = "rgba(34,211,238,0.2)";
- roundRect(ctx, w * 0.32, h * 0.52, w * 0.36, 36, 10);
- ctx.fill();
- ctx.fillStyle = "#ecfeff";
- ctx.font = "700 14px Segoe UI,sans-serif";
- ctx.textAlign = "center";
- ctx.fillText("Element Scout · one atom kind", w * 0.5, h * 0.52 + 22);
- drawLabel(ctx, "Mastery: prove the element rule on mixed cases", w * 0.5, layout.labelY);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- });
- setDispose(() => {});
- });
 }
 
 export const ELEM_ASSET_PATHS = {

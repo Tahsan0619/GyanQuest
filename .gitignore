@@ -38,3 +38,8 @@ sketchfab models/*.glb
 # Cursor / local agent junk
 .cursor/
 agent-transcripts/
+
+# Desktop pack
+/dist/
+/build/
+tools/vendor/

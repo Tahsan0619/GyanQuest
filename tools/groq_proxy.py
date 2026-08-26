@@ -12,26 +12,51 @@ import json
 import mimetypes
 import os
 import pathlib
+import sys
+import threading
 import urllib.error
 import urllib.request
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
+
+def resolve_root() -> pathlib.Path:
+    env = os.environ.get("GYANQUEST_ROOT", "").strip()
+    if env:
+        return pathlib.Path(env).expanduser().resolve()
+    if getattr(sys, "frozen", False):
+        exe_dir = pathlib.Path(sys.executable).resolve().parent
+        for cand in (exe_dir / "web", exe_dir):
+            if (cand / "index.html").is_file():
+                return cand
+        return exe_dir
+    return pathlib.Path(__file__).resolve().parents[1]
+
+
+ROOT = resolve_root()
 
 
 def load_env() -> None:
-    env_path = ROOT / ".env"
-    if not env_path.exists():
-        return
-    for line in env_path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
+    candidates = [ROOT / ".env"]
+    if getattr(sys, "frozen", False):
+        candidates.append(pathlib.Path(sys.executable).resolve().parent / ".env")
+    seen: set[pathlib.Path] = set()
+    for env_path in candidates:
+        try:
+            env_path = env_path.resolve()
+        except OSError:
             continue
-        key, _, val = line.partition("=")
-        key = key.strip()
-        val = val.strip().strip('"').strip("'")
-        if key and key not in os.environ:
-            os.environ[key] = val
+        if env_path in seen or not env_path.is_file():
+            continue
+        seen.add(env_path)
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, val = line.partition("=")
+            key = key.strip()
+            val = val.strip().strip('"').strip("'")
+            if key and key not in os.environ:
+                os.environ[key] = val
 
 
 load_env()
@@ -402,19 +427,43 @@ class Handler(SimpleHTTPRequestHandler):
             super().log_message(fmt, *args)
 
 
-def main():
+def _register_mimetypes() -> None:
     mimetypes.add_type("application/javascript", ".js")
     mimetypes.add_type("text/css", ".css")
     mimetypes.add_type("image/svg+xml", ".svg")
     mimetypes.add_type("model/gltf-binary", ".glb")
     mimetypes.add_type("model/gltf+json", ".gltf")
-    httpd = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
+
+
+def create_server(preferred_port: int | None = None) -> tuple[ThreadingHTTPServer, int]:
+    """Bind 127.0.0.1; skip occupied ports so the desktop app can still start."""
+    global PORT
+    _register_mimetypes()
+    start = preferred_port if preferred_port is not None else PORT
+    last_err: OSError | None = None
+    for port in range(start, start + 30):
+        try:
+            httpd = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+            PORT = port
+            return httpd, port
+        except OSError as e:
+            last_err = e
+    raise OSError(f"No free port in {start}-{start + 29}") from last_err
+
+
+def warm_chat_chain() -> None:
     global _CHAT_CHAIN
-    _CHAT_CHAIN = build_chat_chain()
-    print(f"GyanQuest + Groq proxy at http://127.0.0.1:{PORT}/")
+    try:
+        _CHAT_CHAIN = build_chat_chain()
+    except Exception:
+        _CHAT_CHAIN = list(_PREFERRED_CHAT)
+
+
+def main():
+    httpd, port = create_server()
+    threading.Thread(target=warm_chat_chain, daemon=True).start()
+    print(f"GyanQuest + Groq proxy at http://127.0.0.1:{port}/")
     print(f"Key loaded: {'yes' if GROQ_KEY else 'NO - set GROQ_API_KEY in .env'}")
-    print("Chat models (fallback order):")
-    print("  " + (", ".join(_CHAT_CHAIN) if _CHAT_CHAIN else "(none)"))
     print("POST /api/chat  or  /api/explain")
     try:
         httpd.serve_forever()

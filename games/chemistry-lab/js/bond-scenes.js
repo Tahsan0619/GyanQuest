@@ -2,7 +2,7 @@
  * Chemistry Lab · Mission 3: Bond Buddies - Canvas 2D scenes.
  * Tiny Bits parity: phased meet, zoneId sort + PLACE_CHIP, prop drag, distinct stretch.
  */
-import { chemLabState, pulseFailFeedback, pulseSuccessFeedback } from "./atom-scenes.js";
+import { chemLabState, pulseFailFeedback, pulseSuccessFeedback } from "./atom-scenes.js?v=elemhunt7";
 import { CUP_FOOT, footAlign } from "./scene-layout.js";
 import { sortSlotPositions, getActiveSession } from "./activity-controller.js";
 

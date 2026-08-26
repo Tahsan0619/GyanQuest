@@ -1,44 +1,140 @@
 [
- {
- "file": "m1-cover.jpg",
- "source": "https://commons.wikimedia.org/wiki/File:Home-grown_salt_(ClNa)_crystals._01.jpg",
- "license": "CC BY 4.0",
- "artist": "Mineral photos",
- "bytes": 719282
- },
- {
- "file": "m1-particles.jpg",
- "source": "https://commons.wikimedia.org/wiki/File:Salt_crystals_under_the_microscope.jpg",
- "license": "CC BY 4.0",
- "artist": "\u0414\u0430\u0432\u0438\u0434 \u0410\u043d\u0434\u0440\u043e\u043d\u043e\u0432",
- "bytes": 98935
- },
- {
- "file": "m1-boil.jpg",
- "source": "https://commons.wikimedia.org/wiki/File:Boiling_water.jpg",
- "license": "CC BY 3.0",
- "artist": "GRAN",
- "bytes": 1873796
- },
- {
- "file": "m1-melt.jpg",
- "source": "https://commons.wikimedia.org/wiki/File:Melting_ice.jpg",
- "license": "Public domain",
- "artist": "Rosendahl",
- "bytes": 87442
- },
- {
- "file": "m1-states.jpg",
- "source": "https://commons.wikimedia.org/wiki/File:Ice_water_vapor.jpg",
- "license": "CC BY-SA 3.0",
- "artist": "Blue_ice.jpg: Stephanie Costa\nWassertropfen.jpg: Sven Hoppe\nAbove_the_Clouds.jpg: Arun Kulshreshtha",
- "bytes": 1405152
- },
- {
- "file": "m1-lattice.jpg",
- "source": "https://commons.wikimedia.org/wiki/File:Close_Up_View_Of_Sodium_Chloride_Crystals.jpg",
- "license": "Public domain",
- "artist": "Photograph by the NASA Expedition 6 crew",
- "bytes": 588731
- }
+  {
+    "file": "m1-cover.jpg",
+    "book": "Tiny Bits",
+    "commons_title": "File:Home-grown salt (ClNa) crystals. 01.jpg",
+    "license": "CC BY 4.0"
+  },
+  {
+    "file": "m1-microscope.jpg",
+    "book": "Tiny Bits",
+    "commons_title": "File:Salt crystals under the microscope.jpg",
+    "license": "CC BY 4.0"
+  },
+  {
+    "file": "m1-states.jpg",
+    "book": "Tiny Bits",
+    "commons_title": "File:Ice water vapor.jpg",
+    "license": "CC BY-SA 3.0"
+  },
+  {
+    "file": "m1-melt.jpg",
+    "book": "Tiny Bits",
+    "commons_title": "File:Melting ice.jpg",
+    "license": "Public domain"
+  },
+  {
+    "file": "m1-lattice.jpg",
+    "book": "Tiny Bits",
+    "commons_title": "File:Close Up View Of Sodium Chloride Crystals.jpg",
+    "license": "Public domain"
+  },
+  {
+    "file": "m1-condense.jpg",
+    "book": "Tiny Bits",
+    "commons_title": "File:Dew on grass.jpg",
+    "license": "see Commons"
+  },
+  {
+    "file": "m1-boil.jpg",
+    "book": "Tiny Bits",
+    "commons_title": "File:Boiling water.jpg",
+    "license": "CC BY 3.0"
+  },
+  {
+    "file": "m2-cover.jpg",
+    "book": "Element Hunt",
+    "commons_title": "File:The Periodic Table of the Elements, in pictures.png",
+    "license": "CC BY-SA 4.0",
+    "artist": "Keith Enevoldsen"
+  },
+  {
+    "file": "m2-iron.jpg",
+    "book": "Element Hunt",
+    "commons_title": "File:Iron electrolytic and 1cm3 cube.jpg",
+    "license": "FAL"
+  },
+  {
+    "file": "m2-water.jpg",
+    "book": "Element Hunt",
+    "commons_title": "File:Water drop 001.jpg",
+    "license": "CC BY 2.0"
+  },
+  {
+    "file": "m2-oxygen.jpg",
+    "book": "Element Hunt",
+    "commons_title": "File:Liquid oxygen in a beaker.jpg",
+    "license": "Public domain"
+  },
+  {
+    "file": "m2-graphite.jpg",
+    "book": "Element Hunt",
+    "commons_title": "File:Graphite-and-diamond-with-scale.jpg",
+    "license": "CC BY-SA 3.0"
+  },
+  {
+    "file": "m2-gold.jpg",
+    "book": "Element Hunt",
+    "commons_title": "File:Native gold nuggets.jpg",
+    "license": "Public domain"
+  },
+  {
+    "file": "m2-copper.jpg",
+    "book": "Element Hunt",
+    "commons_title": "File:Native copper.jpg",
+    "license": "Public domain"
+  },
+  {
+    "file": "m2-air.jpg",
+    "book": "Element Hunt",
+    "commons_title": "File:Blue sky.jpg",
+    "license": "CC BY 3.0"
+  },
+  {
+    "file": "m3-cover.jpg",
+    "book": "Bond Buddies",
+    "commons_title": "File:Ball and stick model of a water molecule.png",
+    "license": "CC BY-SA 4.0"
+  },
+  {
+    "file": "m3-droplets.jpg",
+    "book": "Bond Buddies",
+    "commons_title": "File:Water droplets.jpg",
+    "license": "CC BY 2.0"
+  },
+  {
+    "file": "m3-nacl.jpg",
+    "book": "Bond Buddies",
+    "commons_title": "File:NaCl crystal structure.png",
+    "license": "Public domain"
+  },
+  {
+    "file": "m3-modelkit.jpg",
+    "book": "Bond Buddies",
+    "commons_title": "File:HGS General Chemistry Molecular Model Set (DPLA)",
+    "license": "Public domain"
+  },
+  {
+    "file": "m3-sugar.jpg",
+    "book": "Bond Buddies",
+    "commons_title": "File:Sugar crystals.jpg",
+    "license": "CC BY 4.0"
+  },
+  {
+    "file": "m3-glue.jpg",
+    "book": "Bond Buddies",
+    "commons_title": "File:Glue-stick glue holds the doubled thickness (5702862600).jpg",
+    "license": "CC BY-SA 2.0"
+  },
+  {
+    "file": "m3-magnets.svg",
+    "book": "Bond Buddies",
+    "note": "Original GyanQuest diagram (bar magnets as analogy, not a Commons photo)"
+  },
+  {
+    "file": "m3-h2o.jpg",
+    "book": "Bond Buddies",
+    "commons_title": "File:Water-3D-balls-A.png",
+    "license": "see Commons"
+  }
 ]
