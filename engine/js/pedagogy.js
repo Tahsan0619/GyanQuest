@@ -18,7 +18,7 @@ import {
  normalizeHintTiers,
  normalizeConceptLog,
 } from "/engine/js/persist.js?v=resume1";
-import { openBookChat } from "/engine/js/book-chat.js?v=tutor2";
+import { openBookChat } from "/engine/js/book-chat.js?v=tutor3";
 import { openConstellation, pickRecallTerms } from "/engine/js/concept-viz.js?v=ped3";
 
 const PED_CSS = "/engine/css/pedagogy.css?v=ped1";

@@ -2,8 +2,8 @@
  * Floating GyanQuest tutor (Groq via /api/chat).
  * Socratic word flow: ask what the learner thinks → evaluate → compare.
  */
-const CHAT_CSS = "/engine/css/book-chat.css?v=tutor2";
-const CHAT_VER = "tutor2";
+const CHAT_CSS = "/engine/css/book-chat.css?v=tutor3";
+const CHAT_VER = "tutor3";
 
 function ensureChatCss() {
   if (document.querySelector("link[data-gq-chat-css]")) return;
@@ -22,8 +22,18 @@ function escapeHtml(s) {
     .replace(/"/g, "&quot;");
 }
 
+/** Strip em/en dashes from tutor copy; use plain hyphen or rephrase. */
+function normalizeDashes(text) {
+  return String(text ?? "")
+    .replace(/\u2014/g, " - ")
+    .replace(/\u2013/g, " - ")
+    .replace(/\u2212/g, "-")
+    .replace(/\s+-\s+/g, " - ");
+}
+
 /** Inline markdown: **bold**, *italic*, ~~strike~~ */
 function inlineMd(text) {
+  text = normalizeDashes(text);
   let s = escapeHtml(text);
   s = s.replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>");
   s = s.replace(/(?<![*\w])\*([^*\n]+)\*(?!\*)/g, "<em>$1</em>");
@@ -116,7 +126,7 @@ export function mountBookChat(opts = {}) {
  <header class="gq-chat__head">
  <div>
  <strong>GyanQuest Tutor</strong>
- <p class="gq-chat__sub">Ask anything — or tap a red word in the book</p>
+ <p class="gq-chat__sub">Ask anything, or tap a red word in the book</p>
  </div>
  <button type="button" class="gq-chat__x" id="gq-chat-close" aria-label="Close chat">Close</button>
  </header>
@@ -157,7 +167,7 @@ export function mountBookChat(opts = {}) {
   });
 
   appendBot(
-    "Hi! I am your GyanQuest tutor. Tap a **red word** in a mission book, or ask me anything. I will ask what **you** think first — then we compare ideas together.",
+    "Hi! I am your GyanQuest tutor. Tap a **red word** in a mission book, or ask me anything. I will ask what **you** think first, then we compare ideas together.",
   );
   return root;
 }
@@ -222,7 +232,7 @@ function beginTermFlow(opts) {
       onExplained: opts.onExplained,
     };
     appendBot(
-      `From the book you tapped **${term}**.\n\nWhat do you think this word means? Say it in **your own words** — there is no wrong answer yet.`,
+      `From the book you tapped **${term}**.\n\nWhat do you think this word means? Say it in **your own words**. There is no wrong answer yet.`,
     );
     return;
   }
@@ -337,7 +347,7 @@ async function sendChat({
     await new Promise((r) => setTimeout(r, 40));
   }
   if (chatState.busy) {
-    appendBot("One moment — still finishing the last answer. Try again.");
+    appendBot("One moment - still finishing the last answer. Try again.");
     return;
   }
   chatState.busy = true;
@@ -405,7 +415,7 @@ async function sendChat({
       );
       return;
     }
-    const reply = data.reply || "I could not form an answer.";
+    const reply = normalizeDashes(data.reply || "I could not form an answer.");
     appendBot(reply);
     chatState.history.push(
       { role: "user", content: payload.messages[payload.messages.length - 1].content },
@@ -416,7 +426,7 @@ async function sendChat({
     status?.remove();
     appendBot(
       err?.name === "AbortError"
-        ? "That took too long — ask again in a moment."
+        ? "That took too long - ask again in a moment."
         : "Chat is offline. Start the server with: `py -3 tools/groq_proxy.py`",
     );
   } finally {

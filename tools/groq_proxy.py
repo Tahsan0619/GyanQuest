@@ -111,13 +111,13 @@ SYSTEM = (
 
 FORMATTING_RULE = (
     " Formatting: use **bold** labels, `-` bullets when listing, numbered lists like `1.` when steps help. "
-    "No markdown headings (#). Keep Unicode clean (apostrophes, dashes as - not mojibake)."
+    "No markdown headings (#). Use a plain hyphen (-) never an em dash. Keep Unicode clean."
 )
 
 SOCRATIC_CHAT_RULE = (
     " The learner is chatting freely. Use the Socratic method: ask what they think first when a "
     "definition or idea is unclear, build on their words, and end with ONE thoughtful question "
-    "that makes them reason — not yes/no."
+    "that makes them reason, not yes/no."
 )
 
 EVALUATE_RULE = (
@@ -126,8 +126,8 @@ EVALUATE_RULE = (
     "**What it means:** Clear correct meaning in this subject, 2-4 sentences.\n\n"
     "**What you said:** Restate their idea fairly in your own words.\n\n"
     "**How close:** Say if they are right, partly right, or off track. If partly right, name what "
-    "made sense. If wrong, be kind — credit any sensible part.\n\n"
-    "**Compare:** One short paragraph linking the real meaning to their idea — what to keep, "
+    "made sense. If wrong, be kind and credit any sensible part.\n\n"
+    "**Compare:** One short paragraph linking the real meaning to their idea: what to keep, "
     "what to adjust.\n\n"
     "End with exactly ONE Socratic question on its own line about this word in the topic. "
     'Never ask "Do you want to learn more?" or similar.'
@@ -300,11 +300,21 @@ def groq_complete(messages: list, system: str, max_tokens: int) -> tuple[str, st
         except Exception as e:
             last_err = str(e)
             continue
-        text = _message_text(data)
+        text = normalize_dashes(_message_text(data))
         if text:
             return text, model
         last_err = f"{model} returned empty content"
     raise RuntimeError(last_err)
+
+
+def normalize_dashes(text: str) -> str:
+    if not text:
+        return text
+    return (
+        text.replace("\u2014", " - ")
+        .replace("\u2013", " - ")
+        .replace("\u2212", "-")
+    )
 
 
 def follow_up_question(term: str, subject: str) -> str:
@@ -319,22 +329,22 @@ def local_explain(term: str, subject: str, phase: str = "explain", user_attempt:
     attempt = (user_attempt or "").strip()
     if phase == "evaluate" and attempt:
         return (
-            f"**What it means:** In {sub}, **{t}** is a key idea from the lesson — "
+            f"**What it means:** In {sub}, **{t}** is a key idea from the lesson: "
             f"the building block the book pictures and examples point to.\n\n"
             f"**What you said:** You said: \"{attempt}\"\n\n"
             f"**How close:** That is a fair try. Some parts may match the book; compare your words "
             f"to the red glossary line and the diagram on this page.\n\n"
             f"**Compare:** Keep the parts that fit what you see in the book. Adjust anything that "
             f"does not match the mission examples.\n\n"
-            f"(Online tutor briefly unavailable — local helper used.)\n\n"
+            f"(Online tutor briefly unavailable - local helper used.)\n\n"
             f'Where in {sub} would **{t}** change what happens if it were missing?'
         )
     if phase == "followup":
         return (
-            f'Good — let\'s push **"{t}"** further in {sub}.\n\n'
+            f'Good - let\'s push **"{t}"** further in {sub}.\n\n'
             f"- Watch what happens before, during, and after in the mission.\n"
             f"- Name which part the word is labeling.\n\n"
-            f"(Online tutor briefly unavailable — local helper used.)\n\n"
+            f"(Online tutor briefly unavailable - local helper used.)\n\n"
             f'{follow_up_question(t, sub)}'
         )
     return (
@@ -342,7 +352,7 @@ def local_explain(term: str, subject: str, phase: str = "explain", user_attempt:
         f"- Say it aloud.\n"
         f"- Point to a book picture that matches.\n"
         f"- Use it in one sentence of your own.\n\n"
-        f"(Online tutor briefly unavailable — local helper used.)\n\n"
+        f"(Online tutor briefly unavailable - local helper used.)\n\n"
         f'What do you think **{t}** means in your own words?'
     )
 
@@ -390,7 +400,7 @@ class Handler(SimpleHTTPRequestHandler):
         subject = (body.get("subject") or body.get("context") or "").strip()
         user = (body.get("message") or body.get("prompt") or "").strip()
         user_attempt = (body.get("userAttempt") or body.get("user_attempt") or "").strip()
-        # Optional tier 1|2|3 for Hint Ladder — same endpoint, varied depth (Feature 2).
+        # Optional tier 1|2|3 for Hint Ladder - same endpoint, varied depth (Feature 2).
         try:
             tier = int(body.get("tier") or 1)
         except (TypeError, ValueError):
@@ -444,7 +454,7 @@ class Handler(SimpleHTTPRequestHandler):
             self._json(401, {"error": "Groq API error", "detail": str(e)[:800]})
             return
         except Exception as e:
-            fallback = local_explain(term or user, subject, phase, user_attempt)
+            fallback = normalize_dashes(local_explain(term or user, subject, phase, user_attempt))
             self._json(
                 200,
                 {
@@ -455,7 +465,7 @@ class Handler(SimpleHTTPRequestHandler):
             )
             return
 
-        self._json(200, {"reply": text, "model": used_model})
+        self._json(200, {"reply": normalize_dashes(text), "model": used_model})
 
     def _json(self, code: int, obj: dict):
         raw = json.dumps(obj).encode("utf-8")
