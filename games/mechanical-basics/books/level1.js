@@ -1,248 +1,253 @@
 /**
- * Digital book - Mechanical Basics Mission 1: Simple Machines
- * Unique curriculum book (lever, pulley, wheel, incline). Not a template fill-in.
+ * Mechanical Basics Mission 1 book: Levers & Gears
+ * Companion to the 4-spiral lesson (lever → fulcrum/MA → gears → everyday).
  */
 export const BOOK = {
-  missionIndex: 0,
-  title: "Simple Machines",
-  subtitle: "trade force and distance to get work done",
-  subject: "Mechanical Basics / Simple Machines",
-  theories: [
-    "cognitive-load",
-    "dual-coding",
-    "multimedia-learning",
-    "constructivism",
-    "conceptual-change",
-    "spiral-scaffold",
-    "retrieval-practice",
-  ],
-  cover: {
-    title: "Simple Machines",
-    art: "/games/mechanical-basics/assets/book/m1-cover.jpg",
-  },
-  glossary: [
-    { id: "lever", term: "lever" },
-    { id: "fulcrum", term: "fulcrum" },
-    { id: "pulley", term: "pulley" },
-    { id: "inclined-plane", term: "inclined plane" },
-    { id: "wheel-axle", term: "wheel and axle" },
-    { id: "mechanical-advantage", term: "mechanical advantage" },
-    { id: "load", term: "load" },
-  ],
-  pages: [
-    {
-      title: "Machines that multiply effort",
-      layout: "text",
-      figures: [
-        {
-          place: "top",
-          slides: [
-            {
-              src: "/games/mechanical-basics/assets/book/m1-cover.jpg",
-              caption: "Figure 1. Gears and simple machines change how force is applied - they do not erase work.",
-              alt: "Gear mechanism",
-            },
-            {
-              src: "/games/mechanical-basics/assets/book/m1-lever.jpg",
-              caption: "A playground seesaw is a lever with a fulcrum in the middle.",
-              alt: "Seesaw lever",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "A load is what you want to move. Simple machines help you move it by trading larger distance for smaller force - or the reverse.",
-        },
-        {
-          type: "p",
-          text: "Mechanical advantage is how much the machine multiplies your effort force (ideally, ignoring friction).",
-        },
-      ],
-    },
-    {
-      title: "Levers and fulcrums",
-      layout: "full-fig",
-      figures: [
-        {
-          place: "full",
-          slides: [
-            {
-              src: "/games/mechanical-basics/assets/book/m1-lever.jpg",
-              caption: "Figure 2. Move the fulcrum and the same lever feels easier or harder.",
-              alt: "Lever and fulcrum",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "A lever is a rigid bar that turns on a fulcrum. Crowbars, scissors, and bottle openers are lever cousins.",
-        },
-      ],
-    },
-    {
-      title: "Pulleys and ramps",
-      layout: "text",
-      figures: [
-        {
-          place: "top",
-          slides: [
-            {
-              src: "/games/mechanical-basics/assets/book/m1-pulley.jpg",
-              caption: "Figure 3. A pulley changes force direction - and combined pulleys can share the load.",
-              alt: "Pulley system",
-            },
-            {
-              src: "/games/mechanical-basics/assets/book/m1-inclined.jpg",
-              caption: "An inclined plane spreads lifting over a longer path.",
-              alt: "Ramp inclined plane",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Ramps are inclined planes. You push a longer distance so each step of force can be smaller.",
-        },
-        {
-          type: "p",
-          text: "A wheel and axle lets a small force at the rim create useful turning at the center - think steering wheels and doorknobs.",
-        },
-      ],
-    },
-    {
-      title: "Work is not free",
-      layout: "full-fig",
-      figures: [
-        {
-          place: "full",
-          slides: [
-            {
-              src: "/games/mechanical-basics/assets/book/m1-wheel.jpg",
-              caption: "Figure 4. Wheels reduce grinding friction so more of your effort moves the load forward.",
-              alt: "Wheel and axle",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Machines redistribute effort. Friction still steals some energy as heat - real life is never perfect.",
-        },
-      ],
-    },
-    {
-      title: "How the mission connects",
-      layout: "text",
-      blocks: [
-        {
-          type: "p",
-          text: "Meet machines → place fulcrums → lift with pulley/ramp → lab tradeoffs → explain → rule → stretch → myth → fluency → mastery.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Moving a fulcrum shows mechanical advantage changing",
-            "Ramp labs make the distance trade obvious",
-            "The rule sentence is 'trade force against distance'",
-          ],
-        },
-      ],
-    },
-    {
-      title: "Yard lab",
-      layout: "split",
-      figures: [
-        {
-          place: "right",
-          slides: [
-            {
-              src: "/games/mechanical-basics/assets/book/m1-lever.jpg",
-              caption: "Find a lever at home.",
-              alt: "Lever",
-            },
-            {
-              src: "/games/mechanical-basics/assets/book/m1-inclined.jpg",
-              caption: "Spot an inclined plane.",
-              alt: "Ramp",
-            },
-            {
-              src: "/games/mechanical-basics/assets/book/m1-pulley.jpg",
-              caption: "Sketch a pulley lift.",
-              alt: "Pulley",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Name three tools around you and label each as lever, pulley, wheel and axle, or inclined plane.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Where is the fulcrum?",
-            "What is the load?",
-            "Did you gain mechanical advantage?",
-          ],
-        },
-      ],
-    },
-    {
-      title: "Myths to bust",
-      layout: "text",
-      blocks: [
-        {
-          type: "p",
-          text: "Myth: Machines create energy. Better: they rearrange force and distance; work still costs effort.",
-        },
-        {
-          type: "p",
-          text: "Myth: A longer ramp is cheating. Better: you pay with distance to reduce force.",
-        },
-        {
-          type: "p",
-          text: "Red words are glossary terms. Tap one to ask the tutor.",
-        },
-      ],
-    },
-    {
-      title: "Mastery",
-      layout: "text",
-      figures: [
-        {
-          place: "top",
-          slides: [
-            {
-              src: "/games/mechanical-basics/assets/book/m1-cover.jpg",
-              caption: "Figure 5. Teach simple machines as honest force-distance trades.",
-              alt: "Simple machines mastery",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Teach a friend in one minute: levers need a fulcrum; ramps and pulleys help lift; mechanical advantage is the trade.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Sketch a lever with load and fulcrum",
-            "Give one inclined plane example",
-            "Use the word pulley correctly once",
-          ],
-        },
-      ],
-    },
-  ],
+ missionIndex: 0,
+ title: "Levers & Gears",
+ subtitle: "trade distance for force - straight and spinning versions",
+ subject: "Mechanical Basics / Levers & Gears",
+ theories: [
+ "cognitive-load",
+ "dual-coding",
+ "multimedia-learning",
+ "constructivism",
+ "conceptual-change",
+ "spiral-scaffold",
+ "retrieval-practice",
+ ],
+ cover: {
+ title: "Levers & Gears",
+ art: "/games/mechanical-basics/assets/book/gen-me-m1-cover.png",
+ },
+ glossary: [
+ { id: "lever", term: "lever" },
+ { id: "fulcrum", term: "fulcrum" },
+ { id: "mechanical-advantage", term: "mechanical advantage" },
+ { id: "gear", term: "gear" },
+ { id: "torque", term: "torque" },
+ { id: "gear-ratio", term: "gear ratio" },
+ { id: "effort", term: "effort" },
+ ],
+ pages: [
+ {
+ title: "Too heavy by hand",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/mechanical-basics/assets/book/gen-me-m1-fig01-hand.png",
+ caption: "Figure 1. A boulder beats bare hands. A plank can change the trade.",
+ alt: "Hand lift struggle versus plank lever success",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "How does a small push move something far too heavy? A lever trades how far your hand moves for how hard it has to push. A gear does the spinning version of the same honest trade. Scissors, wheelbarrows, and bicycle hills all use it.",
+ },
+ {
+ type: "ul",
+ items: [
+ "Spiral 1: what a lever is.",
+ "Spiral 2: fulcrum and mechanical advantage.",
+ "Spiral 3: gears, torque, and ratio.",
+ "Spiral 4: everyday machines that use the trick.",
+ ],
+ },
+ ],
+ },
+ {
+ title: "Parts of a lever",
+ layout: "full-fig",
+ figures: [
+ {
+ place: "full",
+ src: "/games/mechanical-basics/assets/book/gen-me-m1-fig02-lever.png",
+ caption: "Figure 2. Effort, fulcrum, and load on a simple plank lever.",
+ alt: "Lever with fulcrum effort and load arrows",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "A lever is a rigid bar that turns on a fulcrum. You apply effort on one side; the load sits on the other. Move your hand a longer path and you can often use a smaller force - you did not create free strength.",
+ },
+ {
+ type: "ul",
+ items: [
+ "Fulcrum: the pivot.",
+ "Effort: your push.",
+ "Load: the thing you want to move.",
+ ],
+ },
+ ],
+ },
+ {
+ title: "Slide the fulcrum",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/mechanical-basics/assets/book/gen-me-m1-fig03-fulcrum.png",
+ caption: "Figure 3. Closer fulcrum to the load usually means more mechanical advantage.",
+ alt: "Sliding fulcrum changing mechanical advantage",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Mechanical advantage is how much the machine multiplies your effort (while you trade distance). Slide the fulcrum toward the load and your hand usually travels farther for an easier push. Slide it the other way and the trade flips.",
+ },
+ ],
+ },
+ {
+ title: "Gears spin the trade",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/mechanical-basics/assets/book/gen-me-m1-fig04-gears.png",
+ caption: "Figure 4. Meshed gears trade speed for torque - or the reverse.",
+ alt: "Large and small gears with torque arrows",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Gears are toothed wheels that pass turning force. A small gear spinning fast can drive a larger gear more slowly with stronger twist. That twist is torque. Gear ratio describes how the sizes set the trade.",
+ },
+ ],
+ },
+ {
+ title: "Hills need torque",
+ layout: "full-fig",
+ figures: [
+ {
+ place: "full",
+ src: "/games/mechanical-basics/assets/book/gen-me-m1-fig05-bike.png",
+ caption: "Figure 5. Low gear on a hill: more pedal travel, stronger climbing twist.",
+ alt: "Bicycle climbing hill in low gear",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Everyday hook: climb a hill in a low gear. Your legs spin more for each wheel advance, but the torque helps you up. Same lever idea - spinning edition.",
+ },
+ ],
+ },
+ {
+ title: "Machines all around",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/mechanical-basics/assets/book/gen-me-m1-fig06-everyday.png",
+ caption: "Figure 6. Scissors, bottle openers, and wheelbarrows are everyday levers.",
+ alt: "Everyday lever tools collage",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Once you see fulcrums, you see them everywhere. Sort tools by where the pivot sits and you are doing real mechanical thinking, not memorizing names.",
+ },
+ ],
+ },
+ {
+ title: "Torque is turning push",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/mechanical-basics/assets/book/gen-me-m1-fig07-torque.png",
+ caption: "Figure 7. Torque is how hard a shaft twists - the spinning cousin of force.",
+ alt: "Torque twisting arrows on a gear shaft",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Force pushes in a line. Torque twists around an axis. Gears and pedals care about torque. Name both and the hill climb story stays clear.",
+ },
+ ],
+ },
+ {
+ title: "Lever lab",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/mechanical-basics/assets/book/gen-me-m1-fig08-lab.png",
+ caption: "Figure 8. Slide the fulcrum. Feel how effort and travel change.",
+ alt: "Child sliding fulcrum under a plank in lab",
+ },
+ ],
+ blocks: [
+ {
+ type: "ul",
+ items: [
+ "Where is the fulcrum?",
+ "Did your hand travel farther when the lift felt easier?",
+ "Which everyday tool matches this setup?",
+ ],
+ },
+ ],
+ },
+ {
+ title: "Myths to bust",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/mechanical-basics/assets/book/gen-me-m1-fig09-myth.png",
+ caption: "Figure 9. A plank does not create free strength - it trades distance for force.",
+ alt: "Myth of magic strength versus honest lever trade",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Myth: the plank magically creates extra strength. Better: it trades how far you move for how hard you push.",
+ },
+ {
+ type: "p",
+ text: "Myth: wood being lighter than rock cancels weight. Better: the fulcrum and lever arms do the work.",
+ },
+ {
+ type: "p",
+ text: "Red words are glossary terms. Tap one to ask the tutor.",
+ },
+ ],
+ },
+ {
+ title: "Mastery",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/mechanical-basics/assets/book/gen-me-m1-fig10-close.png",
+ caption: "Figure 10. Teach levers and gears as the same honest trade.",
+ alt: "Levers and gears mastery closing scene",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Teach a friend in one minute: levers trade distance for force around a fulcrum; gears trade speed for torque through gear ratio - same idea, spinning version.",
+ },
+ {
+ type: "ul",
+ items: [
+ "Name fulcrum, effort, and load once.",
+ "Explain mechanical advantage in one sentence.",
+ "Use the word torque correctly once.",
+ ],
+ },
+ ],
+ },
+ ],
 };
 
 export default BOOK;

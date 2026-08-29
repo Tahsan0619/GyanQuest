@@ -34,7 +34,7 @@ export const MISSIONS = [
  theme: "bonds",
  emoji: "🤝",
  rewardName: "Bond Explorer",
- hook: "See how atoms link up as friends and families.",
+ hook: "Why atoms pair up: give an electron away, or share one.",
  accent: "#a78bfa",
  accent2: "#6d28d9",
  icon: "bond",

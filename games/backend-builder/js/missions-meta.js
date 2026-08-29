@@ -8,7 +8,7 @@ export const MISSIONS = [
  "theme": "request response",
  "emoji": "\ud83d\udce1",
  "rewardName": "Server Scout",
- "hook": "A request goes in - a response comes back.",
+ "hook": "Client table, server kitchen - every website is a restaurant behind the scenes.",
  "accent": "#fb923c",
  "accent2": "#c2410c",
  "icon": "leaf",

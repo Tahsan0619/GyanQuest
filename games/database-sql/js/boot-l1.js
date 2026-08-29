@@ -18,17 +18,17 @@ import {
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
 import { createArena2D } from "./arena-2d.js";
-import { playScene, cancelActiveActivity } from "./lab-activities.js?v=tables2";
-import { runL1Sub, L1_META } from "./level1.js?v=tables2";
+import { playScene, cancelActiveActivity } from "./lab-activities.js?v=stor4";
+import { runL1Sub, L1_META } from "./level1.js?v=stor2";
 import { runL2Sub, L2_META } from "./level2.js";
 import { runL3Sub, L3_META } from "./level3.js";
 import { MISSIONS } from "./missions-meta.js";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerTableScenes } from "./table-scenes.js?v=tables2";
+import { registerTableScenes } from "./table-scenes.js?v=stor2";
 import { registerSelectScenes } from "./select-scenes.js";
 import { registerJoinScenes } from "./join-scenes.js";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=gendb1";
 import { BOOK as BOOK_L2 } from "../books/level2.js?v=book3";
 import { BOOK as BOOK_L3 } from "../books/level3.js?v=book3";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
@@ -556,16 +556,16 @@ try {
  btnHint?.addEventListener("click", () => {
  const hints = [
  [
- "Explore the grid - columns across, rows down.",
- "Dial until more neat rows appear.",
- "Sort table parts vs messy vs not data.",
- "Push the grid fuller on the dial.",
- "Order columns -> rows -> cells -> find.",
- "Build: Row - Column - Cell - Record.",
- "Tap home / school / shop / bd / lab lists.",
- "Bust myths about messy piles being tables.",
- "Hit the table fluency checks.",
- "Claim Table Scout.",
+ "Open the storage room door behind the kitchen.",
+ "Chaotic pile: find J. Rivera, then R folder.",
+ "Database = organized shelves, not scattered piles.",
+ "Build Customers shelf: headers + 3 cards.",
+ "Shelf morphs to table grid - rows & columns.",
+ "Break schema: bad card rejected, good accepted.",
+ "Blueprint: column types and required rules.",
+ "Query form: Show me / from / where (Austin).",
+ "Request form = SELECT FROM WHERE SQL.",
+ "Storage room replay + spiral recap, finish.",
  ],
  [
  "Watch SELECT ask the table a question.",

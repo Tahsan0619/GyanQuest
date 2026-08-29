@@ -1,235 +1,295 @@
 /**
- * Web Dev Studio - Mission 3: JS Click (deepened)
+ * Web Dev Studio - Mission 3: JS Clicks
+ * Script: Opening + 4 Bruner spirals (events → functions → variables → toggle) + recap map.
  */
-import { labState, LAB_ASSET_PATHS } from "./lab-state.js";
-import {
- mountMotionChain, mountDragSort, mountHeatLab, mountEquationBuild,
- mountQuiz, mountSpeedDrill, mountMythCards, mountTapContinue, mountOrderSteps, badgeHtml,
-} from "./lab-activities.js";
+import { labState, LAB_ASSET_PATHS, resetJsClickState } from "./lab-state.js?v=jshouse1";
+import { mountGate, mountSpiralMap, mountTapContinue, badgeHtml } from "./lab-activities.js?v=jshouse3";
 
 export const L3_META = {
- objective: "By the end of this mission, you'll be able to explain interaction in your own words.",
+ objective:
+ "By the end of this mission, you'll explain how JavaScript listens for events, runs reusable functions, stores values in variables, and combines all three into real interactivity.",
  bdHook:
- "Bangladesh everyday: game Start button, quiz tap A/B/C, BD ticket kiosk - notice click → code → page change.",
+ "Game Start buttons, quiz taps, ticket kiosks - every reaction is event + code + (often) a variable remembering state.",
  predict: {
- q: "Before we start - what mainly makes a button react when you tap it?",
+ q: "The CSS house looks finished, but the light switch does nothing. What's missing?",
  options: [
- "Only painting CSS colors with no events",
- "An event (click/tap) runs JavaScript code that changes the page",
- "HTML headings alone always score the quiz",
+ "More HTML tags nested deeper",
+ "JavaScript: event listeners and code that run when you click",
+ "Deleting the footer tag entirely",
  ],
  ok: 1,
  },
-
- kidTitle: "JS Click",
- theme: "interaction",
- emoji: "\u26a1",
+ kidTitle: "JS Clicks",
+ theme: "behavior & wiring",
+ emoji: "⚡",
  rewardName: "Click Coder",
- intro: "A click is an event. JavaScript runs code that changes the page - buttons come alive.",
- everyday: ["Game Start button", "Quiz tap A/B/C", "BD ticket kiosk tap"],
+ intro:
+ "The house is built and painted - but it can't react. Today we run the wiring: events, functions, and variables that make every switch, doorbell, and toggle actually work.",
+ everyday: ["Game Start button", "Like counter on a post", "Form error on bad email"],
  subTitles: [
- "Meet the Click", "Click Energy Lab", "Sort Reactions", "Stronger Click Lab",
- "Why Pages React", "Name the Click Rule", "Stretch: Real Taps", "Myth Bust",
- "Fluency Drill", "Click Coder Mastery",
+ "Run the Wiring",
+ "Wire the Switch",
+ "Events & Listeners",
+ "Write turnOnLight",
+ "One Function, Many Switches",
+ "Ring the Doorbell",
+ "The ringCount Box",
+ "Build the Toggle",
+ "Real Interactivity",
+ "The House Is Alive",
  ],
 };
 
 export function runL3Sub(subIndex, api) {
  const { registerTryAgain } = api;
- labState.reveal = false; labState.tokenProgress = 0; labState.masteryStep = 0;
- labState.placed = {}; labState.selectedId = null; labState.mythPhase = "claim";
- labState.heat = 0.2; labState.phase = "desk"; labState.mode = "game";
- labState.clickCount = 0;
+ resetJsClickState();
  const runners = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10];
  const fn = runners[subIndex] || runners[0];
- registerTryAgain(() => { api.overlay.innerHTML = ""; fn(api); });
+ registerTryAgain(() => {
+ api.overlay.innerHTML = "";
+ resetJsClickState();
+ fn(api);
+ });
  fn(api);
 }
 
-function s1({ overlay, setCoach, completeSub }) {
- setCoach("Hook: tap CLICK ME - event runs code, page changes.");
- mountMotionChain(overlay, {
- title: "Meet the Click",
- beats: [
- { scene: "jsMeet", sceneArgs: { phase: "desk" }, dwellMs: 4000,
- html: `${badgeHtml(LAB_ASSET_PATHS.m3, "js")}<p><strong>Act 1:</strong> Tap the big button on the canvas.</p>` },
- { scene: "jsMeet", sceneArgs: { phase: "glow" }, dwellMs: 4200,
- html: `<p><strong>Act 2:</strong> See onClick() spark - code runs after the event.</p>` },
- { scene: "jsMeet", sceneArgs: { phase: "settle" }, dwellMs: 4000,
- html: `<p><strong>Act 3:</strong> The bubble says Changed! - that is the reaction.</p>` },
- ],
- onDone: () => mountQuiz(overlay, {
- scene: "jsMeet", sceneArgs: { phase: "settle" }, title: "Exit check",
- q: "What starts a button reaction?",
- opts: ["An event like a click/tap", "Only painting CSS forever", "Deleting HTML", "Turning off the screen"],
- ok: 0, onDone: () => mountTapContinue(overlay, {
- scene: "jsMeet", badge: LAB_ASSET_PATHS.m3,
- html: `<h3>Click online</h3><p>Next: build click energy on the dial.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
- }),
- });
+function n(text) {
+ return `<p class="tiny-narration">${text}</p>`;
 }
 
-function s2({ overlay, setCoach, completeSub }) {
- setCoach("Dial or tap until click energy >= 60%.");
- labState.heat = 0.2;
- mountHeatLab(overlay, {
- scene: "jsLab", title: "Click Energy Lab",
- html: `<p>Drag the dial (or tap the button) until >= 60%.</p>`,
- goalText: "Goal >= 60%", doneLabel: "Energy up", threshold: 0.6, startHeat: 0.2,
- axis: "x", canvasAction: "stretch", sliderLabel: "Energy", badge: LAB_ASSET_PATHS.m3,
- readoutLabels: {
- cold: "Waiting… no event yet",
- melting: "Click sparking - code warming up",
- liquid: "onClick running - page changing",
- simmer: "Alive! Event → code → change",
- },
+function s1_opening({ overlay, setCoach, completeSub }) {
+ setCoach("The painted house looks great - flip the switch. Nothing. Run the wiring.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "jsOpen",
+ badge: "Opening",
+ title: "JS Clicks",
+ pulse: true,
+ ready: () => labState.jsOpenReady || Date.now() - t0 > 2800,
+ readyText: "Nice house - but completely unresponsive.",
+ doneLabel: "Run the Wiring ▶",
+ html: `${badgeHtml(LAB_ASSET_PATHS.m3, "javascript")}
+ ${n(
+ "This house looks great now - but try flipping that switch. Nothing. No matter how nicely a house is built and decorated, it's still just a stage set unless something inside can react. Today we're running the wiring.",
+ )}`,
  onDone: completeSub,
  });
 }
 
-function s3({ overlay, setCoach, completeSub }) {
- setCoach("Sort click reactions vs static look vs not JS.");
+function s2_wire({ overlay, setCoach, completeSub }) {
+ setCoach("Drag the wire and connector. Click the wired switch - then try the unwired one.");
+ mountGate(overlay, {
+ scene: "jsWire",
+ badge: "Spiral 1 · Enactive",
+ title: "Wire It Up",
+ pulse: true,
+ ready: () => labState.jsWired && labState.jsWireTriedUnwired,
+ readyText: "WHEN clicked → DO this. You just programmed the house.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Drag a wire from the switch to the bulb, drop the connector labeled When clicked → turn on, then click the switch yourself. Try the unwired pair too - nice to look at, completely unresponsive.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function s3_events({ overlay, setCoach, completeSub }) {
+ setCoach("Event → code runs → something changes. Same pattern on every website.");
+ mountGate(overlay, {
+ scene: "jsFlow1",
+ badge: "Spiral 1 · Iconic",
+ title: "The Event Pattern",
+ ready: () => true,
+ html: n(
+ "Something happens, code responds, something visibly changes - running behind almost every button, menu, form, and game you've ever clicked.",
+ ),
+ onDone: () => {
  mountTapContinue(overlay, {
- scene: "jsSort",
- html: `<h3>Guide</h3><p><strong>Reaction:</strong> button click, show/hide, score +1, pop message.<br><strong>Static:</strong> &lt;h1&gt;, color:red.<br><strong>Not:</strong> rock, tea.</p>`,
- onDone: () => mountDragSort(overlay, {
- scene: "jsSort", title: "Sort Reactions",
- instructions: "Drag into Reaction / Static / Not.",
- successText: "Clicks sorted!",
- chips: [
- { id: "btn", text: "Button click", short: "Button click", color: 0xfacc15 },
- { id: "toggle", text: "Show or hide a box", short: "Show/hide", color: 0xeab308 },
- { id: "count", text: "Score goes up", short: "Score +1", color: 0xfde047 },
- { id: "alert", text: "Pop a message", short: "Pop message", color: 0xfef08a },
- { id: "h1", text: "Heading tag", short: "<h1>", color: 0xea580c },
- { id: "color", text: "A color style", short: "color:red", color: 0x38bdf8 },
- { id: "rock", text: "A rock", short: "Rock", color: 0x94a3b8 },
- { id: "tea", text: "A cup of tea", short: "Tea", color: 0xf472b6 },
- ],
- zones: [
- { id: "react", label: "Click reaction", accept: ["btn", "toggle", "count", "alert"] },
- { id: "static", label: "Static look", accept: ["h1", "color"] },
- { id: "not", label: "Not JS", accept: ["rock", "tea"] },
- ],
+ scene: "jsCode1",
+ badge: LAB_ASSET_PATHS.m3,
+ html: `<h3>Spiral 1 · Symbolic</h3>
+ <pre class="hh-inline-code">switch.addEventListener("click", function() {
+  bulb.turnOn();
+});</pre>
+ <p><strong>Event</strong> · <strong>Event listener</strong> · <strong>JavaScript</strong></p>`,
  onDone: completeSub,
- }),
  });
-}
-
-function s4({ overlay, setCoach, completeSub }) {
- setCoach("Push click energy higher.");
- labState.heat = 0.4;
- mountHeatLab(overlay, {
- scene: "jsLab", title: "Stronger Click Lab", html: `<p>Reach >= 75%.</p>`,
- goalText: "Goal >= 75%", doneLabel: "Lab done", threshold: 0.75, startHeat: 0.4,
- axis: "x", canvasAction: "stretch", sliderLabel: "Energy", badge: LAB_ASSET_PATHS.m3,
- readoutLabels: {
- cold: "Quiet button - need more taps",
- melting: "Sparks growing around the button",
- liquid: "Strong reaction - bubble lit",
- simmer: "Click energy max - page feels live",
  },
+ });
+}
+
+function s4_recipe({ overlay, setCoach, completeSub }) {
+ setCoach("Drag 3 steps into the recipe, name it turnOnLight, connect it to 3 switches.");
+ mountGate(overlay, {
+ scene: "jsRecipe",
+ badge: "Spiral 2 · Enactive",
+ title: "Write the Instructions",
+ pulse: true,
+ ready: () => (labState.jsFunctionConnected || []).length >= 3,
+ readyText: "Same instructions. Three switches. Written once.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Drag the three steps in order into the recipe card, name it turnOnLight, then drop the recipe onto the kitchen, hallway, and bedroom switches.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s5({ overlay, setCoach, completeSub }) {
- setCoach("Order why pages react.");
- mountOrderSteps(overlay, {
- scene: "jsMeet", sceneArgs: { phase: "settle" }, title: "Why Pages React",
- instructions: "Order the story.",
- items: [
- { id: "tap", html: "You tap / click (event)" },
- { id: "run", html: "JavaScript runs code" },
- { id: "change", html: "Something on the page changes" },
- { id: "feel", html: "The page feels alive" },
- ],
- correctIds: ["tap", "run", "change", "feel"],
- onDone: () => mountQuiz(overlay, {
- scene: "jsMeet", title: "Check",
- q: "HTML alone (no event code) usually...",
- opts: ["Shows structure but does not react to clicks", "Always scores your quiz", "Deletes CSS", "Prints tickets by itself"],
- ok: 0, onDone: completeSub,
- }),
- });
-}
-
-function s6({ overlay, setCoach, completeSub }) {
- setCoach("Lock the JS click rule.");
- mountEquationBuild(overlay, {
- scene: "jsRule", title: "Name the Click Rule", instructions: "Tap in order.",
- tokens: [
- { id: "a", html: "Event" }, { id: "b", html: "Code" },
- { id: "c", html: "Change" }, { id: "d", html: "Alive" },
- ],
- correctIds: ["a", "b", "c", "d"], badge: LAB_ASSET_PATHS.rule,
- onDone: () => mountTapContinue(overlay, {
- scene: "jsRule", badge: LAB_ASSET_PATHS.rule,
- html: `<h3>Rule locked</h3><p>Event / Code / Change / Alive.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
- });
-}
-
-function s7({ overlay, setCoach, completeSub }) {
- setCoach("Game, form, kiosk, class, home - same click idea.");
+function s5_functions({ overlay, setCoach, completeSub }) {
+ setCoach("One master recipe - update it once, every switch follows.");
+ mountGate(overlay, {
+ scene: "jsIconic2",
+ badge: "Spiral 2 · Iconic",
+ title: "One Function, Many Callers",
+ ready: () => true,
+ html: n(
+ "Picture a function as one master recipe card that any number of switches can point to. Update the recipe once - every connected switch instantly follows.",
+ ),
+ onDone: () => {
  mountTapContinue(overlay, {
- scene: "jsStretch", html: `<h3>Real taps</h3><p>Tap each mode - event then change.</p>`,
- onDone: () => mountQuiz(overlay, {
- scene: "jsStretch", title: "Transfer",
- q: "A BD ticket kiosk tap is...",
- opts: ["An event that should run code", "Only an HTML heading", "Only a CSS color", "Not interaction"],
- ok: 0, onDone: completeSub,
- }),
+ scene: "jsCode2",
+ html: `<h3>Spiral 2 · Symbolic</h3>
+ <pre class="hh-inline-code">function turnOnLight() {
+  bulb.color = "yellow";
+  room.brightness = "high";
+  sign.text = "Lights ON";
+}</pre>
+ <p><strong>Function</strong> · <strong>Calling a function</strong></p>`,
+ onDone: completeSub,
+ });
+ },
  });
 }
 
-function s8({ overlay, setCoach, completeSub }) {
- setCoach("Bust JS myths.");
- mountMythCards(overlay, {
- scene: "jsMyth", title: "Myth Bust", badge: LAB_ASSET_PATHS.myth,
- myths: [
- { claim: "Pages never need clicks", truth: "Many pages wake up when you click or tap", sceneMyth: 0 },
- { claim: "JavaScript is only for games", truth: "Forms, quizzes, and switches use it too", sceneMyth: 1 },
- { claim: "HTML alone makes buttons react", truth: "A reaction needs an event plus code", sceneMyth: 2 },
- { claim: "Kids cannot learn click code", truth: "Event then change is a clear starter idea", sceneMyth: 3 },
- { claim: "One click must do everything", truth: "Each click can run a small clear change", sceneMyth: 4 },
- ],
+function s6_doorbell({ overlay, setCoach, completeSub }) {
+ setCoach("Ring the doorbell - watch ringCount tick up in its storage box.");
+ mountGate(overlay, {
+ scene: "jsDoorbell",
+ badge: "Spiral 3 · Enactive",
+ title: "Ring the Bell",
+ pulse: true,
+ ready: () => (labState.jsRingCount || 0) >= 3,
+ readyText: "The house remembered something between each ring.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Tap the doorbell repeatedly. Each ring ticks the display up by one - that labeled storage box is holding the running number.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s9({ overlay, setCoach, completeSub }) {
- setCoach("Quick JS fluency.");
- mountSpeedDrill(overlay, {
- scene: "jsDrill", title: "Fluency Drill", passScene: "jsMastery",
- items: [
- { q: "A click is a kind of...", opts: ["Event", "Roof tile"], ok: 0, prompt: "Event" },
- { q: "Does JS run code after a click?", opts: ["Yes", "Never"], ok: 0, prompt: "Code" },
- { q: "Is <h1> mainly a click reaction?", opts: ["No", "Yes"], ok: 0, prompt: "h1" },
- { q: "Score +1 after tap is...", opts: ["A reaction", "Only CSS"], ok: 0, prompt: "Score" },
- { q: "Tea is JavaScript?", opts: ["No", "Yes"], ok: 0, prompt: "Tea" },
- { q: "Event + code makes pages...", opts: ["Alive", "Silent forever"], ok: 0, prompt: "Alive" },
- ],
+function s7_variables({ overlay, setCoach, completeSub }) {
+ setCoach("One labeled box. Contents change - the name stays.");
+ mountGate(overlay, {
+ scene: "jsIconic3",
+ badge: "Spiral 3 · Iconic",
+ title: "The Storage Box",
+ ready: () => true,
+ html: n(
+ "A variable is one labeled box, one name, contents that can change freely over time - doorbell counters, cart totals, whether a light is on or off.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "jsCode3",
+ html: `<h3>Spiral 3 · Symbolic</h3>
+ <pre class="hh-inline-code">let ringCount = 0;
+
+doorbell.addEventListener("click", function() {
+  ringCount = ringCount + 1;
+  display.text = ringCount;
+});</pre>
+ <p><strong>Variable</strong> · <code>let</code> · read, add, store back</p>`,
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+function s8_toggle({ overlay, setCoach, completeSub }) {
+ setCoach("Assemble isOn + toggleLight + listener. Click until the bulb toggles on and off.");
+ const p = () => labState.jsTogglePieces || {};
+ mountGate(overlay, {
+ scene: "jsToggle",
+ badge: "Spiral 4 · Enactive",
+ title: "Build a Real Toggle",
+ pulse: true,
+ ready: () => {
+ const pieces = p();
+ return pieces.variable && pieces.function && pieces.listener && (labState.jsToggleFlips || 0) >= 2;
+ },
+ readyText: "Event + variable + function = a working toggle.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Drag the variable box, function card, and event listener into the assembly row. Then click the switch repeatedly - watch isOn and the bulb stay in sync.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s10({ overlay, setCoach, completeSub }) {
- setCoach("Mastery - Click Coder.");
- mountOrderSteps(overlay, {
- scene: "jsMastery", title: "Click Coder Mastery", instructions: "Order your journey.",
- items: [
- { id: "meet", html: "Meet" }, { id: "sort", html: "Sort" }, { id: "lab", html: "Lab" },
- { id: "rule", html: "Rule" }, { id: "myth", html: "Myth" }, { id: "win", html: "Code" },
- ],
- correctIds: ["meet", "sort", "lab", "rule", "myth", "win"],
- onDone: () => mountTapContinue(overlay, {
- scene: "jsMastery", badge: LAB_ASSET_PATHS.m3,
- html: `<h3>Click Coder!</h3><p>Event / Code / Change / Alive - buttons react.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
+function s9_montage({ overlay, setCoach, completeSub }) {
+ setCoach("Dropdowns, sliders, forms, likes - same three ingredients every time.");
+ mountGate(overlay, {
+ scene: "jsMontage",
+ badge: "Spiral 4 · Iconic",
+ title: "Real Interactivity",
+ ready: () => true,
+ html: n(
+ "None of these are separate tricks. Every one is built from the exact same three ingredients you just used: something happens, a function responds, a variable remembers.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "jsSummary",
+ html: `<h3>Spiral 4 · Symbolic</h3>
+ <p><strong>HTML</strong> - structure (rooms) · <strong>CSS</strong> - style (paint) · <strong>JavaScript</strong> - behavior (wiring)</p>
+ <p>Event + function + variable - the three ingredients behind web interactivity.</p>
+ <p><em>Next: what happens when JavaScript needs to remember a whole list of things?</em></p>`,
+ onDone: completeSub,
+ });
+ },
  });
 }
+
+function s10_closing({ overlay, setCoach, completeSub }) {
+ setCoach("Watch the house come alive. Then open the spiral recap map.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "jsClose",
+ badge: "Closing",
+ title: "The House Is Fully Alive",
+ html: n(
+ "We started with a house that looked finished but couldn't respond. Now every switch works, every click means something, and the house remembers its state. HTML gave it a body. CSS gave it a face. JavaScript just gave it a nervous system.",
+ ),
+ ready: () => labState.jsCloseU >= 0.85 || Date.now() - t0 > 7000,
+ readyText: "Fully alive - lights, doorbell, panels.",
+ doneLabel: "Open the recap map ▶",
+ onDone: () => {
+ setCoach("Tap a spiral number to replay, then Finish JS Clicks.");
+ mountSpiralMap(overlay, {
+ scene: "jsSpiral",
+ title: "Your recap map",
+ finishLabel: "Finish JS Clicks ▶",
+ narration:
+ "The four numbers are the four spirals you finished. Tap a number to replay a highlight, then finish when ready.",
+ statusIdle: "Tap a number to replay, or finish now.",
+ stops: [
+ { n: 1, label: "1: Events" },
+ { n: 2, label: "2: Functions" },
+ { n: 3, label: "3: Variables" },
+ { n: 4, label: "4: Toggle" },
+ ],
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+const s1 = s1_opening;
+const s2 = s2_wire;
+const s3 = s3_events;
+const s4 = s4_recipe;
+const s5 = s5_functions;
+const s6 = s6_doorbell;
+const s7 = s7_variables;
+const s8 = s8_toggle;
+const s9 = s9_montage;
+const s10 = s10_closing;

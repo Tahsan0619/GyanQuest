@@ -5,10 +5,10 @@ export const MISSIONS = [
  {
  "id": "circuit-loop",
  "kidTitle": "Circuit Loop",
- "theme": "closed path lights the bulb",
+ "theme": "electricity's water park",
  "emoji": "\ud83d\udd0c",
  "rewardName": "Loop Learner",
- "hook": "Battery, wires, switch, bulb - one closed path.",
+ "hook": "Battery, wire, bulb - one closed loop, like water in pipes.",
  "accent": "#facc15",
  "accent2": "#a16207",
  "icon": "leaf",

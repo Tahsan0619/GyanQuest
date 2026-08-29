@@ -18,16 +18,16 @@ import {
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
 import { createArena2D } from "./arena-2d.js";
-import { playScene, cancelActiveActivity } from "./lab-activities.js?v=aiqa1";
-import { runL1Sub, L1_META } from "./level1.js?v=aiqa1";
+import { playScene, cancelActiveActivity } from "./lab-activities.js?v=appr6";
+import { runL1Sub, L1_META } from "./level1.js?v=appr6";
 import { runL2Sub, L2_META } from "./level2.js";
 import { runL3Sub, L3_META } from "./level3.js";
 import { MISSIONS } from "./missions-meta.js";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerAiScenes } from "./ai-scenes.js?v=aiqa1";
+import { registerAiScenes } from "./ai-scenes.js?v=appr6";
 import { registerPredictScenes } from "./predict-scenes.js";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=genai1";
 import { BOOK as BOOK_L2 } from "../books/level2.js?v=book3";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
 
@@ -97,7 +97,7 @@ try {
 
  if (!canvas) throw new Error("Missing #c3d canvas");
 
- const arena = createArena2D(canvas, { defaultScene: "aiMeet" });
+ const arena = createArena2D(canvas, { defaultScene: "aiOpen" });
  window.__arena = arena;
  registerAiScenes(arena);
  registerPredictScenes(arena);
@@ -368,10 +368,10 @@ try {
  const meta = currentMeta();
  const introScene =
  state.level === 0
- ? ["aiMeet", { phase: "desk", dwellMs: 3200 }]
+ ? ["aiOpen", {}]
  : state.level === 1
  ? ["predictMeet", { phase: "desk", dwellMs: 3200 }]
- : ["aiMeet", { phase: "settle", dwellMs: 2400 }];
+ : ["aiOpen", {}];
 
  playScene(introScene[0], introScene[1]);
  const bodyMeta = state.level === 0 ? L1_META : state.level === 1 ? L2_META : state.level === 2 ? L3_META : null;
@@ -457,7 +457,7 @@ try {
  updateProgressUI();
  const meta = currentMeta();
  setCoach(`${meta.kidTitle} is on the path - live labs ship mission by mission.`);
- playScene("aiMeet", { phase: "settle" });
+ playScene("aiOpen", {});
  overlay.innerHTML = `
  <div class="chem-card">
  <h3>${meta.emoji} ${meta.kidTitle}</h3>
@@ -551,16 +551,16 @@ try {
  btnHint?.addEventListener("click", () => {
  const hints = [
  [
- "Meet AI tools that guess from examples.",
- "Dial pattern clarity to the goal zone.",
- "Sort AI tools / not AI / tricky.",
- "Push clarity higher in the lab.",
- "Order: examples -> patterns -> guess -> check.",
- "Build: AI learns patterns from examples.",
- "Tap home / school / street / shop / lab.",
- "Bust AI myths.",
- "Hit the fluency checks.",
- "Order the journey and claim AI Rookie.",
+ "Watch a photo tagged Dog instantly.",
+ "Patch rules until they break - then feed the Apprentice.",
+ "Rules vs learned patterns - AI and machine learning.",
+ "Run five training rounds: guess → reveal → adjust.",
+ "Accuracy climbs over thousands of rounds.",
+ "Training data · Model · Prediction · Training.",
+ "Both scored 100% - test on brand-new photos.",
+ "Generalization vs overfitting - the classroom test.",
+ "Match each app to its training data.",
+ "The Apprentice understood - open the recap map.",
  ],
  [
  "Watch a sequence and spot the repeat.",

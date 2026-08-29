@@ -8,6 +8,6 @@ export const manifest = {
  emoji: "\ud83c\udf10",
  storageKey: "gq-web-dev-studio-save-v2",
  localeKey: "gq-web-dev-studio-locale",
- defaultScene: "htmlMeet",
+ defaultScene: "htmlOpen",
  theme: { accent: "#a78bfa", accent2: "#6d28d9" },
 };

@@ -3270,16 +3270,65 @@ class GLTFParser {
 
 		if ( sourceDef.bufferView !== undefined ) {
 
-			// Load binary image data from bufferView, if provided.
+			// Embedded images (often large JPEGs in space models): decode the blob
+			// directly. Blob-URL + TextureLoader fails on multi-MB textures in Chrome.
 
-			sourceURI = parser.getDependency( 'bufferView', sourceDef.bufferView ).then( function ( bufferView ) {
+			const promise = parser.getDependency( 'bufferView', sourceDef.bufferView ).then( function ( bufferView ) {
 
-				isObjectURL = true;
 				const blob = new Blob( [ bufferView ], { type: sourceDef.mimeType } );
-				sourceURI = URL.createObjectURL( blob );
-				return sourceURI;
+
+				if ( typeof createImageBitmap !== 'undefined' ) {
+
+					return createImageBitmap( blob ).then( function ( imageBitmap ) {
+
+						const texture = new Texture( imageBitmap );
+						texture.needsUpdate = true;
+						assignExtrasToUserData( texture, sourceDef );
+						texture.userData.mimeType = sourceDef.mimeType;
+						return texture;
+
+					} );
+
+				}
+
+				const objectUrl = URL.createObjectURL( blob );
+
+				return new Promise( function ( resolve, reject ) {
+
+					let onLoad = resolve;
+
+					if ( loader.isImageBitmapLoader === true ) {
+
+						onLoad = function ( imageBitmap ) {
+
+							const texture = new Texture( imageBitmap );
+							texture.needsUpdate = true;
+							resolve( texture );
+
+						};
+
+					}
+
+					loader.load( objectUrl, onLoad, undefined, reject );
+
+				} ).then( function ( texture ) {
+
+					URL.revokeObjectURL( objectUrl );
+					assignExtrasToUserData( texture, sourceDef );
+					texture.userData.mimeType = sourceDef.mimeType;
+					return texture;
+
+				} );
+
+			} ).catch( function ( error ) {
+
+				console.error( 'THREE.GLTFLoader: Couldn\'t load texture', 'bufferView:' + sourceDef.bufferView );
+				throw error;
 
 			} );
+
+			this.sourceCache[ sourceIndex ] = promise;
+			return promise.then( ( texture ) => texture.clone() );
 
 		} else if ( sourceDef.uri === undefined ) {
 

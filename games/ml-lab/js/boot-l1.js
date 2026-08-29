@@ -18,15 +18,15 @@ import {
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
 import { createArena2D } from "./arena-2d.js";
-import { playScene, cancelActiveActivity } from "./lab-activities.js?v=plain-arrows3";
-import { runL1Sub, L1_META } from "./level1.js?v=mlqa1";
+import { playScene, cancelActiveActivity } from "./lab-activities.js?v=acad6";
+import { runL1Sub, L1_META } from "./level1.js?v=acad6";
 import { runL2Sub, L2_META } from "./level2.js?v=mlqa1";
 import { runL3Sub, L3_META } from "./level3.js?v=mlqa1";
 import { MISSIONS } from "./missions-meta.js";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerMlScenes } from "./ml-scenes.js";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
+import { registerMlScenes } from "./ml-scenes.js?v=acad6";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=genml1";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
 
 
@@ -95,7 +95,7 @@ try {
 
  if (!canvas) throw new Error("Missing #c3d canvas");
 
- const arena = createArena2D(canvas, { defaultScene: "mlMeet" });
+ const arena = createArena2D(canvas, { defaultScene: "mlOpen" });
  window.__arena = arena;
  registerMlScenes(arena);
 
@@ -365,8 +365,8 @@ try {
  const meta = currentMeta();
  const introScene =
  state.level === 0
- ? ["mlMeet", { phase: "desk", dwellMs: 3200 }]
- : ["mlMeet", { phase: "settle", dwellMs: 2400 }];
+ ? ["mlOpen", {}]
+ : ["mlOpen", {}];
 
  playScene(introScene[0], introScene[1]);
  const bodyMeta = state.level === 0 ? L1_META : state.level === 1 ? L2_META : state.level === 2 ? L3_META : null;
@@ -452,7 +452,7 @@ try {
  updateProgressUI();
  const meta = currentMeta();
  setCoach(`${meta.kidTitle} is on the path - live labs ship mission by mission.`);
- playScene("mlMeet", { phase: "settle" });
+ playScene("mlOpen", {});
  overlay.innerHTML = `
  <div class="chem-card">
  <h3>${meta.emoji} ${meta.kidTitle}</h3>
@@ -546,16 +546,17 @@ try {
  btnHint?.addEventListener("click", () => {
  const hints = [
  [
- "Meet the core idea on the canvas.",
- "Dial to the goal zone.",
- "Sort chips into the right bins.",
- "Push the dial higher.",
- "Order the explain steps.",
- "Build the rule tokens.",
- "Stretch across places.",
- "Bust the myths.",
- "Fluency drill.",
- "Claim Model Mentor.",
+ "Empty training academy - enroll the apprentice.",
+ "Clean mislabels, duplicates, and blurry cards.",
+ "Dataset · data cleaning · garbage in, garbage out.",
+ "Split 80 practice / 20 sealed vault - try to peek.",
+ "Practice room vs vault room - split first.",
+ "Run epochs - watch error and check scores.",
+ "Sweet spot - stop before check score rises.",
+ "Epoch · loss · overfitting · early stopping.",
+ "Unlock vault - run the honest final exam.",
+ "Collect → Clean → Split → Train → Evaluate.",
+ "Open the recap map - claim Model Mentor.",
  ],
  ];
  const row = hints[state.level] || hints[0];

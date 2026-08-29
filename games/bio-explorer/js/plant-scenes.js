@@ -1,11 +1,27 @@
 /**
- * Bio Explorer · Mission 3: Plant Power - Canvas 2D scenes.
+ * Bio Explorer Mission 3: Plant Power
+ * Script: Opening + 4 Bruner spirals (plant body → kitchen → plumbing → next generation) + recap.
+ * Canvas 2D. No physics engine. Rect hits are center-origin.
  */
-import { bioLabState, pulseFailFeedback, pulseSuccessFeedback } from "./bio-state.js";
-import { sortSlotPositions, getActiveSession } from "./activity-controller.js";
+import {
+ bioLabState,
+ pulseFailFeedback,
+ pulseSuccessFeedback,
+ PLANT_ORGANS,
+ PLANT_KITCHEN_IN,
+ PLANT_KITCHEN_OUT,
+ PLANT_WATER_HOPS,
+ PLANT_SUGAR_HOPS,
+ PLANT_SEEDS,
+} from "./bio-state.js?v=cellplant2";
 
 function roundRect(ctx, x, y, w, h, r) {
- const rr = Math.min(r, w / 2, h / 2);
+ const rr = Math.max(0, Math.min(r, w / 2, h / 2));
+ if (typeof ctx.roundRect === "function") {
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, rr);
+  return;
+ }
  ctx.beginPath();
  ctx.moveTo(x + rr, y);
  ctx.arcTo(x + w, y, x + w, y + h, rr);
@@ -16,15 +32,15 @@ function roundRect(ctx, x, y, w, h, r) {
 }
 
 function drawLabel(ctx, text, x, y, opts = {}) {
- ctx.font = opts.font || "600 14px Segoe UI, system-ui, sans-serif";
+ ctx.font = opts.font || "600 12px Segoe UI, system-ui, sans-serif";
  const tw = ctx.measureText(text).width;
- const bw = Math.min(tw + 24, opts.maxW || 520);
+ const bw = Math.min(opts.maxW || 9999, tw + 22);
  const bh = opts.h || 26;
- ctx.fillStyle = opts.bg || "rgba(20,83,45,0.9)";
+ ctx.fillStyle = opts.bg || "rgba(15,23,42,0.9)";
  roundRect(ctx, x - bw / 2, y - bh / 2, bw, bh, 10);
  ctx.fill();
  ctx.strokeStyle = opts.border || "rgba(134,239,172,0.5)";
- ctx.lineWidth = 1.4;
+ ctx.lineWidth = 1.3;
  ctx.stroke();
  ctx.fillStyle = opts.color || "#dcfce7";
  ctx.textAlign = "center";
@@ -32,151 +48,18 @@ function drawLabel(ctx, text, x, y, opts = {}) {
  ctx.fillText(text, x, y + 1);
 }
 
-function drawPlant(ctx, x, y, scale, stage) {
- ctx.save();
- ctx.translate(x, y);
- ctx.scale(scale, scale);
- ctx.fillStyle = "#854d0e";
- ctx.fillRect(-4, 0, 8, 50);
- if (stage >= 1) {
- ctx.fillStyle = "#22c55e";
- ctx.beginPath();
- ctx.ellipse(-18, 10, 16, 8, -0.5, 0, Math.PI * 2);
+function drawCanvasBtn(ctx, x, y, w, h, label, lit) {
+ roundRect(ctx, x - w / 2, y - h / 2, w, h, 12);
+ ctx.fillStyle = lit ? "#16a34a" : "#14532d";
  ctx.fill();
- ctx.beginPath();
- ctx.ellipse(18, 5, 16, 8, 0.5, 0, Math.PI * 2);
- ctx.fill();
- }
- if (stage >= 2) {
- ctx.fillStyle = "#fbbf24";
- ctx.beginPath();
- ctx.arc(0, -18, 14, 0, Math.PI * 2);
- ctx.fill();
- }
- if (stage >= 3) {
- ctx.fillStyle = "#f97316";
- ctx.beginPath();
- ctx.arc(-8, -28, 6, 0, Math.PI * 2);
- ctx.fill();
- ctx.beginPath();
- ctx.arc(8, -26, 6, 0, Math.PI * 2);
- ctx.fill();
- }
- ctx.restore();
-}
-
-function drawSeedOval(ctx, x, y) {
- ctx.fillStyle = "#a16207";
- ctx.beginPath();
- ctx.ellipse(x, y, 18, 12, 0, 0, Math.PI * 2);
- ctx.fill();
-}
-
-function drawMango(ctx, x, y) {
- drawPlant(ctx, x, y + 10, 1.2, 3);
- ctx.fillStyle = "#f59e0b";
- ctx.beginPath();
- ctx.ellipse(x + 28, y - 10, 14, 10, 0.4, 0, Math.PI * 2);
- ctx.fill();
-}
-
-function drawRicePaddy(ctx, x, y) {
- ctx.fillStyle = "rgba(56,189,248,0.35)";
- roundRect(ctx, x - 50, y + 10, 100, 24, 6);
- ctx.fill();
- for (let i = 0; i < 5; i++) {
- ctx.strokeStyle = "#4ade80";
- ctx.lineWidth = 3;
- ctx.beginPath();
- ctx.moveTo(x - 36 + i * 18, y + 18);
- ctx.lineTo(x - 36 + i * 18, y - 18);
+ ctx.strokeStyle = "rgba(187,247,208,0.75)";
+ ctx.lineWidth = 1.6;
  ctx.stroke();
- ctx.fillStyle = "#fef08a";
- ctx.beginPath();
- ctx.ellipse(x - 36 + i * 18, y - 22, 6, 3, -0.3, 0, Math.PI * 2);
- ctx.fill();
- }
-}
-
-function drawRose(ctx, x, y) {
- ctx.fillStyle = "#854d0e";
- ctx.fillRect(x - 3, y, 6, 40);
- ctx.fillStyle = "#22c55e";
- ctx.beginPath();
- ctx.ellipse(x - 14, y + 12, 12, 6, -0.4, 0, Math.PI * 2);
- ctx.fill();
- ctx.fillStyle = "#f43f5e";
- for (let i = 0; i < 5; i++) {
- const a = (i / 5) * Math.PI * 2;
- ctx.beginPath();
- ctx.ellipse(x + Math.cos(a) * 8, y - 18 + Math.sin(a) * 8, 8, 5, a, 0, Math.PI * 2);
- ctx.fill();
- }
-}
-
-function drawBamboo(ctx, x, y) {
- for (let i = 0; i < 3; i++) {
- ctx.fillStyle = "#65a30d";
- roundRect(ctx, x - 24 + i * 20, y - 40, 10, 70, 3);
- ctx.fill();
- ctx.strokeStyle = "#365314";
- ctx.lineWidth = 1;
- for (let s = 0; s < 4; s++) {
- ctx.beginPath();
- ctx.moveTo(x - 24 + i * 20, y - 30 + s * 16);
- ctx.lineTo(x - 14 + i * 20, y - 30 + s * 16);
- ctx.stroke();
- }
- }
-}
-
-function drawAlgae(ctx, x, y) {
- ctx.fillStyle = "rgba(56,189,248,0.3)";
- ctx.beginPath();
- ctx.ellipse(x, y + 10, 48, 28, 0, 0, Math.PI * 2);
- ctx.fill();
- for (let i = 0; i < 6; i++) {
- ctx.fillStyle = "#4ade80";
- ctx.beginPath();
- ctx.ellipse(x - 30 + i * 12, y + (i % 2) * 8, 8, 4, 0.2, 0, Math.PI * 2);
- ctx.fill();
- }
-}
-
-function drawCandy(ctx, x, y) {
- ctx.fillStyle = "#f472b6";
- roundRect(ctx, x - 18, y - 10, 36, 20, 6);
- ctx.fill();
- ctx.fillStyle = "#fff";
- ctx.font = "700 10px Segoe UI";
+ ctx.fillStyle = "#ecfdf5";
+ ctx.font = "800 12px Segoe UI, sans-serif";
  ctx.textAlign = "center";
- ctx.fillText("candy", x, y + 3);
-}
-
-function drawBee(ctx, x, y) {
- ctx.fillStyle = "#fbbf24";
- ctx.beginPath();
- ctx.ellipse(x, y, 14, 10, 0, 0, Math.PI * 2);
- ctx.fill();
- ctx.fillStyle = "#0f172a";
- ctx.fillRect(x - 4, y - 10, 4, 20);
- ctx.fillRect(x + 2, y - 10, 4, 20);
- ctx.fillStyle = "rgba(255,255,255,0.7)";
- ctx.beginPath();
- ctx.ellipse(x - 12, y - 8, 8, 4, -0.5, 0, Math.PI * 2);
- ctx.fill();
-}
-
-function drawSoilBag(ctx, x, y) {
- ctx.fillStyle = "#a16207";
- roundRect(ctx, x - 40, y, 80, 28, 6);
- ctx.fill();
- ctx.fillStyle = "#78350f";
- for (let i = 0; i < 4; i++) {
- ctx.beginPath();
- ctx.arc(x - 24 + i * 16, y + 10, 3, 0, Math.PI * 2);
- ctx.fill();
- }
+ ctx.textBaseline = "middle";
+ ctx.fillText(label, x, y + 1);
 }
 
 function failFlash(ctx, w, h) {
@@ -192,483 +75,1269 @@ function successFlash(ctx, w, h) {
  ctx.fillRect(0, 0, w, h);
 }
 
+function fillLab(ctx, w, h) {
+ const g = ctx.createLinearGradient(0, 0, 0, h);
+ g.addColorStop(0, "#14532d");
+ g.addColorStop(0.55, "#052e16");
+ g.addColorStop(1, "#022c22");
+ ctx.fillStyle = g;
+ ctx.fillRect(0, 0, w, h);
+}
+
+function fillSky(ctx, w, h) {
+ const g = ctx.createLinearGradient(0, 0, 0, h);
+ g.addColorStop(0, "#7dd3fc");
+ g.addColorStop(0.5, "#bae6fd");
+ g.addColorStop(1, "#86efac");
+ ctx.fillStyle = g;
+ ctx.fillRect(0, 0, w, h);
+}
+
+function drawChloro(ctx, x, y, s = 1) {
+ ctx.save();
+ ctx.translate(x, y);
+ ctx.scale(s, s);
+ ctx.rotate(0.25);
+ const g = ctx.createLinearGradient(-16, 0, 16, 0);
+ g.addColorStop(0, "#bbf7d0");
+ g.addColorStop(0.45, "#22c55e");
+ g.addColorStop(1, "#14532d");
+ ctx.fillStyle = g;
+ ctx.beginPath();
+ ctx.ellipse(0, 0, 16, 9, 0, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.strokeStyle = "rgba(20,83,45,0.5)";
+ ctx.stroke();
+ // thylakoid stacks (real chloroplast look)
+ ctx.fillStyle = "#166534";
+ for (let i = -2; i <= 2; i++) {
+ ctx.beginPath();
+ ctx.ellipse(i * 3.2, 0, 2.8, 5.5, 0, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ ctx.restore();
+}
+
+function drawBee(ctx, x, y) {
+ ctx.fillStyle = "#facc15";
+ ctx.beginPath();
+ ctx.ellipse(x, y, 11, 7, 0, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.fillStyle = "#0f172a";
+ ctx.fillRect(x - 3, y - 7, 3, 14);
+ ctx.fillRect(x + 2, y - 7, 3, 14);
+ ctx.fillStyle = "rgba(255,255,255,0.75)";
+ ctx.beginPath();
+ ctx.ellipse(x - 5, y - 9, 7, 4, -0.45, 0, Math.PI * 2);
+ ctx.fill();
+}
+
+function organZones(w, h) {
+ const cx = w * 0.5;
+ return {
+ flower: { x: cx, y: h * 0.16, r: 30 },
+ leaves: { x: cx, y: h * 0.36, r: 38 },
+ stem: { x: cx, y: h * 0.54, r: 26 },
+ roots: { x: cx, y: h * 0.78, r: 40 },
+ };
+}
+
+function drawFlowerHead(ctx, x, y, open) {
+ const spread = open ? 1 : 0.55;
+ // petals with gradient
+ for (let i = 0; i < 6; i++) {
+ const a = (i / 6) * Math.PI * 2 - Math.PI / 2;
+ const px = x + Math.cos(a) * 12 * spread;
+ const py = y + Math.sin(a) * 12 * spread;
+ const g = ctx.createRadialGradient(px, py, 1, px, py, 10);
+ g.addColorStop(0, "#fbcfe8");
+ g.addColorStop(0.55, "#f472b6");
+ g.addColorStop(1, "#be185d");
+ ctx.fillStyle = g;
+ ctx.beginPath();
+ ctx.ellipse(px, py, 9, 5.5, a, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ // center / stigma
+ const cg = ctx.createRadialGradient(x - 2, y - 2, 1, x, y, 8);
+ cg.addColorStop(0, "#fef08a");
+ cg.addColorStop(1, "#ca8a04");
+ ctx.fillStyle = cg;
+ ctx.beginPath();
+ ctx.arc(x, y, 7, 0, Math.PI * 2);
+ ctx.fill();
+ if (open) {
+ ctx.strokeStyle = "#854d0e";
+ ctx.lineWidth = 1.2;
+ for (let i = 0; i < 5; i++) {
+ const a = (i / 5) * Math.PI * 2;
+ ctx.beginPath();
+ ctx.moveTo(x, y);
+ ctx.lineTo(x + Math.cos(a) * 5, y + Math.sin(a) * 5);
+ ctx.stroke();
+ }
+ }
+}
+
+function drawPlantBody(ctx, w, h, opts = {}) {
+ const z = organZones(w, h);
+ const parts = opts.parts || bioLabState.plantParts || {};
+ const showAll = !!opts.showAll;
+ const show = (id) => showAll || !!parts[id];
+ const lit = opts.lit || null;
+ const t = opts.t || 0;
+ const cutaway = !!opts.cutaway;
+ const ghost = opts.ghost || null;
+ const grow = opts.grow != null ? opts.grow : 1;
+ const water = opts.water || 0;
+ const wind = opts.wind || 0;
+ const skipBg = !!opts.skipBg;
+
+ // sky + soil (unless nested in another scene)
+ if (!skipBg) {
+ const sky = ctx.createLinearGradient(0, 0, 0, h * 0.7);
+ sky.addColorStop(0, "#7dd3fc");
+ sky.addColorStop(1, "#86efac");
+ ctx.fillStyle = sky;
+ ctx.fillRect(0, 0, w, h * 0.72);
+ ctx.fillStyle = "#fde047";
+ ctx.beginPath();
+ ctx.arc(w * 0.82, h * 0.14, 20, 0, Math.PI * 2);
+ ctx.fill();
+ if (wind) {
+ ctx.strokeStyle = "rgba(255,255,255,0.35)";
+ for (let i = 0; i < 5; i++) {
+ const y = h * 0.22 + i * 16;
+ const x0 = ((t * 50 + i * 40) % (w + 60)) - 30;
+ ctx.beginPath();
+ ctx.moveTo(x0, y);
+ ctx.quadraticCurveTo(x0 + 24, y - 3, x0 + 48, y);
+ ctx.stroke();
+ }
+ }
+ const soil = ctx.createLinearGradient(0, h * 0.7, 0, h);
+ soil.addColorStop(0, "#a16207");
+ soil.addColorStop(1, "#451a03");
+ ctx.fillStyle = soil;
+ ctx.fillRect(0, h * 0.7, w, h * 0.3);
+ ctx.fillStyle = "#4d7c0f";
+ ctx.fillRect(0, h * 0.7 - 4, w, 6);
+ }
+
+ const sway = Math.sin(t * 2.2) * wind * 4;
+
+ if (show("roots")) {
+ ctx.strokeStyle = ghost === "roots" ? "#38bdf8" : "#92400e";
+ ctx.lineWidth = ghost === "roots" ? 5 : 3.5;
+ ctx.lineCap = "round";
+ const rootN = 5;
+ for (let i = 0; i < rootN; i++) {
+ const side = i - 2;
+ ctx.beginPath();
+ ctx.moveTo(z.roots.x, h * 0.7);
+ ctx.quadraticCurveTo(
+ z.roots.x + side * 18 + Math.sin(t + i) * 2,
+ z.roots.y - 4,
+ z.roots.x + side * 28,
+ z.roots.y + 14 + Math.abs(side) * 4,
+ );
+ ctx.stroke();
+ }
+ // root hairs
+ if (opts.hair || lit === "roots") {
+ ctx.strokeStyle = "#fde68a";
+ ctx.lineWidth = 1.3;
+ for (let i = 0; i < 8; i++) {
+ ctx.beginPath();
+ ctx.moveTo(z.roots.x - 30 + i * 8, z.roots.y + 6);
+ ctx.lineTo(z.roots.x - 34 + i * 8, z.roots.y + 18);
+ ctx.stroke();
+ }
+ }
+ drawLabel(ctx, "Roots", z.roots.x - 50, z.roots.y, { h: 20, font: "700 11px Segoe UI" });
+ }
+
+ if (show("stem")) {
+ const stemTop = z.leaves.y + 8;
+ const stemBot = h * 0.7;
+ const stemH = (stemBot - stemTop) * grow;
+ const sg = ctx.createLinearGradient(z.stem.x - 10, 0, z.stem.x + 10, 0);
+ sg.addColorStop(0, "#3f6212");
+ sg.addColorStop(0.5, "#65a30d");
+ sg.addColorStop(1, "#365314");
+ ctx.fillStyle = sg;
+ roundRect(ctx, z.stem.x - 8 + sway * 0.15, stemBot - stemH, 16, stemH, 6);
+ ctx.fill();
+ // bark marks
+ ctx.strokeStyle = "rgba(20,83,45,0.4)";
+ for (let i = 0; i < 4; i++) {
+ ctx.beginPath();
+ ctx.moveTo(z.stem.x - 4, stemBot - stemH * (0.2 + i * 0.2));
+ ctx.lineTo(z.stem.x + 4, stemBot - stemH * (0.25 + i * 0.2));
+ ctx.stroke();
+ }
+ if (cutaway) {
+ ctx.fillStyle = "#38bdf8";
+ roundRect(ctx, z.stem.x - 6, stemBot - stemH + 8, 5, stemH - 16, 2);
+ ctx.fill();
+ ctx.fillStyle = "#4ade80";
+ roundRect(ctx, z.stem.x + 1, stemBot - stemH + 8, 5, stemH - 16, 2);
+ ctx.fill();
+ drawLabel(ctx, "Xylem up", z.stem.x - 40, z.stem.y - 10, { h: 18, font: "600 9px Segoe UI" });
+ drawLabel(ctx, "Phloem down", z.stem.x + 48, z.stem.y + 10, { h: 18, font: "600 9px Segoe UI" });
+ }
+ drawLabel(ctx, "Stem", z.stem.x + 42, z.stem.y, { h: 20, font: "700 11px Segoe UI" });
+ // water rising animation
+ if (water > 0.1) {
+ ctx.fillStyle = "rgba(56,189,248,0.75)";
+ for (let i = 0; i < 4; i++) {
+ const uy = stemBot - ((t * 40 + i * 28) % stemH);
+ ctx.beginPath();
+ ctx.arc(z.stem.x - 2, uy, 2.5, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ }
+ }
+
+ if (show("leaves")) {
+ const tilt = -0.35 + Math.sin(t * 2) * wind * 0.12;
+ const leafG = (ox, oy, rot, sc = 1) => {
+ ctx.save();
+ ctx.translate(ox + sway, oy);
+ ctx.rotate(rot);
+ const g = ctx.createRadialGradient(-6, -2, 2, 0, 0, 30 * sc);
+ g.addColorStop(0, "#86efac");
+ g.addColorStop(0.55, "#22c55e");
+ g.addColorStop(1, "#166534");
+ ctx.fillStyle = g;
+ ctx.beginPath();
+ ctx.ellipse(0, 0, 32 * grow * sc, 14 * grow * sc, 0, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.strokeStyle = "#14532d";
+ ctx.lineWidth = 1.2;
+ ctx.beginPath();
+ ctx.moveTo(-24 * sc, 4);
+ ctx.quadraticCurveTo(0, 0, 26 * sc, -4);
+ ctx.stroke();
+ // side veins
+ ctx.lineWidth = 0.8;
+ for (let v = -2; v <= 2; v++) {
+ if (!v) continue;
+ ctx.beginPath();
+ ctx.moveTo(-4, 0);
+ ctx.quadraticCurveTo(v * 6, v * 4, v * 12, v * 7);
+ ctx.stroke();
+ }
+ ctx.restore();
+ };
+ leafG(z.leaves.x - 34, z.leaves.y + 4, tilt);
+ leafG(z.leaves.x + 34, z.leaves.y - 2, -tilt);
+ if (grow > 0.55) leafG(z.leaves.x, z.leaves.y - 16, 0.1);
+ if (grow > 0.8) {
+ leafG(z.leaves.x - 50, z.leaves.y + 18, 0.4, 0.75);
+ leafG(z.leaves.x + 50, z.leaves.y + 14, -0.4, 0.75);
+ }
+ drawLabel(ctx, "Leaves", z.leaves.x - 58, z.leaves.y - 8, { h: 20, font: "700 11px Segoe UI" });
+ }
+
+ if (show("flower") && grow > 0.55) {
+ ctx.save();
+ ctx.translate(sway * 0.6, 0);
+ drawFlowerHead(ctx, z.flower.x, z.flower.y, lit === "flower" || showAll || grow > 0.85);
+ ctx.restore();
+ drawLabel(ctx, "Flower", z.flower.x + 48, z.flower.y, { h: 20, font: "700 11px Segoe UI" });
+ }
+
+ if (lit && z[lit]) {
+ ctx.strokeStyle = "#facc15";
+ ctx.lineWidth = 2.5;
+ ctx.beginPath();
+ ctx.arc(z[lit].x, z[lit].y, z[lit].r + 6, 0, Math.PI * 2);
+ ctx.stroke();
+ const tips = {
+ roots: "Roots: absorb water + minerals, anchor plant",
+ stem: "Stem: support + transport (xylem / phloem)",
+ leaves: "Leaves: catch light, run photosynthesis",
+ flower: "Flower: make seeds for the next generation",
+ };
+ if (tips[lit]) drawLabel(ctx, tips[lit], w * 0.5, 22, { h: 24, maxW: w * 0.92 });
+ }
+ return z;
+}
+
+function drawWindowsillPlant(ctx, w, h, t) {
+ fillSky(ctx, w, h);
+ // window frame
+ ctx.fillStyle = "rgba(255,255,255,0.4)";
+ ctx.fillRect(w * 0.08, h * 0.08, w * 0.84, h * 0.55);
+ ctx.strokeStyle = "#e2e8f0";
+ ctx.lineWidth = 6;
+ ctx.strokeRect(w * 0.08, h * 0.08, w * 0.84, h * 0.55);
+ ctx.beginPath();
+ ctx.moveTo(w * 0.5, h * 0.08);
+ ctx.lineTo(w * 0.5, h * 0.63);
+ ctx.moveTo(w * 0.08, h * 0.35);
+ ctx.lineTo(w * 0.92, h * 0.35);
+ ctx.stroke();
+ // sun + rays
+ ctx.fillStyle = "#fde047";
+ ctx.beginPath();
+ ctx.arc(w * 0.78, h * 0.2, 22, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.strokeStyle = "rgba(253,224,71,0.45)";
+ for (let i = 0; i < 8; i++) {
+ const a = (i / 8) * Math.PI * 2 + t * 0.2;
+ ctx.beginPath();
+ ctx.moveTo(w * 0.78 + Math.cos(a) * 26, h * 0.2 + Math.sin(a) * 26);
+ ctx.lineTo(w * 0.78 + Math.cos(a) * 38, h * 0.2 + Math.sin(a) * 38);
+ ctx.stroke();
+ }
+ // sill + pot
+ ctx.fillStyle = "#78350f";
+ ctx.fillRect(0, h * 0.72, w, h * 0.28);
+ ctx.fillStyle = "#b45309";
+ roundRect(ctx, w * 0.36, h * 0.6, w * 0.28, h * 0.18, 6);
+ ctx.fill();
+ ctx.fillStyle = "#854d0e";
+ ctx.fillRect(w * 0.38, h * 0.6, w * 0.24, 8);
+ const u = Math.min(1.15, t / 3.2);
+ // water drops watering
+ if (u < 1) {
+ ctx.fillStyle = "rgba(56,189,248,0.85)";
+ for (let i = 0; i < 3; i++) {
+ const dropY = h * 0.18 + ((t * 55 + i * 40) % (h * 0.42));
+ ctx.beginPath();
+ ctx.ellipse(w * 0.32 + i * 8, dropY, 4, 7, 0, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ }
+ drawPlantBody(ctx, w, h, {
+ showAll: true,
+ grow: Math.max(0.25, u),
+ water: u > 0.15 ? 1 : 0,
+ wind: u > 0.35 ? 0.8 : 0,
+ t,
+ skipBg: true,
+ });
+ drawLabel(
+ ctx,
+ u < 0.35 ? "Water the plant - watch roots drink" : u < 0.75 ? "Stem and leaves grow in air + sun" : "Flower opens - plant life cycle ready",
+ w * 0.5,
+ 22,
+ { h: 24 },
+ );
+}
+
+function placePart(id, zone) {
+ const item = PLANT_ORGANS.find((o) => o.id === id);
+ if (!item) return;
+ if (item.drop !== zone) {
+ pulseFailFeedback(240);
+ bioLabState.prompt = "That part belongs somewhere else on the silhouette.";
+ return;
+ }
+ bioLabState.prompt = item.snap;
+ bioLabState.plantParts = { ...bioLabState.plantParts, [id]: true };
+ bioLabState.plantPartPick = null;
+ pulseSuccessFeedback(200);
+ if (PLANT_ORGANS.every((o) => bioLabState.plantParts[o.id])) {
+ bioLabState.plantBuildDone = true;
+ pulseSuccessFeedback(280);
+ }
+}
+
+function kitchenList() {
+ return bioLabState.plantKitchenPhase === "out" ? PLANT_KITCHEN_OUT : PLANT_KITCHEN_IN;
+}
+
+function placeKitchen(id, zone) {
+ const item = kitchenList().find((p) => p.id === id);
+ if (!item) return;
+ if (item.drop !== zone) {
+ pulseFailFeedback(260);
+ bioLabState.prompt = "That ingredient belongs in a different chute.";
+ return;
+ }
+ bioLabState.prompt = item.line;
+ bioLabState.plantKitchen = { ...bioLabState.plantKitchen, [id]: true };
+ bioLabState.plantKitchenPick = null;
+ pulseSuccessFeedback(200);
+ const ins = PLANT_KITCHEN_IN.every((p) => bioLabState.plantKitchen[p.id]);
+ if (bioLabState.plantKitchenPhase !== "out" && ins) {
+ bioLabState.plantKitchenPhase = "out";
+ }
+ if (ins && PLANT_KITCHEN_OUT.every((p) => bioLabState.plantKitchen[p.id])) {
+ bioLabState.plantKitchenDone = true;
+ pulseSuccessFeedback(320);
+ }
+}
+
+function sendTrace(toId) {
+ const water = bioLabState.plantTracePhase !== "sugar";
+ const hops = water ? PLANT_WATER_HOPS : PLANT_SUGAR_HOPS;
+ const stepI = water ? bioLabState.plantWaterStep || 0 : bioLabState.plantSugarStep || 0;
+ const step = hops[stepI];
+ if (!step || bioLabState.plantTraceDone) return;
+ if (toId !== step.id) {
+ pulseFailFeedback(240);
+ bioLabState.prompt = "That stop isn't next on this route.";
+ return;
+ }
+ if (water) bioLabState.plantWaterStep = stepI + 1;
+ else bioLabState.plantSugarStep = stepI + 1;
+ bioLabState.prompt = step.caption;
+ pulseSuccessFeedback(200);
+ if (water && bioLabState.plantWaterStep >= hops.length) bioLabState.plantTracePhase = "sugar";
+ if (!water && bioLabState.plantSugarStep >= hops.length) {
+ bioLabState.plantTraceDone = true;
+ pulseSuccessFeedback(300);
+ }
+}
+
+function pollinate(target) {
+ if (bioLabState.plantBloomPhase !== "pollinate") return;
+ if (target === "stamen" && bioLabState.plantBee === "idle") {
+ bioLabState.plantBee = "pollen";
+ bioLabState.prompt = "The bee picked up glowing pollen grains.";
+ pulseSuccessFeedback(200);
+ return;
+ }
+ if (target === "pistil" && bioLabState.plantBee === "pollen") {
+ bioLabState.plantBee = "pollinated";
+ bioLabState.prompt = "Pollen moved from one flower's stamen to another flower's pistil. That's pollination.";
+ pulseSuccessFeedback(280);
+ return;
+ }
+ pulseFailFeedback(240);
+ bioLabState.prompt = "Not yet. Pollen first, then the sticky landing pad.";
+}
+
+function sendSeed(method) {
+ if (bioLabState.plantBloomPhase !== "seed" || bioLabState.plantBloomDone) return;
+ const seed = PLANT_SEEDS[bioLabState.plantSeedI || 0];
+ if (!seed) return;
+ if (method !== seed.method) {
+ pulseFailFeedback(240);
+ bioLabState.prompt = "That travel method doesn't match this seed.";
+ return;
+ }
+ bioLabState.plantSeedOk = { ...bioLabState.plantSeedOk, [seed.id]: true };
+ bioLabState.plantSeedI = (bioLabState.plantSeedI || 0) + 1;
+ bioLabState.prompt = `${seed.name} travels by ${seed.method}.`;
+ pulseSuccessFeedback(220);
+ if (bioLabState.plantSeedI >= PLANT_SEEDS.length) {
+ bioLabState.plantBloomDone = true;
+ pulseSuccessFeedback(300);
+ }
+}
+
 export function registerPlantScenes(arena) {
  if (!arena?.registerScene) return;
 
- arena.registerScene("plantMeet", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, opts } = api;
- const startPhase = opts.phase || bioLabState.phase || "seed";
- bioLabState.phase = startPhase;
- setDescription("Plant Power - plants make food with light.");
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const live = bioLabState.phase || startPhase;
- drawBackdrop();
- if (live === "seed" || live === "desk") {
- drawSeedOval(ctx, w * 0.5, h * 0.45);
- drawLabel(ctx, "A seed is a living plant waiting to grow", w * 0.5, layout.labelY);
- } else if (live === "leaf") {
- drawPlant(ctx, w * 0.5, h * 0.42, 1.6, 1);
- ctx.fillStyle = "rgba(251,191,36,0.7)";
- ctx.beginPath();
- ctx.arc(w * 0.78, h * 0.2, 28, 0, Math.PI * 2);
- ctx.fill();
- // Light rays into leaf
- ctx.strokeStyle = "rgba(251,191,36,0.55)";
- ctx.lineWidth = 2;
- for (let i = 0; i < 3; i++) {
- ctx.beginPath();
- ctx.moveTo(w * 0.72, h * 0.24);
- ctx.lineTo(w * 0.55 - i * 8, h * 0.38);
- ctx.stroke();
- }
- drawLabel(ctx, "Leaves catch light - plant food factories", w * 0.5, layout.labelY);
- } else if (live === "flower") {
- drawPlant(ctx, w * 0.5, h * 0.42, 1.6, 2);
- drawBee(ctx, w * 0.68, h * 0.28);
- drawLabel(ctx, "Flowers help make more plants", w * 0.5, layout.labelY);
- } else {
- drawPlant(ctx, w * 0.5, h * 0.42, 1.6, 3);
- drawCandy(ctx, w * 0.78, h * 0.5);
- ctx.strokeStyle = "#f87171";
- ctx.lineWidth = 3;
- ctx.beginPath();
- ctx.moveTo(w * 0.7, h * 0.42);
- ctx.lineTo(w * 0.86, h * 0.58);
- ctx.moveTo(w * 0.86, h * 0.42);
- ctx.lineTo(w * 0.7, h * 0.58);
- ctx.stroke();
- drawLabel(ctx, "Plants make food - they don’t eat candy", w * 0.5, layout.labelY);
- }
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- });
- setDispose(() => {});
- });
-
- arena.registerScene("plantSort", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler, reducedMotion } =
- api;
- setDescription("Sort plant needs vs extras.");
- const chips = [
- { id: "sun", text: "Sunlight", short: "Sun", color: 0xfbbf24 },
- { id: "water", text: "Water", short: "Water", color: 0x38bdf8 },
- { id: "air", text: "Air (CO₂)", short: "Air", color: 0xa5b4fc },
- { id: "soil", text: "Soil minerals", short: "Soil", color: 0xa16207 },
- { id: "candy", text: "Candy", short: "Candy", color: 0xf472b6 },
- { id: "phone", text: "Phone charger", short: "Charger", color: 0x94a3b8 },
- { id: "bee", text: "Bees (some plants)", short: "Bees", color: 0xf59e0b },
- { id: "toys", text: "Toys", short: "Toys", color: 0x78716c },
- ];
- const accept = {
- need: ["sun", "water", "air"],
- help: ["soil", "bee"],
- no: ["candy", "phone", "toys"],
- };
- const cardPos = {};
- chips.forEach((c) => {
- cardPos[c.id] = { x: 0, y: 0 };
- });
- let draggingId = null;
- let lastZones = [];
-
- function placeChip(chipId, zoneId) {
- if (!chipId || !zoneId) return false;
- if (!(accept[zoneId] || []).includes(chipId)) {
- pulseFailFeedback(400);
- return false;
- }
- bioLabState.placed = { ...(bioLabState.placed || {}), [chipId]: zoneId };
- bioLabState.selectedId = chipId;
- const session = getActiveSession();
- if (session?.dispatch) session.dispatch({ type: "PLACE_CHIP", chipId, zoneId, accept: accept[zoneId] });
- else bioLabState._placedVersion = (bioLabState._placedVersion || 0) + 1;
- pulseSuccessFeedback(220);
- return true;
- }
- function zoneAt(x, y) {
- for (const z of lastZones) {
- if (x >= z.x && x <= z.x + z.ww && y >= z.y && y <= z.y + z.hh) return z.id;
- }
- return null;
- }
-
+ arena.registerScene("plantOpen", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ const start = performance.now();
+ setDescription("A windowsill plant. Quiet, and busy.");
  setIntentHandler((intent) => {
- if (intent.type === "CANVAS_DOWN" && intent.meta?.chipId) {
- draggingId = intent.meta.chipId;
- bioLabState.selectedId = intent.meta.chipId;
- }
- if (intent.type === "CANVAS_DRAG" && intent.meta?.chipId && cardPos[intent.meta.chipId]) {
- draggingId = intent.meta.chipId;
- cardPos[intent.meta.chipId].x = intent.x;
- cardPos[intent.meta.chipId].y = intent.y;
- }
- if (intent.type === "CANVAS_TAP" && intent.meta?.chipId) bioLabState.selectedId = intent.meta.chipId;
- if (intent.type === "CANVAS_TAP" && intent.meta?.zoneId && bioLabState.selectedId) {
- placeChip(bioLabState.selectedId, intent.meta.zoneId);
- }
- if (intent.type === "CANVAS_UP" && intent.meta?.chipId) {
- const zoneId = intent.dropMeta?.zoneId || zoneAt(intent.x, intent.y);
- if (zoneId) placeChip(intent.meta.chipId, zoneId);
- draggingId = null;
- } else if (intent.type === "CANVAS_UP") draggingId = null;
- });
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- drawBackdrop();
- const zoneH = Math.max(100, Math.min(h * 0.28, 130));
- const zoneY = Math.max(layout.labelY + 28, h * 0.09);
- const zones = [
- { id: "need", label: "Must have", x: w * 0.03, y: zoneY, ww: w * 0.3, hh: zoneH, color: "#22c55e" },
- { id: "help", label: "Helps", x: w * 0.35, y: zoneY, ww: w * 0.3, hh: zoneH, color: "#fbbf24" },
- { id: "no", label: "Not plant food", x: w * 0.67, y: zoneY, ww: w * 0.3, hh: zoneH, color: "#94a3b8" },
- ];
- lastZones = zones;
- const hits = [];
- for (const z of zones) {
- ctx.fillStyle = "rgba(5,46,22,0.7)";
- roundRect(ctx, z.x, z.y, z.ww, z.hh, 12);
- ctx.fill();
- ctx.strokeStyle = z.color;
- ctx.lineWidth = 2.5;
- ctx.stroke();
- drawLabel(ctx, z.label, z.x + z.ww / 2, z.y + 16, { h: 20, font: "700 12px Segoe UI" });
- hits.push({
- id: "zone-" + z.id,
- shape: "rect",
- x: z.x + z.ww / 2,
- y: z.y + z.hh / 2,
- w: z.ww,
- h: z.hh,
- meta: { zoneId: z.id, accept: accept[z.id] },
- });
- }
- const placed = bioLabState.placed || {};
- const byZone = {
- need: chips.filter((c) => placed[c.id] === "need").map((c) => c.id),
- help: chips.filter((c) => placed[c.id] === "help").map((c) => c.id),
- no: chips.filter((c) => placed[c.id] === "no").map((c) => c.id),
- };
- const bankIds = chips.filter((c) => typeof placed[c.id] !== "string").map((c) => c.id);
- const ease = reducedMotion ? 1 : 0.18;
- chips.forEach((c) => {
- let targetX;
- let targetY;
- const zoneKey = typeof placed[c.id] === "string" ? placed[c.id] : null;
- if (zoneKey && byZone[zoneKey]) {
- const z = zones.find((zz) => zz.id === zoneKey);
- const idx = byZone[zoneKey].indexOf(c.id);
- const slot = sortSlotPositions({ x: z.x, y: z.y + 18, w: z.ww, h: z.hh - 22 }, Math.max(byZone[zoneKey].length, 1), idx);
- targetX = slot.x;
- targetY = slot.y;
- } else {
- const idx = bankIds.indexOf(c.id);
- targetX = w * 0.14 + (idx % 4) * (w * 0.22);
- targetY = zoneY + zoneH + 36 + Math.floor(idx / 4) * 48;
- }
- const prev = cardPos[c.id];
- if (!prev.x && !prev.y) {
- prev.x = targetX;
- prev.y = targetY;
- }
- if (draggingId !== c.id) {
- prev.x += (targetX - prev.x) * ease;
- prev.y += (targetY - prev.y) * ease;
- }
- ctx.fillStyle = bioLabState.selectedId === c.id ? "rgba(74,222,128,0.4)" : "rgba(20,83,45,0.95)";
- roundRect(ctx, prev.x - 48, prev.y - 16, 96, 32, 8);
- ctx.fill();
- ctx.strokeStyle = "#" + c.color.toString(16).padStart(6, "0");
- ctx.stroke();
- ctx.fillStyle = "#dcfce7";
- ctx.font = "700 12px Segoe UI";
- ctx.textAlign = "center";
- ctx.textBaseline = "middle";
- ctx.fillText(c.short, prev.x, prev.y);
- hits.push({
- id: c.id,
- shape: "rect",
- x: prev.x,
- y: prev.y,
- w: 100,
- h: 36,
- meta: { chipId: c.id },
- onDrag(pt) {
- draggingId = c.id;
- prev.x = Math.max(30, Math.min(w - 30, pt.x));
- prev.y = Math.max(30, Math.min(h - 30, pt.y));
- },
- });
- });
- drawLabel(ctx, "Plants don’t eat candy - they make food", w * 0.5, layout.labelY);
- setHitRegions(hits);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- });
- setDispose(() => setIntentHandler(null));
- });
-
- arena.registerScene("plantLab", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler } = api;
- setDescription("Drag sun energy - watch the plant grow.");
- setIntentHandler((intent) => {
- if (intent.type === "CANVAS_DRAG" && intent.meta?.action === "stretch") {
- const next = Math.max(0, Math.min(1, (intent.x - api.width * 0.2) / (api.width * 0.6)));
- bioLabState.heat = next;
- bioLabState.sun = next;
- }
- });
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const sun = bioLabState.heat ?? bioLabState.sun ?? 0.35;
- bioLabState.sun = sun;
- const focus = bioLabState.labFocus || "sun";
- drawBackdrop();
- const stage = sun > 0.75 ? 3 : sun > 0.5 ? 2 : sun > 0.25 ? 1 : 0;
- drawPlant(ctx, w * 0.5, h * 0.4, 1.5, stage);
- ctx.fillStyle = `rgba(251,191,36,${0.25 + sun * 0.6})`;
- ctx.beginPath();
- ctx.arc(w * 0.78, h * 0.18, 22 + sun * 12, 0, Math.PI * 2);
- ctx.fill();
-
- if (focus === "stages") {
- const labels = ["Seed", "Leaf", "Flower", "Fruit"];
- labels.forEach((lab, i) => {
- const x = w * 0.18 + i * (w * 0.2);
- const on = i <= stage;
- ctx.fillStyle = on ? "rgba(74,222,128,0.4)" : "rgba(30,41,59,0.55)";
- roundRect(ctx, x - 34, h * 0.2, 68, 24, 8);
- ctx.fill();
- ctx.fillStyle = "#dcfce7";
- ctx.font = "600 11px Segoe UI";
- ctx.textAlign = "center";
- ctx.fillText(lab, x, h * 0.215);
- });
- drawLabel(ctx, sun > 0.75 ? "Full stages: seed → leaf → flower → fruit" : "Push sun to unlock plant stages", w * 0.5, layout.labelY);
- } else {
- drawLabel(ctx, sun > 0.7 ? "More light → more plant food" : "Drag sun energy for the plant", w * 0.5, layout.labelY);
- }
-
- const hx = w * 0.2 + sun * w * 0.6;
- ctx.fillStyle = "#fbbf24";
- ctx.beginPath();
- ctx.arc(hx, h * 0.68, 14, 0, Math.PI * 2);
- ctx.fill();
- setHitRegions([{ id: "h", shape: "rect", x: hx, y: h * 0.68, w: 48, h: 48, meta: { action: "stretch" } }]);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- });
- setDispose(() => setIntentHandler(null));
- });
-
- arena.registerScene("plantRule", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop } = api;
- setDescription("Plants make food using light.");
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const prog = bioLabState.tokenProgress || 0;
- drawBackdrop();
- const tokens = ["Light", "+", "water", "+", "air", "→ food"];
- tokens.forEach((label, i) => {
- const x = w * 0.12 + i * (w * 0.14);
- const on = i < prog;
- ctx.fillStyle = on ? "rgba(74,222,128,0.4)" : "rgba(20,83,45,0.9)";
- roundRect(ctx, x - 40, h * 0.36 - 18, 80, 36, 10);
- ctx.fill();
- ctx.fillStyle = on ? "#dcfce7" : "#86efac";
- ctx.font = "700 12px Segoe UI";
- ctx.textAlign = "center";
- ctx.fillText(label, x, h * 0.36);
- });
- drawPlant(ctx, w * 0.5, h * 0.58, 1.2, 2);
- drawLabel(ctx, "Plant Power rule", w * 0.5, layout.labelY);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- });
- setDispose(() => {});
- });
-
- arena.registerScene("plantStretch", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler } = api;
- const modes = [
- { id: "mango", label: "Mango" },
- { id: "rice", label: "Rice" },
- { id: "rose", label: "Rose" },
- { id: "bamboo", label: "Bamboo" },
- { id: "algae", label: "Algae" },
- ];
- setDescription("Same plant idea in Bangladesh stories.");
- setIntentHandler((intent) => {
- if (intent.type === "CANVAS_TAP" && intent.meta?.mode) {
- bioLabState.mode = intent.meta.mode;
+ if (intent.type !== "CANVAS_TAP") return;
+ if (intent.meta?.action === "meet") {
+ bioLabState.plantSeen = true;
  pulseSuccessFeedback(200);
  }
  });
  setTick(() => {
  const w = api.width;
  const h = api.height;
- const layout = api.layout;
- const mode = bioLabState.mode || "mango";
- drawBackdrop();
- const hits = [];
- modes.forEach((m, i) => {
- const x = w * 0.12 + i * (w * 0.17);
- ctx.fillStyle = m.id === mode ? "rgba(74,222,128,0.4)" : "#14532d";
- roundRect(ctx, x - 36, layout.deskTop - 36, 72, 48, 10);
- ctx.fill();
- ctx.fillStyle = "#dcfce7";
- ctx.font = "600 11px Segoe UI";
- ctx.textAlign = "center";
- ctx.fillText(m.label, x, layout.deskTop - 10);
- hits.push({ id: m.id, shape: "rect", x, y: layout.deskTop - 12, w: 72, h: 48, meta: { mode: m.id } });
+ const t = (performance.now() - start) / 1000;
+ bioLabState.plantOpenU = Math.min(1, t / 2.4);
+ drawWindowsillPlant(ctx, w, h, t);
+ drawLabel(
+ ctx,
+ bioLabState.plantOpenU < 0.4
+ ? "A plant that never eats a meal, and never leaves the sill."
+ : "We've met a plant cell. Today: the whole machine.",
+ w * 0.5,
+ 26,
+ { font: "600 12px Segoe UI, sans-serif", h: 28, maxW: w * 0.92 },
+ );
+ const ready = bioLabState.plantOpenU >= 0.4 || bioLabState.plantSeen;
+ drawCanvasBtn(ctx, w * 0.5, h - 36, 210, 40, "Meet the Plant", ready);
+ setHitRegions([{ id: "meet", shape: "rect", x: w * 0.5, y: h - 36, w: 220, h: 44, meta: { action: "meet" } }]);
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
  });
- if (mode === "mango") drawMango(ctx, w * 0.5, h * 0.36);
- else if (mode === "rice") drawRicePaddy(ctx, w * 0.5, h * 0.36);
- else if (mode === "rose") drawRose(ctx, w * 0.5, h * 0.36);
- else if (mode === "bamboo") drawBamboo(ctx, w * 0.5, h * 0.36);
- else drawAlgae(ctx, w * 0.5, h * 0.36);
- const captions = {
- mango: "Mango tree - leaves catch light for sweet fruit",
- rice: "Rice paddy - plants feed a nation",
- rose: "Rose - flowers need light too",
- bamboo: "Bamboo - fast-growing plant power",
- algae: "Pond algae - tiny plants making food",
- };
- drawLabel(ctx, captions[mode], w * 0.5, layout.labelY);
+ setDispose(() => {});
+ });
+
+ arena.registerScene("plantBuild", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ setDescription("Build a plant. Four parts, four places.");
+ setIntentHandler((intent) => {
+ if (intent.type === "CANVAS_TAP" && intent.meta?.part) bioLabState.plantPartPick = intent.meta.part;
+ if (intent.type === "CANVAS_TAP" && intent.meta?.drop && bioLabState.plantPartPick) {
+ placePart(bioLabState.plantPartPick, intent.meta.drop);
+ }
+ if (intent.type === "CANVAS_UP" && intent.meta?.part && intent.dropMeta?.drop) {
+ placePart(intent.meta.part, intent.dropMeta.drop);
+ }
+ });
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ fillLab(ctx, w, h);
+ // Soft ghost silhouette so students see where each organ goes
+ const z = drawPlantBody(ctx, w, h, {
+ t: performance.now() / 1000,
+ lit: bioLabState.plantPartPick,
+ ghost: bioLabState.plantPartPick,
+ water: bioLabState.plantBuildDone ? 1 : 0,
+ wind: bioLabState.plantBuildDone ? 0.5 : 0,
+ });
+ // Draw faint outlines for unplaced parts
+ ["roots", "stem", "leaves", "flower"].forEach((id) => {
+ if (bioLabState.plantParts[id]) return;
+ const zz = z[id];
+ ctx.strokeStyle = "rgba(134,239,172,0.45)";
+ ctx.lineWidth = 2;
+ ctx.setLineDash([5, 4]);
+ ctx.beginPath();
+ ctx.arc(zz.x, zz.y, zz.r, 0, Math.PI * 2);
+ ctx.stroke();
+ ctx.setLineDash([]);
+ drawLabel(ctx, id[0].toUpperCase() + id.slice(1), zz.x + (id === "stem" || id === "flower" ? 48 : -48), zz.y, {
+ h: 18,
+ font: "600 10px Segoe UI",
+ });
+ });
+ const msg = bioLabState.plantBuildDone
+ ? "You just built a complete plant: roots, stem, leaves, and flower."
+ : bioLabState.prompt || "Tap a part, then its place on the silhouette.";
+ drawLabel(ctx, msg, w * 0.5, 22, { font: "600 11px Segoe UI, sans-serif", h: 28, maxW: w * 0.94 });
+ const hits = PLANT_ORGANS.map((o) => ({
+ id: `drop-${o.id}`,
+ shape: "ellipse",
+ x: z[o.id].x,
+ y: z[o.id].y,
+ r: z[o.id].r,
+ meta: { drop: o.id },
+ }));
+ const unused = PLANT_ORGANS.filter((o) => !bioLabState.plantParts[o.id]);
+ unused.forEach((o, i) => {
+ const x = w * (0.16 + i * 0.23);
+ const y = h - 34;
+ const sel = bioLabState.plantPartPick === o.id;
+ drawCanvasBtn(ctx, x, y, 92, 30, o.name, sel);
+ hits.push({ id: `part-${o.id}`, shape: "rect", x, y, w: 96, h: 34, meta: { part: o.id } });
+ });
  setHitRegions(hits);
  failFlash(ctx, w, h);
  successFlash(ctx, w, h);
  });
- setDispose(() => setIntentHandler(null));
- });
-
- arena.registerScene("plantMyth", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler } = api;
- const myths = [
- { claim: "Plants eat soil for food", truth: "Soil helps with minerals - food is made with light", claimVis: "soil", truthVis: "leaf" },
- { claim: "Plants don’t need air", truth: "Plants use air (CO₂) when they make food", claimVis: "leaf", truthVis: "air" },
- { claim: "Seeds are dead until they sprout", truth: "Seeds can be dormant living plants", claimVis: "seed", truthVis: "sprout" },
- { claim: "Only green leaves matter", truth: "Roots, stems, and flowers are plant parts too", claimVis: "leaf", truthVis: "full" },
- { claim: "Bees make the plant’s food", truth: "Bees help pollinate - leaves still make food", claimVis: "bee", truthVis: "leaf" },
- ];
- setDescription("Bust plant myths.");
- setIntentHandler((intent) => {
- if (intent.type === "CANVAS_TAP" && intent.meta?.action === "flip") {
- bioLabState.mythPhase = bioLabState.mythPhase === "truth" ? "claim" : "truth";
- if (bioLabState.mythPhase === "truth") pulseSuccessFeedback(220);
- }
- });
- function drawMythVis(kind, x, y) {
- if (kind === "soil") drawSoilBag(ctx, x, y);
- else if (kind === "seed") drawSeedOval(ctx, x, y);
- else if (kind === "sprout") drawPlant(ctx, x, y, 1.1, 1);
- else if (kind === "full") drawPlant(ctx, x, y, 1.3, 3);
- else if (kind === "bee") drawBee(ctx, x, y);
- else if (kind === "air") {
- ctx.fillStyle = "rgba(165,180,252,0.5)";
- ctx.beginPath();
- ctx.arc(x - 16, y, 14, 0, Math.PI * 2);
- ctx.arc(x + 10, y - 8, 18, 0, Math.PI * 2);
- ctx.fill();
- drawLabel(ctx, "CO₂", x, y + 28, { h: 18, font: "700 11px Segoe UI" });
- } else drawPlant(ctx, x, y, 1.2, 1);
- }
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const idx = bioLabState.myth ?? 0;
- const phase = bioLabState.mythPhase || "claim";
- const m = myths[idx] || myths[0];
- drawBackdrop();
- ctx.fillStyle = phase === "truth" ? "rgba(74,222,128,0.2)" : "rgba(248,113,113,0.18)";
- roundRect(ctx, w * 0.12, h * 0.2, w * 0.76, h * 0.46, 16);
- ctx.fill();
- drawMythVis(phase === "truth" ? m.truthVis : m.claimVis, w * 0.5, h * 0.34);
- drawLabel(ctx, phase === "truth" ? m.truth : `Myth: ${m.claim}`, w * 0.5, h * 0.54, {
- h: 44,
- font: "700 12px Segoe UI",
- });
- drawLabel(ctx, `Myth ${idx + 1} / 5 · Tap to flip`, w * 0.5, layout.labelY);
- setHitRegions([{ id: "card", shape: "rect", x: w * 0.5, y: h * 0.42, w: w * 0.76, h: h * 0.46, meta: { action: "flip" } }]);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- });
- setDispose(() => setIntentHandler(null));
- });
-
- arena.registerScene("plantDrill", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop } = api;
- setDescription(bioLabState.prompt || "Plant drill");
- function drillVis(prompt) {
- const p = (prompt || "").toLowerCase();
- if (p.includes("candy")) return "candy";
- if (p.includes("soil")) return "soil";
- if (p.includes("seed")) return "seed";
- if (p.includes("rice")) return "rice";
- if (p.includes("bee")) return "bee";
- if (p.includes("sun")) return "sun";
- return "plant";
- }
- setTick(() => {
- const w = api.width;
- const h = api.height;
- drawBackdrop();
- drawLabel(ctx, bioLabState.prompt || "Plant Power drill", w * 0.5, h * 0.18, { h: 32, font: "700 16px Segoe UI" });
- const kind = drillVis(bioLabState.prompt);
- if (kind === "candy") drawCandy(ctx, w * 0.5, h * 0.48);
- else if (kind === "soil") drawSoilBag(ctx, w * 0.5, h * 0.48);
- else if (kind === "seed") drawSeedOval(ctx, w * 0.5, h * 0.48);
- else if (kind === "rice") drawRicePaddy(ctx, w * 0.5, h * 0.48);
- else if (kind === "bee") drawBee(ctx, w * 0.5, h * 0.48);
- else if (kind === "sun") {
- ctx.fillStyle = "#fbbf24";
- ctx.beginPath();
- ctx.arc(w * 0.5, h * 0.42, 28, 0, Math.PI * 2);
- ctx.fill();
- drawPlant(ctx, w * 0.5, h * 0.58, 1.1, 1);
- } else drawPlant(ctx, w * 0.5, h * 0.5, 1.4, 2);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- });
  setDispose(() => {});
  });
 
- arena.registerScene("plantMastery", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop } = api;
- setDescription("Plant Explorer mastery.");
+ arena.registerScene("plantOrgans", (api) => {
+ const { ctx, setTick, setDispose, setDescription } = api;
+ const start = performance.now();
+ setDescription("Four parts, four jobs. Then the formal names.");
  setTick(() => {
  const w = api.width;
  const h = api.height;
- const layout = api.layout;
- const locked = bioLabState.masteryStep || 0;
- drawBackdrop();
- ["Meet", "Sort", "Lab", "Rule", "Myth", "Explorer"].forEach((label, i) => {
- const x = w * 0.1 + i * (w * 0.14);
- ctx.fillStyle = i < locked ? "#22c55e" : "rgba(148,163,184,0.35)";
- roundRect(ctx, x - 28, h * 0.78 - 12, 56, 24, 8);
- ctx.fill();
- ctx.fillStyle = "#052e16";
- ctx.font = "600 10px Segoe UI";
+ const t = (performance.now() - start) / 1000;
+ const phase = bioLabState.phase || "jobs";
+ fillLab(ctx, w, h);
+ if (phase === "card") {
+ ctx.fillStyle = "#86efac";
+ ctx.font = "800 16px Segoe UI";
  ctx.textAlign = "center";
- ctx.fillText(label, x, h * 0.78);
+ ctx.fillText("Four plant organs", w * 0.5, 32);
+ PLANT_ORGANS.forEach((o, i) => {
+ drawLabel(ctx, `${o.name}: ${o.def}`, w * 0.5, 78 + i * 40, {
+ font: "600 11px Segoe UI, sans-serif",
+ h: 32,
+ maxW: w * 0.94,
  });
- drawMango(ctx, w * 0.28, h * 0.36);
- drawRicePaddy(ctx, w * 0.55, h * 0.38);
- drawAlgae(ctx, w * 0.8, h * 0.38);
- drawLabel(ctx, "Plant Explorer!", w * 0.5, layout.labelY);
+ });
+ } else {
+ const lit = PLANT_ORGANS[Math.floor(t / 1.8) % 4].id;
+ drawPlantBody(ctx, w, h, { showAll: true, lit, t, cutaway: lit === "stem", hair: lit === "roots" });
+ const o = PLANT_ORGANS.find((p) => p.id === lit);
+ drawLabel(ctx, `${o.name}: ${o.job}`, w * 0.5, 24, { h: 26, maxW: w * 0.94 });
+ }
  failFlash(ctx, w, h);
  successFlash(ctx, w, h);
  });
  setDispose(() => {});
  });
+
+ arena.registerScene("plantKitchen", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ setDescription("Stock the kitchen. Three in, two out.");
+ setIntentHandler((intent) => {
+ if (intent.type === "CANVAS_TAP" && intent.meta?.ing) bioLabState.plantKitchenPick = intent.meta.ing;
+ if (intent.type === "CANVAS_TAP" && intent.meta?.drop && bioLabState.plantKitchenPick) {
+ placeKitchen(bioLabState.plantKitchenPick, intent.meta.drop);
+ }
+ if (intent.type === "CANVAS_UP" && intent.meta?.ing && intent.dropMeta?.drop) {
+ placeKitchen(intent.meta.ing, intent.dropMeta.drop);
+ }
+ });
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ fillLab(ctx, w, h);
+ const cx = w * 0.5;
+ const cy = h * 0.46;
+ // Realistic leaf kitchen
+ const leafG = ctx.createRadialGradient(cx - 30, cy - 20, 10, cx, cy, 160);
+ leafG.addColorStop(0, "#86efac");
+ leafG.addColorStop(0.5, "#22c55e");
+ leafG.addColorStop(1, "#14532d");
+ ctx.fillStyle = leafG;
+ ctx.beginPath();
+ ctx.ellipse(cx, cy, Math.min(w * 0.36, 155), Math.min(h * 0.3, 95), -0.25, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.strokeStyle = "#052e16";
+ ctx.lineWidth = 4;
+ ctx.beginPath();
+ ctx.moveTo(cx - 120, cy + 30);
+ ctx.quadraticCurveTo(cx, cy, cx + 120, cy - 20);
+ ctx.stroke();
+ ctx.fillStyle = "#365314";
+ ctx.fillRect(cx - 8, cy + 70, 16, 40);
+ const chloro = { x: cx + 10, y: cy - 10 };
+ const vein = { x: cx - 70, y: cy + 36 };
+ const stomata = { x: cx, y: cy + 58 };
+ const stemOut = { x: cx, y: cy + 92 };
+ drawChloro(ctx, chloro.x - 18, chloro.y, 1);
+ drawChloro(ctx, chloro.x + 8, chloro.y + 14, 0.9);
+ drawChloro(ctx, chloro.x + 22, chloro.y - 12, 0.8);
+ drawLabel(ctx, "Chloroplasts", chloro.x + 8, chloro.y - 28, { h: 18, font: "600 10px Segoe UI" });
+ drawLabel(ctx, "Vein (water)", vein.x, vein.y + 22, { h: 18, font: "600 10px Segoe UI" });
+ drawLabel(ctx, "Stomata", stomata.x, stomata.y + 22, { h: 18, font: "600 10px Segoe UI" });
+ ctx.fillStyle = "#38bdf8";
+ ctx.beginPath();
+ ctx.arc(stomata.x - 18, stomata.y, 5, 0, Math.PI * 2);
+ ctx.arc(stomata.x + 18, stomata.y, 5, 0, Math.PI * 2);
+ ctx.fill();
+ // placed ingredient markers
+ const kit = bioLabState.plantKitchen || {};
+ if (kit.sun) {
+ ctx.fillStyle = "#fde047";
+ ctx.beginPath();
+ ctx.arc(chloro.x + 40, chloro.y - 30, 10, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ if (kit.water) {
+ ctx.fillStyle = "#38bdf8";
+ ctx.beginPath();
+ ctx.ellipse(vein.x, vein.y - 12, 6, 9, 0, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ if (kit.co2) {
+ ctx.fillStyle = "#7dd3fc";
+ ctx.font = "700 10px Segoe UI";
+ ctx.textAlign = "center";
+ ctx.fillText("CO₂", stomata.x - 40, stomata.y);
+ }
+ if (kit.glucose) {
+ ctx.fillStyle = "#facc15";
+ ctx.font = "700 10px Segoe UI";
+ ctx.fillText("sugar ↓", stemOut.x + 40, stemOut.y);
+ }
+ if (kit.oxygen) {
+ ctx.fillStyle = "#67e8f9";
+ ctx.font = "700 10px Segoe UI";
+ ctx.fillText("O₂ ↑", stomata.x + 48, stomata.y - 14);
+ }
+ const out = bioLabState.plantKitchenPhase === "out";
+ const msg = bioLabState.plantKitchenDone
+ ? "Complete photosynthesis: 3 ingredients in, 2 products out."
+ : bioLabState.prompt || (out ? "Drag sugar and oxygen to their pipes." : "Stock the three input chutes.");
+ drawLabel(ctx, msg, w * 0.5, 22, { font: "600 11px Segoe UI, sans-serif", h: 28, maxW: w * 0.94 });
+ const hits = out
+ ? [
+ { id: "stemOut", shape: "ellipse", x: stemOut.x, y: stemOut.y, r: 28, meta: { drop: "stemOut" } },
+ { id: "stomataOut", shape: "ellipse", x: stomata.x, y: stomata.y, r: 28, meta: { drop: "stomataOut" } },
+ ]
+ : [
+ { id: "chloro", shape: "ellipse", x: chloro.x, y: chloro.y, r: 36, meta: { drop: "chloro" } },
+ { id: "vein", shape: "ellipse", x: vein.x, y: vein.y, r: 28, meta: { drop: "vein" } },
+ { id: "stomata", shape: "ellipse", x: stomata.x, y: stomata.y, r: 26, meta: { drop: "stomata" } },
+ ];
+ const bank = kitchenList().filter((p) => !bioLabState.plantKitchen[p.id]);
+ bank.forEach((p, i) => {
+ const x = w * (0.22 + i * 0.28);
+ const y = h - 36;
+ const sel = bioLabState.plantKitchenPick === p.id;
+ drawCanvasBtn(ctx, x, y, 150, 32, p.name, sel);
+ hits.push({ id: `ing-${p.id}`, shape: "rect", x, y, w: 154, h: 34, meta: { ing: p.id } });
+ });
+ setHitRegions(hits);
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("plantPhoto", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ const start = performance.now();
+ setDescription("Leaf factory: toggle sunlight, water, CO2 - then separate oxygen and glucose.");
+ setIntentHandler((intent) => {
+ if (intent.type !== "CANVAS_TAP") return;
+ const a = intent.meta?.action;
+ if (a === "sun") {
+ bioLabState.plantPhotoSun = !bioLabState.plantPhotoSun;
+ pulseSuccessFeedback(140);
+ bioLabState.prompt = bioLabState.plantPhotoSun
+ ? "Sunlight on - chloroplasts are capturing light energy."
+ : "Sunlight off - the factory pauses.";
+ }
+ if (a === "water") {
+ bioLabState.plantPhotoWater = !bioLabState.plantPhotoWater;
+ pulseSuccessFeedback(140);
+ bioLabState.prompt = bioLabState.plantPhotoWater
+ ? "Water arriving through the leaf vein from the roots."
+ : "Water supply paused.";
+ }
+ if (a === "co2") {
+ bioLabState.plantPhotoCo2 = !bioLabState.plantPhotoCo2;
+ pulseSuccessFeedback(140);
+ bioLabState.prompt = bioLabState.plantPhotoCo2
+ ? "CO2 entering through stomata (tiny pores)."
+ : "Stomata closed - less CO2 in.";
+ }
+ if (a === "sepGlucose") {
+ const ready =
+ bioLabState.plantPhotoSun && bioLabState.plantPhotoWater && bioLabState.plantPhotoCo2;
+ if (!ready) {
+ pulseFailFeedback(220);
+ bioLabState.prompt = "Turn on sunlight, water, and CO2 first - then products form.";
+ return;
+ }
+ bioLabState.plantPhotoGlucoseSep = true;
+ pulseSuccessFeedback(200);
+ bioLabState.prompt = "Glucose separated: sugar travels down the vein into the stem.";
+ }
+ if (a === "sepOxygen") {
+ const ready =
+ bioLabState.plantPhotoSun && bioLabState.plantPhotoWater && bioLabState.plantPhotoCo2;
+ if (!ready) {
+ pulseFailFeedback(220);
+ bioLabState.prompt = "Turn on sunlight, water, and CO2 first - then products form.";
+ return;
+ }
+ bioLabState.plantPhotoOxygenSep = true;
+ pulseSuccessFeedback(200);
+ bioLabState.prompt = "Oxygen separated: O2 exits through stomata into the air.";
+ }
+ });
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = (performance.now() - start) / 1000;
+ const phase = bioLabState.phase || "leaf";
+ fillLab(ctx, w, h);
+ if (phase === "eq") {
+ drawLabel(ctx, "Carbon dioxide + Water + Light energy", w * 0.5, h * 0.28, { h: 28, maxW: w * 0.94 });
+ drawLabel(ctx, "→  Glucose + Oxygen", w * 0.5, h * 0.42, { h: 28, maxW: w * 0.94 });
+ drawLabel(ctx, "6CO2 + 6H2O + light  →  C6H12O6 + 6O2", w * 0.5, h * 0.58, {
+ font: "600 11px Segoe UI, sans-serif",
+ h: 28,
+ maxW: w * 0.94,
+ });
+ drawLabel(ctx, "Chlorophyll captures the light that powers it.", w * 0.5, h * 0.74, { h: 26, maxW: w * 0.94 });
+ setHitRegions([]);
+ } else {
+ const sun = !!bioLabState.plantPhotoSun;
+ const water = !!bioLabState.plantPhotoWater;
+ const co2 = !!bioLabState.plantPhotoCo2;
+ const working = sun && water && co2;
+ const gSep = !!bioLabState.plantPhotoGlucoseSep;
+ const oSep = !!bioLabState.plantPhotoOxygenSep;
+
+ // Realistic leaf cross-section body
+ const leafG = ctx.createLinearGradient(0, h * 0.18, 0, h * 0.72);
+ leafG.addColorStop(0, "#4ade80");
+ leafG.addColorStop(0.45, "#16a34a");
+ leafG.addColorStop(1, "#14532d");
+ ctx.fillStyle = leafG;
+ roundRect(ctx, w * 0.08, h * 0.16, w * 0.84, h * 0.58, 18);
+ ctx.fill();
+ // midrib
+ ctx.strokeStyle = "#052e16";
+ ctx.lineWidth = 5;
+ ctx.beginPath();
+ ctx.moveTo(w * 0.12, h * 0.48);
+ ctx.quadraticCurveTo(w * 0.5, h * 0.44, w * 0.88, h * 0.48);
+ ctx.stroke();
+
+ if (sun) {
+ const beam = ctx.createLinearGradient(w * 0.78, h * 0.08, w * 0.45, h * 0.5);
+ beam.addColorStop(0, "rgba(254,240,138,0.7)");
+ beam.addColorStop(1, "rgba(254,240,138,0)");
+ ctx.fillStyle = beam;
+ ctx.beginPath();
+ ctx.moveTo(w * 0.68, h * 0.1);
+ ctx.lineTo(w * 0.92, h * 0.1);
+ ctx.lineTo(w * 0.58, h * 0.52);
+ ctx.lineTo(w * 0.32, h * 0.52);
+ ctx.fill();
+ ctx.fillStyle = "#fde047";
+ ctx.beginPath();
+ ctx.arc(w * 0.84, h * 0.12, 18, 0, Math.PI * 2);
+ ctx.fill();
+ for (let i = 0; i < 6; i++) {
+ const a = (i / 6) * Math.PI * 2 + t;
+ ctx.strokeStyle = "rgba(253,224,71,0.55)";
+ ctx.beginPath();
+ ctx.moveTo(w * 0.84 + Math.cos(a) * 22, h * 0.12 + Math.sin(a) * 22);
+ ctx.lineTo(w * 0.84 + Math.cos(a) * 32, h * 0.12 + Math.sin(a) * 32);
+ ctx.stroke();
+ }
+ }
+
+ // Chloroplasts - pulse when sun is on
+ for (let r = 0; r < 3; r++) {
+ for (let c = 0; c < 5; c++) {
+ const px = w * 0.22 + c * w * 0.12;
+ const py = h * 0.32 + r * 32;
+ const pulse = sun ? 0.85 + 0.25 * Math.sin(t * 4 + r + c) : 0.7;
+ drawChloro(ctx, px, py, pulse);
+ if (sun) {
+ ctx.fillStyle = `rgba(254,240,138,${0.15 + 0.2 * Math.sin(t * 5 + c)})`;
+ ctx.beginPath();
+ ctx.arc(px, py, 14, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ }
+ }
+
+ // Water droplets along vein
+ if (water) {
+ ctx.fillStyle = "rgba(56,189,248,0.85)";
+ for (let i = 0; i < 5; i++) {
+ const ux = w * 0.18 + ((t * 40 + i * 36) % (w * 0.64));
+ ctx.beginPath();
+ ctx.ellipse(ux, h * 0.48 + Math.sin(t * 3 + i) * 3, 4, 6, 0, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ drawLabel(ctx, "H2O in vein", w * 0.22, h * 0.4, { h: 18, font: "600 10px Segoe UI" });
+ }
+
+ // Stomata + CO2 / O2 flow
+ const open = co2 ? 0.7 + 0.3 * Math.sin(t * 2.5) : 0.25;
+ ctx.fillStyle = `rgba(15,23,42,${0.45 + open * 0.35})`;
+ ctx.beginPath();
+ ctx.ellipse(w * 0.32, h * 0.66, 10, 3 + open * 5, 0, 0, Math.PI * 2);
+ ctx.ellipse(w * 0.5, h * 0.68, 10, 3 + open * 5, 0, 0, Math.PI * 2);
+ ctx.ellipse(w * 0.68, h * 0.66, 10, 3 + open * 5, 0, 0, Math.PI * 2);
+ ctx.fill();
+ if (co2) {
+ ctx.fillStyle = "#38bdf8";
+ ctx.font = "700 11px Segoe UI";
+ ctx.textAlign = "center";
+ const gy = h * 0.62 + Math.sin(t * 3) * 4;
+ ctx.fillText("CO₂ in ↑", w * 0.2, gy);
+ }
+ if (working) {
+ ctx.fillStyle = "#67e8f9";
+ ctx.font = "700 11px Segoe UI";
+ ctx.textAlign = "center";
+ ctx.fillText("O₂ out ↓", w * 0.8, h * 0.58 + Math.sin(t * 2.8) * 4);
+ ctx.fillStyle = "#facc15";
+ ctx.fillText("Glucose forming…", w * 0.5, h * 0.38);
+ }
+
+ const msg =
+ bioLabState.prompt ||
+ (working
+ ? "Factory running. Tap Glucose and Oxygen to separate the products."
+ : "Toggle Sunlight, Water, and CO₂ to start the leaf factory.");
+ drawLabel(ctx, msg, w * 0.5, 22, { h: 26, maxW: w * 0.94, font: "600 11px Segoe UI" });
+
+ // Toggle buttons
+ const btns = [
+ { id: "sun", label: sun ? "Sun ON" : "Sunlight", x: w * 0.18, lit: sun },
+ { id: "water", label: water ? "Water ON" : "Water", x: w * 0.5, lit: water },
+ { id: "co2", label: co2 ? "CO₂ ON" : "CO₂", x: w * 0.82, lit: co2 },
+ ];
+ const hits = [];
+ btns.forEach((b) => {
+ drawCanvasBtn(ctx, b.x, h - 78, 100, 30, b.label, b.lit);
+ hits.push({ id: `btn-${b.id}`, shape: "rect", x: b.x, y: h - 78, w: 104, h: 32, meta: { action: b.id } });
+ });
+
+ // Separable products
+ const gX = gSep ? w * 0.22 : w * 0.42;
+ const oX = oSep ? w * 0.78 : w * 0.58;
+ const py = h - 36;
+ ctx.fillStyle = working || gSep ? "#4ade80" : "#365314";
+ roundRect(ctx, gX - 40, py - 14, 80, 28, 10);
+ ctx.fill();
+ ctx.fillStyle = "#0f172a";
+ ctx.font = "800 11px Segoe UI";
+ ctx.textAlign = "center";
+ ctx.textBaseline = "middle";
+ ctx.fillText(gSep ? "Glucose → stem" : "Glucose", gX, py);
+ hits.push({ id: "sep-g", shape: "rect", x: gX, y: py, w: 84, h: 30, meta: { action: "sepGlucose" } });
+
+ ctx.fillStyle = working || oSep ? "#67e8f9" : "#0e7490";
+ roundRect(ctx, oX - 40, py - 14, 80, 28, 10);
+ ctx.fill();
+ ctx.fillStyle = "#0f172a";
+ ctx.fillText(oSep ? "Oxygen → air" : "Oxygen", oX, py);
+ hits.push({ id: "sep-o", shape: "rect", x: oX, y: py, w: 84, h: 30, meta: { action: "sepOxygen" } });
+
+ if (gSep && oSep) {
+ drawLabel(ctx, "Products separated: sugar to stem, oxygen to air", w * 0.5, h * 0.78, {
+ h: 22,
+ font: "600 10px Segoe UI",
+ });
+ }
+
+ setHitRegions(hits);
+ }
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("plantTrace", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ setDescription("Trace water up, then sugar down.");
+ setIntentHandler((intent) => {
+ if (intent.type === "CANVAS_TAP" && intent.meta?.hop) sendTrace(intent.meta.hop);
+ });
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ fillLab(ctx, w, h);
+ const water = bioLabState.plantTracePhase !== "sugar";
+ const z = drawPlantBody(ctx, w, h, {
+ showAll: true,
+ cutaway: true,
+ hair: true,
+ t: performance.now() / 1000,
+ lit: water ? "roots" : "leaves",
+ });
+ const msg = bioLabState.plantTraceDone
+ ? "Two journeys, opposite directions, two separate sets of tubes."
+ : bioLabState.prompt ||
+ (water ? "Water: roots, up the stem, into the leaf." : "Sugar: leaf, down the stem, everywhere else.");
+ drawLabel(ctx, msg, w * 0.5, 22, { font: "600 11px Segoe UI, sans-serif", h: 28, maxW: w * 0.94 });
+ const hops = water ? PLANT_WATER_HOPS : PLANT_SUGAR_HOPS;
+ const pts = water
+ ? [z.roots, z.stem, z.leaves]
+ : [z.leaves, z.stem, z.roots];
+ const hits = hops.map((hop, i) => ({
+ id: hop.id,
+ shape: "ellipse",
+ x: pts[i].x,
+ y: pts[i].y,
+ r: pts[i].r,
+ meta: { hop: hop.id },
+ }));
+ setHitRegions(hits);
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("plantHighways", (api) => {
+ const { ctx, setTick, setDispose, setDescription } = api;
+ const start = performance.now();
+ setDescription("Two one-way highways. Then xylem and phloem.");
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = (performance.now() - start) / 1000;
+ const phase = bioLabState.phase || "lanes";
+ fillLab(ctx, w, h);
+ if (phase === "names") {
+ drawLabel(ctx, "Xylem: water and minerals up, roots to leaves", w * 0.5, h * 0.28, { h: 28, maxW: w * 0.94 });
+ drawLabel(ctx, "Phloem: sugar throughout the plant, wherever needed", w * 0.5, h * 0.44, { h: 28, maxW: w * 0.94 });
+ drawLabel(ctx, "Root hairs: extra surface for absorbing water", w * 0.5, h * 0.6, { h: 28, maxW: w * 0.94 });
+ drawLabel(ctx, "Transpiration: water evaporates from leaves, pulling more up", w * 0.5, h * 0.76, {
+ h: 28,
+ maxW: w * 0.94,
+ });
+ } else {
+ drawPlantBody(ctx, w, h, { showAll: true, cutaway: true, t });
+ const y0 = h * 0.2;
+ const y1 = h * 0.78;
+ const drift = (t * 30) % 40;
+ ctx.strokeStyle = "#38bdf8";
+ ctx.lineWidth = 8;
+ ctx.beginPath();
+ ctx.moveTo(w * 0.22, y1);
+ ctx.lineTo(w * 0.22, y0);
+ ctx.stroke();
+ ctx.strokeStyle = "#4ade80";
+ ctx.beginPath();
+ ctx.moveTo(w * 0.3, y0);
+ ctx.lineTo(w * 0.3, y1);
+ ctx.stroke();
+ ctx.fillStyle = "#7dd3fc";
+ ctx.beginPath();
+ ctx.arc(w * 0.22, y1 - drift * 4, 5, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.fillStyle = "#86efac";
+ ctx.beginPath();
+ ctx.arc(w * 0.3, y0 + drift * 4, 5, 0, Math.PI * 2);
+ ctx.fill();
+ drawLabel(ctx, "Two separate one-way highways, full height, no pump.", w * 0.5, 24, {
+ h: 26,
+ maxW: w * 0.94,
+ });
+ }
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("plantBloom", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ setDescription("Pollinate, then send the seed.");
+ setIntentHandler((intent) => {
+ if (intent.type !== "CANVAS_TAP") return;
+ if (intent.meta?.spot) pollinate(intent.meta.spot);
+ if (intent.meta?.method) sendSeed(intent.meta.method);
+ });
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ fillLab(ctx, w, h);
+ const phase = bioLabState.plantBloomPhase || "pollinate";
+ const hits = [];
+ if (phase === "seed") {
+ const seed = PLANT_SEEDS[Math.min(bioLabState.plantSeedI || 0, PLANT_SEEDS.length - 1)];
+ ctx.fillStyle = seed.id === "coconut" ? "#a16207" : seed.id === "burr" ? "#78716c" : "#fde68a";
+ ctx.beginPath();
+ ctx.ellipse(w * 0.5, h * 0.4, seed.id === "coconut" ? 28 : 16, seed.id === "coconut" ? 18 : 10, 0, 0, Math.PI * 2);
+ ctx.fill();
+ const msg = bioLabState.plantBloomDone
+ ? "The next plant doesn't have to grow in direct competition with its parent."
+ : bioLabState.prompt || `Match this ${seed.name.toLowerCase()} (${seed.hint}) to how it travels.`;
+ drawLabel(ctx, msg, w * 0.5, 24, { font: "600 11px Segoe UI, sans-serif", h: 28, maxW: w * 0.94 });
+ ["wind", "animal", "water"].forEach((m, i) => {
+ const x = w * (0.22 + i * 0.28);
+ const y = h - 36;
+ drawCanvasBtn(ctx, x, y, 120, 32, m, false);
+ hits.push({ id: `m-${m}`, shape: "rect", x, y, w: 124, h: 34, meta: { method: m } });
+ });
+ } else {
+ const ax = w * 0.32;
+ const bx = w * 0.68;
+ const fy = h * 0.42;
+ drawFlowerHead(ctx, ax, fy, true);
+ drawFlowerHead(ctx, bx, fy, true);
+ ctx.fillStyle = "#4d7c0f";
+ ctx.fillRect(ax - 3, fy + 14, 6, 50);
+ ctx.fillRect(bx - 3, fy + 14, 6, 50);
+ ctx.fillStyle = "#facc15";
+ ctx.beginPath();
+ ctx.arc(ax, fy - 22, 6, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.fillStyle = "#fb7185";
+ ctx.beginPath();
+ ctx.arc(bx, fy - 18, 7, 0, Math.PI * 2);
+ ctx.fill();
+ const beeX = bioLabState.plantBee === "idle" ? w * 0.5 : bioLabState.plantBee === "pollen" ? ax + 18 : bx - 18;
+ const beeY = bioLabState.plantBee === "idle" ? h * 0.7 : fy - 8;
+ drawBee(ctx, beeX, beeY);
+ const msg =
+ bioLabState.prompt || "Drag the bee to the stamen, then to the other flower's pistil.";
+ drawLabel(ctx, msg, w * 0.5, 24, { font: "600 11px Segoe UI, sans-serif", h: 28, maxW: w * 0.94 });
+ hits.push({ id: "stamen", shape: "ellipse", x: ax, y: fy - 22, r: 28, meta: { spot: "stamen" } });
+ hits.push({ id: "pistil", shape: "ellipse", x: bx, y: fy - 18, r: 28, meta: { spot: "pistil" } });
+ }
+ setHitRegions(hits);
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("plantCycle", (api) => {
+ const { ctx, setTick, setDispose, setDescription } = api;
+ const start = performance.now();
+ setDescription("One continuous cycle. Then the names.");
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = (performance.now() - start) / 1000;
+ const phase = bioLabState.phase || "cycle";
+ fillLab(ctx, w, h);
+ if (phase === "card") {
+ drawLabel(ctx, "Pollination: pollen from a stamen to a pistil", w * 0.5, h * 0.28, { h: 28, maxW: w * 0.94 });
+ drawLabel(ctx, "Fertilization: pollen plus an egg cell makes a seed", w * 0.5, h * 0.46, { h: 28, maxW: w * 0.94 });
+ drawLabel(ctx, "Seed dispersal: the seed travels by wind, animal, or water", w * 0.5, h * 0.64, {
+ h: 28,
+ maxW: w * 0.94,
+ });
+ } else {
+ const labels = ["Seed", "Sprout", "Young plant", "Flowering", "Pollination", "New seed"];
+ const shot = Math.floor(t / 1.6) % 6;
+ const cx = w * 0.5;
+ const cy = h * 0.52;
+ ctx.strokeStyle = "rgba(74,222,128,0.55)";
+ ctx.lineWidth = 3;
+ ctx.beginPath();
+ ctx.arc(cx, cy, Math.min(w, h) * 0.28, 0, Math.PI * 2);
+ ctx.stroke();
+ labels.forEach((lab, i) => {
+ const a = -Math.PI / 2 + (i / 6) * Math.PI * 2;
+ const x = cx + Math.cos(a) * Math.min(w, h) * 0.28;
+ const y = cy + Math.sin(a) * Math.min(w, h) * 0.28;
+ ctx.fillStyle = i === shot ? "#16a34a" : "#14532d";
+ ctx.beginPath();
+ ctx.arc(x, y, 16, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.fillStyle = "#ecfdf5";
+ ctx.font = "700 10px Segoe UI";
+ ctx.textAlign = "center";
+ ctx.fillText(String(i + 1), x, y + 3);
+ });
+ drawLabel(ctx, `${labels[shot]}. Every organ keeps this cycle running.`, w * 0.5, 24, {
+ h: 26,
+ maxW: w * 0.94,
+ });
+ }
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("plantClose", (api) => {
+ const { ctx, setTick, setDispose, setDescription } = api;
+ const start = performance.now();
+ setDescription("The whole machine. Nothing about a plant is actually still.");
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = (performance.now() - start) / 1000;
+ bioLabState.plantCloseU = Math.min(1, t / 3);
+ drawWindowsillPlant(ctx, w, h, t);
+ const ghosts = ["roots", "leaves", "stem", "flower"];
+ const g = ghosts[Math.floor(t / 0.8) % 4];
+ ctx.save();
+ ctx.globalAlpha = 0.55;
+ drawPlantBody(ctx, w, h, { showAll: true, cutaway: true, ghost: g, t });
+ ctx.restore();
+ drawLabel(ctx, "Nothing about a plant is actually still. It's just quiet.", w * 0.5, 28, {
+ h: 26,
+ maxW: w * 0.94,
+ });
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("plantSpiral", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ const stops = [
+ { id: 1, label: "1 Body", caption: "Spiral 1: roots, stem, leaves, flower" },
+ { id: 2, label: "2 Kitchen", caption: "Spiral 2: photosynthesis in the leaf" },
+ { id: 3, label: "3 Plumbing", caption: "Spiral 3: xylem up, phloem around" },
+ { id: 4, label: "4 Next", caption: "Spiral 4: pollination, seeds, the cycle" },
+ ];
+ setDescription("Recap map of the four Plant Power spirals.");
+ setIntentHandler((intent) => {
+ if (intent.type !== "CANVAS_TAP") return;
+ if (intent.meta?.action === "spiral") {
+ bioLabState.spiralStop = Number(intent.meta.stop) || 0;
+ bioLabState.spiralUntil = performance.now() + 4500;
+ }
+ if (intent.meta?.action === "spiralFinish") bioLabState.spiralFinish = true;
+ });
+ function polar(s, w, h) {
+ const cx = w * 0.5;
+ const cy = Math.min(h * 0.44, h - 118);
+ const maxR = Math.min(w * 0.36, Math.max(70, h - 140) * 0.42, 150);
+ const a = -0.55 + s * 1.28;
+ const r = maxR * (0.55 + s * 0.15);
+ return { x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r, cx, cy };
+ }
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const stop = bioLabState.spiralStop || 0;
+ fillLab(ctx, w, h);
+ ctx.strokeStyle = "rgba(74,222,128,0.55)";
+ ctx.lineWidth = 3;
+ ctx.beginPath();
+ for (let s = 0; s <= 3.02; s += 0.04) {
+ const p = polar(s, w, h);
+ if (s === 0) ctx.moveTo(p.x, p.y);
+ else ctx.lineTo(p.x, p.y);
+ }
+ ctx.stroke();
+ const origin = polar(0, w, h);
+ ctx.beginPath();
+ ctx.arc(origin.cx, origin.cy, 48, 0, Math.PI * 2);
+ ctx.fillStyle = "rgba(6,78,59,0.55)";
+ ctx.fill();
+ if (stop === 1) drawPlantBody(ctx, 90, 90, { showAll: true });
+ if (stop === 2) drawChloro(ctx, origin.cx, origin.cy, 1.4);
+ if (stop === 3) {
+ ctx.fillStyle = "#38bdf8";
+ ctx.fillRect(origin.cx - 8, origin.cy - 16, 6, 32);
+ ctx.fillStyle = "#4ade80";
+ ctx.fillRect(origin.cx + 2, origin.cy - 16, 6, 32);
+ }
+ if (stop === 4) drawFlowerHead(ctx, origin.cx, origin.cy, true);
+ const hits = [];
+ stops.forEach((s, i) => {
+ const p = polar(i, w, h);
+ ctx.fillStyle = stop === s.id ? "#16a34a" : "#14532d";
+ ctx.beginPath();
+ ctx.arc(p.x, p.y, 22, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.fillStyle = "#ecfdf5";
+ ctx.font = "800 16px Segoe UI";
+ ctx.textAlign = "center";
+ ctx.textBaseline = "middle";
+ ctx.fillText(String(s.id), p.x, p.y + 1);
+ hits.push({ id: `stop-${s.id}`, shape: "ellipse", x: p.x, y: p.y, r: 36, meta: { action: "spiral", stop: s.id } });
+ });
+ if (stop) {
+ const cap = stops.find((s) => s.id === stop);
+ if (cap) drawLabel(ctx, cap.caption, w * 0.5, 28, { font: "600 12px Segoe UI, sans-serif", h: 28, maxW: w * 0.94 });
+ }
+ const fx = w * 0.5;
+ const fy = h - 34;
+ const fw = Math.min(260, w * 0.76);
+ roundRect(ctx, fx - fw / 2, fy - 22, fw, 44, 12);
+ ctx.fillStyle = "#16a34a";
+ ctx.fill();
+ ctx.fillStyle = "#ecfdf5";
+ ctx.font = "800 16px Segoe UI, sans-serif";
+ ctx.textAlign = "center";
+ ctx.textBaseline = "middle";
+ ctx.fillText("Finish Plant Power", fx, fy);
+ hits.push({ id: "spiral-finish", shape: "rect", x: fx, y: fy, w: fw, h: 44, meta: { action: "spiralFinish" } });
+ setHitRegions(hits);
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ if (typeof arena.registerAlias === "function") {
+ arena.registerAlias("plantMeet", "plantOpen");
+ arena.registerAlias("plantSort", "plantBuild");
+ arena.registerAlias("plantLab", "plantKitchen");
+ arena.registerAlias("plantRule", "plantPhoto");
+ arena.registerAlias("plantStretch", "plantTrace");
+ arena.registerAlias("plantMyth", "plantHighways");
+ arena.registerAlias("plantDrill", "plantBloom");
+ arena.registerAlias("plantMastery", "plantSpiral");
+ }
 }

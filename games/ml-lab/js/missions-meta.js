@@ -5,10 +5,10 @@ export const MISSIONS = [
  {
  "id": "teach-model",
  "kidTitle": "Teach the Model",
- "theme": "train vs test - more good examples",
- "emoji": "\ud83c\udf93",
+ "theme": "the real machine learning work cycle",
+ "emoji": "\ud83c\udfeb",
  "rewardName": "Model Mentor",
- "hook": "A model learns from training examples, then we test it on new ones it has not memorized.",
+ "hook": "Run the full academy cycle - clean, split, train, evaluate honestly.",
  "accent": "#f472b6",
  "accent2": "#be185d",
  "icon": "leaf",

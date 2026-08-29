@@ -8,6 +8,6 @@ export const manifest = {
  emoji: "\u26a1",
  storageKey: "gq-electrical-basics-save-v2",
  localeKey: "gq-electrical-basics-locale",
- defaultScene: "circuitMeet",
+ defaultScene: "circOpen",
  theme: { accent: "#facc15", accent2: "#a16207" },
 };

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GyanQuest A4 - Canvas 2D Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./a4-styles.css" />
+</head>
+<body>
+  <p class="index no-print"><a href="./index.html">All sheets</a> · Print this page (Ctrl+P) as A4</p>
+
+  <article class="sheet">
+    <div class="sheet__mark" aria-hidden="true"></div>
+    <header class="top">
+      <div class="brand">
+        <img src="./gyanquest-logo.png" alt="" />
+        <div>
+          <strong>Gyan<em>Quest</em></strong>
+          <span>Feature sheet 01 / 04</span>
+        </div>
+      </div>
+      <div class="badge">Canvas 2D Game</div>
+    </header>
+
+    <h1 class="hero-title">Canvas 2D missions you play, not watch</h1>
+    <p class="hero-lead">
+      Every subject game runs in the browser as an interactive Canvas 2D lab: drag, sort, grow, score, and retry.
+      Missions follow a 10-step path with a coach panel, step rail, hints, and progress that saves on the device.
+    </p>
+
+    <figure class="shot">
+      <img src="./snapshots/gq-snap-canvas.png" alt="Bio Explorer Living or Not canvas step with four suspects" />
+      <figcaption class="shot__cap">Live snapshot · Bio Explorer · Mission 1 · Step 1 canvas + coach</figcaption>
+    </figure>
+
+    <div class="grid">
+      <section class="card">
+        <h3>What it is</h3>
+        <p>HTML5 Canvas scenes drawn in real time (no Unity install). Shared engine powers 28 subject games with the same mission hub pattern.</p>
+        <ul>
+          <li>Mission hub with playable cards</li>
+          <li>10 steps per mission (Bruner spirals)</li>
+          <li>Coach Bio + side activity card</li>
+          <li>Step rail locks until you finish</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>How a student uses it</h3>
+        <ul>
+          <li>Open a game (example: Bio Explorer)</li>
+          <li>Choose a mission, tap Start</li>
+          <li>Act on the canvas: tap, drag, sort, grow</li>
+          <li>Read coach prompts; use Hint if stuck</li>
+          <li>Continue through all 10 steps</li>
+          <li>Progress restores after reload</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>What you see on screen</h3>
+        <ul>
+          <li><strong>Viewport:</strong> the interactive lab (Canvas)</li>
+          <li><strong>Coach:</strong> short spoken-style guidance</li>
+          <li><strong>Activity card:</strong> narration + controls</li>
+          <li><strong>Steps:</strong> 1-10 with lock / current state</li>
+          <li><strong>Ask:</strong> tutor FAB always available</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>Pedagogy + tech</h3>
+        <ul>
+          <li>Learn-by-doing: fail, retry, prove</li>
+          <li>English / বাংলা language modes</li>
+          <li>Works on phones and shared devices</li>
+          <li>localStorage save (save-v2)</li>
+          <li>Optional login sync via API</li>
+        </ul>
+      </section>
+      <section class="card wide">
+        <h3>Example in the snapshot</h3>
+        <p>
+          Bio Explorer · Living or Not · Step 1 places four suspects (flame, crystal, virus, sleeping cat) on a desk.
+          Students start the investigation on Canvas, then move into sort, tree-vs-rock growth, mushroom proof, MRS GREN, and harder cases.
+          The same Canvas pattern is reused across Force Fighter, Chemistry Lab, Math Quest, and the full library.
+        </p>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <span>gyanquest · impactx</span>
+      <span><em>01</em> Canvas 2D Game</span>
+    </footer>
+  </article>
+</body>
+</html>

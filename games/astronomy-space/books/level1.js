@@ -1,12 +1,12 @@
 /**
- * Digital book - Astronomy Space Mission 1: Sky Neighbors
- * Unique curriculum book (sun, planets, orbits). Not a template fill-in.
+ * Astronomy & Space Mission 1 book: Solar Family
+ * Companion to the 4-spiral lesson (gravity → types → members → scale).
  */
 export const BOOK = {
   missionIndex: 0,
-  title: "Sky Neighbors",
-  subtitle: "our star, planets, and the paths they keep",
-  subject: "Astronomy Space / Sky Neighbors",
+  title: "Solar Family",
+  subtitle: "meet the Sun's eight children, held by gravity",
+  subject: "Astronomy & Space / Solar Family",
   theories: [
     "cognitive-load",
     "dual-coding",
@@ -17,197 +17,203 @@ export const BOOK = {
     "retrieval-practice",
   ],
   cover: {
-    title: "Sky Neighbors",
-    art: "/games/astronomy-space/assets/book/m1-cover.jpg",
+    title: "Solar Family",
+    art: "/games/astronomy-space/assets/book/gen-as-m1-cover.png",
   },
   glossary: [
-    { id: "star", term: "star" },
-    { id: "planet", term: "planet" },
     { id: "orbit", term: "orbit" },
     { id: "gravity", term: "gravity" },
+    { id: "planet", term: "planet" },
+    { id: "terrestrial", term: "terrestrial" },
+    { id: "gas-giant", term: "gas giant" },
+    { id: "habitable-zone", term: "habitable zone" },
     { id: "solar-system", term: "solar system" },
-    { id: "moon", term: "moon" },
-    { id: "telescope", term: "telescope" },
   ],
   pages: [
     {
-      title: "A neighborhood in space",
+      title: "Meet the family",
       layout: "text",
       figures: [
         {
           place: "top",
-          slides: [
-            {
-              src: "/games/astronomy-space/assets/book/m1-cover.jpg",
-              caption: "Figure 1. Night sky stars are distant suns; our solar system is the local neighborhood around one star.",
-              alt: "Milky Way night sky",
-            },
-            {
-              src: "/games/astronomy-space/assets/book/m1-sun.jpg",
-              caption: "The Sun is our star - the gravity anchor of the solar system.",
-              alt: "The Sun",
-            },
-          ],
+          src: "/games/astronomy-space/assets/book/gen-as-m1-fig01-sky.png",
+          caption: "Figure 1. Night-sky wanderers are siblings of one star: our Sun.",
+          alt: "Child looking up at a starry night sky",
         },
       ],
       blocks: [
         {
           type: "p",
-          text: "A star makes its own light with nuclear power in its core. Planets shine mostly by reflected light.",
-        },
-        {
-          type: "p",
-          text: "Earth is one planet among others circling the Sun on an orbit shaped by gravity.",
-        },
-      ],
-    },
-    {
-      title: "Orbits are falling sideways",
-      layout: "full-fig",
-      figures: [
-        {
-          place: "full",
-          slides: [
-            {
-              src: "/games/astronomy-space/assets/book/m1-orbit.jpg",
-              caption: "Figure 2. An orbit is a balanced dance - gravity pulls in while sideways speed keeps the path from collapsing.",
-              alt: "Earth Moon orbit illustration",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "The Moon orbits Earth for the same reason planets orbit the Sun: gravity plus motion.",
+          text: "The solar system is a family. The Sun is the parent; eight planets are its children - four rocky and close, four giant and far. Mars news and Saturn photos are family portraits of the same neighborhood.",
         },
         {
           type: "ul",
           items: [
-            "Closer paths need faster orbital speeds for circular orbits",
-            "Moons are natural satellites of planets",
-            "Models shrink huge distances so we can think",
+            "Spiral 1: gravity and orbits.",
+            "Spiral 2: rocky worlds versus giants.",
+            "Spiral 3: members in order from the Sun.",
+            "Spiral 4: scale and Earth's habitable home.",
           ],
         },
       ],
     },
     {
-      title: "Planets are not alike",
+      title: "Home world",
+      layout: "full-fig",
+      figures: [
+        {
+          place: "full",
+          src: "/games/astronomy-space/assets/book/gen-as-m1-fig02-earth.png",
+          caption: "Figure 2. Earth is one planet among eight, spinning day into night.",
+          alt: "Earth as a glowing sphere in space",
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "Earth is not the center of everything. It is one sibling circling the Sun. Day and night happen because Earth turns. The bigger family story is the orbit around our star.",
+        },
+      ],
+    },
+    {
+      title: "Moonlight neighbor",
       layout: "text",
       figures: [
         {
           place: "top",
-          slides: [
-            {
-              src: "/games/astronomy-space/assets/book/m1-planet.jpg",
-              caption: "Figure 3. Giant planets like Saturn show rings and scale far beyond Earth.",
-              alt: "Saturn with rings",
-            },
-          ],
+          src: "/games/astronomy-space/assets/book/gen-as-m1-fig03-moon.png",
+          caption: "Figure 3. The Moon changes how it looks as sunlight hits different faces.",
+          alt: "Moon phases arc from crescent to full",
         },
       ],
       blocks: [
         {
           type: "p",
-          text: "Rocky inner planets differ from gas-rich outer giants. Distance from the Sun changes heat and year length.",
+          text: "The Moon is Earth's close companion, not another planet of the Sun. Its changing shape is sunlight and shadow from our viewpoint - a reminder that space bodies move and light tells the story.",
         },
       ],
     },
     {
-      title: "Seeing farther",
+      title: "Find the balance",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/astronomy-space/assets/book/gen-as-m1-fig04-orbit.png",
+          caption: "Figure 4. Earth travels a path around the Sun - an orbit.",
+          alt: "Earth orbiting the Sun on a glowing path",
+        },
+      ],
+      blocks: [
+        {
+          type: "p",
+          text: "An orbit is a path around a heavier body. Earth does not sit still, and it does not fall straight into the Sun. It keeps circling on that path year after year.",
+        },
+      ],
+    },
+    {
+      title: "Gravity keeps the family",
       layout: "full-fig",
       figures: [
         {
           place: "full",
-          slides: [
-            {
-              src: "/games/astronomy-space/assets/book/m1-telescope.jpg",
-              caption: "Figure 4. A telescope gathers more light so faint sky neighbors become visible.",
-              alt: "Telescope at observatory",
-            },
-          ],
+          src: "/games/astronomy-space/assets/book/gen-as-m1-fig05-gravity.png",
+          caption: "Figure 5. Gravity pulls inward; sideways motion carries Earth around.",
+          alt: "Gravity pull and sideways motion balancing an orbit",
         },
       ],
       blocks: [
         {
           type: "p",
-          text: "Eyes alone miss detail. Optics and dark skies turn dots into worlds and starfields.",
-        },
-      ],
-    },
-    {
-      title: "How the mission connects",
-      layout: "text",
-      blocks: [
-        {
-          type: "p",
-          text: "Meet the Sun → place planets → trace orbits → telescope lab → explain → rule → stretch → myth → fluency → mastery.",
+          text: "What keeps Earth from flying off or falling in? A balance: the Sun's gravity pulls inward while Earth's sideways motion carries it around. Same gravity that keeps your feet on the ground holds the solar family together.",
         },
         {
           type: "ul",
           items: [
-            "Ordering planets fights random memorization",
-            "Orbit sketches link gravity to path",
-            "The rule sentence is 'gravity holds the neighborhood together'",
+            "Pull in: gravity toward the Sun.",
+            "Carry around: sideways motion.",
+            "Together: a stable orbit.",
           ],
         },
       ],
     },
     {
-      title: "Ball-and-string lab",
-      layout: "split",
+      title: "Rocky vs giants",
+      layout: "text",
       figures: [
         {
-          place: "right",
-          slides: [
-            {
-              src: "/games/astronomy-space/assets/book/m1-orbit.jpg",
-              caption: "Model an orbit path.",
-              alt: "Orbit model",
-            },
-            {
-              src: "/games/astronomy-space/assets/book/m1-sun.jpg",
-              caption: "Keep the star at center.",
-              alt: "Sun center",
-            },
-            {
-              src: "/games/astronomy-space/assets/book/m1-planet.jpg",
-              caption: "Compare planet types.",
-              alt: "Planet types",
-            },
-          ],
+          place: "top",
+          src: "/games/astronomy-space/assets/book/gen-as-m1-fig06-rocky.png",
+          caption: "Figure 6. Four small rocky worlds near the Sun; four giants farther out.",
+          alt: "Rocky planets near Sun versus distant giant planets",
         },
       ],
       blocks: [
         {
           type: "p",
-          text: "Swing a soft ball on a string (safe open space). The pull is your gravity stand-in; the path is an orbit sketch.",
-        },
-        {
-          type: "ul",
-          items: [
-            "What happens if you pull harder?",
-            "What happens if motion stops?",
-            "Which object is the star in your model?",
-          ],
+          text: "Terrestrial planets are rocky and closer in. Gas and ice giants are huge and farther out. Sorting the family this way is clearer than memorizing random facts.",
         },
       ],
     },
     {
-      title: "Myths to bust",
+      title: "In order from the Sun",
       layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/astronomy-space/assets/book/gen-as-m1-fig07-order.png",
+          caption: "Figure 7. Eight planets in order: the family portrait from closest to farthest.",
+          alt: "Eight planets lined in order from the Sun",
+        },
+      ],
       blocks: [
         {
           type: "p",
-          text: "Myth: The Sun is not a star. Better: it is the nearest star - bright because it is close.",
+          text: "Name the eight in order from the Sun and you can place any family photo. Closest rocky worlds first, then the giants. Order is a map, not a poem to forget.",
         },
+      ],
+    },
+    {
+      title: "Walk the scale",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/astronomy-space/assets/book/gen-as-m1-fig08-scale.png",
+          caption: "Figure 8. Earth looks tiny beside Jupiter and tiny again beside the Sun.",
+          alt: "Size comparison of Earth Jupiter and Sun",
+        },
+      ],
+      blocks: [
         {
           type: "p",
-          text: "Myth: Gravity stops in space. Better: gravity reaches across the solar system and beyond.",
+          text: "Scale surprises almost everyone. Earth is huge to us and small in the family. Giants dwarf the rocky worlds; the Sun dwarfs them all. Walking a scaled model in the mission makes that feeling stick.",
         },
+      ],
+    },
+    {
+      title: "Why Earth fits",
+      layout: "text",
+      figures: [
+        {
+          place: "top",
+          src: "/games/astronomy-space/assets/book/gen-as-m1-fig09-habitable.png",
+          caption: "Figure 9. The habitable zone is the Goldilocks band where liquid water can last.",
+          alt: "Earth in the Sun habitable zone ring",
+        },
+      ],
+      blocks: [
         {
           type: "p",
-          text: "Red words are glossary terms. Tap one to ask the tutor.",
+          text: "Earth's place in the habitable zone matters: not too hot, not too cold for liquid water as we know life needs it. Exploration of Mars and beyond asks how rare that sweet spot is.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Too close: often too hot.",
+            "Too far: often too cold.",
+            "In the zone: a chance for liquid water.",
+          ],
         },
       ],
     },
@@ -217,26 +223,22 @@ export const BOOK = {
       figures: [
         {
           place: "top",
-          slides: [
-            {
-              src: "/games/astronomy-space/assets/book/m1-cover.jpg",
-              caption: "Figure 5. Teach the sky as a gravity-bound solar system, not stickers on a dome.",
-              alt: "Astronomy mastery anchor",
-            },
-          ],
+          src: "/games/astronomy-space/assets/book/gen-as-m1-fig10-close.png",
+          caption: "Figure 10. Teach the solar family: gravity, types, order, and home.",
+          alt: "Full solar family mastery overview",
         },
       ],
       blocks: [
         {
           type: "p",
-          text: "Teach a friend in one minute: the Sun is our star; planets orbit; gravity shapes those paths; moons orbit planets.",
+          text: "Teach a friend in one minute: gravity plus sideways motion makes orbits; four rocky and four giant planets; name them in order; Earth's habitable-zone place helps life as we know it.",
         },
         {
           type: "ul",
           items: [
-            "Define orbit in one sentence",
-            "Name one difference between a star and a planet",
-            "Use the word telescope correctly once",
+            "Explain the orbit balance once.",
+            "Sort rocky versus giants once.",
+            "Use the words orbit and habitable zone correctly once.",
           ],
         },
       ],

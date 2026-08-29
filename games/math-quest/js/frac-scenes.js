@@ -2,7 +2,7 @@
  * Math Quest · Mission 2: Fraction Friends - Canvas 2D scenes (Tiny Bits depth).
  * Pizza/roti shares, equal parts, halves/thirds/fourths, BD stretch.
  */
-import { labState, pulseFailFeedback, pulseSuccessFeedback } from "./lab-state.js";
+import { labState, pulseFailFeedback, pulseSuccessFeedback } from "./lab-state.js?v=numbersense1";
 import { sortSlotPositions, getActiveSession } from "./activity-controller.js";
 
 function roundRect(ctx, x, y, w, h, r) {

@@ -3,8 +3,8 @@
  * Script: Opening + 4 Bruner spirals (identity → orbits → orbitals → personality) + recap map.
  * Packed into the shared 10-step mission engine (N_SUBS = 10).
  */
-import { chemLabState, resetElementHuntState } from "./atom-scenes.js?v=elemhunt7";
-import { ELEM_ASSET_PATHS } from "./element-scenes.js?v=elemhunt7";
+import { chemLabState, resetElementHuntState } from "./atom-scenes.js?v=bondbuddy1";
+import { ELEM_ASSET_PATHS } from "./element-scenes.js?v=bondbuddy1";
 import {
  mountGate,
  mountQuiz,
@@ -17,7 +17,7 @@ import {
  mountBuildupScrub,
  mountInspector,
  badgeHtml,
-} from "./chem-activities.js?v=elemhunt7";
+} from "./chem-activities.js?v=bondbuddy1";
 
 export const L2_META = {
  objective:

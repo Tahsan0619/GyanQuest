@@ -260,8 +260,10 @@ export class SpecimenViewer {
     this.blurEnabled = !!on;
   }
 
-  async load(url) {
+  async load(url, loadOpts = {}) {
     const tok = ++this._loadTok;
+    this._fitExclude = loadOpts.fitExclude || null;
+    this._fitDistScale = loadOpts.fitDistScale ?? 1;
     this._clearModel();
     this.opts.onProgress?.(0);
     let gltf;
@@ -368,21 +370,34 @@ export class SpecimenViewer {
     mat.needsUpdate = true;
   }
 
+  _boundsOf(group) {
+    if (!this._fitExclude) return this._box.setFromObject(group);
+    this._box.makeEmpty();
+    group.traverse((o) => {
+      if (!o.isMesh) return;
+      const label = o.name || o.userData?.name || "";
+      if (this._fitExclude.test(label)) return;
+      this._box.expandByObject(o);
+    });
+    if (this._box.isEmpty()) this._box.setFromObject(group);
+    return this._box;
+  }
+
   _normalize(group) {
-    this._box.setFromObject(group);
+    this._boundsOf(group);
     this._box.getSize(this._size);
     const maxDim = Math.max(this._size.x, this._size.y, this._size.z, 0.001);
     group.scale.multiplyScalar(2.35 / maxDim);
-    this._box.setFromObject(group);
+    this._boundsOf(group);
     const c = this._box.getCenter(this._v);
     group.position.sub(c);
   }
 
   _fitCamera() {
-    this._box.setFromObject(this.root);
+    this._boundsOf(this.root);
     this._box.getSize(this._size);
     const maxDim = Math.max(this._size.x, this._size.y, this._size.z, 0.8);
-    const dist = maxDim * 1.7;
+    const dist = maxDim * 1.7 * (this._fitDistScale ?? 1);
     this.camera.position.set(dist * 0.42, dist * 0.95, dist * 0.55);
     this.camera.near = Math.max(0.02, dist / 80);
     this.camera.far = dist * 20;
@@ -446,24 +461,34 @@ export class SpecimenViewer {
     });
   }
 
+  /** Match Three.js GLTFLoader node names (spaces become underscores). */
+  _sanitizeNodeName(name) {
+    return String(name).replace(/\s/g, "_").replace(/[[\].:/]/g, "");
+  }
+
   findNamed(name) {
     if (!name) return null;
     const want = String(name).toLowerCase();
+    const wantSan = this._sanitizeNodeName(name).toLowerCase();
     let best = null;
     let bestScore = 999;
     this.root.traverse((o) => {
-      if (!o.name) return;
-      const n = o.name.toLowerCase();
-      let score = 999;
-      if (n === want) score = 0;
-      else if (n === `${want}_0`) score = 1;
-      else if (n.startsWith(`${want}_`) || n.startsWith(`${want}:`)) score = 2;
-      else if (want.includes(".") && n.startsWith(want)) score = 3;
-      else if (n.includes(want) && want.length >= 5) score = 8;
-      if (score < bestScore) {
-        bestScore = score;
-        best = o;
-      }
+      const labels = [o.name, o.userData?.name].filter(Boolean);
+      labels.forEach((label) => {
+        const n = String(label).toLowerCase();
+        const nSan = this._sanitizeNodeName(label).toLowerCase();
+        let score = 999;
+        if (n === want || nSan === wantSan || n === wantSan || nSan === want) score = 0;
+        else if (n === `${want}_0` || nSan === `${wantSan}_0`) score = 1;
+        else if (n.startsWith(`${want}_`) || n.startsWith(`${want}:`)) score = 2;
+        else if (want.includes(".") && n.startsWith(want)) score = 3;
+        else if (n.includes(want) && want.length >= 5) score = 8;
+        else if (nSan.includes(wantSan) && wantSan.length >= 5) score = 8;
+        if (score < bestScore) {
+          bestScore = score;
+          best = o;
+        }
+      });
     });
     return bestScore < 20 ? best : null;
   }

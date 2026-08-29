@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GyanQuest A4 - Digital Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./a4-styles.css" />
+</head>
+<body>
+  <p class="index no-print"><a href="./index.html">All sheets</a> · Print this page (Ctrl+P) as A4</p>
+
+  <article class="sheet">
+    <div class="sheet__mark" aria-hidden="true"></div>
+    <header class="top">
+      <div class="brand">
+        <img src="./gyanquest-logo.png" alt="" />
+        <div>
+          <strong>Gyan<em>Quest</em></strong>
+          <span>Feature sheet 02 / 04</span>
+        </div>
+      </div>
+      <div class="badge">Digital Book</div>
+    </header>
+
+    <h1 class="hero-title">Mission books that feel like a real text</h1>
+    <p class="hero-lead">
+      Each mission unlocks a digital book: cover, page-turn spreads, figures, and glossary terms.
+      Books reinforce what you just played. Finish the 10 steps to unlock, or use Unlock books on the landing page for demos.
+    </p>
+
+    <figure class="shot">
+      <img src="./snapshots/gq-snap-book.png" alt="Living or Not digital book cover overlay" />
+      <figcaption class="shot__cap">Live snapshot · Bio Explorer · Living or Not book cover</figcaption>
+    </figure>
+
+    <div class="grid">
+      <section class="card">
+        <h3>What it is</h3>
+        <p>A full-screen book viewer built into every game. Fixed pages (no endless scroll), optional figure carousels, and clickable glossary words.</p>
+        <ul>
+          <li>Cover + Open / Prev / Next</li>
+          <li>Illustrated spreads from curriculum books</li>
+          <li>Red glossary terms → tutor</li>
+          <li>Per-mission book packs in <code>books/</code></li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>How a student uses it</h3>
+        <ul>
+          <li>Complete a mission (or unlock books)</li>
+          <li>On the hub, tap Read book</li>
+          <li>Tap the cover or Open</li>
+          <li>Turn pages through theory spreads</li>
+          <li>Tap a red word to ask the tutor</li>
+          <li>Close and return to missions</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>What you see on screen</h3>
+        <ul>
+          <li><strong>Cover:</strong> title, hook line, art</li>
+          <li><strong>Spreads:</strong> text + figures</li>
+          <li><strong>Controls:</strong> Prev / status / Open or Next</li>
+          <li><strong>Close:</strong> dismiss overlay</li>
+          <li><strong>Terms:</strong> highlighted vocabulary</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>Locking + unlock</h3>
+        <ul>
+          <li>Default: locked until mission done</li>
+          <li>Landing toggle: Unlock books: On</li>
+          <li>Stored in browser (demo-friendly)</li>
+          <li>Same book engine for all 28 games</li>
+        </ul>
+      </section>
+      <section class="card wide">
+        <h3>Example in the snapshot</h3>
+        <p>
+          Living or Not opens on a navy cover: “seven signs of life, then the cases that fool a gut check.”
+          The book walks MRS GREN and tricky cases after the Canvas mission, so play and reading stay linked.
+          Engine files: <code>engine/js/digital-book.js</code>, <code>engine/css/digital-book.css</code>, <code>engine/js/mission-books.js</code>.
+        </p>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <span>gyanquest · impactx</span>
+      <span><em>02</em> Digital Book</span>
+    </footer>
+  </article>
+</body>
+</html>

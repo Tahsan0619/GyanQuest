@@ -1,0 +1,434 @@
+/* Mission 1: Circuit Loop - water-park DOM overlay */
+.viewport--circuit #c3d {
+ opacity: 0;
+ pointer-events: none;
+}
+
+.tiny-narration {
+ font-size: 0.92rem;
+ line-height: 1.5;
+ color: #fef9c3;
+ margin: 0.35rem 0 0.65rem;
+}
+
+.tiny-spiral-stops {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 0.4rem;
+ margin: 0.65rem 0;
+}
+
+.tiny-pulse {
+ animation: ck-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes ck-pulse {
+ 0%, 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.45); }
+ 50% { box-shadow: 0 0 0 8px rgba(250, 204, 21, 0); }
+}
+
+.circuit-root {
+ position: absolute;
+ inset: 0;
+ z-index: 3;
+ display: flex;
+ flex-direction: column;
+ padding: clamp(8px, 1.5vh, 14px);
+ gap: 0.45rem;
+ background: radial-gradient(circle at 50% 18%, #422006, #0f172a 72%);
+ pointer-events: auto;
+ overflow: auto;
+}
+
+.ck-banner {
+ margin: 0;
+ padding: 8px 12px;
+ text-align: center;
+ font-size: clamp(11px, 1.8vw, 13px);
+ font-weight: 600;
+ color: #fef9c3;
+ background: rgba(15, 23, 42, 0.88);
+ border: 1px solid rgba(250, 204, 21, 0.45);
+ border-radius: 10px;
+ line-height: 1.35;
+}
+
+.ck-stage {
+ flex: 1;
+ min-height: 160px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ padding: 8px;
+}
+
+.ck-caption, .ck-hint {
+ font-size: 0.85rem;
+ color: #fde68a;
+ text-align: center;
+ margin: 8px auto 0;
+ max-width: 340px;
+ line-height: 1.4;
+}
+
+.ck-open-scene { text-align: center; width: min(96%, 360px); }
+
+.ck-open-parts {
+ display: flex;
+ justify-content: center;
+ gap: 16px;
+ flex-wrap: wrap;
+ margin-bottom: 12px;
+}
+
+.ck-part {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 4px;
+ font-size: 1.6rem;
+ padding: 12px;
+ border-radius: 12px;
+ background: rgba(15, 23, 42, 0.6);
+ border: 2px dashed rgba(250, 204, 21, 0.35);
+}
+
+.ck-part span { font-size: 0.75rem; color: #fde68a; }
+.ck-part--dim { opacity: 0.55; }
+
+.ck-loop-stack {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 6px;
+ width: min(96%, 260px);
+ margin: 0 auto;
+ position: relative;
+}
+
+.ck-battery {
+ display: flex;
+ align-items: center;
+ gap: 4px;
+ padding: 8px 12px;
+ border-radius: 10px;
+ background: rgba(15, 23, 42, 0.85);
+ border: 2px solid #ca8a04;
+}
+
+.ck-bat-plus { color: #ef4444; font-weight: 700; }
+.ck-bat-minus { color: #3b82f6; font-weight: 700; }
+.ck-bat-label { font-size: 0.7rem; color: #fde68a; margin-left: 4px; }
+
+.ck-bulb { text-align: center; }
+.ck-bulb-glass {
+ font-size: 2.2rem;
+ filter: grayscale(1) brightness(0.35);
+ transition: filter 0.2s, text-shadow 0.2s;
+}
+.ck-bulb.is-lit .ck-bulb-glass {
+ filter: none;
+ text-shadow: 0 0 calc(20px * var(--ck-glow, 0.5)) #fde047, 0 0 calc(40px * var(--ck-glow, 0.5)) #facc15;
+}
+.ck-bulb-label { font-size: 0.72rem; color: #fde68a; }
+
+.ck-gap {
+ min-width: 120px;
+ padding: 8px 12px;
+ border-radius: 8px;
+ border: 2px dashed rgba(250, 204, 21, 0.5);
+ background: rgba(15, 23, 42, 0.5);
+ cursor: pointer;
+ font-size: 0.78rem;
+ color: #fde68a;
+ transition: border-color 0.15s, background 0.15s;
+}
+.ck-gap.is-filled {
+ border-style: solid;
+ border-color: #ca8a04;
+ background: rgba(202, 138, 4, 0.15);
+}
+.ck-gap.is-broken {
+ border-color: #ef4444;
+ background: rgba(239, 68, 68, 0.12);
+ animation: ck-flash 0.35s ease;
+}
+@keyframes ck-flash {
+ 0%, 100% { opacity: 1; }
+ 50% { opacity: 0.4; }
+}
+
+.ck-wire-seg.is-thick { font-weight: 700; color: #fef08a; }
+
+.ck-loop-scene.has-flow .ck-flow-ring {
+ position: absolute;
+ inset: -8px;
+ border: 2px solid transparent;
+ border-radius: 50%;
+ border-top-color: rgba(253, 224, 71, 0.7);
+ animation: ck-spin 1.2s linear infinite;
+ pointer-events: none;
+}
+@keyframes ck-spin { to { transform: rotate(360deg); } }
+
+.ck-note { font-size: 0.82rem; text-align: center; margin-top: 8px; }
+.ck-note--ok { color: #86efac; }
+.ck-note--warn { color: #fca5a5; }
+
+.ck-pipe-compare, .ck-pump-row, .ck-valve-compare {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 12px;
+ justify-content: center;
+ width: min(98%, 520px);
+}
+.ck-pipe-panel, .ck-pump-card, .ck-valve-panel {
+ flex: 1 1 140px;
+ max-width: 200px;
+ padding: 12px;
+ border-radius: 12px;
+ background: rgba(15, 23, 42, 0.75);
+ border: 1px solid rgba(250, 204, 21, 0.35);
+ text-align: center;
+ font-size: 0.78rem;
+ color: #fde68a;
+}
+.ck-pipe-panel h4, .ck-valve-panel h4 { margin: 0 0 8px; color: #fef9c3; font-size: 0.85rem; }
+
+.ck-pipe-loop {
+ position: relative;
+ height: 80px;
+ margin: 8px 0;
+}
+.ck-pipe-ring {
+ width: 64px;
+ height: 64px;
+ margin: 0 auto;
+ border: 4px solid #3b82f6;
+ border-radius: 50%;
+}
+.ck-pipe-ring--flow {
+ border-top-color: #60a5fa;
+ animation: ck-spin 1.5s linear infinite;
+}
+.ck-pipe-ring--spill {
+ border-color: #ef4444;
+ border-top-color: transparent;
+}
+.ck-gap-mark {
+ position: absolute;
+ bottom: 0;
+ left: 50%;
+ transform: translateX(-50%);
+ color: #ef4444;
+ font-weight: 700;
+ font-size: 0.7rem;
+}
+
+.ck-pump-flow {
+ height: 6px;
+ margin: 8px 0;
+ border-radius: 3px;
+ background: rgba(59, 130, 246, 0.3);
+ overflow: hidden;
+}
+.ck-pump-flow--weak::after,
+.ck-pump-flow--medium::after,
+.ck-pump-flow--strong::after {
+ content: "";
+ display: block;
+ height: 100%;
+ background: #60a5fa;
+ animation: ck-flow-bar 1s linear infinite;
+}
+.ck-pump-flow--weak::after { width: 30%; animation-duration: 2s; }
+.ck-pump-flow--medium::after { width: 55%; animation-duration: 1.2s; }
+.ck-pump-flow--strong::after { width: 90%; animation-duration: 0.6s; }
+@keyframes ck-flow-bar {
+ from { transform: translateX(-100%); }
+ to { transform: translateX(200%); }
+}
+
+.ck-mini-wheel {
+ width: 28px;
+ height: 28px;
+ margin: 6px auto;
+ border: 3px solid #fde047;
+ border-radius: 50%;
+ border-top-color: transparent;
+ animation: ck-spin 0.8s linear infinite;
+}
+
+.ck-term-list {
+ list-style: none;
+ padding: 0;
+ margin: 0;
+ text-align: left;
+ max-width: 360px;
+}
+.ck-term-list li {
+ margin: 0.5rem 0;
+ font-size: 0.88rem;
+ color: #fef9c3;
+ line-height: 1.45;
+}
+.ck-term-note { font-size: 0.82rem !important; color: #fde68a !important; font-style: italic; }
+
+.ck-battery-tray, .ck-flow-actions {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 8px;
+ justify-content: center;
+ margin-top: 12px;
+}
+.ck-tray-label { width: 100%; text-align: center; font-size: 0.8rem; color: #fde68a; margin: 0; }
+.ck-bat-chip.is-active { border-color: #facc15; background: rgba(250, 204, 21, 0.2); }
+
+.ck-switch {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 4px;
+ padding: 8px 16px;
+ border-radius: 10px;
+ border: 2px solid #64748b;
+ background: rgba(15, 23, 42, 0.8);
+ cursor: pointer;
+ color: #fde68a;
+ font-size: 0.75rem;
+}
+.ck-switch.is-closed { border-color: #22c55e; }
+.ck-switch.is-open { border-color: #ef4444; }
+.ck-switch-lever {
+ width: 36px;
+ height: 8px;
+ border-radius: 4px;
+ background: #64748b;
+ transition: transform 0.2s, background 0.2s;
+}
+.ck-switch.is-closed .ck-switch-lever { background: #22c55e; transform: rotate(-18deg); }
+.ck-switch.is-open .ck-switch-lever { background: #ef4444; transform: rotate(18deg); }
+
+.ck-wheel-scene { text-align: center; max-width: 320px; }
+.ck-wheel-pipe {
+ position: relative;
+ height: 100px;
+ margin: 12px auto;
+ border: 4px solid #3b82f6;
+ border-radius: 12px;
+ overflow: hidden;
+}
+.ck-pipe-flow {
+ position: absolute;
+ inset: 0;
+ background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.5), transparent);
+ animation: ck-flow-slide 1.2s linear infinite;
+}
+@keyframes ck-flow-slide {
+ from { transform: translateX(-100%); }
+ to { transform: translateX(100%); }
+}
+.ck-water-wheel {
+ position: absolute;
+ left: 50%;
+ top: 50%;
+ transform: translate(-50%, -50%);
+ font-size: 2rem;
+ animation: ck-spin 1s linear infinite;
+}
+.ck-wheel-light {
+ position: absolute;
+ top: 4px;
+ right: 8px;
+ font-size: 1.2rem;
+ animation: ck-pulse 1s ease-in-out infinite;
+}
+
+.ck-valve-diagram {
+ padding: 16px;
+ border-radius: 10px;
+ background: rgba(30, 41, 59, 0.8);
+ min-height: 60px;
+}
+.ck-valve-body {
+ width: 40px;
+ height: 40px;
+ margin: 0 auto 8px;
+ border-radius: 50%;
+ background: #64748b;
+}
+.ck-valve-diagram.is-open .ck-valve-body { background: #22c55e; }
+.ck-valve-diagram.is-shut .ck-valve-body { background: #ef4444; }
+
+.ck-bypass {
+ padding: 8px 16px;
+ border: 2px dashed #f97316;
+ border-radius: 8px;
+ color: #fdba74;
+ font-size: 0.8rem;
+}
+
+.ck-close-scene {
+ text-align: center;
+ transition: opacity 0.3s;
+}
+.ck-close-loop {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 12px;
+ flex-wrap: wrap;
+ opacity: calc(0.3 + var(--ck-close, 0) * 0.7);
+}
+
+@media (max-width: 640px) {
+ .ck-pipe-compare, .ck-pump-row, .ck-valve-compare { flex-direction: column; align-items: center; }
+}
+/* ══ Circuit workflow motion (loop4) ══ */
+.ck-workflow { display:flex; flex-wrap:wrap; gap:4px; justify-content:center; margin-bottom:8px; }
+.ck-wf {
+  padding:3px 8px; border-radius:999px; font-size:10px; font-weight:700;
+  color:#64748b; border:1px solid #334155; background:rgba(15,23,42,.7);
+}
+.ck-wf.is-on { color:#e0f2fe; border-color:#38bdf8; background:rgba(14,165,233,.25); box-shadow:0 0 10px rgba(56,189,248,.35); }
+
+.ck-loop-scene { position:relative; }
+.ck-particles {
+  pointer-events:none; position:absolute; inset:8% 18%; border-radius:18px;
+}
+.ck-dot {
+  position:absolute; width:8px; height:8px; border-radius:50%;
+  background:#38bdf8; box-shadow:0 0 8px #38bdf8;
+  animation: ckOrbit 2.2s linear infinite;
+  animation-delay: calc(var(--d) * -0.35s);
+}
+@keyframes ckOrbit {
+  0% { left:10%; top:8%; }
+  25% { left:88%; top:18%; }
+  50% { left:82%; top:82%; }
+  75% { left:12%; top:78%; }
+  100% { left:10%; top:8%; }
+}
+.ck-bulb.is-lit .ck-bulb-glass {
+  animation: ckGlow 1s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(250,204,21,.8));
+}
+@keyframes ckGlow {
+  0%,100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.06); filter: brightness(1.25); }
+}
+.ck-switch .ck-switch-lever {
+  transition: transform .28s cubic-bezier(.2,1.2,.4,1);
+}
+.ck-switch.is-closed .ck-switch-lever { transform: rotate(28deg); }
+.ck-switch.is-open .ck-switch-lever { transform: rotate(-28deg); }
+.ck-gap.is-filled { animation: ckSnap .28s ease; }
+@keyframes ckSnap {
+  from { transform: scale(.9); opacity:.5; }
+  to { transform: scale(1); opacity:1; }
+}
+.ck-pipe-ring--flow::after {
+  content:""; position:absolute; inset:0; border-radius:50%;
+  border:2px solid transparent; border-top-color:#38bdf8;
+  animation: ck-spin .9s linear infinite;
+}

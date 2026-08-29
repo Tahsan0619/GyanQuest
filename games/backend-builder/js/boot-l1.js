@@ -18,17 +18,17 @@ import {
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
 import { createArena2D } from "./arena-2d.js";
-import { playScene, cancelActiveActivity } from "./lab-activities.js?v=server1";
-import { runL1Sub, L1_META } from "./level1.js?v=server1";
+import { playScene, cancelActiveActivity } from "./lab-activities.js?v=rest4";
+import { runL1Sub, L1_META } from "./level1.js?v=rest2";
 import { runL2Sub, L2_META } from "./level2.js";
 import { runL3Sub, L3_META } from "./level3.js";
 import { MISSIONS } from "./missions-meta.js";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerServerScenes } from "./server-scenes.js?v=server1";
+import { registerServerScenes } from "./server-scenes.js?v=rest2";
 import { registerRoutesScenes } from "./routes-scenes.js";
 import { registerAuthScenes } from "./auth-scenes.js";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=genbe1";
 import { BOOK as BOOK_L2 } from "../books/level2.js?v=book3";
 import { BOOK as BOOK_L3 } from "../books/level3.js?v=book3";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
@@ -556,16 +556,16 @@ try {
  btnHint?.addEventListener("click", () => {
  const hints = [
  [
- "Drag phone (client) and server rack.",
- "Dial until the REQ/RES loop is clear.",
- "Sort request vs response vs not-server.",
- "Push the loop stronger on the dial.",
- "Order ask -> work -> reply -> show.",
- "Build: Request - in - Response - out.",
- "Tap home / school / shop / bd / lab apps.",
- "Bust myths about browsers being servers.",
- "Hit the server fluency checks.",
- "Order the journey and claim Server Scout.",
+ "Click the link - watch blank flicker then page load.",
+ "Tap Call with no kitchen; drag kitchen + hallway; call again.",
+ "Client asks, server provides - read formal terms.",
+ "Order Homepage Special, then Secret Page (404).",
+ "Request → server → response loop.",
+ "Start Service - six tables, one kitchen queue.",
+ "Many clients, one server - concurrent requests.",
+ "Type PixelBistro.com - DNS lookup to IP.",
+ "Website, app, speaker - same pattern. Read DNS terms.",
+ "Slow page-load replay, spiral recap, finish.",
  ],
  [
  "Drag /users /posts /login route doors.",

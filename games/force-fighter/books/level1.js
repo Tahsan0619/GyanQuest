@@ -1,11 +1,11 @@
 /**
- * Digital book - Force Fighter Mission 1: The Lazy Rock
- * Unique curriculum book (inertia / Newton 1). Not a template fill-in.
+ * Force Fighter Mission 1 book: The Lazy Rock
+ * Companion to the 4-spiral interactive lesson (still/move → inertia → Newton 1 → why it matters).
  */
 export const BOOK = {
  missionIndex: 0,
  title: "The Lazy Rock",
- subtitle: "inertia - things keep doing what they are doing",
+ subtitle: "inertia and Newton's First Law",
  subject: "Force Fighter / The Lazy Rock",
  theories: [
  "cognitive-load",
@@ -18,229 +18,245 @@ export const BOOK = {
  ],
  cover: {
  title: "The Lazy Rock",
- art: "/games/force-fighter/assets/book/m1-cover.jpg",
+ art: "/games/force-fighter/assets/book/gen-ff-m1-cover.png",
  },
  glossary: [
  { id: "inertia", term: "inertia" },
+ { id: "state-of-motion", term: "state of motion" },
+ { id: "mass", term: "mass" },
  { id: "force", term: "force" },
- { id: "push", term: "push" },
- { id: "pull", term: "pull" },
- { id: "motion", term: "motion" },
- { id: "rest", term: "rest" },
  { id: "friction", term: "friction" },
+ { id: "newtons-first-law", term: "Newton's First Law" },
+ { id: "net-force", term: "net force" },
+ { id: "rest", term: "rest" },
  ],
  pages: [
  {
- title: "A rock that will not wake",
+ title: "A rock that does nothing",
  layout: "text",
  figures: [
  {
  place: "top",
- slides: [
- {
- src: "/games/force-fighter/assets/book/m1-cover.jpg",
- caption: "Motion keeps going until a force changes it - like a rider coasting on a board.",
- alt: "Person skateboarding",
- },
- ],
+ src: "/games/force-fighter/assets/book/gen-ff-m1-fig01-rock.png",
+ caption: "Figure 1. The lazy rock sits by the canal. It will not change what it is doing unless something makes it.",
+ alt: "A canal-bank boulder sitting still",
  },
  ],
  blocks: [
  {
  type: "p",
- text: "Things stay still until something pushes or pulls them. Wake a sleepy rock - just like pushing a door open!",
+ text: "This is the first lesson in the Physics track. You do not need any earlier physics missions. The whole story centers on one character: a canal-bank boulder nicknamed the lazy rock, because inertia is easiest to feel as a kind of laziness. Matter's stubborn preference for continuing to do exactly whatever it was already doing.",
  },
  {
  type: "p",
- text: "That stubborn 'keep doing what I was doing' feeling is called inertia. A football on the grass does not roll until a kick gives it a push.",
- },
- {
- type: "p",
- text: "Everyday hooks: pushing a door, kicking a football, shoving a shopping trolley. Same rule each time.",
- },
- ],
- },
- {
- title: "Newton's first idea",
- layout: "full-fig",
- figures: [
- {
- place: "full",
- slides: [
- {
- src: "/games/force-fighter/assets/book/m1-model.webp",
- caption: "Newton's cradle - balls transfer a push through the line. Motion does not appear from nowhere.",
- alt: "Newton cradle demonstration",
- },
- ],
- },
- ],
- blocks: [
- {
- type: "p",
- text: "At rest stays at rest. In motion stays in motion - unless a net force acts. That is the heart of Newton 1.",
+ text: "That sounds almost too obvious to deserve a whole lesson. The path is a spiral. You do something with your hands, you watch a picture of what you just did, then you get the grown-up name. Each loop reactivates the last one before it pushes deeper.",
  },
  {
  type: "ul",
  items: [
- "No push or pull? The rock keeps sleeping.",
- "A push starts motion.",
- "Another force (wall, friction, hand) can slow or stop it.",
+ "Spiral 1: what is stillness, and what is movement?",
+ "Spiral 2: objects resist change. That resistance has a name.",
+ "Spiral 3: strip away friction and hear what Newton actually said.",
+ "Spiral 4: why this matters, from seatbelts to satellites.",
  ],
  },
  ],
  },
  {
- title: "Why coasting ends",
+ title: "Poke the rock, then try a ball",
  layout: "text",
  figures: [
  {
  place: "top",
- slides: [
- {
- src: "/games/force-fighter/assets/book/m1-mechanism.jpg",
- caption: "Surfaces and surroundings apply hidden forces - nothing 'runs out of push' by magic.",
- alt: "Changing ice surface",
- },
- ],
+ src: "/games/force-fighter/assets/book/gen-ff-m1-fig02-poke.png",
+ caption: "Figure 2. A tap is not a push. Drag across the rock, then give a light ball the same kind of shove.",
+ alt: "A hand tapping then pushing a heavy rock",
  },
  ],
  blocks: [
  {
  type: "p",
- text: "In the mission you coasted, then hit a wall. The wall applied a force. Floor friction also nibbles speed every second.",
+ text: "A light tap does nothing. You have to actually push. After you stop pushing, the rock slides a short way on the grass and then slows, with friction nibbling at its motion. The same kind of push on a light ball sends it farther before it stops.",
  },
  {
  type: "p",
- text: "Myth preview: objects do not 'get tired.' Forces change their motion.",
+ text: "Two very different results from a similar push. Your hands have already found something worth explaining: whatever is happening is not just about the push. It is also about the object being pushed.",
  },
  ],
  },
  {
- title: "See the rule in the lab",
- layout: "full-fig",
- figures: [
- {
- place: "full",
- slides: [
- {
- src: "/games/force-fighter/assets/book/m1-hook.jpg",
- caption: "Same inertia on a board: start with a push, keep moving, stop when forces act.",
- alt: "Skateboard motion",
- },
- ],
- },
- ],
- blocks: [
- {
- type: "p",
- text: "Models on the canvas (rock, door, trolley) are stories for the same rule. Point to the force that starts motion and the force that ends it.",
- },
- ],
- },
- {
- title: "How the 10 steps build inertia",
- layout: "text",
- blocks: [
- {
- type: "p",
- text: "Meet the rock → coast & glide → sort force vs not → wall hit → why it coasts → name the rule → stretch → myth bust → fluency → Rock Rookie mastery.",
- },
- {
- type: "ul",
- items: [
- "Sorting trains you to spot real pushes and pulls",
- "Wall lab makes the 'change of motion' feel obvious",
- "The rule sentence locks Newton 1 in words",
- ],
- },
- ],
- },
- {
- title: "Door, ball, trolley",
- layout: "split",
- figures: [
- {
- place: "right",
- slides: [
- {
- src: "/games/force-fighter/assets/book/m1-cover.jpg",
- caption: "Coast like a board - inertia in motion.",
- alt: "Skateboard",
- },
- {
- src: "/games/force-fighter/assets/book/m1-model.webp",
- caption: "Cradle clicks - pushes travel as forces.",
- alt: "Newton cradle",
- },
- {
- src: "/games/force-fighter/assets/book/m1-mechanism.jpg",
- caption: "Surfaces change how long motion lasts.",
- alt: "Surface change",
- },
- ],
- },
- ],
- blocks: [
- {
- type: "p",
- text: "Try at home: open a door slowly, then give a football a gentle kick. Ask what force started each motion.",
- },
- {
- type: "ul",
- items: [
- "What was at rest before?",
- "What force woke it?",
- "What force finally stopped it?",
- ],
- },
- ],
- },
- {
- title: "Inertia myths",
- layout: "text",
- blocks: [
- {
- type: "p",
- text: "Myth: Moving things stop because they run out of force. Better: unbalanced forces (often friction) slow them.",
- },
- {
- type: "p",
- text: "Myth: Heavy things have more inertia so they 'want' to fall faster. Better: inertia resists changes in motion; falling is about gravity and other forces.",
- },
- {
- type: "p",
- text: "Tap red glossary words if you want a tutor root explanation.",
- },
- ],
- },
- {
- title: "Rock Rookie check",
+ title: "Stillness and motion are one state",
  layout: "text",
  figures: [
  {
  place: "top",
- slides: [
- {
- src: "/games/force-fighter/assets/book/m1-model.webp",
- caption: "Teach with this picture: no mystery motion - only forces changing motion.",
- alt: "Newton cradle teaching anchor",
- },
- ],
+ src: "/games/force-fighter/assets/book/gen-ff-m1-fig03-coast.png",
+ caption: "Figure 3. The push happens once and then it is over. The movement, or the stillness, keeps going on its own afterward.",
+ alt: "A short push arrow and a longer coast trail",
  },
  ],
  blocks: [
  {
  type: "p",
- text: "In one minute, teach a friend: inertia means stay-as-you-were until a net force acts. Give door, football, and trolley as examples.",
+ text: "Here is the detail most people miss: after you stop pushing, the object does not need anything else to keep doing what it is doing. The rock kept sliding a bit after your hand let go. The ball kept rolling long after that.",
  },
  {
- type: "ul",
- items: [
- "Say Newton 1 in your own words",
- "Point to one push and one stopping force nearby",
- "Bust the 'ran out of force' myth once",
+ type: "p",
+ text: "Staying still and staying in motion turn out to be surprisingly similar. Both are just an object continuing on its own, undisturbed, until something else steps in. Physicists call both an object's state of motion. Whether that state is sitting still or moving steadily, changing it, in either direction, is what needs an explanation.",
+ },
  ],
+ },
+ {
+ title: "Same push: ball, brick, football",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/force-fighter/assets/book/gen-ff-m1-fig04-mass.png",
+ caption: "Figure 4. Same effort, wildly different results: a ball, a brick, and a football. Size is not the same as mass.",
+ alt: "A ball, a brick, and a football pushed with the same force",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Give a playground ball, a brick, and a football the same push. The ball shoots off. The brick barely creeps. The football looks big, but it is full of air, so it moves more than the brick. Then start all three already rolling at the same speed and try to stop them. The ball stops almost instantly. The brick takes far more effort.",
+ },
+ {
+ type: "p",
+ text: "The heavier an object is, the more it resists both starting to move and stopping once it is moving. The lazy rock is not lazy about moving. It is lazy about changing.",
+ },
+ ],
+ },
+ {
+ title: "The stubbornness is called inertia",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/force-fighter/assets/book/gen-ff-m1-fig05-inertia.png",
+ caption: "Figure 5. Resistance to change scales with mass. A brick has more inertia than a ball. A football looks big, but air does not add much mass.",
+ alt: "Heavy brick versus light ball showing inertia",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "This resistance is not a separate mysterious force. It scales directly with how much mass an object has. More stuff packed into an object means a stubborner commitment to continuing whatever it is already doing.",
+ },
+ {
+ type: "p",
+ text: "Physicists call this stubbornness inertia: an object's natural tendency to resist any change to its state of motion. More mass means more inertia. Inertia is not a force pushing back. It is a property every object has, just by having mass. The lazy rock is lazy because it is massive.",
+ },
+ ],
+ },
+ {
+ title: "Ice, then gravel",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/force-fighter/assets/book/gen-ff-m1-fig06-ice.png",
+ caption: "Figure 6. On ice the rock keeps going. Flip to gravel mid-slide and friction, a real outside force, is what stops it.",
+ alt: "Rock gliding on ice versus slowing on gravel",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "This is the hinge of the whole lesson. Put the lazy rock on ice and give it one push. It glides in a straight line at a constant speed and keeps going. That is not a trick. That is inertia with nothing else interfering.",
+ },
+ {
+ type: "p",
+ text: "Flip to gravel while it is still sliding and it begins to slow, exactly as it did on grass. It did not run out of motion. Friction, a real outside force, quietly acted on it. Every everyday stop you have seen was never really 'on its own' at all.",
+ },
+ ],
+ },
+ {
+ title: "What Newton actually said",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/force-fighter/assets/book/gen-ff-m1-fig07-space.png",
+ caption: "Figure 7. Same physics in a space station and on an Earth table. The difference is how much hidden friction is fighting the motion.",
+ alt: "Wrench drifting in space versus stopping on a table",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "A wrench nudged in a space station drifts in a straight line. The same nudge on a table on Earth slides a short way, then air resistance and table friction bring it to a stop. Earth's objects are not less lazy. Earth is covered in invisible forces like friction, constantly nudging things without you noticing.",
+ },
+ {
+ type: "p",
+ text: "Around 1687, Isaac Newton wrote the idea down formally. Newton's First Law of Motion, also called the Law of Inertia: an object at rest stays at rest, and an object in motion stays in motion at a constant speed and direction, unless acted on by a net outside force. If a hockey puck slides across ice and eventually stops, that tells you a force like friction must have acted. It did not run out of motion.",
+ },
+ ],
+ },
+ {
+ title: "A sudden stop, and a seatbelt",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/force-fighter/assets/book/gen-ff-m1-fig08-seatbelt.png",
+ caption: "Figure 8. The car stops. The passenger's body does not, until something forces it to. A seatbelt is that outside force.",
+ alt: "Car stop with seatbelt applying force",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "A car hits a wall. The car stops. An unrestrained passenger keeps moving forward at the same speed, like the lazy rock, until something applies a force. With a seatbelt on, that belt tightens and supplies the missing outside force so the passenger stops along with the car.",
+ },
+ {
+ type: "p",
+ text: "A seatbelt is not just a rule. It is literally supplying the force your body needs to change its state of motion. The tablecloth trick is the same idea wearing a party costume: yank the cloth fast enough and the dishes barely move, because their inertia keeps them in place while only the cloth is forced to move.",
+ },
+ ],
+ },
+ {
+ title: "Net force = 0, no change in motion",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/force-fighter/assets/book/gen-ff-m1-fig09-netzero.png",
+ caption: "Figure 9. If the combined result of every force is zero, motion does not change. That is Newton's First Law in short.",
+ alt: "Balanced opposite forces on a rock",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Once you know to look for it, Newton's First Law is everywhere: you lurch on a bus, a coin stays on a yanked card, a satellite drifts around Earth for years with no engine running. None of these are separate coincidences. They are all the same lazy-rock behavior in different costumes.",
+ },
+ {
+ type: "p",
+ text: "Net force is the combined result of every force acting on an object at once. If net force = 0, there is no change in motion. What happens the moment net force is not zero? That is the next mission.",
+ },
+ ],
+ },
+ {
+ title: "The rock was never really lazy",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/force-fighter/assets/book/gen-ff-m1-fig10-close.png",
+ caption: "Figure 10. Back at the first image: state of rest, inertia, net force = 0. One rock, one law.",
+ alt: "The lazy rock at sunset",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "We started with a rock doing nothing, and called it lazy. That is not a character flaw. It is a law of the universe. Everything, everywhere, insists on continuing to do exactly what it is already doing, until something else forces a change.",
+ },
+ {
+ type: "p",
+ text: "That is not laziness. That is inertia, and now you will not look at a rock, a brick, a bus, or a seatbelt quite the same way again. The recap map lets you replay the four spirals: still or moving, inertia, Newton 1, and why it matters.",
  },
  ],
  },

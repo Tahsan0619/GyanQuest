@@ -1,235 +1,293 @@
 /**
- * Web Dev Studio - Mission 1: HTML House (deepened)
+ * Web Dev Studio: Mission 1: HTML House
+ * Script: Opening + 4 Bruner spirals (tags → nesting → structure → iframe) + recap map.
  */
-import { labState, LAB_ASSET_PATHS } from "./lab-state.js";
-import {
- mountMotionChain, mountDragSort, mountHeatLab, mountEquationBuild,
- mountQuiz, mountSpeedDrill, mountMythCards, mountTapContinue, mountOrderSteps, badgeHtml,
-} from "./lab-activities.js";
+import { labState, LAB_ASSET_PATHS, resetHtmlHouseState, initHtmlSub } from "./lab-state.js?v=html5";
+import { mountGate, mountSpiralMap, mountTapContinue, badgeHtml } from "./lab-activities.js?v=html5";
 
 export const L1_META = {
- objective: "By the end of this mission, you'll be able to explain structure tags in your own words.",
+ objective:
+ "By the end of this mission, you'll explain how HTML tags are rooms with opening and closing doors, how nesting works, what semantic tags do, and what an iframe is.",
  bdHook:
- "Bangladesh everyday: school notice page, family photo blog, BD news headline block - notice how tags build the page house.",
+ "Every webpage you visit (school notice, family blog, BD news) is secretly a house built from tags.",
  predict: {
- q: "Before we start - where does a visible heading on a web page usually live?",
+ q: "Before we start, what happens if you forget to close an HTML tag?",
  options: [
- "Only in a CSS color file with no tags",
- "Inside <body>, nested inside the <html> house",
- "Outside <html> so browsers never see it",
+ "Nothing. The page still works perfectly",
+ "Everything after it can leak into the wrong room and break the page",
+ "The browser automatically adds the closing tag for you every time",
  ],
  ok: 1,
  },
-
  kidTitle: "HTML House",
- theme: "structure tags",
- emoji: "\ud83c\udfe0",
+ theme: "tags are rooms",
+ emoji: "🏠",
  rewardName: "HTML Builder",
- intro: "A web page is a house. Tags are the rooms - <html> wraps, <head> holds meta, <body> holds what you see.",
- everyday: ["School notice page", "Family photo blog", "BD news headline block"],
+ intro:
+ "Every webpage is secretly a house built from tags. Some rooms are wide open, some tuck inside others, and if you forget to close a door, the whole house can fall apart. Today we build one room by room.",
+ everyday: ["School notice page", "Family photo blog", "Embedded map on a news site"],
  subTitles: [
- "Meet the Tag House", "Open Rooms Lab", "Sort Structure", "Build More Rooms",
- "Why Nest Tags", "Name the House Rule", "Stretch: Real Pages", "Myth Bust",
- "Fluency Drill", "HTML Builder Mastery",
+ "Start Building",
+ "Build One Room",
+ "Tags & Elements",
+ "Nest the Rooms",
+ "Nesting Rule",
+ "Furnish the House",
+ "Semantic Rooms",
+ "Cut a Window",
+ "iframe Everywhere",
+ "The House Is Built",
  ],
 };
 
 export function runL1Sub(subIndex, api) {
  const { registerTryAgain } = api;
- labState.reveal = false; labState.tokenProgress = 0; labState.masteryStep = 0;
- labState.placed = {}; labState.selectedId = null; labState.mythPhase = "claim";
- labState.heat = 0.25; labState.phase = "desk"; labState.mode = "home";
- labState.tagBuild = 0.25;
+ initHtmlSub(subIndex);
  const runners = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10];
  const fn = runners[subIndex] || runners[0];
- registerTryAgain(() => { api.overlay.innerHTML = ""; fn(api); });
+ registerTryAgain(() => {
+ api.overlay.innerHTML = "";
+ resetHtmlHouseState();
+ fn(api);
+ });
  fn(api);
 }
 
-function s1({ overlay, setCoach, completeSub }) {
- setCoach("Hook: tags are rooms - drag <html>, <head>, <body>.");
- mountMotionChain(overlay, {
- title: "Meet the Tag House",
- beats: [
- { scene: "htmlMeet", sceneArgs: { phase: "desk" }, dwellMs: 4000,
- html: `${badgeHtml(LAB_ASSET_PATHS.m1, "html")}<p><strong>Act 1:</strong> Drag the tag chips around the house.</p>` },
- { scene: "htmlMeet", sceneArgs: { phase: "glow" }, dwellMs: 4200,
- html: `<p><strong>Act 2:</strong> Links light up - <html> wraps, <head> and <body> nest inside.</p>` },
- { scene: "htmlMeet", sceneArgs: { phase: "settle" }, dwellMs: 4000,
- html: `<p><strong>Act 3:</strong> What you see on screen lives in <body> (headings, text, images).</p>` },
- ],
- onDone: () => mountQuiz(overlay, {
- scene: "htmlMeet", sceneArgs: { phase: "settle" }, title: "Exit check",
- q: "Where does a visible heading usually live?",
- opts: ["Inside <body>", "Only in CSS files", "Only in JavaScript", "Outside <html>"],
- ok: 0, onDone: () => mountTapContinue(overlay, {
- scene: "htmlMeet", badge: LAB_ASSET_PATHS.m1,
- html: `<h3>House unlocked</h3><p>Next: open more rooms with the dial.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
- }),
- });
+function n(text) {
+ return `<p class="tiny-narration">${text}</p>`;
 }
 
-function s2({ overlay, setCoach, completeSub }) {
- setCoach("Dial until more tag-rooms open (clarity >= 60%).");
- labState.heat = 0.25;
- mountHeatLab(overlay, {
- scene: "htmlLab", title: "Open Rooms Lab",
- html: `<p>Drag until the house rooms open (>= 60%).</p>`,
- goalText: "Goal >= 60%", doneLabel: "Rooms open", threshold: 0.6, startHeat: 0.25,
- axis: "x", canvasAction: "stretch", sliderLabel: "Rooms", badge: LAB_ASSET_PATHS.m1,
- readoutLabels: {
- cold: "Shell only - few tags lit",
- melting: "Opening <head> and <body>…",
- liquid: "Inner rooms (<h1>, <p>) lighting",
- simmer: "Full tag house - structure clear",
- },
+function s1_opening({ overlay, setCoach, completeSub }) {
+ setCoach("Watch <html> type itself. A house frame rises from the lot.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "htmlOpen",
+ badge: "Opening",
+ title: "HTML House",
+ pulse: true,
+ ready: () => labState.htmlOpenReady || Date.now() - t0 > 2800,
+ readyText: "The frame is up. Tags build houses.",
+ doneLabel: "Start Building ▶",
+ html: `${badgeHtml(LAB_ASSET_PATHS.m1, "html house")}
+ ${n(
+ "Every single webpage you've ever visited is secretly a house, built entirely out of tags. Some rooms are wide open, some are tucked inside others, and if you forget to close a door behind you, the whole house can start to fall apart. Today we're not just going to look at a webpage. We're going to build one, room by room, like a house.",
+ )}`,
  onDone: completeSub,
  });
 }
 
-function s3({ overlay, setCoach, completeSub }) {
- setCoach("Sort structure tags vs style/script vs not HTML.");
+function s2_room({ overlay, setCoach, completeSub }) {
+ setCoach("Drag opening tag, Welcome!, and closing tag. Then build again without the closing tag.");
+ mountGate(overlay, {
+ scene: "htmlRoom",
+ badge: "Spiral 1 · Enactive",
+ title: "Build One Room",
+ pulse: true,
+ ready: () => labState.htmlRoomBuilt && labState.htmlRoomFailed,
+ readyText: "You felt both: a solid room and a leaking wall.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "A tag is a container with an opening and a closing side, like a doorway in and a doorway out. First build a complete room. Then repeat the build but leave out the closing tag entirely. Watch what leaks through the missing wall.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function s3_tags({ overlay, setCoach, completeSub }) {
+ setCoach("Blueprint ↔ code on the left canvas. Then read the formal terms.");
+ mountGate(overlay, {
+ scene: "htmlBlueprint",
+ badge: "Spiral 1 · Iconic",
+ title: "Blueprint & Code",
+ ready: () => true,
+ html: n(
+ "A blueprint and a piece of HTML do the exact same job: marking where something begins, what goes inside it, and where it ends. Architects have done this with doorways for thousands of years. Web browsers do it with a slightly different kind of doorway.",
+ ),
+ onDone: () => {
  mountTapContinue(overlay, {
- scene: "htmlSort",
- html: `<h3>Guide</h3><p><strong>Structure:</strong> &lt;h1&gt;, &lt;p&gt;, &lt;img&gt;, &lt;div&gt;.<br><strong>Style/script:</strong> color:red, onclick.<br><strong>Not:</strong> cake, sock.</p>`,
- onDone: () => mountDragSort(overlay, {
- scene: "htmlSort", title: "Sort Structure",
- instructions: "Drag into Structure / Style-script / Not.",
- successText: "House sorted!",
- chips: [
- { id: "h1", text: "Heading tag", short: "<h1>", color: 0xea580c },
- { id: "p", text: "Paragraph tag", short: "<p>", color: 0xf97316 },
- { id: "img", text: "Image tag", short: "<img>", color: 0xfb923c },
- { id: "div", text: "Box tag", short: "<div>", color: 0xfdba74 },
- { id: "css", text: "A color style", short: "color:red", color: 0x38bdf8 },
- { id: "js", text: "A click script", short: "onclick", color: 0xa78bfa },
- { id: "cake", text: "Birthday cake", short: "Cake", color: 0xf472b6 },
- { id: "sock", text: "A sock", short: "Sock", color: 0x94a3b8 },
- ],
- zones: [
- { id: "struct", label: "Structure tag", accept: ["h1", "p", "img", "div"] },
- { id: "style", label: "Style / script", accept: ["css", "js"] },
- { id: "not", label: "Not HTML", accept: ["cake", "sock"] },
- ],
+ scene: "htmlTerms",
+ badge: LAB_ASSET_PATHS.m1,
+ html: `<h3>Spiral 1 · Symbolic</h3>
+ <p><strong>Tag</strong>: marks start or end: <code>&lt;div&gt;</code> or <code>&lt;/div&gt;</code></p>
+ <p><strong>Opening tag</strong>: no forward slash. <strong>Closing tag</strong>: has a slash.</p>
+ <p><strong>Element</strong>: opening + content + closing together: <code>&lt;div&gt;Welcome!&lt;/div&gt;</code></p>`,
  onDone: completeSub,
- }),
  });
-}
-
-function s4({ overlay, setCoach, completeSub }) {
- setCoach("Push the dial higher - fill the house.");
- labState.heat = 0.4;
- mountHeatLab(overlay, {
- scene: "htmlLab", title: "Build More Rooms", html: `<p>Reach >= 75%.</p>`,
- goalText: "Goal >= 75%", doneLabel: "Lab done", threshold: 0.75, startHeat: 0.4,
- axis: "x", canvasAction: "stretch", sliderLabel: "Rooms", badge: LAB_ASSET_PATHS.m1,
- readoutLabels: {
- cold: "Still sparse - need more rooms",
- melting: "Nesting more tags inside <body>",
- liquid: "Almost full - <img> nearly on",
- simmer: "House filled - tidy nested tags",
  },
+ });
+}
+
+function s4_nest({ overlay, setCoach, completeSub }) {
+ setCoach(
+ "Part 1: outer open → inner open → inner close → outer close. Part 2: same, but close OUTER before INNER.",
+ );
+ mountGate(overlay, {
+ scene: "htmlNest",
+ badge: "Spiral 2 · Enactive",
+ title: "Nest the Rooms",
+ pulse: true,
+ ready: () => labState.htmlNestBuilt && labState.htmlNestFailed,
+ readyText: "Clean nesting, then broken walls - Continue unlocked.",
+ status:
+ "Part 1 of 2: place tags in order (outer open → inner open → inner close → outer close).",
+ liveStatus: () => {
+ if (labState.prompt) return labState.prompt;
+ if (labState.htmlNestBuilt) {
+ return "Part 2 of 2: break the nest - outer open → inner open → OUTER close → INNER close.";
+ }
+ return "Part 1 of 2: outer open → inner open → inner close → outer close.";
+ },
+ doneLabel: "Continue ▶",
+ html: n(
+ "Whatever you open last, you must close first, like leaving a room inside a room. Close them out of order and the outer wall cuts straight through the inner room. That is exactly what a browser sees as broken HTML.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s5({ overlay, setCoach, completeSub }) {
- setCoach("Order why we nest tags.");
- mountOrderSteps(overlay, {
- scene: "htmlMeet", sceneArgs: { phase: "settle" }, title: "Why Nest Tags",
- instructions: "Order the story.",
- items: [
- { id: "wrap", html: "<html> wraps the whole page" },
- { id: "head", html: "<head> holds title and links" },
- { id: "body", html: "<body> holds what people see" },
- { id: "close", html: "Close tags so rooms stay tidy" },
- ],
- correctIds: ["wrap", "head", "body", "close"],
- onDone: () => mountQuiz(overlay, {
- scene: "htmlMeet", title: "Check",
- q: "Leaving tags open and messy usually...",
- opts: ["Confuses browsers and readers", "Makes CSS faster always", "Deletes the internet", "Turns into JavaScript"],
- ok: 0, onDone: completeSub,
- }),
- });
-}
-
-function s6({ overlay, setCoach, completeSub }) {
- setCoach("Lock the HTML house rule.");
- mountEquationBuild(overlay, {
- scene: "htmlRule", title: "Name the House Rule", instructions: "Tap in order.",
- tokens: [
- { id: "a", html: "Tags" }, { id: "b", html: "Nest" },
- { id: "c", html: "Close" }, { id: "d", html: "House" },
- ],
- correctIds: ["a", "b", "c", "d"], badge: LAB_ASSET_PATHS.rule,
- onDone: () => mountTapContinue(overlay, {
- scene: "htmlRule", badge: LAB_ASSET_PATHS.rule,
- html: `<h3>Rule locked</h3><p>Tags nest and close - that builds the page house.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
- });
-}
-
-function s7({ overlay, setCoach, completeSub }) {
- setCoach("Home, school, shop, BD news, blog - same tag house.");
+function s5_nestingRule({ overlay, setCoach, completeSub }) {
+ setCoach("Nesting dolls open and close in reverse order: same rule as HTML indentation.");
+ mountGate(overlay, {
+ scene: "htmlDolls",
+ badge: "Spiral 2 · Iconic",
+ title: "Rooms Inside Rooms",
+ ready: () => true,
+ html: n(
+ "Indentation in real code is not just for looks: the deeper a tag is indented, the deeper inside the house that room actually is.",
+ ),
+ onDone: () => {
  mountTapContinue(overlay, {
- scene: "htmlStretch", html: `<h3>Real pages</h3><p>Tap each mode - same structure tags.</p>`,
- onDone: () => mountQuiz(overlay, {
- scene: "htmlStretch", title: "Transfer",
- q: "A BD news site still needs...",
- opts: ["Structure tags like <html> and <body>", "Only paint and no tags", "Zero nesting ever", "Only JavaScript files"],
- ok: 0, onDone: completeSub,
- }),
+ scene: "htmlNestCode",
+ html: `<h3>Spiral 2 · Symbolic</h3>
+ <p><strong>Nesting:</strong> placing one element completely inside another.</p>
+ <p><strong>Rule:</strong> last opened, first closed.</p>
+ <pre class="hh-inline-code">&lt;div&gt;\n  &lt;p&gt;Welcome!&lt;/p&gt;\n&lt;/div&gt;</pre>`,
+ onDone: completeSub,
+ });
+ },
  });
 }
 
-function s8({ overlay, setCoach, completeSub }) {
- setCoach("Bust HTML myths.");
- mountMythCards(overlay, {
- scene: "htmlMyth", title: "Myth Bust", badge: LAB_ASSET_PATHS.myth,
- myths: [
- { claim: "HTML is only for experts", truth: "Kids can learn core tags with clear labs", sceneMyth: 0 },
- { claim: "Tags can stay open forever", truth: "Most tags need a matching close tag", sceneMyth: 1 },
- { claim: "Order of tags never matters", truth: "Nesting order builds the page house", sceneMyth: 2 },
- { claim: "CSS and HTML are the same", truth: "HTML = structure; CSS = look", sceneMyth: 3 },
- { claim: "One giant div is enough forever", truth: "Clear tags help people and browsers", sceneMyth: 4 },
- ],
+function s6_furnish({ overlay, setCoach, completeSub }) {
+ setCoach("Drop header, hero, main, footer, and a blank div into the blueprint zones.");
+ mountGate(overlay, {
+ scene: "htmlFurnish",
+ badge: "Spiral 3 · Enactive",
+ title: "Furnish the House",
+ pulse: true,
+ ready: () => labState.htmlFurnishCount >= 5,
+ readyText: "Five rooms placed: four with built-in jobs, one blank div.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Header, hero, main, and footer came with a job already built in, just from their name. A div has no job at all. It is the blank, flexible room you use when none of the specialized rooms quite fit.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s9({ overlay, setCoach, completeSub }) {
- setCoach("Quick HTML fluency.");
- mountSpeedDrill(overlay, {
- scene: "htmlDrill", title: "Fluency Drill", passScene: "htmlMastery",
- items: [
- { q: "Visible text lives mainly in...", opts: ["<body>", "<head> only"], ok: 0, prompt: "Body" },
- { q: "Is <h1> a structure tag?", opts: ["Yes", "No"], ok: 0, prompt: "h1" },
- { q: "color:red is mainly...", opts: ["CSS style", "An HTML room"], ok: 0, prompt: "Style" },
- { q: "Should tags nest tidy?", opts: ["Yes", "Never"], ok: 0, prompt: "Nest" },
- { q: "Cake is an HTML tag?", opts: ["No", "Yes"], ok: 0, prompt: "Cake" },
- { q: "HTML builds...", opts: ["Page structure", "Only button clicks"], ok: 0, prompt: "HTML" },
- ],
+function s7_semantic({ overlay, setCoach, completeSub }) {
+ setCoach("House blueprint glows beside a real webpage skeleton: same layout.");
+ mountGate(overlay, {
+ scene: "htmlLayout",
+ badge: "Spiral 3 · Iconic",
+ title: "Every Real Website",
+ ready: () => true,
+ html: n(
+ "This is genuinely how real websites are structured, almost every single time: header up top, a hero section to welcome you in, the main content doing the heavy lifting, and a footer holding down the bottom.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "htmlSemantic",
+ html: `<h3>Spiral 3 · Symbolic</h3>
+ <p>Tags like <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, and <code>&lt;footer&gt;</code> are <strong>semantic</strong>: their name tells you their job.</p>
+ <p>A <code>&lt;div&gt;</code> is deliberately the opposite: meaningless on its own, ready to be whatever you need.</p>`,
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+function s8_iframe({ overlay, setCoach, completeSub }) {
+ setCoach("Drag iframe into the main wall, then point src at the neighbor house.");
+ mountGate(overlay, {
+ scene: "htmlIframe",
+ badge: "Spiral 4 · Enactive",
+ title: "Cut a Window",
+ pulse: true,
+ ready: () => labState.htmlIframeDone,
+ readyText: "A window into a completely separate house.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "An iframe is not a room that belongs to this house at all. It is a window straight through to a different one entirely. That is what happens when you see an embedded map, video, or payment form on a website.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s10({ overlay, setCoach, completeSub }) {
- setCoach("Mastery - HTML Builder.");
- mountOrderSteps(overlay, {
- scene: "htmlMastery", title: "HTML Builder Mastery", instructions: "Order your journey.",
- items: [
- { id: "meet", html: "Meet" }, { id: "sort", html: "Sort" }, { id: "lab", html: "Lab" },
- { id: "rule", html: "Rule" }, { id: "myth", html: "Myth" }, { id: "win", html: "Build" },
- ],
- correctIds: ["meet", "sort", "lab", "rule", "myth", "win"],
- onDone: () => mountTapContinue(overlay, {
- scene: "htmlMastery", badge: LAB_ASSET_PATHS.m1,
- html: `<h3>HTML Builder!</h3><p>Tags nest and close - your page house stands strong.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
+function s9_iframeEverywhere({ overlay, setCoach, completeSub }) {
+ setCoach("Maps, videos, payment boxes: all iframe windows cut into the page.");
+ mountGate(overlay, {
+ scene: "htmlMontage",
+ badge: "Spiral 4 · Iconic",
+ title: "Windows Everywhere",
+ ready: () => true,
+ html: n(
+ "Once you know to look for it, iframe windows are everywhere online, and for good reason. It lets a page borrow trusted functionality from somewhere else without rebuilding that entire house from scratch.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "htmlSummary",
+ html: `<h3>Spiral 4 · Symbolic</h3>
+ <p>Screen readers used by blind and low-vision users rely on semantic tags like <code>&lt;header&gt;</code> and <code>&lt;main&gt;</code> to describe a page out loud.</p>
+ <p>A page built entirely from unlabeled <code>&lt;div&gt;</code> rooms is much harder for them to navigate.</p>
+ <p><em>Next question: now that the house is built, how do we paint and furnish it?</em> (That is CSS: Mission 2.)</p>`,
+ onDone: completeSub,
+ });
+ },
  });
 }
+
+function s10_closing({ overlay, setCoach, completeSub }) {
+ setCoach("Watch the full house replay. Then open the spiral recap map.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "htmlClose",
+ badge: "Closing",
+ title: "The House Is Built",
+ html: n(
+ "You started today looking at an empty lot. Now you understand exactly how every real webpage gets built: tags as rooms, opened and closed like doors, nested in the right order, some with a real job built in and some left blank on purpose, and even the occasional window cut straight through into someone else's house entirely.",
+ ),
+ ready: () => labState.htmlCloseU >= 0.85 || Date.now() - t0 > 7000,
+ readyText: "The complete house stands finished.",
+ doneLabel: "Open the recap map ▶",
+ onDone: () => {
+ setCoach("Tap a spiral number to replay, then Finish HTML House.");
+ mountSpiralMap(overlay, {
+ scene: "htmlSpiral",
+ title: "Your recap map",
+ finishLabel: "Finish HTML House ▶",
+ narration:
+ "This last screen is a recap, not a new puzzle. The four numbers are the four spirals you already finished. Tap a number to replay a short highlight. When you are ready, tap Finish HTML House.",
+ statusIdle: "Tap a number to replay, or finish now.",
+ stops: [
+ { n: 1, label: "1: Tags & doors" },
+ { n: 2, label: "2: Nesting" },
+ { n: 3, label: "3: Structure" },
+ { n: 4, label: "4: iframe" },
+ ],
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+const s1 = s1_opening;
+const s2 = s2_room;
+const s3 = s3_tags;
+const s4 = s4_nest;
+const s5 = s5_nestingRule;
+const s6 = s6_furnish;
+const s7 = s7_semantic;
+const s8 = s8_iframe;
+const s9 = s9_iframeEverywhere;
+const s10 = s10_closing;

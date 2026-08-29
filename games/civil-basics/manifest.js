@@ -8,6 +8,6 @@ export const manifest = {
  emoji: "\ud83c\udfd7\ufe0f",
  storageKey: "gq-civil-basics-save-v2",
  localeKey: "gq-civil-basics-locale",
- defaultScene: "structMeet",
+ defaultScene: "structOpen",
  theme: { accent: "#a8a29e", accent2: "#57534e" },
 };

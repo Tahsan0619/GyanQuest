@@ -1,0 +1,332 @@
+/* Mission 1: Waste Watch - sorting station DOM overlay */
+.viewport:has(#waste-root) #c3d,
+.chem-l1-live .viewport--waste #c3d,
+.ecoguardian-live .viewport--waste #c3d {
+ opacity: 0 !important;
+ pointer-events: none !important;
+ z-index: 0 !important;
+}
+
+.viewport:has(#waste-root) #waste-root,
+.chem-l1-live .viewport--waste #waste-root,
+.ecoguardian-live .viewport--waste #waste-root {
+ z-index: 5;
+}
+
+.tiny-narration {
+ font-size: 0.92rem;
+ line-height: 1.5;
+ color: #d1fae5;
+ margin: 0.35rem 0 0.65rem;
+}
+
+.tiny-spiral-stops {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 0.4rem;
+ margin: 0.65rem 0;
+}
+
+.tiny-pulse,
+.ww-pulse {
+ animation: ww-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes ww-pulse {
+ 0%, 100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.45); }
+ 50% { box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+}
+
+.waste-root {
+ position: absolute;
+ inset: 0;
+ z-index: 3;
+ display: flex;
+ flex-direction: column;
+ padding: clamp(8px, 1.5vh, 14px);
+ gap: 0.45rem;
+ background: radial-gradient(circle at 50% 18%, #14532d, #0f172a 72%);
+ pointer-events: auto;
+ overflow: auto;
+}
+
+.ww-banner {
+ margin: 0;
+ font-size: 0.85rem;
+ font-weight: 600;
+ color: #a7f3d0;
+ text-align: center;
+}
+
+.ww-stage {
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: flex-start;
+ gap: 0.6rem;
+}
+
+.ww-caption,
+.ww-hint {
+ font-size: 0.8rem;
+ color: #bbf7d0;
+ text-align: center;
+ margin: 0.25rem 0;
+}
+
+.ww-note {
+ font-size: 0.8rem;
+ padding: 0.45rem 0.65rem;
+ border-radius: 8px;
+ margin: 0.35rem 0;
+ max-width: 420px;
+ text-align: center;
+}
+
+.ww-note--ok {
+ background: rgba(16, 185, 129, 0.2);
+ border: 1px solid #34d399;
+ color: #d1fae5;
+}
+
+.ww-note--warn {
+ background: rgba(245, 158, 11, 0.18);
+ border: 1px solid #fbbf24;
+ color: #fef3c7;
+}
+
+.ww-open,
+.ww-follow,
+.ww-map,
+.ww-sort-scene,
+.ww-loop,
+.ww-nature-loop,
+.ww-split,
+.ww-terms,
+.ww-close {
+ width: min(520px, 100%);
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 0.5rem;
+}
+
+.ww-trash {
+ position: relative;
+ width: 100px;
+ height: 120px;
+ background: #334155;
+ border-radius: 10px 10px 14px 14px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ border: 2px solid #64748b;
+}
+
+.ww-lid {
+ position: absolute;
+ top: -8px;
+ left: 10%;
+ right: 10%;
+ height: 14px;
+ background: #475569;
+ border-radius: 6px;
+}
+
+.ww-bottle {
+ font-size: 2rem;
+}
+
+.ww-bins {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 0.5rem;
+ justify-content: center;
+ width: 100%;
+}
+
+.ww-bin {
+ min-width: 96px;
+ padding: 0.55rem 0.7rem;
+ border-radius: 12px;
+ border: 2px solid #475569;
+ background: rgba(15, 23, 42, 0.85);
+ text-align: center;
+ cursor: pointer;
+ color: #e2e8f0;
+ font-size: 0.75rem;
+}
+
+.ww-bin--landfill { border-color: #94a3b8; }
+.ww-bin--recycle { border-color: #38bdf8; }
+.ww-bin--compost { border-color: #4ade80; }
+.ww-bin.is-lit { outline: 2px solid #fbbf24; }
+
+.ww-bin-icon { display: block; font-size: 1.4rem; margin-bottom: 0.15rem; }
+
+.ww-tray {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 0.4rem;
+ justify-content: center;
+ max-width: 480px;
+}
+
+.ww-item {
+ font-size: 0.78rem;
+ padding: 0.4rem 0.55rem;
+ border-radius: 8px;
+ border: 1px solid #64748b;
+ background: rgba(30, 41, 59, 0.95);
+ color: #f8fafc;
+ cursor: grab;
+}
+
+.ww-item--big {
+ font-size: 1rem;
+ padding: 0.7rem 1rem;
+}
+
+.ww-score {
+ font-size: 0.78rem;
+ color: #86efac;
+}
+
+.ww-mound {
+ width: 90px;
+ height: calc(40px + 60px * var(--h, 0.4));
+ background: linear-gradient(180deg, #78716c, #44403c);
+ border-radius: 50% 50% 8px 8px;
+ margin: 0 auto;
+ position: relative;
+}
+
+.ww-mound--tall { height: 110px; }
+.ww-mound--small { height: 48px; }
+
+.ww-map-row,
+.ww-split-row {
+ display: flex;
+ align-items: center;
+ gap: 0.75rem;
+ flex-wrap: wrap;
+ justify-content: center;
+}
+
+.ww-road { color: #fbbf24; font-weight: 700; }
+
+.ww-landfill {
+ position: relative;
+ width: 160px;
+ min-height: 100px;
+}
+
+.ww-dozer { position: absolute; bottom: 4px; left: 4px; }
+.ww-bottle-tiny { position: absolute; bottom: 20px; right: 30px; font-size: 0.9rem; }
+
+.ww-loop-ring {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 0.35rem;
+ justify-content: center;
+ max-width: 420px;
+}
+
+.ww-loop-step {
+ padding: 0.35rem 0.5rem;
+ border-radius: 8px;
+ background: rgba(30, 41, 59, 0.9);
+ border: 1px solid #334155;
+ font-size: 0.72rem;
+ color: #cbd5e1;
+}
+
+.ww-loop-step.is-active {
+ border-color: #34d399;
+ background: rgba(16, 185, 129, 0.25);
+ color: #ecfdf5;
+}
+
+.ww-nature-steps {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 0.35rem;
+ justify-content: center;
+ font-size: 0.85rem;
+ color: #bbf7d0;
+}
+
+.ww-def-list {
+ margin: 0;
+ max-width: 440px;
+}
+
+.ww-def-list dt {
+ font-weight: 700;
+ color: #6ee7b7;
+ margin-top: 0.45rem;
+}
+
+.ww-def-list dd {
+ margin: 0.15rem 0 0.35rem;
+ color: #d1fae5;
+ font-size: 0.85rem;
+}
+
+.ww-summary-list {
+ margin: 0;
+ padding-left: 1.1rem;
+ color: #d1fae5;
+ font-size: 0.85rem;
+ line-height: 1.45;
+}
+
+.ww-term-note { color: #a7f3d0; font-style: italic; list-style: none; margin-top: 0.5rem; }
+
+.ww-split-side {
+ width: min(200px, 45%);
+ text-align: center;
+ padding: 0.5rem;
+ background: rgba(15, 23, 42, 0.7);
+ border-radius: 10px;
+ border: 1px solid #334155;
+ color: #e2e8f0;
+ font-size: 0.75rem;
+}
+
+.ww-side-facilities { margin: 0.35rem 0; color: #86efac; }
+
+.ww-close-paths {
+ display: flex;
+ flex-direction: column;
+ gap: 0.4rem;
+ width: min(320px, 100%);
+}
+
+.ww-path {
+ padding: 0.5rem 0.75rem;
+ border-radius: 10px;
+ background: rgba(30, 41, 59, 0.85);
+ border: 1px solid #475569;
+ color: #cbd5e1;
+ opacity: calc(0.4 + var(--ww-close, 0) * 0.6);
+}
+
+.ww-path--recycle.is-chosen {
+ border-color: #38bdf8;
+ background: rgba(14, 165, 233, 0.25);
+ color: #e0f2fe;
+}
+
+.ww-compost-pile {
+ text-align: center;
+ padding: 0.75rem;
+ border-radius: 12px;
+ background: rgba(22, 101, 52, 0.45);
+ border: 1px solid #4ade80;
+}
+
+.ww-compost-pile.is-soil { background: rgba(69, 26, 3, 0.55); border-color: #a16207; }
+
+.ww-worms { font-size: 1.5rem; margin-bottom: 0.35rem; }

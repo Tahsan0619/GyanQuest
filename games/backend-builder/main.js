@@ -1,4 +1,4 @@
-import { bootBackendBuilder } from "./js/boot-l1.js?v=tier3";
+import { bootBackendBuilder } from "./js/boot-l1.js?v=rest3";
 import { manifest } from "./manifest.js";
 
 function showBootError(msg) {

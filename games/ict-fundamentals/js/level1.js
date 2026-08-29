@@ -1,412 +1,297 @@
 /**
  * ICT - Mission 1: Computer Bits
- * Tiny Bits depth, hardware-specific interactions (CPU / RAM / storage).
+ * Script: Opening + 4 Bruner spirals (bits → CPU → memory/storage → why it matters) + recap.
+ * Metaphor: a computer is a kitchen.
  */
-import { labState, LAB_ASSET_PATHS } from "./lab-state.js";
-import {
- mountMotionChain, mountDragSort, mountHeatLab, mountEquationBuild, mountScaleLab,
- mountQuiz, mountSpeedDrill, mountMythCards, mountTapContinue, mountOrderSteps,
- mountRevealSteps, mountMultiQuiz, badgeHtml,
-} from "./lab-activities.js";
+import { initBitsSub, resetBitsKitchenState, LAB_ASSET_PATHS, labState } from "./lab-state.js";
+import { mountGate, mountSpiralMap, mountTapContinue, badgeHtml } from "./lab-activities.js";
 
 export const L1_META = {
- objective: "By the end of this mission, you'll be able to explain CPU / RAM / storage in your own words.",
+ objective:
+ "By the end of this mission, you'll explain bits, bytes, CPU, RAM, and storage using the kitchen metaphor - in your own words.",
  bdHook:
- "Bangladesh everyday: phone chip, school lab PC, saving a homework file - notice CPU / RAM / storage on every machine.",
+ "Bangladesh everyday: a phone waking up in a second, a sluggish school PC with too many tabs, reading a laptop spec sheet.",
  predict: {
- q: "Before we start - what mainly keeps a saved photo after you shut the PC down?",
+ q: "Before we start - underneath everything a computer shows you, what's the smallest unit of information?",
  options: [
- "Open apps stay forever in RAM",
- "Storage keeps the saved file; RAM clears when power is off",
- "Only the screen stores homework",
+ "A bit - one switch that's only ever fully on or fully off",
+ "A pixel on the screen",
+ "A letter in a word document",
  ],
- ok: 1,
+ ok: 0,
  },
-
- kidTitle: "Computer Bits",
- theme: "CPU / RAM / storage",
- emoji: "\ud83d\udda5",
- rewardName: "Bit Scout",
+ kidTitle: "Bits: Inside the Machine's Kitchen",
+ theme: "bits, CPU, RAM & storage",
+ emoji: "💻",
+ rewardName: "Kitchen Scout",
  intro:
- "CPU thinks, RAM holds open work, storage keeps files after power off. We meet the inside team on a desk, fill RAM under load, then lock a rule you can reuse on phones and school PCs.",
- everyday: ["Phone chip", "Laptop upgrades", "Saving a school file"],
+ "A computer is a kitchen. Every single thing it knows is ultimately just a pattern of light switches - a bit. The CPU is the chef. RAM is the countertop. Storage is the pantry. Today we shrink down, meet those switches, meet the chef, and find out exactly where a computer keeps everything it knows.",
+ everyday: ["Phone waking up in a second", "School PC feeling sluggish", "Reading a laptop spec sheet"],
  subTitles: [
- "Meet the Inside Team", "Busy PC Lab", "Sort the Jobs", "RAM Fill Lab",
- "Why Three Parts", "Name the Bits Rule", "Stretch: Devices", "Myth Bust",
- "Fluency Drill", "Bit Scout Mastery",
+ "Open the Kitchen",
+ "Flip the Switches",
+ "Bits → Bytes",
+ "Give the Chef an Instruction",
+ "The CPU Loop",
+ "Counter vs Pantry",
+ "RAM & Storage",
+ "Open a Program",
+ "Read the Spec Sheet",
+ "The Kitchen, Fully Understood",
  ],
 };
 
 export function runL1Sub(subIndex, api) {
  const { registerTryAgain } = api;
- labState.reveal = false; labState.tokenProgress = 0; labState.masteryStep = 0;
- labState.placed = {}; labState.selectedId = null; labState.mythPhase = "claim";
- labState.heat = 0.3; labState.phase = "desk"; labState.mode = "phone"; labState.scale = 0;
+ initBitsSub(subIndex);
  const runners = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10];
  const fn = runners[subIndex] || runners[0];
- registerTryAgain(() => { api.overlay.innerHTML = ""; fn(api); });
+ registerTryAgain(() => {
+ api.overlay.innerHTML = "";
+ resetBitsKitchenState();
+ initBitsSub(subIndex);
+ fn(api);
+ });
  fn(api);
 }
 
-function s1({ overlay, setCoach, completeSub }) {
- setCoach("Hook: brain, desk pad, cupboard - CPU, RAM, storage on one machine.");
- mountMotionChain(overlay, {
- title: "Meet the Inside Team",
- beats: [
- {
- scene: "bitsMeet", sceneArgs: { phase: "desk" }, dwellMs: 4200,
- html: `${badgeHtml(LAB_ASSET_PATHS.m1, "bits")}
- <p><strong>Act 1 - Desk props:</strong> Drag the CPU chip, RAM stick, and storage disk.</p>
- <p>These are the three parts every computer needs to think, hold work, and keep files.</p>`,
- },
- {
- scene: "bitsMeet", sceneArgs: { phase: "glow" }, dwellMs: 4500,
- html: `<p><strong>Act 2 - Links:</strong> Watch the glow between CPU and RAM.</p>
- <p>Open apps need the CPU to run instructions and RAM to hold them right now.</p>`,
- },
- {
- scene: "bitsMeet", sceneArgs: { phase: "settle" }, dwellMs: 4200,
- html: `<p><strong>Act 3 - Power-off story:</strong> Storage is the cupboard that keeps photos and homework when power is off.</p>
- <p>RAM clears; the disk (or SSD) keeps what you saved.</p>`,
- },
- ],
- onDone: () => mountQuiz(overlay, {
- scene: "bitsMeet", sceneArgs: { phase: "settle" }, title: "Exit check",
- q: "Which keeps a photo after you shut down?",
- opts: [
- "Storage (SSD/disk)",
- "Only RAM",
- "Only the screen",
- "The keyboard",
- ],
- ok: 0,
- onDone: () => mountTapContinue(overlay, {
- scene: "bitsMeet", sceneArgs: { phase: "settle" }, badge: LAB_ASSET_PATHS.m1,
- html: `<h3>Inside team ready</h3><p>Next: make the PC busy and watch RAM fill.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
- }),
- });
+function n(text) {
+ return `<p class="tiny-narration">${text}</p>`;
 }
 
-function s2({ overlay, setCoach, completeSub }) {
- setCoach("Enactive: more CPU work opens more tasks - watch RAM fill (not a chemistry melt).");
- labState.heat = 0.25;
- mountHeatLab(overlay, {
- scene: "bitsLab", title: "Busy PC Lab",
- html: `<p>Drag the blue handle or use the slider. As <strong>CPU work</strong> rises, open tasks pile into <strong>RAM</strong>.</p>
- <p>This dial is workload - not temperature.</p>`,
- goalText: "Goal: push busy level past ~60% so RAM looks packed with open apps.",
- doneLabel: "Busy checked - continue", threshold: 0.6, startHeat: 0.25,
- axis: "x", canvasAction: "stretch", sliderLabel: "CPU work (open apps)",
- badge: LAB_ASSET_PATHS.m1,
- readoutLabels: {
- cold: "Idle - few open apps in RAM",
- melting: "Warming up - more tabs opening",
- liquid: "Busy - RAM holding lots of open work",
- simmer: "Maxed - CPU maxed, RAM nearly full",
- },
- onDone: () => mountQuiz(overlay, {
- scene: "bitsLab", title: "Busy check",
- q: "When the PC gets busier, what fills with open work?",
- opts: [
- "RAM holds the open apps; CPU keeps running them",
- "Only the printer fills up",
- "Storage melts like ice",
- "The keyboard stores the apps forever",
- ],
- ok: 0, onDone: completeSub,
- }),
+function s1_opening({ overlay, setCoach, completeSub }) {
+ setCoach("Tap Open the Kitchen on the canvas - a laptop wakes and loads apps in seconds.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "bitsOpen",
+ badge: "Opening",
+ title: "Bits: Inside the Machine's Kitchen",
+ pulse: true,
+ autoAdvanceOnReady: true,
+ ready: () => labState.bitsOpenReady || Date.now() - t0 > 6000,
+ readyText: "Billions of tiny switches - that's the entire secret.",
+ doneLabel: "Continue ▶",
+ controlsHtml: `<p class="drag-hint">Or tap here if the canvas button is hard to reach:</p>
+ <button type="button" class="btn secondary" id="gate-open-kitchen">Open the Kitchen →</button>`,
+ bind: (host, { finish, signalGateReady: signal }) => {
+ host.querySelector("#gate-open-kitchen")?.addEventListener("click", () => {
+ labState.bitsOpenReady = true;
+ signal?.({ forceAdvance: true });
+ finish();
  });
-}
-
-function s3({ overlay, setCoach, completeSub }) {
- setCoach("Enactive sort: CPU calculates, RAM holds now, storage keeps, snacks are not PC parts.");
- mountTapContinue(overlay, {
- scene: "bitsSort",
- html: `<h3>Jobs for the inside team</h3>
- <p><strong>CPU:</strong> calculate, run instructions.</p>
- <p><strong>RAM:</strong> hold an open app or scratch pad right now.</p>
- <p><strong>Storage:</strong> keep a file or live on an SSD/disk.</p>
- <p><strong>Not a PC part:</strong> snacks and wall paint.</p>`,
- onDone: () => mountDragSort(overlay, {
- scene: "bitsSort", title: "Sort the jobs",
- instructions: "Drag into CPU / RAM / Storage / Not a PC part.",
- successText: "Team sorted!",
- chips: [
- { id: "calc", text: "Do the math fast", short: "Calculate", color: 0x60a5fa },
- { id: "open", text: "Hold open app", short: "Open app", color: 0x22c55e },
- { id: "save", text: "Keep photo forever", short: "Save file", color: 0x94a3b8 },
- { id: "boot", text: "Run instructions", short: "Run code", color: 0x3b82f6 },
- { id: "temp", text: "Scratch pad now", short: "Scratch", color: 0x4ade80 },
- { id: "ssd", text: "SSD / hard disk", short: "Disk", color: 0x64748b },
- { id: "snack", text: "Eat a snack", short: "Snack", color: 0xf97316 },
- { id: "paint", text: "Wall paint color", short: "Paint", color: 0xa78bfa },
- ],
- zones: [
- { id: "cpu", label: "CPU job", accept: ["calc", "boot"] },
- { id: "ram", label: "RAM job", accept: ["open", "temp"] },
- { id: "storage", label: "Storage job", accept: ["save", "ssd"] },
- { id: "not", label: "Not a PC part", accept: ["snack", "paint"] },
- ],
- onDone: () => mountQuiz(overlay, {
- scene: "bitsSort", title: "Justify",
- q: "Why is \"eat a snack\" NOT a CPU / RAM / storage job?",
- opts: [
- "It is not a computer hardware job - snacks are not PC parts",
- "Because snacks live in RAM forever",
- "Because snacks are a kind of SSD",
- "Because only paint is a PC part",
- ],
- ok: 0, onDone: completeSub,
- }),
- }),
- });
-}
-
-function s4({ overlay, setCoach, completeSub }) {
- setCoach("Push RAM fill higher - open work vanishes from RAM when power cuts, not from storage.");
- labState.heat = 0.4;
- mountHeatLab(overlay, {
- scene: "bitsLab", title: "RAM Fill Lab",
- html: `<p>Crank CPU work until the green RAM bar is mostly full (&gt;= 75%).</p>
- <p>Remember: this is temporary workspace - not the place homework \"lives\" after shutdown.</p>`,
- goalText: "Goal: RAM fill past ~75%.",
- doneLabel: "RAM lab done", threshold: 0.75, startHeat: 0.4,
- axis: "x", canvasAction: "stretch", sliderLabel: "CPU work -> RAM fill",
- badge: LAB_ASSET_PATHS.m1,
- readoutLabels: {
- cold: "Light load - RAM mostly free",
- melting: "Opening apps - RAM rising",
- liquid: "Heavy load - RAM packed",
- simmer: "Near full - close apps or risk slowdown",
  },
- onDone: () => mountRevealSteps(overlay, {
- scene: "bitsLab",
- title: "Power-off story",
- steps: [
- "Busy PC: CPU runs instructions; RAM holds open apps.",
- "You save a file: a copy goes to storage (SSD/disk).",
- "Power off: RAM clears - open apps are gone until reopen.",
- "Storage stays: the saved file is still there next time.",
- ],
- onDone: () => mountQuiz(overlay, {
- scene: "bitsMeet", sceneArgs: { phase: "settle" }, title: "RAM vs storage",
- q: "After shutdown, open apps that were only in RAM...",
- opts: [
- "Are cleared (need reopen)",
- "Stay forever in RAM",
- "Become the CPU",
- "Delete storage",
- ],
- ok: 0, onDone: completeSub,
- }),
- }),
- });
-}
-
-function s5({ overlay, setCoach, completeSub }) {
- setCoach("Order why we need three parts - think, hold now, keep forever.");
- mountOrderSteps(overlay, {
- scene: "bitsMeet", sceneArgs: { phase: "settle" }, title: "Why three parts",
- instructions: "Order the story from thinking to power-off.",
- items: [
- { id: "think", html: "CPU runs instructions" },
- { id: "hold", html: "RAM holds open work" },
- { id: "keep", html: "Storage keeps files" },
- { id: "off", html: "Power off - RAM clears, storage stays" },
- ],
- correctIds: ["think", "hold", "keep", "off"],
- onDone: () => mountQuiz(overlay, {
- scene: "bitsMeet", sceneArgs: { phase: "settle" }, title: "Check",
- q: "Why do we need all three parts?",
- opts: [
- "CPU thinks, RAM holds now, storage keeps after power off",
- "Only the screen matters",
- "RAM alone keeps files forever",
- "Storage runs every instruction",
- ],
- ok: 0, onDone: completeSub,
- }),
- });
-}
-
-function s6({ overlay, setCoach, completeSub }) {
- setCoach("Symbolic: build the Computer Bits rule, then scrub desk -> open work -> storage stays.");
- mountEquationBuild(overlay, {
- scene: "bitsRule", title: "Name the Bits Rule", instructions: "Tap tokens in order.",
- tokens: [
- { id: "a", html: "CPU thinks" },
- { id: "b", html: "RAM holds now" },
- { id: "c", html: "Storage keeps" },
- { id: "d", html: "after power off" },
- ],
- correctIds: ["a", "b", "c", "d"], badge: LAB_ASSET_PATHS.rule,
- onDone: () => mountScaleLab(overlay, {
- scene: "bitsRule",
- title: "Bits scale scrubber",
- html: `<p>Slide from whole desk PC -> open apps in RAM -> storage that survives shutdown.</p>
- <p>This is a hardware story - not a chemistry grain zoom.</p>`,
- start: 0,
- threshold: 0.85,
- sliderLabel: "Bits scale: desk PC -> open RAM -> storage stays",
- goalText: "Canvas follows: desk team -> busy RAM glow -> Bit Scout rule banner.",
- readoutLabels: {
- low: "Desk PC - CPU, RAM, storage together",
- mid: "Open work glowing in RAM",
- high: "Rule: storage keeps after power off",
- },
- onDone: () => mountQuiz(overlay, {
- scene: "bitsRule", title: "Rule check",
- q: "Best Computer Bits rule?",
- opts: [
- "CPU thinks, RAM holds now, storage keeps after power off",
- "RAM and storage are the same thing",
- "Phones have no CPU",
- "Only gaming PCs have storage",
- ],
- ok: 0, onDone: completeSub,
- }),
- }),
- });
-}
-
-function s7({ overlay, setCoach, completeSub }) {
- setCoach("Transfer: same inside team in phone, laptop, lab PC, game box, and class tablet.");
- const modes = [
- {
- mode: "phone",
- html: `${badgeHtml(LAB_ASSET_PATHS.m1, "phone")}<p><strong>Phone:</strong> A pocket computer - SoC (CPU), RAM, and flash storage.</p>`,
- },
- {
- mode: "laptop",
- html: `<p><strong>Laptop:</strong> Same team, bigger screen - save essays to storage, not just RAM.</p>`,
- },
- {
- mode: "lab",
- html: `<p><strong>School lab PC:</strong> Shared desktops still need CPU + RAM + a disk for your folder.</p>`,
- },
- {
- mode: "game",
- html: `<p><strong>Game console:</strong> Fast CPU + enough RAM for worlds; games install onto storage.</p>`,
- },
- {
- mode: "class",
- html: `<p><strong>Class tablet:</strong> Still CPU / RAM / storage - apps open in RAM, installs live on storage.</p>`,
- },
- ];
- let step = 0;
- function show() {
- if (step >= modes.length) {
- mountQuiz(overlay, {
- scene: "bitsStretch", sceneArgs: { mode: "phone" }, title: "Transfer",
- q: "A phone still has...",
- opts: [
- "CPU + RAM + storage",
- "Only a screen",
- "No memory ever",
- "Only a keyboard",
- ],
- ok: 0, onDone: completeSub,
- });
- return;
- }
- const m = modes[step];
- labState.mode = m.mode;
- mountTapContinue(overlay, {
- scene: "bitsStretch", sceneArgs: { mode: m.mode },
- html: `<div class="lab-demo__badge">Device ${step + 1} of ${modes.length}</div>${m.html}`,
- onDone: () => { step++; show(); },
- });
- }
- show();
-}
-
-function s8({ overlay, setCoach, completeSub }) {
- setCoach("Misconceptions: claim first on canvas; truth appears after you bust the myth.");
- mountMythCards(overlay, {
- scene: "bitsMyth", title: "Myth Bust", badge: LAB_ASSET_PATHS.myth,
- myths: [
- { claim: "RAM and storage are the same", truth: "RAM is temporary-fast; storage keeps files after power off", sceneMyth: 0 },
- { claim: "CPU is only for gaming", truth: "CPU runs all instructions - school apps too", sceneMyth: 1 },
- { claim: "More storage always opens apps faster", truth: "Open speed leans on CPU + RAM; storage holds files", sceneMyth: 2 },
- { claim: "Phones have no CPU", truth: "Phones have a CPU/SoC", sceneMyth: 3 },
- { claim: "Closing the lid deletes storage", truth: "Storage files stay; RAM clears when powered off", sceneMyth: 4 },
- ],
+ html: `${badgeHtml(LAB_ASSET_PATHS.m1, "kitchen")}
+ ${n(
+ "In the time it took that laptop to wake up, it just performed billions of individual actions - and every single one of them, underneath absolutely everything you just saw, was nothing more than a tiny switch being flipped on or off. That's genuinely the entire secret. Today we're going to shrink down, meet those switches, meet the chef who uses them, and find out exactly where a computer keeps everything it knows.",
+ )}`,
  onDone: completeSub,
  });
 }
 
-function s9({ overlay, setCoach, completeSub }) {
- setCoach("Fluency: quick CPU / RAM / storage checks. Need about 80% to continue.");
- mountSpeedDrill(overlay, {
- scene: "bitsDrill", title: "Fluency Drill", passScene: "bitsMastery", passRatio: 0.8,
- items: [
- { q: "CPU main job?", opts: ["Run instructions", "Store photos forever"], ok: 0, prompt: "CPU" },
- { q: "RAM after power off?", opts: ["Clears", "Keeps forever"], ok: 0, prompt: "RAM" },
- { q: "Where saved homework lives?", opts: ["Storage", "Only RAM"], ok: 0, prompt: "Save" },
- { q: "SSD is a kind of...", opts: ["Storage", "Keyboard"], ok: 0, prompt: "SSD" },
- { q: "Open apps sit mainly in...", opts: ["RAM", "Printer"], ok: 0, prompt: "Open" },
- { q: "Snack is a PC part?", opts: ["No", "Yes"], ok: 0, prompt: "Snack" },
- { q: "Best Bits rule?", opts: ["CPU thinks, RAM holds, storage keeps", "Only screens matter"], ok: 0, prompt: "Rule" },
- { q: "Phone has a CPU?", opts: ["Yes (SoC/chip)", "Never"], ok: 0, prompt: "Phone" },
- ],
+function s2_switches({ overlay, setCoach, completeSub }) {
+ setCoach("Flip switches on the canvas - watch the binary and decimal readout update live.");
+ mountGate(overlay, {
+ scene: "bitsSwitches1",
+ badge: "Spiral 1 · Enactive",
+ title: "The Only Language a Computer Speaks: Bits",
+ pulse: true,
+ ready: () => (labState.bitsSwitchFlips || 0) >= 2,
+ readyText: "8 switches → 256 unique patterns. That's the whole foundation.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Each one of those switches is either on or off, full stop - no dimmer setting, no in-between. And yet, just 8 of them together can already represent 256 completely different values. This is genuinely the entire foundation everything else in this lesson is built on top of.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s10({ overlay, setCoach, completeSub }) {
- setCoach("Mastery: rebuild the path, transfer to phone + lab PC, then prove it.");
- mountOrderSteps(overlay, {
- scene: "bitsMastery", title: "Bit Scout Mastery",
- instructions: "Order your journey: meet -> sort -> lab -> rule -> myth/scout.",
- items: [
- { id: "meet", html: "Meet the inside team" },
- { id: "sort", html: "Sort CPU / RAM / storage jobs" },
- { id: "lab", html: "Busy PC + RAM fill labs" },
- { id: "rule", html: "Name the Bits rule" },
- { id: "myth", html: "Stretch devices + bust myths" },
- { id: "scout", html: "Claim Bit Scout" },
- ],
- correctIds: ["meet", "sort", "lab", "rule", "myth", "scout"],
- onDone: () => mountTapContinue(overlay, {
- scene: "bitsMastery",
- html: `<h3>Mixed case</h3>
- <p><strong>Phone + school lab:</strong> Both still have CPU (think), RAM (open now), and storage (save for later).</p>
- <p>Ready for the final checks?</p>`,
- onDone: () => mountMultiQuiz(overlay, {
- scene: "bitsMastery",
- title: "Final mastery",
- doneTitle: "Bit Scout ready",
- items: [
- {
- q: "CPU, RAM, and storage teach the same team idea because...",
- opts: [
- "They split think / hold-now / keep-after-power-off jobs",
- "They are all the same as a keyboard",
- "Only RAM keeps files forever",
- "Phones skip two of the three",
- ],
- ok: 0,
+function s3_bits_bytes({ overlay, setCoach, completeSub }) {
+ setCoach("Watch the same pattern become a number, a letter, and a pixel - then name the rule.");
+ mountGate(overlay, {
+ scene: "bitsReinterpret1",
+ badge: "Spiral 1 · Iconic",
+ title: "Same Pattern, Three Meanings",
+ ready: () => true,
+ html: n(
+ "This is the part that surprises people the most: a computer doesn't have a separate secret method for storing text versus numbers versus pictures. It's all switches, all the way down - just interpreted differently depending on the job at hand.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "bitsTerms1",
+ html: `<h3>Spiral 1 · Symbolic</h3>
+ <p><strong>Bit</strong> - a single binary digit: 0 or 1, off or on. The smallest possible unit of information.</p>
+ <p><strong>Byte</strong> - a group of 8 bits, able to represent 256 different values.</p>`,
+ onDone: completeSub,
+ });
  },
- {
- q: "After shutdown, a photo you saved lives in...",
- opts: ["Storage", "Only RAM", "Only the CPU", "The snack drawer"],
- ok: 0,
- },
- {
- q: "Which is NOT a Computer Bits part?",
- opts: ["Wall paint color", "CPU", "RAM", "SSD storage"],
- ok: 0,
- },
- ],
- onDone: () => mountTapContinue(overlay, {
- scene: "bitsMastery", badge: LAB_ASSET_PATHS.m1,
- html: `<h3>Bit Scout!</h3>
- <p>You can explain CPU, RAM, and storage on phones and PCs. Press <strong>Next</strong> in the dock to claim the reward.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
- }),
- }),
  });
 }
+
+function s4_chef({ overlay, setCoach, completeSub }) {
+ setCoach("Drag 3 and 5 to the chef, Execute once slowly - then slide the speed toward fast.");
+ mountGate(overlay, {
+ scene: "bitsChef2",
+ badge: "Spiral 2 · Enactive",
+ title: "The Chef: What Does the CPU Actually Do?",
+ pulse: true,
+ ready: () => labState.bitsChefExecuted && (labState.bitsSpeedLevel || 0) >= 0.5,
+ readyText: "Real CPUs don't do one of these a second. They do billions.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "You just watched the exact same basic cycle happen once, slowly, and then thousands of times, rapidly - and a real CPU does this same simple cycle billions of times every single second, every one of those instructions built from nothing more exotic than bits, exactly like the ones you flipped a minute ago.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function s5_loop({ overlay, setCoach, completeSub }) {
+ setCoach("Watch the 4-step instruction loop cycle - then read the formal CPU terms.");
+ mountGate(overlay, {
+ scene: "bitsLoop2",
+ badge: "Spiral 2 · Iconic",
+ title: "Read → Data → Compute → Result",
+ ready: () => true,
+ html: n(
+ "Every single thing your computer does - loading a photo, running a game, opening this very lesson - is this same tiny loop, repeated an almost unimaginable number of times per second. Nothing mysterious is happening at the center of a computer. Just this loop, running unbelievably fast.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "bitsTerms2",
+ html: `<h3>Spiral 2 · Symbolic</h3>
+ <p><strong>CPU (Central Processing Unit)</strong> - executes instructions and performs calculations; the computer's "brain."</p>
+ <p><strong>Instruction</strong> - one single operation the CPU carries out (like adding two numbers).</p>
+ <p><strong>Clock speed</strong> - instruction cycles per second, measured in hertz (GHz = billions per second).</p>`,
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+function s6_kitchen({ overlay, setCoach, completeSub }) {
+ setCoach("Fetch from counter (fast), then pantry (slower walk), then Power Off - watch the counter wipe.");
+ mountGate(overlay, {
+ scene: "bitsKitchen3",
+ badge: "Spiral 3 · Enactive",
+ title: "The Countertop vs. the Pantry",
+ pulse: true,
+ ready: () => labState.bitsFetchCounter && labState.bitsFetchPantry && labState.bitsPowerOff,
+ readyText: "Counter: fast but forgetful. Pantry: slower but permanent.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Two genuinely different trade-offs, both just demonstrated: the countertop is far faster to grab from, but everything on it disappears the moment the kitchen shuts down. The pantry is slower to fetch from, but it doesn't care whether the kitchen is open or closed - everything in it just stays put.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function s7_memory({ overlay, setCoach, completeSub }) {
+ setCoach("Compare speed and permanence - then name RAM and storage.");
+ mountGate(overlay, {
+ scene: "bitsCompare3",
+ badge: "Spiral 3 · Iconic",
+ title: "Fast but Forgetful · Slower but Permanent",
+ ready: () => true,
+ html: n(
+ "Neither one of these is simply 'better' - a kitchen genuinely needs both. All-countertop, no pantry, and you'd lose everything the second the power went out. All-pantry, no countertop, and even the simplest task would mean a slow walk across the room every single time.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "bitsTerms3",
+ html: `<h3>Spiral 3 · Symbolic</h3>
+ <p><strong>RAM (Random Access Memory)</strong> - fast, temporary working memory; <em>volatile</em> (lost without power).</p>
+ <p><strong>Storage (SSD / hard drive)</strong> - slower, long-term memory; <em>non-volatile</em> (stays without power).</p>
+ <p><em>"Volatile" just means: disappears without power. RAM is volatile. Storage is not.</em></p>`,
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+function s8_program({ overlay, setCoach, completeSub }) {
+ setCoach("Open the program and tap through all 4 steps - including the cramped-kitchen slowdown.");
+ mountGate(overlay, {
+ scene: "bitsProgram4",
+ badge: "Spiral 4 · Enactive",
+ title: "How It All Connects",
+ pulse: true,
+ ready: () => (labState.bitsProgramStep || 0) >= 4 && labState.bitsCrampedSeen,
+ readyText: "Storage → RAM → CPU → screen. Lag = a full counter.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "This is genuinely the entire journey every program takes, every time you open it: pulled from storage into RAM, worked on by the CPU, shown to you as a result. And that cramped-kitchen slowdown you just watched is exactly what's happening on a real computer that feels sluggish with too many programs open at once - not a broken computer, just a countertop that's run out of space.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function s9_spec({ overlay, setCoach, completeSub }) {
+ setCoach("Hover each spec line - it connects to the kitchen. Then read the summary.");
+ mountGate(overlay, {
+ scene: "bitsSpec4",
+ badge: "Spiral 4 · Iconic",
+ title: "Read a Spec Sheet",
+ ready: () => true,
+ html: n(
+ "Every one of those confusing numbers on a computer's spec sheet is really just describing the size of the countertop, the size of the pantry, and how fast the chef can work. You now genuinely know what you're looking at, and why each of those numbers matters for how a computer actually feels to use.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "bitsTerms4",
+ html: `<h3>Spiral 4 · Symbolic</h3>
+ <ul class="bk-summary-list">
+ <li><strong>Bit → Byte</strong> - basic units of information</li>
+ <li><strong>CPU</strong> - executes instructions (GHz)</li>
+ <li><strong>RAM</strong> - fast, volatile working memory</li>
+ <li><strong>Storage</strong> - slower, non-volatile long-term memory</li>
+ </ul>
+ <p><em>Next: once the CPU produces a result, how does it get to your screen or printer?</em></p>`,
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+function s10_closing({ overlay, setCoach, completeSub }) {
+ setCoach("Watch the laptop wake with the ghost kitchen underneath - then open the recap map.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "bitsClose",
+ badge: "Closing",
+ title: "The Kitchen, Fully Understood",
+ html: n(
+ "That laptop waking up in under a second isn't mysterious anymore. Underneath it, exactly what you'd expect: billions of switches, a chef working through instructions faster than you can blink, a countertop holding exactly what's needed right now, and a pantry quietly keeping everything else safe. That's not a metaphor stretched to fit anymore. That's genuinely what's happening, every single time you turn a computer on.",
+ ),
+ ready: () => labState.bitsCloseU >= 0.5 || Date.now() - t0 > 7000,
+ readyText: "The kitchen, fully understood.",
+ doneLabel: "Open the recap map ▶",
+ onDone: () => {
+ setCoach("Tap a spiral number to replay, then finish Bits: Inside the Machine's Kitchen.");
+ mountSpiralMap(overlay, {
+ scene: "bitsSpiral",
+ title: "Your recap map",
+ finishLabel: "Finish Bits: Inside the Machine's Kitchen ▶",
+ narration:
+ "The four numbers are the four spirals you finished. Tap a number (on the canvas or here) to replay a short highlight. When you are ready, tap Finish.",
+ statusIdle: "Tap a number to replay, or finish now.",
+ stops: [
+ { n: 1, label: "1: Bits" },
+ { n: 2, label: "2: CPU" },
+ { n: 3, label: "3: Memory" },
+ { n: 4, label: "4: Connect" },
+ ],
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+const s1 = s1_opening;
+const s2 = s2_switches;
+const s3 = s3_bits_bytes;
+const s4 = s4_chef;
+const s5 = s5_loop;
+const s6 = s6_kitchen;
+const s7 = s7_memory;
+const s8 = s8_program;
+const s9 = s9_spec;
+const s10 = s10_closing;

@@ -1,4 +1,4 @@
-import { bootMathQuest } from "./js/boot-l1.js?v=tier3";
+import { bootMathQuest } from "./js/boot-l1.js?v=numbersense1";
 import { manifest } from "./manifest.js";
 
 function showBootError(msg) {

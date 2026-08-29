@@ -9,7 +9,7 @@ import {
  setHeatTarget,
  pulseFailFeedback,
  pulseSuccessFeedback,
-} from "./lab-state.js";
+} from "./lab-state.js?v=numbersense1";
 import { createActivitySession, stopActivitySession, heatPhase } from "./activity-controller.js";
 
 let activeCleanup = null;
@@ -29,13 +29,13 @@ export function cancelActiveActivity() {
  arena?.setIntentHandler?.(null);
 }
 
-function trackCleanup(fn) {
+export function trackCleanup(fn) {
  cancelActiveActivity();
  activeCleanup = fn || null;
  return fn;
 }
 
-function once(fn) {
+export function once(fn) {
  let done = false;
  return (...args) => {
  if (done) return;
@@ -970,5 +970,95 @@ export function mountMultiQuiz(host, cfg) {
  }
  render();
  return trackCleanup(() => {});
+}
+
+export function narrationHtml(text) {
+ return `<p class="tiny-narration">${text}</p>`;
+}
+
+export function mountGate(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ window.__arena?.setIntentHandler?.(null);
+ });
+ playScene(cfg.scene, cfg.sceneArgs || {});
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ ${cfg.badge ? `<div class="lab-demo__badge">${cfg.badge}</div>` : ""}
+ ${cfg.title ? `<h3>${cfg.title}</h3>` : ""}
+ ${cfg.html || ""}
+ ${cfg.controlsHtml || ""}
+ <p id="tiny-gate-status" class="drag-hint" aria-live="polite">${cfg.status || ""}</p>
+ <button type="button" class="btn primary ${cfg.pulse ? "tiny-pulse" : ""}" id="tiny-gate-go" ${cfg.ready ? "disabled" : ""}>${cfg.doneLabel || "Continue ▶"}</button>
+ </div>`;
+ const btn = host.querySelector("#tiny-gate-go");
+ const status = host.querySelector("#tiny-gate-status");
+ iv = cfg.ready
+ ? setInterval(() => {
+ if (cancelled) return;
+ if (cfg.ready()) {
+ btn.disabled = false;
+ if (cfg.readyText && status) status.textContent = cfg.readyText;
+ }
+ }, 120)
+ : null;
+ if (cfg.bind) cfg.bind(host, { finish, button: btn, status, playScene });
+ btn.onclick = () => {
+ if (btn.disabled) return;
+ finish();
+ };
+}
+
+export function mountSpiralMap(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ const arena = window.__arena;
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ arena?.setIntentHandler?.(null);
+ });
+ chemLabState.spiralStop = 0;
+ chemLabState.spiralUntil = 0;
+ chemLabState.spiralFinish = false;
+ playScene(cfg.scene || "numSpiral");
+ const stops = cfg.stops || [];
+ const finishLabel = cfg.finishLabel || "Finish Number Sense ▶";
+ const statusIdle = cfg.statusIdle || "Tap a number to replay, or finish now.";
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">${cfg.badge || "Closing"}</div>
+ <h3>${cfg.title || "Your recap map"}</h3>
+ ${narrationHtml(cfg.narration || "This last screen is a recap, not a new puzzle.")}
+ <div class="tiny-spiral-stops">
+ ${stops.map((s) => `<button type="button" class="btn secondary" data-stop="${s.n}">${s.label}</button>`).join("")}
+ </div>
+ <p id="spiral-status" class="drag-hint">${statusIdle}</p>
+ <button type="button" class="btn primary tiny-pulse" id="spiral-go">${finishLabel}</button>
+ </div>`;
+ function playStop(n) {
+ if (cancelled) return;
+ chemLabState.spiralStop = n;
+ chemLabState.spiralUntil = performance.now() + 4500;
+ const el = host.querySelector("#spiral-status");
+ if (el) el.textContent = `Replaying spiral ${n}. Tap another number, or ${finishLabel}.`;
+ }
+ host.querySelectorAll("[data-stop]").forEach((btn) => {
+ btn.onclick = () => playStop(Number(btn.dataset.stop));
+ });
+ host.querySelector("#spiral-go").onclick = () => finish();
+ arena?.setIntentHandler?.((intent) => {
+ if (intent.type !== "CANVAS_TAP") return;
+ if (intent.meta?.action === "spiral") playStop(intent.meta.stop);
+ if (intent.meta?.action === "spiralFinish") finish();
+ });
+ iv = setInterval(() => {
+ if (!cancelled && chemLabState.spiralFinish) finish();
+ }, 80);
 }
 

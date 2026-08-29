@@ -1,421 +1,199 @@
 /**
- * Force Fighter - Mission 1: The Lazy Rock (Newton 1 / inertia)
+ * Force Fighter Mission 1: The Lazy Rock
+ * Script: Opening + 4 Bruner spirals (still/move → inertia → Newton 1 → why it matters) + recap map.
+ * Packed into the shared 10-step mission engine (N_SUBS = 10).
  */
-import { forceLabState } from "./force-state.js";
-import { FORCE_ASSET_PATHS } from "./force-state.js";
+import { forceLabState, resetLazyRockState, FORCE_ASSET_PATHS } from "./force-state.js?v=pairvis6";
 import {
- mountMotionChain,
- mountDragSort,
- mountForceDial,
- mountRevealSteps,
- mountEquationBuild,
- mountQuiz,
- mountSpeedDrill,
- mountMythCards,
- mountTapContinue,
- mountOrderSteps,
+ mountGate,
+ mountSpiralMap,
+ mountRockPoke,
+ mountRockStates,
+ mountRockEffort,
+ mountRockInertia,
+ mountRockIce,
+ mountRockNewton,
+ mountRockCrash,
+ mountRockWhy,
  badgeHtml,
-} from "./force-activities.js";
+} from "./force-activities.js?v=pairvis6";
 
 export const L1_META = {
- objective: "By the end of this mission, you'll be able to explain inertia / Newton 1 in your own words.",
- bdHook: "Bangladesh everyday: a parked rickshaw, a football kick, a shopping trolley - notice what stays put until a push.",
+ objective:
+ "By the end of this mission, you'll be able to explain inertia and Newton's First Law in your own words: an object keeps its state of motion until a net outside force acts.",
+ bdHook: "Start with a canal-bank rock that will not move, then feel the same stubbornness on a bus and in a seatbelt.",
  predict: {
- q: "Before we start - what mainly wakes a lazy rock?",
+ q: "Before we start: a rock sitting in a field does nothing. What is the best reason?",
  options: [
- "Waiting forever with no push",
- "An unbalanced push or pull",
- "Hoping it decides to move on its own",
+ "It is waiting until it feels like moving",
+ "Things don't change what they're doing unless something makes them",
+ "Only living things can stay still",
  ],
  ok: 1,
  },
-
  kidTitle: "The Lazy Rock",
- theme: "inertia / Newton 1",
+ theme: "inertia and Newton's First Law",
  emoji: "🪨",
  rewardName: "Rock Rookie",
  intro:
- "Things stay still until something pushes or pulls them. Wake a sleepy rock - just like pushing a door open!",
- everyday: ["Pushing a door open", "Kicking a football", "Pushing a shopping trolley"],
+ "Here's a rock by the canal. It's not doing anything, and it will not, unless something makes it. That stubborn preference for continuing exactly whatever it was already doing is the first idea in physics worth a whole lesson. We call it the lazy rock, and 'lazy' turns out to be the perfect scientific word for it.",
+ everyday: [
+ "A canal-bank boulder sitting still",
+ "A ball, a brick, and a football given the same push",
+ "A bus starting and braking, and a seatbelt supplying the missing stop",
+ ],
  subTitles: [
- "Meet the Lazy Rock",
- "Coast & Glide",
- "Sort: Force or Not?",
- "Wall Hit Lab",
- "Why It Coasts",
- "Name the Inertia Rule",
- "Stretch: New Contexts",
- "Myth Bust",
- "Fluency Drill",
- "Lazy Rock Mastery",
+ "A sitting rock",
+ "Poke the rock",
+ "Still or moving",
+ "Ball, brick, football",
+ "Feel inertia on a bus",
+ "Ice then gravel",
+ "What Newton said",
+ "Seatbelts",
+ "Why it matters",
+ "The rock was never lazy",
  ],
 };
 
 export function runL1Sub(subIndex, api) {
  const { registerTryAgain } = api;
- forceLabState.reveal = false;
- forceLabState.tokenProgress = 0;
- forceLabState.masteryStep = 0;
- forceLabState.sortPlaced = 0;
- forceLabState.placed = {};
- forceLabState.selectedId = null;
- forceLabState.mythBusted = false;
- forceLabState.mythPhase = "claim";
- forceLabState.rockAwake = false;
- forceLabState.rockVx = 0.2;
- forceLabState.wallHit = 0;
- forceLabState.heat = 0.2;
- forceLabState.heatTarget = 0.2;
- forceLabState.phase = "desk";
- forceLabState.mode = "door";
+ resetLazyRockState();
 
  const runners = [
- sub1_meet,
- sub2_glide,
- sub3_sort,
- sub4_wall,
- sub5_explain,
- sub6_rule,
- sub7_stretch,
- sub8_myths,
- sub9_drill,
- sub10_mastery,
+ sub1_opening,
+ sub2_poke,
+ sub3_states,
+ sub4_effort,
+ sub5_inertia,
+ sub6_ice,
+ sub7_newton,
+ sub8_crash,
+ sub9_why,
+ sub10_closing,
  ];
  const fn = runners[subIndex] || runners[0];
  registerTryAgain(() => {
  api.overlay.innerHTML = "";
+ resetLazyRockState();
  fn(api);
  });
  fn(api);
 }
 
-function sub1_meet({ overlay, setCoach, completeSub }) {
- setCoach("Hook: still things stay still until an unbalanced push or pull.");
- mountMotionChain(overlay, {
- title: "Meet the Lazy Rock",
- beats: [
- {
- scene: "rockMeet",
- sceneArgs: { phase: "desk" },
- dwellMs: 4000,
- html: `${badgeHtml(FORCE_ASSET_PATHS.rock, "rock")}
- <p><strong>Act 1:</strong> Drag the door, ball, and sleepy rock - everyday clues about push.</p>`,
- },
- {
- scene: "rockMeet",
- sceneArgs: { phase: "wake" },
- dwellMs: 4500,
- html: `<p><strong>Act 2:</strong> Flick or drag the rock awake. An unbalanced force starts motion.</p>`,
- },
- {
- scene: "rockMeet",
- sceneArgs: { phase: "glide" },
- dwellMs: 4000,
- html: `<p><strong>Act 3:</strong> After the push ends, the rock can coast - speed stays roughly flat.</p>`,
- },
- {
- scene: "rockMeet",
- sceneArgs: { phase: "settle" },
- dwellMs: 3800,
- html: `<p><strong>Act 4:</strong> Big idea - objects keep doing what they are doing until an unbalanced force acts.</p>`,
- },
- ],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "rockMeet",
- sceneArgs: { phase: "settle" },
- title: "Exit check",
- q: "A parked van stays put mainly because...",
- opts: [
- "Forces on it are balanced (net force ≈ 0)",
- "It is afraid of moving",
- "Gravity turned off",
- "Only heavy things can rest",
- ],
- ok: 0,
- onDone: () => {
- mountTapContinue(overlay, {
- scene: "rockMeet",
- sceneArgs: { phase: "desk" },
- badge: FORCE_ASSET_PATHS.rock,
- html: `<h3>You met the Lazy Rock</h3><p>Next: watch coasting speed on a low-friction lane.</p>`,
- onDone: completeSub,
- advanceAfterDone: true,
- });
- },
- });
- },
- });
-}
-
-function sub2_glide({ overlay, setCoach, completeSub }) {
- setCoach("Watch: with almost no net force, speed stays about the same - inertia.");
- forceLabState.rockVx = 0.45;
- forceLabState.heat = 0.45;
- mountForceDial(overlay, {
- scene: "rockGlide",
- title: "Coast & Glide",
- html: `<p>Drag the <strong>coast speed</strong> handle (or use +/−). The rock keeps coasting - speed readout stays flat without a new force.</p>
- <p>This is not heating ice - you are setting how fast it glides on a low-friction lane.</p>`,
- goalText: "Goal: set coast speed ≥ 60%.",
- doneLabel: "Glide checked ▶",
- threshold: 0.6,
- startHeat: 0.45,
- axis: "x",
- canvasAction: "stretch",
- sliderLabel: "Coast speed",
- syncKey: "rockVx",
- readoutLabels: {
- cold: "Slow coast",
- melting: "Medium coast",
- liquid: "Fast coast - still flat speed",
- simmer: "Speedy coast - inertia!",
- },
- badge: FORCE_ASSET_PATHS.arrow,
- onDone: () => {
- mountQuiz(overlay, {
- scene: "rockGlide",
- title: "Check",
- q: "After the push ends on smooth ice, the rock keeps moving mainly because of...",
- opts: ["Inertia (no new net force needed to keep coasting)", "A hidden forever-push", "Magic", "Air always pushing forward"],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub3_sort({ overlay, setCoach, completeSub }) {
- setCoach("Sort stories: coasting, balanced rest, or unbalanced push.");
- mountTapContinue(overlay, {
- scene: "rockSort",
- html: `<h3>Force or not?</h3>
- <p><strong>No net / coast:</strong> ice drift, space coast.</p>
- <p><strong>Balanced:</strong> rock at rest, parked van, book on table.</p>
- <p><strong>Unbalanced:</strong> shove, kick, sudden brake.</p>`,
- onDone: () => {
- mountDragSort(overlay, {
- scene: "rockSort",
- title: "Sort force stories",
- instructions: "Drag into No net force, Balanced, or Unbalanced.",
- successText: "Nice sort - coast, balance, or push!",
- chips: [
- { id: "drift", text: "Ice drift (no push)", short: "Drift", color: 0x38bdf8 },
- { id: "rest", text: "Rock at rest", short: "Rest", color: 0xa8a29e },
- { id: "shove", text: "Hard shove", short: "Shove", color: 0xfbbf24 },
- { id: "kick", text: "Kick a ball", short: "Kick", color: 0x22c55e },
- { id: "park", text: "Parked van", short: "Park", color: 0x94a3b8 },
- { id: "space", text: "Coast in space", short: "Space", color: 0xa78bfa },
- { id: "brake", text: "Sudden brake", short: "Brake", color: 0xf87171 },
- { id: "table", text: "Book on table", short: "Table", color: 0xd6d3d1 },
- ],
- zones: [
- { id: "none", label: "No net / coast", accept: ["drift", "space"] },
- { id: "balanced", label: "Balanced", accept: ["rest", "park", "table"] },
- { id: "unbalanced", label: "Unbalanced", accept: ["shove", "kick", "brake"] },
- ],
- onDone: () => {
- forceLabState.reveal = true;
- mountQuiz(overlay, {
- scene: "rockSort",
- title: "Justify",
- q: "A sudden brake is unbalanced because...",
- opts: [
- "A new force changes the velocity quickly",
- "Brakes remove all mass",
- "The car becomes lighter",
- "Forces always cancel when braking",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
- },
- });
-}
-
-function sub4_wall({ overlay, setCoach, completeSub }) {
- setCoach("Try it: hit the wall - the wall force points opposite the motion.");
- forceLabState.heat = 0.15;
- forceLabState.wallHit = 0;
- mountForceDial(overlay, {
- scene: "rockWall",
- title: "Wall Hit Lab",
- html: `<p>Slide the rock into the wall. When it hits, the wall pushes back the other way - an unbalanced force that stops or redirects.</p>`,
- goalText: "Goal: hit ≥ 85%.",
- doneLabel: "Wall hit ▶",
- threshold: 0.85,
- startHeat: 0.15,
- axis: "x",
- canvasAction: "stretch",
- sliderLabel: "Approach to wall",
- readoutLabels: {
- cold: "Far from wall",
- melting: "Closing in…",
- liquid: "Almost there",
- simmer: "HIT - wall force opposite!",
- },
- badge: FORCE_ASSET_PATHS.arrow,
- onDone: () => {
- mountQuiz(overlay, {
- scene: "rockWall",
- title: "Check",
- q: "When the rock hits the wall moving right, the wall force on the rock points...",
- opts: ["Left (opposite the motion)", "Right (same way)", "Straight up only", "Nowhere"],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub5_explain({ overlay, setCoach, completeSub }) {
- setCoach("Explain: ice, belt, space - when forces change, motion changes.");
- mountRevealSteps(overlay, {
- scene: "rockMeet",
- sceneArgs: { phase: "glide" },
- title: "Why it coasts",
- steps: [
- { html: "<p>A short push changes velocity - then it can end.</p>" },
- { html: "<p>With little friction, the rock keeps nearly the same speed.</p>" },
- { html: "<p>That stubborn keep-going / stay-put idea is <strong>inertia</strong>.</p>" },
- ],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "rockMeet",
- sceneArgs: { phase: "settle" },
- title: "Name it",
- q: "Best word for “keeps doing what it’s doing until unbalanced force”?",
- opts: ["Inertia", "Brightness", "Volume", "Temperature"],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub6_rule({ overlay, setCoach, completeSub }) {
- setCoach("Symbolic: build the inertia rule.");
- mountEquationBuild(overlay, {
- scene: "rockRule",
- title: "Build the inertia rule",
- instructions: "Tap tokens in order.",
- badge: FORCE_ASSET_PATHS.rule,
- tokens: [
- { id: "a", html: "Stay still" },
- { id: "b", html: "or coast" },
- { id: "c", html: "until" },
- { id: "d", html: "FORCE" },
- ],
- correctIds: ["a", "b", "c", "d"],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "rockRule",
- title: "Rule check",
- q: "Newton’s first-law idea in this lab is closest to...",
- opts: [
- "Motion stays the same until unbalanced force acts",
- "Force equals mass times acceleration only",
- "Every push has a pair push",
- "Friction always helps you go faster",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub7_stretch({ overlay, setCoach, completeSub }) {
- setCoach("Stretch: door, ice, space, belt, asteroid - same inertia idea. Tap canvas chips too.");
- const modes = [
- { mode: "door", title: "Door", blurb: "Stays shut until you push - rest until unbalanced force." },
- { mode: "ice", title: "Ice", blurb: "Low friction - coasts longer after the shove ends." },
- { mode: "space", title: "Space", blurb: "Almost no force - keeps velocity." },
- { mode: "belt", title: "Belt", blurb: "Conveyor force changes motion." },
- { mode: "asteroid", title: "Asteroid", blurb: "Tap to nudge - force changes velocity." },
- ];
- let i = 0;
- function step() {
- if (i >= modes.length) {
- mountQuiz(overlay, {
- scene: "rockStretch",
- title: "Transfer",
- q: "Nudging an asteroid changes its velocity because...",
- opts: ["You applied an unbalanced force", "Asteroids dislike stillness", "Space removes mass", "Light pushes forever"],
- ok: 0,
- onDone: completeSub,
- });
- return;
+function sub1_opening({ overlay, setCoach, completeSub }) {
+ setCoach("A canal rock that does nothing, until you make it. Tap Try Nudging It.");
+ mountGate(overlay, {
+ scene: "rockOpen",
+ badge: "Opening",
+ title: "The Lazy Rock",
+ pulse: true,
+ ready: () => forceLabState.rockNudged,
+ readyText: "It only moved because you made it.",
+ doneLabel: "Start the lesson ▶",
+ controlsHtml: `<button type="button" class="btn secondary tiny-pulse" id="rock-nudge-btn">Try Nudging It →</button>`,
+ html: `${badgeHtml(FORCE_ASSET_PATHS.rock, "lazy rock")}
+ ${n(
+ "Here's a rock. It's not doing anything. It's not going to do anything, either, not unless something makes it. That sounds obvious, almost too obvious to be worth a whole lesson. But this exact idea, that things don't change what they're doing all by themselves, turns out to be one of the deepest, most useful ideas in all of physics. We're going to call this rock the lazy rock, and by the end of today, you'll understand exactly why 'lazy' is actually the perfect scientific word for it.",
+ )}`,
+ bind(host) {
+ const arena = window.__arena;
+ function doNudge() {
+ forceLabState.rockNudged = true;
+ const btn = document.getElementById("tiny-gate-go");
+ if (btn) {
+ btn.disabled = false;
+ btn.click();
  }
- const m = modes[i++];
- forceLabState.mode = m.mode;
- mountTapContinue(overlay, {
- scene: "rockStretch",
- sceneArgs: { mode: m.mode },
- html: `<h3>${m.title}</h3><p>${m.blurb}</p>
- <p class="drag-hint">Tip: tap the matching chip on the canvas (Door / Ice / Space / Belt / Asteroid).</p>`,
- onDone: step,
- });
  }
- step();
-}
-
-function sub8_myths({ overlay, setCoach, completeSub }) {
- setCoach("Myth bust: forever-kick, constant push, rest means no forces...");
- mountMythCards(overlay, {
- scene: "rockMyth",
- title: "Inertia myths",
- myths: [
- { title: "Forever kick", claim: "A kick keeps pushing the ball forever.", truth: "The kick is short; then inertia + friction rule.", sceneMyth: 0 },
- { title: "Need push", claim: "Moving things need a constant push to keep going.", truth: "Only net force changes velocity - coasting needs none.", sceneMyth: 1 },
- { title: "Heavy want", claim: "Heavier objects fall because they want to stop more.", truth: "Inertia resists change - gravity is a separate story.", sceneMyth: 2 },
- { title: "Must have force", claim: "If something is moving there must be a force on it now.", truth: "It can coast with zero net force after the push ends.", sceneMyth: 3 },
- { title: "Rest = no forces", claim: "Rest means no forces at all.", truth: "Rest can mean forces are balanced (net zero).", sceneMyth: 4 },
- ],
+ host.querySelector("#rock-nudge-btn")?.addEventListener("click", doNudge);
+ arena?.setIntentHandler?.((intent) => {
+ if (
+ (intent.type === "CANVAS_TAP" || intent.type === "CANVAS_UP") &&
+ intent.meta?.action === "nudge"
+ ) {
+ doNudge();
+ }
+ });
+ },
  onDone: completeSub,
  });
 }
 
-function sub9_drill({ overlay, setCoach, completeSub }) {
- setCoach("Quick checks - balance, space coast, redirect.");
- mountSpeedDrill(overlay, {
- scene: "rockDrill",
- title: "Fluency drill",
- items: [
- { q: "Book resting on a table - net force is...", opts: ["About zero (balanced)", "Huge upward", "Huge downward only", "Infinite"], ok: 0, prompt: "Balanced?" },
- { q: "Empty space, engines off, ignore drag - the craft...", opts: ["Keeps its velocity", "Must stop instantly", "Speeds up forever", "Turns into light"], ok: 0, prompt: "Space coast" },
- { q: "A wall hit can...", opts: ["Redirect / stop by applying force", "Create new mass", "Delete inertia", "Remove gravity"], ok: 0, prompt: "Wall force" },
- ],
- onDone: completeSub,
- });
+function sub2_poke({ overlay, setCoach, completeSub }) {
+ setCoach("A tap is not enough. Drag to push the rock, then try the ball.");
+ mountRockPoke(overlay, { onDone: completeSub });
 }
 
-function sub10_mastery({ overlay, setCoach, completeSub }) {
- setCoach("Mastery: velocity cannot change with zero net force.");
- forceLabState.masteryStep = 5;
- mountOrderSteps(overlay, {
- scene: "rockMastery",
- title: "Story order",
- instructions: "Put the inertia story in order.",
- items: [
- { id: "s1", html: "Object at rest or coasting" },
- { id: "s2", html: "Unbalanced force acts" },
- { id: "s3", html: "Velocity changes" },
- { id: "s4", html: "Force can end - then coast again" },
- ],
- correctIds: ["s1", "s2", "s3", "s4"],
+function sub3_states({ overlay, setCoach, completeSub }) {
+ setCoach("Stillness and steady motion are more alike than they first appear.");
+ mountRockStates(overlay, { onDone: completeSub });
+}
+
+function sub4_effort({ overlay, setCoach, completeSub }) {
+ setCoach("Same push on a ball, a brick, and a football. Size is not the same as mass.");
+ mountRockEffort(overlay, { onDone: completeSub });
+}
+
+function sub5_inertia({ overlay, setCoach, completeSub }) {
+ setCoach("Start the bus, then brake. Your body tries to keep doing what it was already doing.");
+ mountRockInertia(overlay, { onDone: completeSub });
+}
+
+function sub6_ice({ overlay, setCoach, completeSub }) {
+ setCoach("Push on the ICE page first. Then flip to the GRAVEL page while it is still sliding.");
+ mountRockIce(overlay, { onDone: completeSub });
+}
+
+function sub7_newton({ overlay, setCoach, completeSub }) {
+ setCoach("Nudge the wrench in space, then the puck on the table. Then read Newton's First Law.");
+ mountRockNewton(overlay, { onDone: completeSub });
+}
+
+function sub8_crash({ overlay, setCoach, completeSub }) {
+ setCoach("Drive with no seatbelt, then with one. Watch the passenger keep going along a curve.");
+ mountRockCrash(overlay, { onDone: completeSub });
+}
+
+function sub9_why({ overlay, setCoach, completeSub }) {
+ setCoach("Do the bus, the coin, and the satellite yourself. Same law, three costumes.");
+ mountRockWhy(overlay, { onDone: completeSub });
+}
+
+function sub10_closing({ overlay, setCoach, completeSub }) {
+ setCoach("The rock, the ball, the brick, and the football were never really lazy. Then open the recap map.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "rockClose",
+ badge: "Closing",
+ title: "The rock was never really lazy",
+ html: n(
+ "We started with a rock doing nothing, and called it lazy. By now you know that's not really a character flaw. It's a law of the universe. Everything, everywhere, insists on continuing to do exactly what it's already doing, until something else forces a change. That's not laziness. That's inertia, and now you'll never look at a rock, or a brick, or a bus, or a seatbelt, quite the same way again.",
+ ),
+ ready: () => forceLabState.rockCloseU >= 0.95 || Date.now() - t0 > 8000,
+ readyText: "The overlays are in.",
+ doneLabel: "Open the spiral map ▶",
  onDone: () => {
- forceLabState.masteryStep = 6;
- mountQuiz(overlay, {
- scene: "rockMastery",
- title: "Mastery claim",
- q: "With truly zero net force, velocity...",
- opts: ["Cannot change", "Must increase", "Must become zero", "Becomes random"],
- ok: 0,
+ setCoach("Last screen: a recap map of the four spirals. Tap a number to replay, then Finish The Lazy Rock.");
+ mountSpiralMap(overlay, {
+ scene: "rockSpiral",
+ title: "Your recap map",
+ finishLabel: "Finish The Lazy Rock ▶",
+ narration:
+ "This last screen is a recap, not a new puzzle. The four numbers are the four loops you already finished. Tap a number (on the canvas or here) to replay a short highlight. When you are ready, tap Finish The Lazy Rock.",
+ statusIdle: "Tap a number to replay, or finish now.",
+ stops: [
+ { n: 1, label: "1: Why still/move" },
+ { n: 2, label: "2: Inertia" },
+ { n: 3, label: "3: Newton 1" },
+ { n: 4, label: "4: Why it matters" },
+ ],
  onDone: completeSub,
  });
  },
  });
+}
+
+function n(text) {
+ return `<p class="tiny-narration">${text}</p>`;
 }

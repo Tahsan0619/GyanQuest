@@ -1,273 +1,280 @@
 /**
- * Digital book - Bio Explorer Mission 2: Cell City
- * Unique curriculum book (cell parts as a working city). Not a template fill-in.
- * Photos: Wikimedia Commons (see assets/book/CREDITS-m2.json).
+ * Bio Explorer Mission 2 book: Cell City
+ * Companion to the 4-spiral lesson (cities of cells → animal workers → plant upgrades → cooperation).
  */
 export const BOOK = {
-  missionIndex: 1,
-  title: "Cell City",
-  subtitle: "tiny parts that keep life running",
-  subject: "Bio Explorer / Cell City",
-  theories: [
-    "cognitive-load",
-    "dual-coding",
-    "multimedia-learning",
-    "constructivism",
-    "conceptual-change",
-    "spiral-scaffold",
-    "retrieval-practice",
-  ],
-  cover: {
-    title: "Cell City",
-    art: "/games/bio-explorer/assets/book/m2-cover.jpg",
-  },
-  glossary: [
-    { id: "organelle", term: "organelle" },
-    { id: "nucleus", term: "nucleus" },
-    { id: "membrane", term: "membrane" },
-    { id: "cytoplasm", term: "cytoplasm" },
-    { id: "mitochondria", term: "mitochondria" },
-    { id: "chloroplast", term: "chloroplast" },
-    { id: "microscope", term: "microscope" },
-  ],
-  pages: [
-    {
-      title: "A city too small to see",
-      layout: "text",
-      theory: ["constructivism", "dual-coding", "cognitive-load"],
-      figures: [
-        {
-          place: "top",
-          slides: [
-            {
-              src: "/games/bio-explorer/assets/book/m2-hook.jpg",
-              caption: "Figure 1. Onion skin under a microscope - real cells, packed like rooms in a wall.",
-              alt: "Onion epidermis cells under microscope",
-            },
-            {
-              src: "/games/bio-explorer/assets/book/m2-cover.jpg",
-              caption: "A labeled cell model helps you name parts you cannot see with bare eyes.",
-              alt: "Animal cell model",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Every plant and animal body is built from cells. One cell is a tiny room with jobs happening inside.",
-        },
-        {
-          type: "p",
-          text: "We call the specialized parts organelles - like shops and offices inside a busy city.",
-        },
-        {
-          type: "p",
-          text: "Everyday hook: think of your school. The office, cafeteria, and walls each do a different job so the whole place works.",
-        },
-      ],
-    },
-    {
-      title: "Control room and border",
-      layout: "full-fig",
-      theory: ["multimedia-learning", "dual-coding"],
-      figures: [
-        {
-          place: "full",
-          slides: [
-            {
-              src: "/games/bio-explorer/assets/book/m2-nucleus.jpg",
-              caption: "Figure 2. The nucleus is the control room - it holds the instructions for the cell.",
-              alt: "Cell nucleus microscopy",
-            },
-            {
-              src: "/games/bio-explorer/assets/book/m2-membrane.jpg",
-              caption: "The membrane is the city border - it chooses what enters and leaves.",
-              alt: "Cell membrane diagram",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "ul",
-          items: [
-            "Nucleus: stores the plan (DNA instructions)",
-            "Membrane: thin border that controls traffic",
-            "Cytoplasm: the jelly-like space where work happens",
-          ],
-        },
-        {
-          type: "p",
-          text: "If the membrane fails, the city floods. If the nucleus is missing, nobody knows what to build next.",
-        },
-      ],
-    },
-    {
-      title: "Power plants inside",
-      layout: "text",
-      theory: ["cognitive-load", "dual-coding"],
-      figures: [
-        {
-          place: "top",
-          slides: [
-            {
-              src: "/games/bio-explorer/assets/book/m2-organelle.jpg",
-              caption: "Figure 3. Mitochondria release usable energy from food molecules - the cell's power stations.",
-              alt: "Mitochondria electron micrograph",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Mitochondria break down food fuel so the cell can move materials, repair itself, and grow.",
-        },
-        {
-          type: "p",
-          text: "Plant cells add another organelle: the chloroplast, which captures light to make sugar. Animal cells do not have that factory.",
-        },
-      ],
-    },
-    {
-      title: "Why models matter",
-      layout: "full-fig",
-      theory: ["multimedia-learning", "spiral-scaffold"],
-      figures: [
-        {
-          place: "full",
-          slides: [
-            {
-              src: "/games/bio-explorer/assets/book/m2-cover.jpg",
-              caption: "Figure 4. A classroom cell model is a map, not a photograph of every molecule.",
-              alt: "Classroom cell model",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Under a microscope you see outlines and some organelles. Colored models exaggerate size so you can learn the jobs faster.",
-        },
-        {
-          type: "p",
-          text: "In the mission, matching each organelle to a city job trained that map in your head.",
-        },
-      ],
-    },
-    {
-      title: "How the 10 steps connect",
-      layout: "text",
-      theory: ["spiral-scaffold", "cognitive-load"],
-      blocks: [
-        {
-          type: "p",
-          text: "Meet the city → tour parts → match jobs → lab view → explain → rule → stretch → myth → fluency → mastery.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Matching jobs stops you from memorizing names with no meaning",
-            "The microscope step proves cells are real, not cartoon only",
-            "The rule sentence links part → job → whole organism",
-          ],
-        },
-      ],
-    },
-    {
-      title: "Tour lab",
-      layout: "split",
-      theory: ["constructivism", "dual-coding", "retrieval-practice"],
-      figures: [
-        {
-          place: "right",
-          slides: [
-            {
-              src: "/games/bio-explorer/assets/book/m2-nucleus.jpg",
-              caption: "Control room - nucleus.",
-              alt: "Nucleus",
-            },
-            {
-              src: "/games/bio-explorer/assets/book/m2-organelle.jpg",
-              caption: "Power station - mitochondria.",
-              alt: "Mitochondria",
-            },
-            {
-              src: "/games/bio-explorer/assets/book/m2-membrane.jpg",
-              caption: "City border - membrane.",
-              alt: "Membrane",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Point to each photo and say the organelle name plus one job. Then invent a new city metaphor of your own.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Which part is the border?",
-            "Which part holds the plan?",
-            "Which part makes usable energy?",
-          ],
-        },
-      ],
-    },
-    {
-      title: "Myths to bust",
-      layout: "text",
-      theory: ["conceptual-change"],
-      blocks: [
-        {
-          type: "p",
-          text: "Myth: Only animals have cells. Better: plants, fungi, and many tiny organisms are also built from cells.",
-        },
-        {
-          type: "p",
-          text: "Myth: The nucleus is a tiny brain that thinks. Better: it stores instructions; thinking happens in networks of many cells.",
-        },
-        {
-          type: "p",
-          text: "Red words are glossary terms. Tap one to ask the tutor.",
-        },
-      ],
-    },
-    {
-      title: "Mastery",
-      layout: "text",
-      theory: ["retrieval-practice", "spiral-scaffold"],
-      figures: [
-        {
-          place: "top",
-          slides: [
-            {
-              src: "/games/bio-explorer/assets/book/m2-hook.jpg",
-              caption: "Figure 5. Teach from this microscope view: walls of cells, each with jobs inside.",
-              alt: "Onion cells teaching anchor",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Teach a friend in one minute: cells are living rooms; organelles do jobs; nucleus, membrane, and mitochondria are three you must know.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Sketch a cell and label three organelles",
-            "Give one plant-only organelle (chloroplast)",
-            "Use the word cytoplasm correctly once",
-          ],
-        },
-      ],
-    },
-  ],
+ missionIndex: 1,
+ title: "Cell City",
+ subtitle: "tiny workers building every living thing",
+ subject: "Bio Explorer / Cell City",
+ theories: [
+ "cognitive-load",
+ "dual-coding",
+ "multimedia-learning",
+ "constructivism",
+ "conceptual-change",
+ "spiral-scaffold",
+ "retrieval-practice",
+ ],
+ cover: {
+ title: "Cell City",
+ art: "/games/bio-explorer/assets/book/gen-bio-m2-cover.png",
+ },
+ glossary: [
+ { id: "cell", term: "cell" },
+ { id: "cell-theory", term: "cell theory" },
+ { id: "organelle", term: "organelle" },
+ { id: "nucleus", term: "nucleus" },
+ { id: "mitochondria", term: "mitochondria" },
+ { id: "ribosome", term: "ribosome" },
+ { id: "endoplasmic-reticulum", term: "endoplasmic reticulum" },
+ { id: "golgi", term: "Golgi apparatus" },
+ { id: "cell-membrane", term: "cell membrane" },
+ { id: "cell-wall", term: "cell wall" },
+ { id: "chloroplast", term: "chloroplast" },
+ { id: "vacuole", term: "vacuole" },
+ { id: "unicellular", term: "unicellular" },
+ { id: "multicellular", term: "multicellular" },
+ ],
+ pages: [
+ {
+ title: "The question Living or Not left open",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/bio-explorer/assets/book/gen-bio-m2-fig01-city.png",
+ caption: "Figure 1. A night city and packed tissue rhyme: many small units, each on a job.",
+ alt: "City pattern beside a grid of cells",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "If living things do MRS GREN's seven jobs, something inside them is doing that work. That something is the cell: a complete, self-contained unit, like one building in a city.",
+ },
+ {
+ type: "p",
+ text: "This lesson treats a cell as a working city, not a diagram to memorize. Every organelle gets a real name and a city job, taught together on purpose.",
+ },
+ {
+ type: "ul",
+ items: [
+ "Spiral 1: zoom skin into packed cells, then cell theory.",
+ "Spiral 2: tour six animal-cell workers.",
+ "Spiral 3: add wall, chloroplasts, and a water tower.",
+ "Spiral 4: run a protein production line, then zoom out to tissues and organisms.",
+ ],
+ },
+ ],
+ },
+ {
+ title: "Zoom the skin",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/bio-explorer/assets/book/gen-bio-m2-fig02-skin.png",
+ caption: "Figure 2. Skin looks smooth until you zoom. Then you see living cells packed wall to wall.",
+ alt: "Palm close-up zooming into skin cells",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Your hand looks continuous. Zoom far enough and the surface breaks into millions of individual living cells, each with a nucleus, each doing a job. You are not looking at skin anymore. You are looking at a city.",
+ },
+ {
+ type: "p",
+ text: "The same packed pattern appears in leaf tissue, mushroom flesh, and muscle. Living bodies are built from cooperating units, not continuous magic material.",
+ },
+ ],
+ },
+ {
+ title: "Cell theory, live",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/bio-explorer/assets/book/gen-bio-m2-fig03-theory.png",
+ caption: "Figure 3. A living tissue rack: cells packing into a complete structure, one unit at a time.",
+ alt: "Grid of living cells with nuclei",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Three rules called cell theory sit under almost all of biology.",
+ },
+ {
+ type: "ul",
+ items: [
+ "All living things are made of one or more cells.",
+ "The cell is the basic unit of structure and function in living things.",
+ "All cells come from other cells that already existed.",
+ ],
+ },
+ {
+ type: "p",
+ text: "A city block and a single cell rhyme for the same reason: each is a complete unit that only works well because many cooperate.",
+ },
+ ],
+ },
+ {
+ title: "Six workers in an animal cell",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/bio-explorer/assets/book/gen-bio-m2-fig04-workers.png",
+ caption: "Figure 4. City Hall, power plants, factories, highway, post office, and city wall.",
+ alt: "Animal cell mapped as a small city",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Nucleus (City Hall) holds DNA and directs the cell. Mitochondria (power plants) release energy from food. Ribosomes (factories) build proteins. Endoplasmic reticulum (highway) transports materials. Golgi apparatus (post office) packages and ships. The cell membrane (city wall) controls what enters and leaves.",
+ },
+ {
+ type: "p",
+ text: "An organelle is a 'little organ': one structure, one job, the way organs each do one job for a body. None of these six workers could run the whole city alone.",
+ },
+ ],
+ },
+ {
+ title: "City Hall: the nucleus",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/bio-explorer/assets/book/gen-bio-m2-fig05-nucleus.png",
+ caption: "Figure 5. The nucleus holds DNA instructions and directs everything else.",
+ alt: "Glowing nucleus with DNA hint",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "The nucleus contains the cell's DNA and controls its activities. Think of it as City Hall holding the master plans and sending orders out to every department.",
+ },
+ {
+ type: "p",
+ text: "Damage or copy errors in those instructions can change how the whole city behaves. That is why the nucleus sits at the center of so many biology stories, from growth to disease.",
+ },
+ ],
+ },
+ {
+ title: "Power plants: mitochondria",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/bio-explorer/assets/book/gen-bio-m2-fig06-mito.png",
+ caption: "Figure 6. Mitochondria release usable energy from food. Busy cells need many of them.",
+ alt: "Mitochondria with energy glow",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Mitochondria release energy from food through respiration. That is the cellular version of MRS GREN's R: not just breathing lungs, but chemistry that powers every job in the city.",
+ },
+ {
+ type: "p",
+ text: "Muscle cells and busy brain cells pack many mitochondria. Quiet storage cells need fewer. Energy demand shapes the city's power-plant count.",
+ },
+ ],
+ },
+ {
+ title: "Plant upgrades",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/bio-explorer/assets/book/gen-bio-m2-fig07-plant.png",
+ caption: "Figure 7. Plant cells keep the animal team, then add wall, chloroplasts, and a large vacuole.",
+ alt: "Boxy plant cell with wall, chloroplasts, vacuole",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Plant cells keep the whole animal-cell team, then add three specialists. A rigid cell wall sits outside the membrane for support and protection. Chloroplasts capture sunlight and turn it into food. A large central vacuole stores water and keeps the cell firm.",
+ },
+ {
+ type: "p",
+ text: "That is why plant cells often look boxy and green, while animal cells look softer and rounder. Same core city. Different neighborhood upgrades.",
+ },
+ ],
+ },
+ {
+ title: "Animal cell beside plant cell",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/bio-explorer/assets/book/gen-bio-m2-fig08-pair.png",
+ caption: "Figure 8. Shared core team on both sides. Wall, chloroplasts, and large vacuole only on the plant side.",
+ alt: "Animal cell next to plant cell",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Shared team: nucleus, mitochondria, ribosomes, ER, Golgi, membrane. Plant-only extras: cell wall, chloroplasts, large vacuole. Animal cells may have small vacuoles, but not the giant water tower that firms a plant cell.",
+ },
+ {
+ type: "p",
+ text: "If you can read that table, you can tell leaf tissue from skin tissue under a microscope without guessing.",
+ },
+ ],
+ },
+ {
+ title: "The protein production line",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/bio-explorer/assets/book/gen-bio-m2-fig09-line.png",
+ caption: "Figure 9. Instructions → build → transport → package → ship. One production line, all day.",
+ alt: "Protein package moving through cell departments",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "The production line is always the same idea: nucleus instructions reach ribosomes, product enters the ER highway, Golgi packages and labels it, membrane ships it out or keeps it where needed.",
+ },
+ {
+ type: "p",
+ text: "That sequence runs in living cells all day. It is cooperation made visible: six departments, one finished product.",
+ },
+ ],
+ },
+ {
+ title: "One city, or a country of cities",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/bio-explorer/assets/book/gen-bio-m2-fig10-scale.png",
+ caption: "Figure 10. Cell → tissue → organ → organism, plus a single-cell city-state.",
+ alt: "Hierarchy of cells and a lone amoeba",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Unicellular organisms (bacteria, amoeba) are one complete city-state. Multicellular organisms (you, a tree, a mushroom) are trillions of cities cooperating as tissues, organs, and whole bodies.",
+ },
+ {
+ type: "p",
+ text: "Next hunt: plant cells already carry solar panels. How does a whole plant use millions of those panels, move water with no pump, and build the next generation from a flower? That is Plant Power.",
+ },
+ ],
+ },
+ ],
 };
 
 export default BOOK;

@@ -18,19 +18,19 @@ import {
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
 import { createArena2D } from "./arena-2d.js";
-import { playScene, cancelActiveActivity } from "./lab-activities.js?v=webqa2";
-import { runL1Sub, L1_META } from "./level1.js?v=webqa2";
-import { runL2Sub, L2_META } from "./level2.js?v=webqa2";
-import { runL3Sub, L3_META } from "./level3.js?v=webqa2";
+import { playScene, cancelActiveActivity } from "./lab-activities.js?v=html5";
+import { runL1Sub, L1_META } from "./level1.js?v=html5";
+import { runL2Sub, L2_META } from "./level2.js?v=csspaint3";
+import { runL3Sub, L3_META } from "./level3.js?v=jshouse3";
 import { MISSIONS } from "./missions-meta.js";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerHtmlScenes } from "./html-scenes.js?v=webqa2";
-import { registerCssScenes } from "./css-scenes.js?v=webqa2";
-import { registerJsScenes } from "./js-scenes.js?v=webqa2";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
-import { BOOK as BOOK_L2 } from "../books/level2.js?v=book3";
-import { BOOK as BOOK_L3 } from "../books/level3.js?v=book3";
+import { registerHtmlScenes } from "./html-scenes.js?v=html5";
+import { registerCssScenes } from "./css-scenes.js?v=csspaint3";
+import { registerJsScenes } from "./js-scenes.js?v=jshouse3";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=genweb1";
+import { BOOK as BOOK_L2 } from "../books/level2.js?v=genweb1";
+import { BOOK as BOOK_L3 } from "../books/level3.js?v=genweb1";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
 
 
@@ -556,40 +556,40 @@ try {
  btnHint?.addEventListener("click", () => {
  const hints = [
  [
- "Drag <html>, <head>, <body> tags around the house.",
- "Drag the rooms dial until tag rooms open.",
- "Sort structure tags vs style/script vs not HTML.",
- "Push the dial higher - fill more rooms.",
- "Order wrap -> head -> body -> close.",
- "Build: Tags · Nest · Close · House.",
- "Tap home / school / shop / bd / blog pages.",
- "Bust myths about open tags and CSS vs HTML.",
- "Hit the HTML fluency checks.",
- "Order the journey and claim HTML Builder.",
+ "Watch <html> type on the lot. Tap Start Building when the frame rises.",
+ "Build a room with opening + content + closing tag. Then skip the closing tag.",
+ "Blueprint matches HTML code. Read tag, opening tag, closing tag, element.",
+ "Nest tags: outer open → inner open → inner close → outer close. Then cross the walls.",
+ "Nesting dolls and indented code: last opened, first closed.",
+ "Drop header, hero, main, footer, and div into the blueprint zones.",
+ "Real webpage layout matches the house blueprint. Semantic vs blank div.",
+ "Drag iframe into the wall and set src to the neighbor house.",
+ "Maps, videos, payments: iframe windows everywhere. Screen reader payoff.",
+ "Full house replay, then tap the spiral recap map and finish.",
  ],
  [
- "Drag color, size, and space paint pots.",
- "Dial style clarity until the preview looks clear.",
- "Sort CSS look vs HTML structure vs not.",
- "Push style strength higher on the dial.",
- "Order select -> style -> see -> fix.",
- "Build: Select · Style · Look · Clear.",
- "Tap poster / school / shop / bd / app surfaces.",
- "Bust myths about rainbow colors and tiny text.",
- "Hit the CSS fluency checks.",
- "Claim Style Star.",
+ "Watch the unstyled HTML house. Grab the Paintbrush when ready.",
+ "Pointer → select main → paint. Then header with another color.",
+ "Selector, property, value, then formal rule vocabulary.",
+ "All three sliders: padding, border, margin: do not skip.",
+ "Four-layer cutaway, then box model code.",
+ "Resize width/height. Tap Left, Center, and Right.",
+ "Four alignments side by side: same room, different feel.",
+ "Apply .cozy-room to 3 rooms, then override #reading-nook.",
+ "Change the stylesheet: every cozy room updates.",
+ "House transforms, then spiral recap map and finish.",
  ],
  [
- "Tap CLICK ME - watch onClick spark and Changed!",
- "Dial click energy (or tap the button) to 60%.",
- "Sort click reactions vs static look vs not JS.",
- "Push click energy higher on the dial.",
- "Order tap -> run code -> change -> alive.",
- "Build: Event · Code · Change · Alive.",
- "Tap game / form / kiosk / class / home modes.",
- "Bust myths about HTML-only reactions.",
- "Hit the JS fluency checks.",
- "Claim Click Coder.",
+ "The painted house: flip the switch - nothing. Run the Wiring.",
+ "Drag wire + connector, click wired switch, then try unwired.",
+ "Event → code → change. Read addEventListener syntax.",
+ "Build turnOnLight recipe, connect to 3 room switches.",
+ "One function, many callers. Read function turnOnLight().",
+ "Ring doorbell 3+ times - watch ringCount update.",
+ "Variable box: name stays, contents change. Read let ringCount.",
+ "Assemble isOn + toggleLight + listener; toggle 2+ times.",
+ "Real UI montage, then HTML · CSS · JS summary.",
+ "House alive replay, spiral recap map, finish.",
  ],
  ];
  const row = hints[state.level] || hints[0];

@@ -93,6 +93,42 @@
  color: #e8eee9;
 }
 
+.gq-chat__bubble--bot p {
+ margin: 0.35rem 0;
+}
+
+.gq-chat__bubble--bot p:first-child {
+ margin-top: 0;
+}
+
+.gq-chat__bubble--bot p:last-child {
+ margin-bottom: 0;
+}
+
+.gq-chat__bubble--bot ul,
+.gq-chat__bubble--bot ol {
+ margin: 0.35rem 0 0.35rem 0.25rem;
+ padding-left: 1.1rem;
+}
+
+.gq-chat__bubble--bot li {
+ margin: 0.2rem 0;
+}
+
+.gq-chat__bubble--bot strong {
+ color: #f8bd45;
+ font-weight: 700;
+}
+
+.gq-chat__bubble--bot em {
+ color: #b8e6cf;
+ font-style: italic;
+}
+
+.gq-chat__bubble--bot del {
+ opacity: 0.65;
+}
+
 .gq-chat__bubble--user {
  align-self: flex-end;
  background: #1d4ed8;

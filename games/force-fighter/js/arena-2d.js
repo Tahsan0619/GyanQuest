@@ -274,6 +274,13 @@ export function createArena2D(canvas, theme = {}) {
  if (dragState) endDrag(e);
  });
 
+ function registerAlias(alias, targetName) {
+ SCENES[alias] = function runAlias() {
+ const fn = SCENES[targetName];
+ if (fn) fn();
+ };
+ }
+
  function registerScene(name, builder) {
  SCENES[name] = function runScene() {
  builder({
@@ -311,7 +318,7 @@ export function createArena2D(canvas, theme = {}) {
  lastSceneName = name;
  canvas.dataset.scene = name;
  clearScene();
- const fn = SCENES[name] || SCENES.atomsMeet;
+ const fn = SCENES[name] || SCENES[theme.defaultScene] || SCENES.rockOpen;
  if (fn) fn();
  else extraTick = () => drawLabBackdrop();
  }
@@ -360,6 +367,7 @@ export function createArena2D(canvas, theme = {}) {
  return {
  playExample,
  registerScene,
+ registerAlias,
  tick,
  resize,
  clearExtras: clearScene,

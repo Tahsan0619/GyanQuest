@@ -1,259 +1,253 @@
 /**
- * Digital book - AI Lab Mission 1: Smart Patterns
- * Unique curriculum book (what AI can and cannot do). Not a template fill-in.
+ * AI Lab Mission 1 book: What is AI?
+ * Companion to the 4-spiral lesson (rules vs ML → training → test → real AI).
  */
 export const BOOK = {
-  missionIndex: 0,
-  title: "Smart Patterns",
-  subtitle: "machines that learn from examples",
-  subject: "AI Lab / Smart Patterns",
-  theories: [
-    "cognitive-load",
-    "dual-coding",
-    "multimedia-learning",
-    "constructivism",
-    "conceptual-change",
-    "spiral-scaffold",
-    "retrieval-practice",
-  ],
-  cover: {
-    title: "Smart Patterns",
-    art: "/games/ai-lab/assets/book/m1-cover.jpg",
-  },
-  glossary: [
-    { id: "artificial-intelligence", term: "artificial intelligence" },
-    { id: "training-data", term: "training data" },
-    { id: "model", term: "model" },
-    { id: "prediction", term: "prediction" },
-    { id: "bias", term: "bias" },
-    { id: "classify", term: "classify" },
-    { id: "feature", term: "feature" },
-  ],
-  pages: [
-    {
-      title: "Not magic - patterns",
-      layout: "text",
-      figures: [
-        {
-          place: "top",
-          slides: [
-            {
-              src: "/games/ai-lab/assets/book/m1-cover.jpg",
-              caption: "Figure 1. Artificial intelligence systems look for patterns in examples, not wishes.",
-              alt: "AI pattern visualization",
-            },
-            {
-              src: "/games/ai-lab/assets/book/m1-robot.jpg",
-              caption: "A robot body is hardware; the 'smart' part is the learned model.",
-              alt: "Educational robot",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Artificial intelligence here means software that finds useful patterns in data so it can act on new cases.",
-        },
-        {
-          type: "p",
-          text: "It does not understand like a friend. It estimates from what it saw in training data.",
-        },
-        {
-          type: "p",
-          text: "Everyday hook: a photo app that tags 'cat' learned from thousands of labeled cat pictures.",
-        },
-      ],
-    },
-    {
-      title: "Train, then predict",
-      layout: "full-fig",
-      figures: [
-        {
-          place: "full",
-          slides: [
-            {
-              src: "/games/ai-lab/assets/book/m1-train.jpg",
-              caption: "Figure 2. Training data is the example set the model studies before it is tested.",
-              alt: "Training dataset concept",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "ul",
-          items: [
-            "Training data: labeled examples used to learn",
-            "Model: the saved pattern rules after training",
-            "Prediction: the model's answer on a new input",
-          ],
-        },
-        {
-          type: "p",
-          text: "If the training set is narrow, predictions get shaky outside that narrow world.",
-        },
-      ],
-    },
-    {
-      title: "Features and labels",
-      layout: "text",
-      figures: [
-        {
-          place: "top",
-          slides: [
-            {
-              src: "/games/ai-lab/assets/book/m1-pattern.jpg",
-              caption: "Figure 3. A feature is a measurable clue - shape, color, word count, sensor reading.",
-              alt: "Pattern recognition shapes",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "To classify means to put an item into a category. The model weighs features to choose a label.",
-        },
-        {
-          type: "p",
-          text: "Bad features or messy labels make confident-looking mistakes.",
-        },
-      ],
-    },
-    {
-      title: "Bias is a data story",
-      layout: "full-fig",
-      figures: [
-        {
-          place: "full",
-          slides: [
-            {
-              src: "/games/ai-lab/assets/book/m1-decide.jpg",
-              caption: "Figure 4. Decision paths inherit bias if training examples were unfair or incomplete.",
-              alt: "Decision flowchart",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Bias here means systematic error - the model favors some groups or cases because the data did.",
-        },
-        {
-          type: "p",
-          text: "Good AI use includes checking who is missing from the training data before trusting predictions.",
-        },
-      ],
-    },
-    {
-      title: "How the mission connects",
-      layout: "text",
-      blocks: [
-        {
-          type: "p",
-          text: "Meet AI → sort examples → train a tiny model → test → explain → rule → stretch → myth → fluency → mastery.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Sorting examples shows why labels matter",
-            "Testing after training proves prediction is not memory only",
-            "The rule sentence separates pattern tools from human judgment",
-          ],
-        },
-      ],
-    },
-    {
-      title: "Example lab",
-      layout: "split",
-      figures: [
-        {
-          place: "right",
-          slides: [
-            {
-              src: "/games/ai-lab/assets/book/m1-train.jpg",
-              caption: "Gather fair training data.",
-              alt: "Training data",
-            },
-            {
-              src: "/games/ai-lab/assets/book/m1-pattern.jpg",
-              caption: "Name the features you use.",
-              alt: "Features",
-            },
-            {
-              src: "/games/ai-lab/assets/book/m1-decide.jpg",
-              caption: "Check predictions for bias.",
-              alt: "Decision check",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Sort ten photos into two labels you invent. Then try a new photo. Where would a short-sighted model fail?",
-        },
-        {
-          type: "ul",
-          items: [
-            "What features did you actually use?",
-            "What is missing from your training set?",
-            "Is a wrong prediction bias or bad luck?",
-          ],
-        },
-      ],
-    },
-    {
-      title: "Myths to bust",
-      layout: "text",
-      blocks: [
-        {
-          type: "p",
-          text: "Myth: AI is always right because it is a computer. Better: it copies patterns - including human mistakes in data.",
-        },
-        {
-          type: "p",
-          text: "Myth: If it sounds fluent, it understands. Better: fluent text can still be a wrong prediction.",
-        },
-        {
-          type: "p",
-          text: "Red words are glossary terms. Tap one to ask the tutor.",
-        },
-      ],
-    },
-    {
-      title: "Mastery",
-      layout: "text",
-      figures: [
-        {
-          place: "top",
-          slides: [
-            {
-              src: "/games/ai-lab/assets/book/m1-robot.jpg",
-              caption: "Figure 5. Teach AI as learned patterns plus careful human checks.",
-              alt: "AI teaching anchor",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Teach a friend in one minute: AI learns from training data; models make predictions; bias can hide in the examples.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Define model in one sentence",
-            "Give one example of classify",
-            "Use the word feature correctly once",
-          ],
-        },
-      ],
-    },
-  ],
+ missionIndex: 0,
+ title: "What is AI?",
+ subtitle: "an apprentice that learns patterns from examples",
+ subject: "Artificial Intelligence / What is AI?",
+ theories: [
+ "cognitive-load",
+ "dual-coding",
+ "multimedia-learning",
+ "constructivism",
+ "conceptual-change",
+ "spiral-scaffold",
+ "retrieval-practice",
+ ],
+ cover: {
+ title: "What is AI?",
+ art: "/games/ai-lab/assets/book/gen-ai-m1-cover.png",
+ },
+ glossary: [
+ { id: "ai", term: "AI" },
+ { id: "example", term: "example" },
+ { id: "pattern", term: "pattern" },
+ { id: "training", term: "training" },
+ { id: "accuracy", term: "accuracy" },
+ { id: "test", term: "test" },
+ { id: "generalization", term: "generalization" },
+ ],
+ pages: [
+ {
+ title: "Meet the apprentice",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/ai-lab/assets/book/gen-ai-m1-fig01-rules.png",
+ caption: "Figure 1. A rulebook employee follows IF…THEN lists. An apprentice learns from examples.",
+ alt: "Rule checklist worker versus apprentice learning from cards",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "AI is not magic and not a giant handwritten rulebook. Think of an apprentice: it studies many labeled examples, gets corrected, and slowly finds patterns. Phone photo tags, voice assistants, and spam filters all work that way.",
+ },
+ {
+ type: "ul",
+ items: [
+ "Spiral 1: rules versus learning from examples.",
+ "Spiral 2: training rounds and accuracy.",
+ "Spiral 3: testing on brand-new cases.",
+ "Spiral 4: real apps that use the same idea.",
+ ],
+ },
+ ],
+ },
+ {
+ title: "Examples, not every rule",
+ layout: "full-fig",
+ figures: [
+ {
+ place: "full",
+ src: "/games/ai-lab/assets/book/gen-ai-m1-fig02-examples.png",
+ caption: "Figure 2. Labeled example cards are the teaching material.",
+ alt: "Desk covered with labeled example photo cards",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Nobody wrote a perfect rule for every dog angle and lighting. Instead, the apprentice sees thousands of labeled photos and notices patterns: ears, fur, shapes. Labels turn pictures into lessons.",
+ },
+ {
+ type: "ul",
+ items: [
+ "Example: one labeled case.",
+ "Pattern: what repeats across many examples.",
+ "Garbage labels make a confused apprentice.",
+ ],
+ },
+ ],
+ },
+ {
+ title: "Training rounds",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/ai-lab/assets/book/gen-ai-m1-fig03-train.png",
+ caption: "Figure 3. Training is practice with correction, round after round.",
+ alt: "Apprentice training with correction sparks",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Training means showing examples, checking the guess, and adjusting. Wrong guesses get a gentle correction. Right guesses get reinforced. One pass is not enough - rounds of practice make the patterns stick.",
+ },
+ ],
+ },
+ {
+ title: "Accuracy over time",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/ai-lab/assets/book/gen-ai-m1-fig04-accuracy.png",
+ caption: "Figure 4. Accuracy climbs as training teaches better patterns.",
+ alt: "Rising accuracy curve with stars",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Accuracy is how often the apprentice is right on the practice set. Early on it is clumsy. With good examples and enough rounds, the curve rises. Rising practice accuracy is progress - but not the final exam yet.",
+ },
+ ],
+ },
+ {
+ title: "Seal a real test",
+ layout: "full-fig",
+ figures: [
+ {
+ place: "full",
+ src: "/games/ai-lab/assets/book/gen-ai-m1-fig05-test.png",
+ caption: "Figure 5. A sealed test vault holds brand-new cases never used in training.",
+ alt: "Vault of unseen test cards for final exam",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "A fair test uses cases the apprentice has never practiced on. If you train on the exam cards, the score looks amazing and means little. Seal the test set early. Open it only when you are ready to judge honestly.",
+ },
+ ],
+ },
+ {
+ title: "Generalization",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/ai-lab/assets/book/gen-ai-m1-fig06-generalize.png",
+ caption: "Figure 6. Generalization: patterns that still work on new angles and lighting.",
+ alt: "Apprentice recognizing a new dog photo angle",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Generalization means the patterns travel to new situations. A new dog photo, a new spam email, a new voice clip - if training taught real patterns, the apprentice still has a chance. Memorizing only the practice deck is not intelligence.",
+ },
+ ],
+ },
+ {
+ title: "Real AI apps",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/ai-lab/assets/book/gen-ai-m1-fig07-apps.png",
+ caption: "Figure 7. Photo tags, voice help, spam filters, recommendations - same apprentice idea.",
+ alt: "Collage of everyday AI applications",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Everyday AI is the same story wearing different clothes: examples in, patterns learned, new inputs scored. The mission rule sentence is simple: AI learns patterns from examples, then is tested on new ones.",
+ },
+ ],
+ },
+ {
+ title: "Apprentice lab",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/ai-lab/assets/book/gen-ai-m1-fig08-lab.png",
+ caption: "Figure 8. Train with examples, watch accuracy, then open a sealed test.",
+ alt: "Child training an apprentice with example cards",
+ },
+ ],
+ blocks: [
+ {
+ type: "ul",
+ items: [
+ "Did you train on examples or invent endless rules?",
+ "Was the test set sealed before training?",
+ "Did accuracy on new cases stay honest?",
+ ],
+ },
+ ],
+ },
+ {
+ title: "Myths to bust",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/ai-lab/assets/book/gen-ai-m1-fig09-myth.png",
+ caption: "Figure 9. AI is not a magic wand. It is learning from examples.",
+ alt: "Magic wand myth versus apprentice learning",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Myth: AI magically understands like a person. Better: it finds patterns in examples it was shown.",
+ },
+ {
+ type: "p",
+ text: "Myth: a perfect rulebook for every case is easier. Better: for messy real photos, examples beat endless IF…THEN lists.",
+ },
+ {
+ type: "p",
+ text: "Red words are glossary terms. Tap one to ask the tutor.",
+ },
+ ],
+ },
+ {
+ title: "Mastery",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/ai-lab/assets/book/gen-ai-m1-fig10-close.png",
+ caption: "Figure 10. Teach AI as an apprentice: examples, training, honest tests.",
+ alt: "Apprentice mastery closing scene",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Teach a friend in one minute: AI is an apprentice that learns patterns from labeled examples, improves with training, and must be tested on brand-new cases to prove generalization.",
+ },
+ {
+ type: "ul",
+ items: [
+ "Contrast rules versus examples once.",
+ "Name training and test correctly once.",
+ "Use the word generalization correctly once.",
+ ],
+ },
+ ],
+ },
+ ],
 };
 
 export default BOOK;

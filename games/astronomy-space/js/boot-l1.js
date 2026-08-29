@@ -17,17 +17,17 @@ import {
  levelDoneCount,
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
-import { createArena2D } from "./arena-2d.js?v=solarqa1";
-import { playScene, cancelActiveActivity } from "./lab-activities.js?v=solarqa1";
-import { runL1Sub, L1_META } from "./level1.js?v=solarqa1";
+import { createArena2D } from "./arena-2d.js?v=solar4";
+import { playScene, cancelActiveActivity } from "./lab-activities.js?v=solar4";
+import { runL1Sub, L1_META } from "./level1.js?v=solar4";
 import { runL2Sub, L2_META } from "./level2.js";
 import { runL3Sub, L3_META } from "./level3.js";
 import { MISSIONS } from "./missions-meta.js";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerSolarScenes } from "./solar-scenes.js?v=solarqa1";
+import { registerSolarScenes } from "./solar-scenes.js?v=solar4";
 import { registerSkyScenes } from "./sky-scenes.js";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=genas1";
 import { BOOK as BOOK_L2 } from "../books/level2.js?v=book3";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
 
@@ -97,7 +97,7 @@ try {
 
  if (!canvas) throw new Error("Missing #c3d canvas");
 
- const arena = createArena2D(canvas, { defaultScene: "solarMeet" });
+ const arena = createArena2D(canvas, { defaultScene: "solarOpen" });
  window.__arena = arena;
  registerSolarScenes(arena);
  registerSkyScenes(arena);
@@ -368,12 +368,12 @@ try {
  const meta = currentMeta();
  const introScene =
  state.level === 0
- ? ["solarMeet", { phase: "desk", dwellMs: 3200 }]
+ ? ["solarOpen", { dwellMs: 3200 }]
  : state.level === 1
  ? ["pushMeet", { phase: "predict", dwellMs: 3200 }]
  : state.level === 2
  ? ["pairMeet", { phase: "desk", dwellMs: 3200 }]
- : ["solarMeet", { phase: "settle", dwellMs: 2400 }];
+ : ["solarOpen", { dwellMs: 2400 }];
  playScene(introScene[0], introScene[1]);
  const bodyMeta = state.level === 0 ? L1_META : state.level === 1 ? L2_META : state.level === 2 ? L3_META : null;
  overlay.innerHTML = `
@@ -458,7 +458,7 @@ try {
  updateProgressUI();
  const meta = currentMeta();
  setCoach(`${meta.kidTitle} is on the path - live labs ship mission by mission.`);
- playScene("solarMeet", { phase: "settle" });
+ playScene("solarOpen", { dwellMs: 2400 });
  overlay.innerHTML = `
  <div class="chem-card">
  <h3>${meta.emoji} ${meta.kidTitle}</h3>

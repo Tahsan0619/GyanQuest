@@ -1,4 +1,4 @@
-import { bootAiLab } from "./js/boot-l1.js?v=tier3";
+import { bootAiLab } from "./js/boot-l1.js?v=appr6";
 import { manifest } from "./manifest.js";
 
 function showBootError(msg) {

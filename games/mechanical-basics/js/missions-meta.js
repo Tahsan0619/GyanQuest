@@ -5,10 +5,10 @@ export const MISSIONS = [
  {
  "id": "levers-gears",
  "kidTitle": "Levers & Gears",
- "theme": "simple machines",
+ "theme": "machines that make effort go further",
  "emoji": "\u2699\ufe0f",
  "rewardName": "Lever Learner",
- "hook": "Levers and gears trade force, distance, and turn.",
+ "hook": "Plank and bicycle - trade distance for force, speed for torque.",
  "accent": "#fdba74",
  "accent2": "#9a3412",
  "icon": "leaf",

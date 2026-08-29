@@ -1,252 +1,261 @@
 /**
- * Digital book - Electrical Basics Mission 1: Circuit Flow
- * Unique curriculum book (voltage, current, resistance). Not a template fill-in.
+ * Electrical Basics Mission 1 book: Circuit Loop
+ * Companion to the 4-spiral lesson (loop → voltage → current/resistance → switch).
  */
 export const BOOK = {
-  missionIndex: 0,
-  title: "Circuit Flow",
-  subtitle: "why a bulb needs a complete path",
-  subject: "Electrical Basics / Circuit Flow",
-  theories: [
-    "cognitive-load",
-    "dual-coding",
-    "multimedia-learning",
-    "constructivism",
-    "conceptual-change",
-    "spiral-scaffold",
-    "retrieval-practice",
-  ],
-  cover: {
-    title: "Circuit Flow",
-    art: "/games/electrical-basics/assets/book/m1-cover.jpg",
-  },
-  glossary: [
-    { id: "circuit", term: "circuit" },
-    { id: "current", term: "current" },
-    { id: "voltage", term: "voltage" },
-    { id: "resistance", term: "resistance" },
-    { id: "conductor", term: "conductor" },
-    { id: "insulator", term: "insulator" },
-    { id: "switch", term: "switch" },
-  ],
-  pages: [
-    {
-      title: "A loop or nothing",
-      layout: "text",
-      figures: [
-        {
-          place: "top",
-          slides: [
-            {
-              src: "/games/electrical-basics/assets/book/m1-cover.jpg",
-              caption: "Figure 1. A breadboard circuit only works when the path closes from source through the load and back.",
-              alt: "Breadboard LED circuit",
-            },
-            {
-              src: "/games/electrical-basics/assets/book/m1-switch.jpg",
-              caption: "A wall switch opens or closes the loop on purpose.",
-              alt: "Light switch",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "A circuit is a closed path that lets electric charge move. Break the path and useful work stops.",
-        },
-        {
-          type: "p",
-          text: "Everyday hook: a flashlight dies not only from empty cells - a loose spring can open the circuit too.",
-        },
-      ],
-    },
-    {
-      title: "Voltage and current",
-      layout: "full-fig",
-      figures: [
-        {
-          place: "full",
-          slides: [
-            {
-              src: "/games/electrical-basics/assets/book/m1-voltage.jpg",
-              caption: "Figure 2. Batteries provide voltage - the push that can drive charge around a circuit.",
-              alt: "Batteries",
-            },
-            {
-              src: "/games/electrical-basics/assets/book/m1-current.jpg",
-              caption: "Current is the flow of charge through a conductor like copper wire.",
-              alt: "Copper wire conductor",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "ul",
-          items: [
-            "Voltage: electric push (pressure-like idea)",
-            "Current: how much charge flows per time",
-            "Conductor: material that lets charge move easily",
-          ],
-        },
-      ],
-    },
-    {
-      title: "Resistance slows the flow",
-      layout: "text",
-      figures: [
-        {
-          place: "top",
-          slides: [
-            {
-              src: "/games/electrical-basics/assets/book/m1-resistance.jpg",
-              caption: "Figure 3. A resistor adds resistance so current stays in a safe, useful range.",
-              alt: "Resistor component",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Resistance opposes current. Insulators have very high resistance so charge barely flows through them.",
-        },
-        {
-          type: "p",
-          text: "Ohm's useful idea: more voltage tends to raise current; more resistance tends to lower it.",
-        },
-      ],
-    },
-    {
-      title: "Switches decide",
-      layout: "full-fig",
-      figures: [
-        {
-          place: "full",
-          slides: [
-            {
-              src: "/games/electrical-basics/assets/book/m1-switch.jpg",
-              caption: "Figure 4. Open switch = open circuit. Closed switch = path ready for current.",
-              alt: "Switch controlling a circuit",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Safety first: never probe mains electricity. Learn on battery labs and diagrams.",
-        },
-      ],
-    },
-    {
-      title: "How the mission connects",
-      layout: "text",
-      blocks: [
-        {
-          type: "p",
-          text: "Meet the loop → add a load → measure ideas → switch lab → explain → rule → stretch → myth → fluency → mastery.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Building a loop beats memorizing words alone",
-            "Switch labs prove open vs closed",
-            "The rule sentence is 'closed path + push + limited resistance'",
-          ],
-        },
-      ],
-    },
-    {
-      title: "Battery lab",
-      layout: "split",
-      figures: [
-        {
-          place: "right",
-          slides: [
-            {
-              src: "/games/electrical-basics/assets/book/m1-voltage.jpg",
-              caption: "Name the voltage source.",
-              alt: "Battery",
-            },
-            {
-              src: "/games/electrical-basics/assets/book/m1-resistance.jpg",
-              caption: "Point to resistance.",
-              alt: "Resistor",
-            },
-            {
-              src: "/games/electrical-basics/assets/book/m1-cover.jpg",
-              caption: "Trace the full circuit.",
-              alt: "Full circuit",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "On paper, draw battery, switch, bulb, wires. Mark where current would stop if the switch opens.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Where is the conductor path?",
-            "What provides voltage?",
-            "What adds resistance on purpose?",
-          ],
-        },
-      ],
-    },
-    {
-      title: "Myths to bust",
-      layout: "text",
-      blocks: [
-        {
-          type: "p",
-          text: "Myth: Voltage is stuff that flows. Better: current flows; voltage is the push that can cause flow.",
-        },
-        {
-          type: "p",
-          text: "Myth: Electricity stops in the bulb and disappears. Better: charge moves around the whole circuit.",
-        },
-        {
-          type: "p",
-          text: "Red words are glossary terms. Tap one to ask the tutor.",
-        },
-      ],
-    },
-    {
-      title: "Mastery",
-      layout: "text",
-      figures: [
-        {
-          place: "top",
-          slides: [
-            {
-              src: "/games/electrical-basics/assets/book/m1-cover.jpg",
-              caption: "Figure 5. Teach circuits as closed paths with push, flow, and resistance.",
-              alt: "Circuit mastery anchor",
-            },
-          ],
-        },
-      ],
-      blocks: [
-        {
-          type: "p",
-          text: "Teach a friend in one minute: circuits need a closed path; voltage pushes; current flows; resistance limits.",
-        },
-        {
-          type: "ul",
-          items: [
-            "Draw one open and one closed circuit",
-            "Name a conductor and an insulator",
-            "Use the word switch correctly once",
-          ],
-        },
-      ],
-    },
-  ],
+ missionIndex: 0,
+ title: "Circuit Loop",
+ subtitle: "electricity's water park - complete loops, push, and flow",
+ subject: "Electrical Basics / Circuit Loop",
+ theories: [
+ "cognitive-load",
+ "dual-coding",
+ "multimedia-learning",
+ "constructivism",
+ "conceptual-change",
+ "spiral-scaffold",
+ "retrieval-practice",
+ ],
+ cover: {
+ title: "Circuit Loop",
+ art: "/games/electrical-basics/assets/book/gen-el-m1-cover.png",
+ },
+ glossary: [
+ { id: "circuit", term: "circuit" },
+ { id: "voltage", term: "voltage" },
+ { id: "current", term: "current" },
+ { id: "resistance", term: "resistance" },
+ { id: "switch", term: "switch" },
+ { id: "battery", term: "battery" },
+ { id: "load", term: "load" },
+ ],
+ pages: [
+ {
+ title: "Nothing without a loop",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/electrical-basics/assets/book/gen-el-m1-fig01-open.png",
+ caption: "Figure 1. An open gap breaks the path. The bulb stays dark.",
+ alt: "Open broken circuit with dark bulb",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Electricity behaves like water in pipes. A battery is the pump, wire is the pipe, a bulb is a water wheel that glows when flow pushes through. Phone chargers, room lights, and toy motors all need one complete loop.",
+ },
+ {
+ type: "ul",
+ items: [
+ "Spiral 1: close the unbroken loop.",
+ "Spiral 2: voltage is the pump push.",
+ "Spiral 3: current and resistance.",
+ "Spiral 4: a switch is a valve.",
+ ],
+ },
+ ],
+ },
+ {
+ title: "Close the loop",
+ layout: "full-fig",
+ figures: [
+ {
+ place: "full",
+ src: "/games/electrical-basics/assets/book/gen-el-m1-fig02-closed.png",
+ caption: "Figure 2. A complete circuit: battery, wires, and a glowing load.",
+ alt: "Closed complete circuit with bright bulb",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "A circuit is a complete, unbroken path back to the source. Leave a gap and flow stops. The mission rule starts here: electricity only flows through a complete loop.",
+ },
+ {
+ type: "ul",
+ items: [
+ "Source: the battery or outlet push.",
+ "Path: conducting wires.",
+ "Load: the useful work (bulb, motor).",
+ ],
+ },
+ ],
+ },
+ {
+ title: "Voltage is the push",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/electrical-basics/assets/book/gen-el-m1-fig03-voltage.png",
+ caption: "Figure 3. The battery is the pump. Voltage is how hard it pushes.",
+ alt: "Battery pump pushing flow through pipe circuit",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Voltage is the push that tries to move charge around the loop - like water pressure from a pump. Swap to a stronger battery and the push increases. No push, no useful glow.",
+ },
+ ],
+ },
+ {
+ title: "Current and resistance",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/electrical-basics/assets/book/gen-el-m1-fig04-current.png",
+ caption: "Figure 4. Wide easy path versus narrow resistance that slows the flow.",
+ alt: "Thick versus narrow pipe affecting current",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Current is how much charge flows each second - the amount of water moving. Resistance is how hard the path fights the flow - a narrow pipe. More resistance usually means less current for the same push, and a dimmer useful load.",
+ },
+ {
+ type: "ul",
+ items: [
+ "Voltage: the push.",
+ "Current: the flow amount.",
+ "Resistance: the squeeze in the path.",
+ ],
+ },
+ ],
+ },
+ {
+ title: "A switch is a valve",
+ layout: "full-fig",
+ figures: [
+ {
+ place: "full",
+ src: "/games/electrical-basics/assets/book/gen-el-m1-fig05-switch.png",
+ caption: "Figure 5. Open valve: dark. Closed valve: bright. Same loop, controlled gap.",
+ alt: "Switch as valve open and closed comparison",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "A switch opens or closes a gap on purpose. Open is an intentional break. Closed reconnects the loop. Room lights are valves you flip with a finger.",
+ },
+ ],
+ },
+ {
+ title: "Lights at home",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/electrical-basics/assets/book/gen-el-m1-fig06-home.png",
+ caption: "Figure 6. A wall switch completes or breaks the room light circuit.",
+ alt: "Home light switch controlling ceiling lamp",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Everyday hook: flip a room switch and you are opening or closing a circuit. The lamp is the load. The wiring is the path. The supply provides the push.",
+ },
+ ],
+ },
+ {
+ title: "Chargers need a loop too",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/electrical-basics/assets/book/gen-el-m1-fig07-charger.png",
+ caption: "Figure 7. A phone charger is still a complete path doing useful work.",
+ alt: "Phone charger complete circuit glow",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "A charger looks different from a bulb circuit, but the idea matches: source, path, and a place where energy does useful work. Unplug and you open the loop.",
+ },
+ ],
+ },
+ {
+ title: "Wiring lab",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/electrical-basics/assets/book/gen-el-m1-fig08-lab.png",
+ caption: "Figure 8. Build battery → wire → bulb → wire → battery. Watch the glow.",
+ alt: "Child assembling a simple circuit in lab",
+ },
+ ],
+ blocks: [
+ {
+ type: "ul",
+ items: [
+ "Is the loop complete with no accidental gap?",
+ "Where is the push coming from?",
+ "What did the switch change when you flipped it?",
+ ],
+ },
+ ],
+ },
+ {
+ title: "Myths to bust",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/electrical-basics/assets/book/gen-el-m1-fig09-myth.png",
+ caption: "Figure 9. Wire is a path, not a sponge that fills up with electricity.",
+ alt: "Myth of wire as sponge versus flowing loop",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Myth: wire stores electricity like a sponge until full. Better: wire is a path; flow needs a complete loop and a push.",
+ },
+ {
+ type: "p",
+ text: "Myth: shaking a battery fixes a dark bulb. Better: check for an open gap or a dead source.",
+ },
+ {
+ type: "p",
+ text: "Red words are glossary terms. Tap one to ask the tutor.",
+ },
+ ],
+ },
+ {
+ title: "Mastery",
+ layout: "text",
+ figures: [
+ {
+ place: "top",
+ src: "/games/electrical-basics/assets/book/gen-el-m1-fig10-close.png",
+ caption: "Figure 10. Teach the water-park loop: push, path, load, valve.",
+ alt: "Circuit loop mastery closing scene",
+ },
+ ],
+ blocks: [
+ {
+ type: "p",
+ text: "Teach a friend in one minute: circuits need a complete loop; voltage pushes; current flows; resistance squeezes; a switch is a valve.",
+ },
+ {
+ type: "ul",
+ items: [
+ "Draw one complete loop once.",
+ "Name voltage versus current once.",
+ "Explain what a switch does once.",
+ ],
+ },
+ ],
+ },
+ ],
 };
 
 export default BOOK;

@@ -8,6 +8,6 @@ export const manifest = {
  emoji: "\ud83d\udd27",
  storageKey: "gq-mechanical-basics-save-v2",
  localeKey: "gq-mechanical-basics-locale",
- defaultScene: "leverMeet",
+ defaultScene: "levOpen",
  theme: { accent: "#fdba74", accent2: "#9a3412" },
 };

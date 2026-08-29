@@ -8,7 +8,7 @@ export const MISSIONS = [
  "theme": "rows columns",
  "emoji": "\u25a6",
  "rewardName": "Table Scout",
- "hook": "Data lives in neat rows and columns.",
+ "hook": "The kitchen's storage room - shelves, cards, blueprints, and SQL queries.",
  "accent": "#2dd4bf",
  "accent2": "#0f766e",
  "icon": "leaf",

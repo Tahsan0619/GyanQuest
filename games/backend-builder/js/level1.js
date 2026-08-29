@@ -1,557 +1,279 @@
 /**
  * Backend Builder - Mission 1: Server Basics
- * 10 sub-levels, Bruner spiral: enactive -> iconic -> symbolic.
- * Target: 45-60 minutes. Accurate: client, server, request, response, status.
+ * Script: Opening + 4 Bruner spirals (client/server → request/response → concurrency → DNS) + recap.
  */
-import { labState, LAB_ASSET_PATHS } from "./lab-state.js";
-import {
- mountMotionChain,
- mountDragSort,
- mountHeatLab,
- mountEquationBuild,
- mountQuiz,
- mountSpeedDrill,
- mountMythCards,
- mountTapContinue,
- mountOrderSteps,
- mountRevealSteps,
- mountScaleLab,
- mountMultiQuiz,
- playScene,
- badgeHtml,
-} from "./lab-activities.js";
-
-const LOOP_READOUTS = {
- cold: "Quiet - no clear REQ yet",
- melting: "Request forming…",
- liquid: "REQ flying - waiting on RES",
- simmer: "Loop clear - response linked",
-};
+import { labState, LAB_ASSET_PATHS, resetServerBasicsState, initSrvSub } from "./lab-state.js?v=rest2";
+import { mountGate, mountSpiralMap, mountTapContinue, badgeHtml } from "./lab-activities.js?v=rest4";
 
 export const L1_META = {
- objective: "By the end of this mission, you'll be able to explain request response in your own words.",
- bdHook: "Bangladesh everyday: notice request response around you - then connect it to Server Basics.",
+ objective:
+ "By the end of this mission, you'll explain client and server roles, request-response cycles, concurrent handling, and how DNS finds the right server.",
+ bdHook:
+ "Weather apps, school portals, ticket kiosks - every tap hides the same restaurant: client asks, server answers.",
  predict: {
- q: "Before we start - what do you think matters most in Server Basics?",
+ q: "Before a webpage fills in, what's happening during that blank flicker?",
  options: [
- "Guessing without checking",
- "Looking for a clear pattern or rule",
- "Skipping the practice steps",
+ "Nothing - the browser paints CSS randomly",
+ "A request travels to a server and a response comes back",
+ "HTML tags close themselves automatically",
  ],
  ok: 1,
  },
-
  kidTitle: "Server Basics",
- theme: "request response",
+ theme: "client & server",
  emoji: "📡",
  rewardName: "Server Scout",
  intro:
- "A client asks. A server answers. Request goes in - response comes back with data and a status.",
- everyday: [
- "Phone weather app",
- "School portal login page",
- "Shop checkout order",
- ],
+ "Every webpage load is a round trip: your browser asks, a server answers. Today we slow that invisible moment down - to the size of a restaurant, a waiter, and a kitchen.",
+ everyday: ["Phone weather app", "School portal login", "Shop checkout order"],
  subTitles: [
- "Meet Client & Server",
- "Request Loop Lab",
- "Sort REQ / RES",
- "Stronger Loop Lab",
- "Why Wait for RES",
- "Name the Server Rule",
- "Stretch: Real Apps",
- "Myth Bust",
- "Fluency Drill",
- "Server Scout Mastery",
+ "Open the Restaurant",
+ "Try to Order",
+ "Client & Server",
+ "Place an Order",
+ "Request & Response",
+ "Run a Busy Shift",
+ "One Kitchen, Many Tables",
+ "Find the Restaurant",
+ "Why This Matters",
+ "The Restaurant Is Open",
  ],
 };
 
-/**
- * @param {{
- * overlay: HTMLElement,
- * setCoach: (html: string, aside?: string) => void,
- * completeSub: () => void,
- * registerTryAgain: (fn: () => void) => void,
- * }} api
- */
 export function runL1Sub(subIndex, api) {
  const { registerTryAgain } = api;
- labState.reveal = false;
- labState.tokenProgress = 0;
- labState.masteryStep = 0;
- labState.sortPlaced = 0;
- labState.placed = {};
- labState.selectedId = null;
- labState.mythBusted = false;
- labState.mythPhase = "claim";
- labState.scale = 0;
- labState.heat = 0.25;
- labState.phase = "desk";
- labState.mode = "home";
- labState.prompt = "Server drill!";
-
+ initSrvSub(subIndex);
  const runners = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10];
  const fn = runners[subIndex] || runners[0];
  registerTryAgain(() => {
  api.overlay.innerHTML = "";
+ resetServerBasicsState();
  fn(api);
  });
  fn(api);
 }
 
-function s1({ overlay, setCoach, completeSub }) {
- setCoach("Hook + light enactive: drag the phone (client) and rack (server) - watch REQ fly out and RES return.");
- mountMotionChain(overlay, {
- title: "Meet Client & Server",
- beats: [
- {
- scene: "serverMeet",
- sceneArgs: { phase: "desk" },
- dwellMs: 4200,
+function n(text) {
+ return `<p class="tiny-narration">${text}</p>`;
+}
+
+function s1_opening({ overlay, setCoach, completeSub }) {
+ setCoach("Click the link - watch the blank flicker, then the page load.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "srvOpen",
+ badge: "Opening",
+ title: "Server Basics",
+ pulse: true,
+ ready: () => labState.srvOpenReady || (labState.srvLoadPhase >= 2 && Date.now() - t0 > 3500),
+ readyText: "That flicker was a round trip - ask, answer, show.",
+ doneLabel: "Open the Restaurant ▶",
  html: `${badgeHtml(LAB_ASSET_PATHS.m1, "server")}
- <p><strong>Act 1 - Everyday ask:</strong> Drag the phone (client) and the server rack on the canvas.</p>
- <p>Your weather app is a client. The machine that answers lives elsewhere.</p>`,
- },
- {
- scene: "serverMeet",
- sceneArgs: { phase: "glow" },
- dwellMs: 4500,
- html: `<p><strong>Act 2 - Packets move:</strong> Watch <strong>REQ</strong> fly toward the rack and <strong>RES</strong> come back.</p>
- <p>That two-way trip is the core server loop - not magic paint on the screen.</p>`,
- },
- {
- scene: "serverMeet",
- sceneArgs: { phase: "settle" },
- dwellMs: 4200,
- html: `<p><strong>Act 3 - Big idea:</strong> A request goes in - a response comes back with data and a status.</p>
- <p>Phone apps, school portals, and shop checkouts all ride this ask/answer loop.</p>`,
- },
- ],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "serverMeet",
- sceneArgs: { phase: "settle" },
- title: "Exit check",
- q: "Who usually answers a client request?",
- opts: [
- "The server",
- "Only a sock",
- "Only CSS paint",
- "A cake shop always",
- ],
- ok: 0,
+ ${n(
+ "That tiny blank moment before a webpage loads is one of the most interesting round trips in technology. Your click travelled somewhere, asked a question, and got an answer back. Today we're slowing that down - to a restaurant, a waiter, and a kitchen.",
+ )}`,
+ onDone: completeSub,
+ });
+}
+
+function s2_kitchen({ overlay, setCoach, completeSub }) {
+ setCoach("Tap Call with no kitchen - then drag kitchen + hallway and try again.");
+ mountGate(overlay, {
+ scene: "srvKitchen1",
+ badge: "Spiral 1 · Enactive",
+ title: "Try to Order",
+ pulse: true,
+ ready: () => labState.srvCallWorked && labState.srvCallTriedEmpty,
+ readyText: "Same tap - kitchen on the other end makes the difference.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Tap the call button with no kitchen - nothing happens. Drag the kitchen onto the floor, connect the hallway, then tap again. Food travels back to the table.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function s3_clientServer({ overlay, setCoach, completeSub }) {
+ setCoach("Client asks. Server has and provides.");
+ mountGate(overlay, {
+ scene: "srvSplit1",
+ badge: "Spiral 1 · Iconic",
+ title: "Who's Cooking?",
+ ready: () => true,
+ html: n(
+ "One side asks for things. One side holds the resources and does the work - weather apps, email, streaming: all have a customer table and a kitchen.",
+ ),
  onDone: () => {
  mountTapContinue(overlay, {
- scene: "serverMeet",
- sceneArgs: { phase: "settle" },
+ scene: "srvTerms1",
  badge: LAB_ASSET_PATHS.m1,
- html: `<h3>You met Client & Server</h3><p>Next we dial the request/response loop until it looks clear.</p>`,
- onDone: completeSub,
- advanceAfterDone: true,
- });
- },
- });
- },
- });
-}
-
-function s2({ overlay, setCoach, completeSub }) {
- setCoach("Enactive: dial Clarity until the REQ/RES loop looks clear (>= 60%). Drag the orange handle on the canvas too.");
- labState.heat = 0.25;
- mountHeatLab(overlay, {
- scene: "serverLab",
- title: "Request Loop Lab",
- html: `<p>Drag until the <strong>request/response</strong> loop looks clear (>= 60%).</p>
- <p>Use the slider, +/−, or drag the orange handle on the canvas.</p>`,
- goalText: "Goal: clarity >= 60% so REQ and RES are clearly linked.",
- doneLabel: "Loop checked",
- threshold: 0.6,
- startHeat: 0.25,
- axis: "x",
- canvasAction: "stretch",
- sliderLabel: "Clarity",
- badge: LAB_ASSET_PATHS.m1,
- readoutLabels: LOOP_READOUTS,
- onDone: completeSub,
- });
-}
-
-function s3({ overlay, setCoach, completeSub }) {
- setCoach("Enactive sort: requests ask, responses answer, CSS/cake/sock are not the server loop.");
- mountTapContinue(overlay, {
- scene: "serverSort",
- html: `<h3>Request vs response vs not</h3>
- <p><strong>Request:</strong> GET, POST, JSON body - what the client asks.</p>
- <p><strong>Response:</strong> 200 OK, 500 error - status + data back.</p>
- <p><strong>Not server:</strong> color:red (look), cake, sock.</p>`,
- onDone: () => {
- mountDragSort(overlay, {
- scene: "serverSort",
- title: "Sort REQ / RES",
- instructions: "Drag into Request / Response / Not server.",
- successText: "Server sorted!",
- chips: [
- { id: "get", text: "GET a page", short: "GET page", color: 0x22c55e },
- { id: "post", text: "POST a form", short: "POST form", color: 0x38bdf8 },
- { id: "json", text: "JSON body", short: "JSON body", color: 0xfbbf24 },
- { id: "ok", text: "200 OK reply", short: "200 OK", color: 0x4ade80 },
- { id: "err", text: "500 error reply", short: "500 error", color: 0xf97316 },
- { id: "css", text: "A CSS color", short: "color:red", color: 0xa78bfa },
- { id: "cake", text: "Birthday cake", short: "Cake", color: 0xf472b6 },
- { id: "sock", text: "A sock", short: "Sock", color: 0x94a3b8 },
- ],
- zones: [
- { id: "req", label: "Request", accept: ["get", "post", "json"] },
- { id: "res", label: "Response", accept: ["ok", "err"] },
- { id: "not", label: "Not server", accept: ["css", "cake", "sock"] },
- ],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "serverSort",
- title: "Justify",
- q: "Why is color:red NOT a server response?",
- opts: [
- "It is CSS look styling - not status + data from a server",
- "Because red is an illegal color",
- "Because only GET can use colors",
- "Because socks own all colors",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
- },
- });
-}
-
-function s4({ overlay, setCoach, completeSub }) {
- setCoach("Push the loop stronger - watch 200 OK appear when the path is clear.");
- labState.heat = 0.4;
- mountHeatLab(overlay, {
- scene: "serverLab",
- title: "Stronger Loop Lab",
- html: `<p>Reach >= 75% clarity so the request/response path is rock-solid.</p>
- <p>When the loop is clear, the canvas shows a <strong>200 OK</strong> status badge.</p>`,
- goalText: "Goal: clarity >= 75%.",
- doneLabel: "Lab done",
- threshold: 0.75,
- startHeat: 0.4,
- axis: "x",
- canvasAction: "stretch",
- sliderLabel: "Clarity",
- badge: LAB_ASSET_PATHS.m1,
- readoutLabels: LOOP_READOUTS,
- onDone: () => {
- mountQuiz(overlay, {
- scene: "serverLab",
- title: "Status check",
- q: "A 200 OK on the canvas means…",
- opts: [
- "The server answered successfully with a status",
- "The browser painted CSS forever",
- "Cake arrived as the response body",
- "The client became the server",
- ],
- ok: 0,
+ html: `<h3>Spiral 1 · Symbolic</h3>
+ <p><strong>Client</strong> · <strong>Server</strong> · <strong>Network</strong></p>
+ <p>Browser = client. Kitchen program = server. Hallway = network.</p>`,
  onDone: completeSub,
  });
  },
  });
 }
 
-function s5({ overlay, setCoach, completeSub }) {
- setCoach("Explain: why the browser waits - order ask → work → reply → show.");
- mountOrderSteps(overlay, {
- scene: "serverMeet",
- sceneArgs: { phase: "settle" },
- title: "Why Wait for RES",
- instructions: "Order the story.",
- items: [
- { id: "ask", html: "Client sends a request" },
- { id: "work", html: "Server does the work" },
- { id: "reply", html: "Server sends a response" },
- { id: "show", html: "Client shows the result" },
- ],
- correctIds: ["ask", "work", "reply", "show"],
- onDone: () => {
- mountRevealSteps(overlay, {
- scene: "serverMeet",
- sceneArgs: { phase: "glow" },
- title: "Causal chain",
- steps: [
- "Client sends a request (ask) across the network.",
- "Server receives it and does the work (lookup, save, compute).",
- "Server sends a response with status + data (or a clear error).",
- "Client paints the result - or shows a wait/error if no RES arrives.",
- ],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "serverMeet",
- title: "Check",
- q: "If the server never replies, the app usually…",
- opts: [
- "Waits or shows an error",
- "Paints CSS forever",
- "Becomes a sock",
- "Deletes the internet",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
- },
- });
-}
-
-function s6({ overlay, setCoach, completeSub }) {
- setCoach("Symbolic: build Request → in → Response → out, then scrub phone → packets → rule banner.");
- mountEquationBuild(overlay, {
- scene: "serverRule",
- title: "Name the Server Rule",
- instructions: "Tap tokens in order to build the Server Basics rule.",
- tokens: [
- { id: "a", html: "Request" },
- { id: "b", html: "in" },
- { id: "c", html: "Response" },
- { id: "d", html: "out" },
- ],
- correctIds: ["a", "b", "c", "d"],
- badge: LAB_ASSET_PATHS.rule,
- onDone: () => {
- mountScaleLab(overlay, {
- scene: "serverRule",
- title: "Server scale scrubber",
- html: `<p>Slide from everyday phone + rack → REQ/RES packets → the locked rule banner.</p>
- <p>The Server Basics rule is <strong>request in, response out</strong>.</p>`,
- start: 0.05,
- threshold: 0.85,
- sliderLabel: "Server scale: desk → packets → REQUEST IN / RESPONSE OUT",
- goalText: "Left canvas: phone desk → flying packets → green rule banner.",
- readoutLabels: {
- low: "Desk: client phone + server rack",
- mid: "Packets: REQ out, RES back",
- high: "Rule: REQUEST IN · RESPONSE OUT",
- },
- onDone: () => {
- mountQuiz(overlay, {
- scene: "serverRule",
- title: "Rule check",
- q: "What is the main Server Basics rule?",
- opts: [
- "Request goes in - response comes out",
- "Browsers are always the server",
- "Servers only send CSS colors",
- "Cake is a valid HTTP status",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
- },
- });
-}
-
-function s7({ overlay, setCoach, completeSub }) {
- setCoach("Transfer: same request/response idea in home, school, shop, BD ticket, and API lab.");
- const modes = [
- {
- mode: "home",
- html: `${badgeHtml(LAB_ASSET_PATHS.m1, "home")}<p><strong>Home:</strong> Weather app on the phone sends GET /wx - cloud replies with JSON forecast.</p>`,
- },
- {
- mode: "school",
- html: `<p><strong>School:</strong> Browser asks the portal for grades - server returns 200 OK with data.</p>`,
- },
- {
- mode: "shop",
- html: `<p><strong>Shop:</strong> Cart posts an order - server answers with order #42 confirmation.</p>`,
- },
- {
- mode: "bd",
- html: `<p><strong>BD ticket:</strong> Ticket / bKash-style app still uses the same request → response loop.</p>`,
- },
- {
- mode: "lab",
- html: `<p><strong>API lab:</strong> Terminal sends GET /api/ping and reads <code>200 { ok: true }</code>.</p>`,
- },
- ];
- let step = 0;
-
- function show() {
- if (step >= modes.length) {
- mountQuiz(overlay, {
- scene: "serverStretch",
- sceneArgs: { mode: "bd" },
- title: "Transfer",
- q: "A BD ticket app still needs…",
- opts: [
- "A request to a server and a response back",
- "Only socks and cake",
- "Zero responses ever",
- "Only paint with no data",
- ],
- ok: 0,
- onDone: completeSub,
- });
- return;
- }
- const m = modes[step];
- labState.mode = m.mode;
- mountTapContinue(overlay, {
- scene: "serverStretch",
- sceneArgs: { mode: m.mode },
- html: `<div class="lab-demo__badge">Context ${step + 1} of ${modes.length}</div>${m.html}`,
- onDone: () => {
- step++;
- show();
- },
- });
- }
- show();
-}
-
-function s8({ overlay, setCoach, completeSub }) {
- setCoach("Misconceptions: claim first on canvas; truth (and diagram) appears after you bust the myth.");
- mountMythCards(overlay, {
- scene: "serverMyth",
- title: "Myth Bust",
- badge: LAB_ASSET_PATHS.myth,
- myths: [
- {
- sceneMyth: 0,
- title: "“The browser is the server”",
- claim: "The browser is the server",
- truth: "Browser is the client - server answers elsewhere",
- },
- {
- sceneMyth: 1,
- title: "“Servers only send pretty colors”",
- claim: "Servers only send pretty colors",
- truth: "Servers send data and status - CSS is look",
- },
- {
- sceneMyth: 2,
- title: "“A request never needs a response”",
- claim: "A request never needs a response",
- truth: "Useful apps wait for a response (or a clear error)",
- },
- {
- sceneMyth: 3,
- title: "“Only experts can learn this”",
- claim: "Only experts can learn request/response",
- truth: "Kids can learn client asks, server answers",
- },
- {
- sceneMyth: 4,
- title: "“Cake is a valid HTTP response”",
- claim: "Cake is a valid HTTP response",
- truth: "Responses are status and data - not snacks",
- },
- ],
+function s4_order({ overlay, setCoach, completeSub }) {
+ setCoach("Order Homepage Special (200), then Secret Page (404).");
+ mountGate(overlay, {
+ scene: "srvOrder2",
+ badge: "Spiral 2 · Enactive",
+ title: "Place an Order",
+ pulse: true,
+ ready: () => labState.srvOrderSuccess && labState.srvOrder404,
+ readyText: "Two full round trips - success and honest not-found.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Tap Homepage Special - ticket out, plate back. Then tap Secret Page - a 404 card comes back instead. Both are complete responses.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s9({ overlay, setCoach, completeSub }) {
- setCoach("Fluency: quick application checks. Need about 80% to unlock Continue.");
- mountSpeedDrill(overlay, {
- scene: "serverDrill",
- title: "Fluency Drill",
- passScene: "serverMastery",
- passRatio: 0.8,
- items: [
- { q: "Client sends the request?", opts: ["Yes", "No"], ok: 0, prompt: "Client" },
- { q: "Server answers with a response?", opts: ["Yes", "No"], ok: 0, prompt: "Server" },
- { q: "Is color:red mainly a server reply?", opts: ["No", "Yes"], ok: 0, prompt: "CSS color" },
- { q: "200 OK is a response status?", opts: ["Yes", "No"], ok: 0, prompt: "200 OK" },
- { q: "Should apps ignore all errors?", opts: ["No", "Yes"], ok: 0, prompt: "Errors" },
- { q: "Sock is a request body?", opts: ["No", "Yes"], ok: 0, prompt: "Sock" },
- {
- q: "Best Server Basics rule?",
- opts: ["Request in, response out", "Browser is always the server", "Only CSS matters", "Skip all errors"],
- ok: 0,
- prompt: "Request",
- },
- {
- q: "Which is a response?",
- opts: ["200 OK reply", "GET a page", "color:red", "A sock"],
- ok: 0,
- prompt: "Status",
- },
- ],
- onDone: completeSub,
- });
-}
-
-function s10({ overlay, setCoach, completeSub }) {
- setCoach("Mastery: rebuild the path, transfer to weather + portal, then prove it.");
- playScene("serverMastery");
- mountOrderSteps(overlay, {
- scene: "serverMastery",
- title: "Server Scout Mastery - learning path",
- instructions: "Tap Bruner order: meet → sort → lab → rule → stretch/myths.",
- items: [
- { id: "1", html: "Meet client & server (concrete)" },
- { id: "2", html: "Sort request vs response" },
- { id: "3", html: "Dial the REQ/RES loop (do it)" },
- { id: "4", html: "Name request-in / response-out" },
- { id: "5", html: "Stretch + bust myths" },
- ],
- correctIds: ["1", "2", "3", "4", "5"],
+function s5_requestResponse({ overlay, setCoach, completeSub }) {
+ setCoach("Request out, response back - every webpage load.");
+ mountGate(overlay, {
+ scene: "srvLoop2",
+ badge: "Spiral 2 · Iconic",
+ title: "The Request Loop",
+ ready: () => true,
+ html: n(
+ "This loop runs every time any webpage loads, any app fetches data - the same ticket-and-plate cycle, in a fraction of a second.",
+ ),
  onDone: () => {
  mountTapContinue(overlay, {
- scene: "serverMastery",
- html: `<h3>Mixed case</h3>
- <p><strong>Weather + school portal:</strong> Phone weather GETs forecast JSON; portal browser asks for grades and waits for 200 OK - same ask/answer family, different apps.</p>
- <p>Ready for the final checks?</p>`,
- onDone: () => {
- mountMultiQuiz(overlay, {
- scene: "serverMastery",
- title: "Final mastery",
- doneTitle: "Server Scout ready",
- items: [
- {
- q: "Weather apps, portals, and shop checkouts all teach the same idea because…",
- opts: [
- "They use a client request and a server response",
- "They are unrelated magic tricks",
- "Only weather apps talk to servers",
- "Responses are always cake",
- ],
- ok: 0,
- },
- {
- q: "A correct statement about client vs server is…",
- opts: [
- "The browser is usually the client; the server answers elsewhere",
- "The browser is always the server",
- "Servers only send CSS colors",
- "Clients never send requests",
- ],
- ok: 0,
- },
- {
- q: "Which belongs in “not server”?",
- opts: ["A sock", "200 OK", "GET a page", "JSON body"],
- ok: 0,
- },
- ],
- onDone: () => {
- mountTapContinue(overlay, {
- scene: "serverMastery",
- badge: LAB_ASSET_PATHS.m1,
- html: `<h3>Mission 1 complete path</h3>
- <p>You earned the story arc from concrete phone + rack to a reusable rule. Use step dots to replay any weak spot. Press <strong>Next</strong> in the dock to claim <strong>Server Scout</strong>.</p>`,
+ scene: "srvTerms2",
+ html: `<h3>Spiral 2 · Symbolic</h3>
+ <p><strong>Request</strong> · <strong>Response</strong> · <strong>Status code</strong></p>
+ <p><code>200</code> = here's what you wanted · <code>404</code> = that doesn't exist here</p>`,
  onDone: completeSub,
- advanceAfterDone: true,
- });
- },
- });
- },
  });
  },
  });
 }
+
+function s6_busy({ overlay, setCoach, completeSub }) {
+ setCoach('Tap Start Service - watch six tables get served from one kitchen.');
+ mountGate(overlay, {
+ scene: "srvBusy3",
+ badge: "Spiral 3 · Enactive",
+ title: "Run a Busy Shift",
+ pulse: true,
+ ready: () => (labState.srvOrdersHandled || 0) >= 6,
+ readyText: "Six tables. One kitchen. Every order handled.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Start service - orders arrive from multiple tables. Tickets stack briefly, the kitchen works through the queue, every table gets its plate.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function s7_concurrent({ overlay, setCoach, completeSub }) {
+ setCoach("Scale up: one server, many clients at once.");
+ mountGate(overlay, {
+ scene: "srvScale3",
+ badge: "Spiral 3 · Iconic",
+ title: "One Kitchen, Many Tables",
+ ready: () => true,
+ html: n(
+ "A popular website's server might field thousands of orders every second, from all over the world - built to run 24/7 on dedicated hardware.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "srvTerms3",
+ html: `<h3>Spiral 3 · Symbolic</h3>
+ <p><strong>Concurrent requests</strong> - many at once, queued and served in turn.</p>
+ <p>Servers run on always-on cloud hardware - not a laptop shut off at night.</p>`,
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+function s8_dns({ overlay, setCoach, completeSub }) {
+ setCoach('Type PixelBistro.com - watch DNS translate name → IP → kitchen.');
+ mountGate(overlay, {
+ scene: "srvDns4",
+ badge: "Spiral 4 · Enactive",
+ title: "Find the Restaurant",
+ pulse: true,
+ ready: () => labState.srvDnsDone,
+ readyText: "Friendly name → directory lookup → exact kitchen.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Type a domain name in the address bar. DNS (the directory booth) looks up the real numeric IP before your request reaches the right kitchen.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function s9_matters({ overlay, setCoach, completeSub }) {
+ setCoach("Website, app, smart speaker - same chain every time.");
+ mountGate(overlay, {
+ scene: "srvMontage4",
+ badge: "Spiral 4 · Iconic",
+ title: "Why This Matters",
+ ready: () => true,
+ html: n(
+ "The restaurant metaphor isn't a toy version - it's structurally what's really happening behind nearly everything you do online.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "srvTerms4",
+ html: `<h3>Spiral 4 · Symbolic</h3>
+ <p><strong>Domain name</strong> · <strong>IP address</strong> · <strong>DNS</strong></p>
+ <p><em>Next: where does the kitchen keep its ingredients - stored data?</em></p>`,
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+function s10_closing({ overlay, setCoach, completeSub }) {
+ setCoach("Watch the slowed page-load trip. Then open the recap map.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "srvClose",
+ badge: "Closing",
+ title: "The Restaurant Is Open",
+ html: n(
+ "That blank flicker isn't blank anymore. A name looked up, a request raced out, a server prepared exactly what was asked for, and a response raced back - all in less time than a blink.",
+ ),
+ ready: () => labState.srvCloseU >= 0.85 || Date.now() - t0 > 7000,
+ readyText: "Click → DNS → request → server → response → page.",
+ doneLabel: "Open the recap map ▶",
+ onDone: () => {
+ setCoach("Tap a spiral number to replay, then Finish Server Basics.");
+ mountSpiralMap(overlay, {
+ scene: "srvSpiral",
+ title: "Your recap map",
+ finishLabel: "Finish Server Basics ▶",
+ narration:
+ "The four numbers are the four spirals you finished. Tap a number to replay a highlight, then finish when ready.",
+ statusIdle: "Tap a number to replay, or finish now.",
+ stops: [
+ { n: 1, label: "1: Client/Server" },
+ { n: 2, label: "2: Request/RES" },
+ { n: 3, label: "3: Many tables" },
+ { n: 4, label: "4: DNS" },
+ ],
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+const s1 = s1_opening;
+const s2 = s2_kitchen;
+const s3 = s3_clientServer;
+const s4 = s4_order;
+const s5 = s5_requestResponse;
+const s6 = s6_busy;
+const s7 = s7_concurrent;
+const s8 = s8_dns;
+const s9 = s9_matters;
+const s10 = s10_closing;

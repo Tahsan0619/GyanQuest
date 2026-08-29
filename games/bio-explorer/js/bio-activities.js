@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Bio Explorer activity mounts - panel + canvas share forceLabState / intents.
  */
 import { scaledDwellMs } from "/engine/js/timings.js";
@@ -9,7 +9,16 @@ import {
  setHeatTarget,
  pulseFailFeedback,
  pulseSuccessFeedback,
-} from "./bio-state.js";
+ LIFE_SORT_ITEMS,
+ MRS_GREN,
+ LIFE_PROVE_CARDS,
+ LIFE_FLAME_EVIDENCE,
+ LIFE_MARS,
+ CELL_ORGANELLES,
+ CELL_PLANT_ADDONS,
+ CELL_LINE,
+ CELL_THEORY,
+} from "./bio-state.js?v=cellplant2";
 import { createActivitySession, stopActivitySession, heatPhase } from "./activity-controller.js";
 
 let activeCleanup = null;
@@ -29,13 +38,13 @@ export function cancelActiveActivity() {
  arena?.setIntentHandler?.(null);
 }
 
-function trackCleanup(fn) {
+export function trackCleanup(fn) {
  cancelActiveActivity();
  activeCleanup = fn || null;
  return fn;
 }
 
-function once(fn) {
+export function once(fn) {
  let done = false;
  return (...args) => {
  if (done) return;
@@ -403,7 +412,7 @@ export function mountHeatLab(host, cfg) {
  <p>${cfg.html}</p>
  <label class="chem-heat__label" for="chem-heat">${sliderLabel}</label>
  <div class="chem-heat__controls">
- <button type="button" class="btn secondary chem-heat__nudge" id="chem-heat-down" aria-label="Decrease">ˆ\u2019</button>
+ <button type="button" class="btn secondary chem-heat__nudge" id="chem-heat-down" aria-label="Decrease">?\u2019</button>
  <input id="chem-heat" class="chem-heat__range" type="range" min="0" max="100" step="1"
  value="${Math.round(startH * 100)}" aria-valuemin="0" aria-valuemax="100"
  aria-valuenow="${Math.round(startH * 100)}" />
@@ -618,8 +627,8 @@ export function mountScaleLab(host, cfg) {
  const finish = once(() => cfg.onDone());
  chemLabState.scale = cfg.start ?? 0;
  playScene(cfg.scene, { ...(cfg.sceneArgs || {}), scale: chemLabState.scale });
- const sliderLabel = cfg.sliderLabel || "Zoom scale: grain → ions → atom model";
- const goalText = cfg.goalText || "Left canvas follows the same order: grain → ions → orbitals.";
+ const sliderLabel = cfg.sliderLabel || "Zoom scale: grain ? ions ? atom model";
+ const goalText = cfg.goalText || "Left canvas follows the same order: grain ? ions ? orbitals.";
  const readoutLabels = cfg.readoutLabels || {
  low: "Everyday salt grain",
  mid: "Crystal of ions (model)",
@@ -791,7 +800,7 @@ export function mountOrderSteps(host, cfg) {
  const it = cfg.items.find((x) => x.id === id);
  return `<span class="eq-placed">${it?.html || id}</span>`;
  })
- .join(" †\u2019 ");
+ .join(" ?\u2019 ");
  bank.querySelectorAll(".order-chip").forEach((b) => {
  b.disabled = picked.includes(b.dataset.id);
  });
@@ -964,5 +973,1063 @@ export function mountMultiQuiz(host, cfg) {
  }
  render();
  return trackCleanup(() => {});
+}
+
+export function narrationHtml(text) {
+ return `<p class="tiny-narration">${text}</p>`;
+}
+
+export function mountGate(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ window.__arena?.setIntentHandler?.(null);
+ });
+ playScene(cfg.scene, cfg.sceneArgs || {});
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ ${cfg.badge ? `<div class="lab-demo__badge">${cfg.badge}</div>` : ""}
+ ${cfg.title ? `<h3>${cfg.title}</h3>` : ""}
+ ${cfg.html || ""}
+ ${cfg.controlsHtml || ""}
+ <p id="tiny-gate-status" class="drag-hint" aria-live="polite">${cfg.status || ""}</p>
+ <button type="button" class="btn primary ${cfg.pulse ? "tiny-pulse" : ""}" id="tiny-gate-go" ${cfg.ready ? "disabled" : ""}>${cfg.doneLabel || "Continue ?"}</button>
+ </div>`;
+ const btn = host.querySelector("#tiny-gate-go");
+ const status = host.querySelector("#tiny-gate-status");
+ iv = cfg.ready
+ ? setInterval(() => {
+ if (cancelled) return;
+ if (cfg.ready()) {
+ btn.disabled = false;
+ if (cfg.readyText && status) status.textContent = cfg.readyText;
+ }
+ }, 120)
+ : null;
+ if (cfg.bind) cfg.bind(host, { finish, button: btn, status, playScene });
+ btn.onclick = () => {
+ if (btn.disabled) return;
+ finish();
+ };
+}
+
+export function mountSpiralMap(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ const arena = window.__arena;
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ arena?.setIntentHandler?.(null);
+ });
+ chemLabState.spiralStop = 0;
+ chemLabState.spiralUntil = 0;
+ chemLabState.spiralFinish = false;
+ playScene(cfg.scene || "lifeSpiral");
+ const stops = cfg.stops || [];
+ const finishLabel = cfg.finishLabel || "Finish Living or Not ?";
+ const statusIdle = cfg.statusIdle || "Tap a number to replay, or finish now.";
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">${cfg.badge || "Closing"}</div>
+ <h3>${cfg.title || "Your recap map"}</h3>
+ ${narrationHtml(cfg.narration || "This last screen is a recap, not a new puzzle.")}
+ <div class="tiny-spiral-stops">
+ ${stops.map((s) => `<button type="button" class="btn secondary" data-stop="${s.n}">${s.label}</button>`).join("")}
+ </div>
+ <p id="spiral-status" class="drag-hint">${statusIdle}</p>
+ <button type="button" class="btn primary tiny-pulse" id="spiral-go">${finishLabel}</button>
+ </div>`;
+ function playStop(n) {
+ if (cancelled) return;
+ chemLabState.spiralStop = n;
+ chemLabState.spiralUntil = performance.now() + 4500;
+ const el = host.querySelector("#spiral-status");
+ if (el) el.textContent = `Replaying spiral ${n}. Tap another number, or ${finishLabel.replace(" ?", "")}.`;
+ }
+ host.querySelectorAll("[data-stop]").forEach((btn) => {
+ btn.onclick = () => playStop(Number(btn.dataset.stop));
+ });
+ host.querySelector("#spiral-go").onclick = () => finish();
+ arena?.setIntentHandler?.((intent) => {
+ if (intent.type !== "CANVAS_TAP") return;
+ if (intent.meta?.action === "spiral") playStop(intent.meta.stop);
+ if (intent.meta?.action === "spiralFinish") finish();
+ });
+ iv = setInterval(() => {
+ if (!cancelled && chemLabState.spiralFinish) finish();
+ }, 80);
+}
+
+export function mountLifeSort(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ });
+ chemLabState.lifePlaced = {};
+ chemLabState.lifeSortDone = false;
+ chemLabState.lifeSelected = null;
+ playScene("lifeSort");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 1: Enactive</div>
+ <h3>Sort it yourself</h3>
+ ${narrationHtml(
+ "Eight everyday things. Put each into Living or Non-living using only what you can see on the canvas: dog, tree, mushroom, person vs rock, chair, car, cloud. No trick items yet.",
+ )}
+ <p class="drag-hint">Tap a thing on the canvas or here, then Living or Non-living.</p>
+ <div class="chip-bank" id="life-sort-bank"></div>
+ <div class="btn-row">
+ <button type="button" class="btn secondary" id="life-bin-live">Living</button>
+ <button type="button" class="btn secondary" id="life-bin-not">Non-living</button>
+ </div>
+ <p id="life-sort-status" class="drag-hint" aria-live="polite">0 of 8 sorted.</p>
+ <button type="button" class="btn primary" id="life-sort-go" disabled>Continue</button>
+ </div>`;
+ const bank = host.querySelector("#life-sort-bank");
+ const status = host.querySelector("#life-sort-status");
+ const go = host.querySelector("#life-sort-go");
+ function renderBank() {
+ bank.innerHTML = LIFE_SORT_ITEMS.filter((c) => !chemLabState.lifePlaced[c.id])
+ .map((c) => `<button type="button" class="chip" data-chip="${c.id}" title="${c.hint || ""}">${c.label}</button>`)
+ .join("");
+ bank.querySelectorAll("[data-chip]").forEach((btn) => {
+ btn.onclick = () => {
+ chemLabState.lifeSelected = btn.dataset.chip;
+ bank.querySelectorAll(".chip").forEach((el) => el.classList.toggle("chip--selected", el === btn));
+ const item = LIFE_SORT_ITEMS.find((c) => c.id === btn.dataset.chip);
+ if (item?.hint) status.textContent = `${item.label}: ${item.hint}`;
+ };
+ });
+ }
+ function place(bin) {
+ const id = chemLabState.lifeSelected;
+ if (!id) {
+ status.textContent = "Tap an item first.";
+ return;
+ }
+ const item = LIFE_SORT_ITEMS.find((c) => c.id === id);
+ if (item.bin !== bin) {
+ pulseFailFeedback(280);
+ status.textContent = "Gut check: try the other bin.";
+ return;
+ }
+ chemLabState.lifePlaced = { ...chemLabState.lifePlaced, [id]: bin };
+ chemLabState.lifeSelected = null;
+ pulseSuccessFeedback(180);
+ if (LIFE_SORT_ITEMS.every((c) => chemLabState.lifePlaced[c.id] === c.bin)) {
+ chemLabState.lifeSortDone = true;
+ }
+ renderBank();
+ }
+ host.querySelector("#life-bin-live").onclick = () => place("living");
+ host.querySelector("#life-bin-not").onclick = () => place("nonliving");
+ renderBank();
+ iv = setInterval(() => {
+ if (cancelled) return;
+ const n = Object.keys(chemLabState.lifePlaced || {}).length;
+ status.textContent = chemLabState.lifeSortDone
+ ? "You sorted these correctly. What were you actually looking for?"
+ : `${n} of 8 sorted.`;
+ if (chemLabState.lifeSortDone) go.disabled = false;
+ }, 160);
+ go.onclick = () => finish();
+}
+
+export function mountLifeCompare(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let stage = "see";
+ trackCleanup(() => {});
+ chemLabState.phase = "see";
+ playScene("lifeCompare", { phase: "see" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 1: Iconic</div>
+ <h3 id="life-cmp-title">Tree versus rock</h3>
+ <div id="life-cmp-body"></div>
+ <button type="button" class="btn primary" id="life-cmp-go">Name the pattern ?</button>
+ </div>`;
+ const title = host.querySelector("#life-cmp-title");
+ const body = host.querySelector("#life-cmp-body");
+ const go = host.querySelector("#life-cmp-go");
+ body.innerHTML = `${narrationHtml(
+ "Watch the outdoor scene: sunlight beams hit the tree, wind moves the canopy, and the tree grows taller and thicker frame by frame. The rock beside it never grows, never sways, never makes seeds.",
+ )}<p class="tiny-onscreen">1. Tree grows under the sun. Rock stays the same size.</p>
+ <p class="tiny-onscreen">2. Leaves sway in the wind. Rock does not respond.</p>
+ <p class="tiny-onscreen">3. Mature tree drops seeds. Rock never reproduces.</p>`;
+ go.onclick = () => {
+ if (stage === "see") {
+ stage = "word";
+ chemLabState.phase = "word";
+ playScene("lifeCompare", { phase: "word" });
+ title.textContent = "A rough outline";
+ body.innerHTML = `${narrationHtml(
+ "That contrast is the rough outline biologists use: grow, use energy, respond, reproduce, and move parts of the body. Next we turn it into the named checklist MRS GREN.",
+ )}<p class="tiny-onscreen">Living pattern: grow · use energy · respond · reproduce · move (at least sometime).</p>`;
+ go.textContent = "Continue";
+ return;
+ }
+ finish();
+ };
+}
+
+export function mountLifeProve(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ });
+ chemLabState.lifeProve = {};
+ chemLabState.lifeProvePick = null;
+ chemLabState.lifeProveDone = false;
+ playScene("lifeProve");
+ const shuffled = [...LIFE_PROVE_CARDS].sort(() => Math.random() - 0.5);
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 2: Enactive</div>
+ <h3>Prove it's alive</h3>
+ ${narrationHtml(
+ "Prove this mushroom is alive. Each correct clip fills a numbered slot and the mushroom on the canvas changes: stem taller, cap wider, spores, then a baby mushroom beside it.",
+ )}
+ <p class="drag-hint">Slots 1-7 have no names yet. Watch the mushroom change as slots fill.</p>
+ <div class="chip-bank" id="life-prove-bank"></div>
+ <div class="btn-row" id="life-prove-slots"></div>
+ <p id="life-prove-status" class="drag-hint" aria-live="polite">Tap a clip, then a slot.</p>
+ <button type="button" class="btn primary" id="life-prove-go" disabled>Continue ?</button>
+ </div>`;
+ const bank = host.querySelector("#life-prove-bank");
+ const slotRow = host.querySelector("#life-prove-slots");
+ const status = host.querySelector("#life-prove-status");
+ const go = host.querySelector("#life-prove-go");
+ slotRow.innerHTML = MRS_GREN.map(
+ (t, i) => `<button type="button" class="btn secondary" data-trait="${t.id}">${i + 1}</button>`,
+ ).join("");
+ function renderBank() {
+ bank.innerHTML = shuffled
+ .filter((c) => !chemLabState.lifeProve[c.id])
+ .map((c) => `<button type="button" class="chip" data-card="${c.id}">${c.label}</button>`)
+ .join("");
+ bank.querySelectorAll("[data-card]").forEach((btn) => {
+ btn.onclick = () => {
+ chemLabState.lifeProvePick = btn.dataset.card;
+ bank.querySelectorAll(".chip").forEach((el) => el.classList.toggle("chip--selected", el === btn));
+ };
+ });
+ }
+ slotRow.querySelectorAll("[data-trait]").forEach((btn) => {
+ btn.onclick = () => {
+ const pick = chemLabState.lifeProvePick;
+ if (!pick) {
+ status.textContent = "Tap a clip first.";
+ return;
+ }
+ const card = LIFE_PROVE_CARDS.find((c) => c.id === pick);
+ if (card.trait !== btn.dataset.trait) {
+ pulseFailFeedback(280);
+ status.textContent = "That clip belongs on a different numbered slot.";
+ return;
+ }
+ chemLabState.lifeProve = { ...chemLabState.lifeProve, [pick]: card.trait };
+ chemLabState.lifeProvePick = null;
+ pulseSuccessFeedback(180);
+ if (LIFE_PROVE_CARDS.every((c) => chemLabState.lifeProve[c.id] === c.trait)) {
+ chemLabState.lifeProveDone = true;
+ }
+ renderBank();
+ };
+ });
+ renderBank();
+ iv = setInterval(() => {
+ if (cancelled) return;
+ const n = Object.keys(chemLabState.lifeProve || {}).length;
+ status.textContent = chemLabState.lifeProveDone
+ ? "You built a complete case for the mushroom, using seven independent pieces of evidence."
+ : `${n} of 7 clips placed.`;
+ if (chemLabState.lifeProveDone) go.disabled = false;
+ }, 160);
+ go.onclick = () => finish();
+}
+
+export function mountLifeMrs(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let stage = "icons";
+ trackCleanup(() => {});
+ chemLabState.phase = "icons";
+ playScene("lifeMrs", { phase: "icons" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 2: Iconic</div>
+ <h3 id="life-mrs-title">MRS GREN</h3>
+ <div id="life-mrs-body"></div>
+ <button type="button" class="btn primary" id="life-mrs-go">Lock the definitions ?</button>
+ </div>`;
+ const title = host.querySelector("#life-mrs-title");
+ const body = host.querySelector("#life-mrs-body");
+ const go = host.querySelector("#life-mrs-go");
+ body.innerHTML = `${narrationHtml(
+ "MRS GREN is the memory trick for seven signs of life. On the canvas, each letter shows a concrete real-world example (dog running, seedling growing, mushroom spores, plant leaning to light).",
+ )}<p class="tiny-onscreen">${MRS_GREN.map((t) => `${t.letter} ${t.name}`).join(" · ")}</p>`;
+ go.onclick = () => {
+ if (stage === "icons") {
+ stage = "card";
+ chemLabState.phase = "card";
+ playScene("lifeMrs", { phase: "card" });
+ title.textContent = "The official checklist";
+ body.innerHTML = `${narrationHtml(
+ "Lock each letter with its definition and a specific real example. Then we test hard cases: flame, crystal, virus, dormant seed.",
+ )}${MRS_GREN.map((t) => `<p class="tiny-onscreen"><strong>${t.letter} ${t.name}</strong> - ${t.def}<br/><em>${t.example}</em></p>`).join("")}`;
+ go.textContent = "Continue";
+ return;
+ }
+ finish();
+ };
+}
+
+function flameReady() {
+ return LIFE_FLAME_EVIDENCE.every((e) => chemLabState.lifeMarks?.[e.trait]);
+}
+
+export function mountLifeSuspects(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ });
+ chemLabState.lifeSuspect = 0;
+ chemLabState.lifeMarks = {};
+ chemLabState.lifeFlameDone = false;
+ chemLabState.lifeCrystalDone = false;
+ chemLabState.lifeVirusDone = false;
+ chemLabState.lifeSeedDone = false;
+ chemLabState.lifeSeedWater = false;
+ chemLabState.lifeSeedT0 = 0;
+ chemLabState.lifeFlameFuel = 0;
+ chemLabState.lifeFlameWind = 0;
+ chemLabState.lifeFlameSmoke = 0;
+ chemLabState.lifeFlameFlicker = 0;
+ playScene("lifeSuspects");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 3: Enactive</div>
+ <h3 id="life-sus-title">Suspect 1 of 4: flame</h3>
+ <div id="life-sus-body"></div>
+ <p id="life-sus-status" class="drag-hint" aria-live="polite">Place every flame behavior on the checklist.</p>
+ <div id="life-sus-controls"></div>
+ <button type="button" class="btn primary" id="life-sus-go" disabled>Score this suspect ?</button>
+ </div>`;
+ const title = host.querySelector("#life-sus-title");
+ const body = host.querySelector("#life-sus-body");
+ const status = host.querySelector("#life-sus-status");
+ const controls = host.querySelector("#life-sus-controls");
+ const go = host.querySelector("#life-sus-go");
+
+ function setStage() {
+ const i = chemLabState.lifeSuspect || 0;
+ chemLabState.lifeMarks = {};
+ go.disabled = true;
+ if (i === 0) {
+ title.textContent = "Suspect 1 of 4: flame";
+ body.innerHTML = narrationHtml(
+ "A flame fakes several signs of life. Tap each behavior and watch the canvas: fuel makes the flame grow taller, wind leans it, smoke rises. Two checklist slots stay empty on purpose (no true respiration, no true reproduction).",
+ );
+ controls.innerHTML = LIFE_FLAME_EVIDENCE.map(
+ (e) => `<button type="button" class="btn secondary" data-ev="${e.id}">${e.label}</button>`,
+ ).join("");
+ controls.querySelectorAll("[data-ev]").forEach((btn) => {
+ btn.onclick = () => {
+ const ev = LIFE_FLAME_EVIDENCE.find((e) => e.id === btn.dataset.ev);
+ chemLabState.lifeMarks = { ...chemLabState.lifeMarks, [ev.trait]: true };
+ if (ev.effect === "fuel") chemLabState.lifeFlameFuel = Math.min(1, (chemLabState.lifeFlameFuel || 0) + 0.45);
+ if (ev.effect === "wind") chemLabState.lifeFlameWind = 1;
+ if (ev.effect === "smoke") chemLabState.lifeFlameSmoke = 1;
+ if (ev.effect === "flicker") chemLabState.lifeFlameFlicker = 1;
+ if (ev.effect === "consume") chemLabState.lifeFlameFuel = Math.max(0.15, (chemLabState.lifeFlameFuel || 0.5) * 0.7);
+ pulseSuccessFeedback(160);
+ btn.disabled = true;
+ };
+ });
+ } else if (i === 1) {
+ title.textContent = "Suspect 2 of 4: crystal";
+ body.innerHTML = narrationHtml(
+ "Crystals get larger by stacking mineral layers. That is not biological growth - no cells are built.",
+ );
+ controls.innerHTML = `<button type="button" class="btn secondary" id="life-layers">Adds mineral layers</button>`;
+ controls.querySelector("#life-layers").onclick = () => {
+ chemLabState.lifeMarks = { growth: true };
+ pulseSuccessFeedback(160);
+ };
+ } else if (i === 2) {
+ title.textContent = "Suspect 3 of 4: virus";
+ body.innerHTML = narrationHtml(
+ "The canvas shows a virus particle: a genetic shell with protein spikes. It can copy only by hijacking a living host cell. On its own it does not eat, respire, excrete, or grow.",
+ );
+ controls.innerHTML = `<button type="button" class="btn secondary" id="life-hijack">Hijacks a host cell</button>`;
+ controls.querySelector("#life-hijack").onclick = () => {
+ chemLabState.lifeMarks = { reproduction: "partial" };
+ pulseSuccessFeedback(160);
+ };
+ } else {
+ title.textContent = "Suspect 4 of 4: dormant seed";
+ body.innerHTML = narrationHtml(
+ "A dry seed looks inactive. Add water and watch the work cycle on the canvas: root, then shoot, then leaves opening - frame by frame. Life was paused, not missing.",
+ );
+ controls.innerHTML = `<button type="button" class="btn secondary tiny-pulse" id="life-water">Add water</button>`;
+ controls.querySelector("#life-water").onclick = () => {
+ chemLabState.lifeSeedWater = true;
+ chemLabState.lifeSeedT0 = performance.now();
+ const marks = {};
+ MRS_GREN.forEach((t) => {
+ marks[t.id] = true;
+ });
+ chemLabState.lifeMarks = marks;
+ pulseSuccessFeedback(240);
+ };
+ }
+ }
+
+ go.onclick = () => {
+ const i = chemLabState.lifeSuspect || 0;
+ if (i === 0 && flameReady()) {
+ chemLabState.lifeMarks = {
+ ...chemLabState.lifeMarks,
+ respiration: false,
+ reproduction: false,
+ };
+ chemLabState.lifeFlameDone = true;
+ chemLabState.lifeSuspect = 1;
+ status.textContent = "5 out of 7. The 2 misses matter most: no cells, no true reproduction.";
+ setStage();
+ return;
+ }
+ if (i === 1 && chemLabState.lifeMarks?.growth) {
+ chemLabState.lifeCrystalDone = true;
+ chemLabState.lifeSuspect = 2;
+ status.textContent = "1 out of 7. Not close.";
+ setStage();
+ return;
+ }
+ if (i === 2 && chemLabState.lifeMarks?.reproduction === "partial") {
+ chemLabState.lifeVirusDone = true;
+ chemLabState.lifeSuspect = 3;
+ status.textContent = "Reproduces only by hijacking. Everything else: no, not on its own.";
+ setStage();
+ return;
+ }
+ if (i === 3 && chemLabState.lifeSeedWater && chemLabState.lifeSeedDone) {
+ finish();
+ }
+ };
+
+ iv = setInterval(() => {
+ if (cancelled) return;
+ const i = chemLabState.lifeSuspect || 0;
+ if (i === 0 && flameReady()) {
+ go.disabled = false;
+ go.textContent = "Score this suspect ?";
+ status.textContent = "All five flame behaviors are on the board.";
+ }
+ if (i === 1 && chemLabState.lifeMarks?.growth) {
+ go.disabled = false;
+ go.textContent = "Score this suspect ?";
+ }
+ if (i === 2 && chemLabState.lifeMarks?.reproduction === "partial") {
+ go.disabled = false;
+ go.textContent = "Score this suspect ?";
+ }
+ if (i === 3 && chemLabState.lifeSeedWater) {
+ chemLabState.lifeSeedDone = true;
+ go.disabled = false;
+ go.textContent = "Continue ?";
+ status.textContent = "It was not failing the checklist. It was paused, waiting for the right conditions.";
+ }
+ }, 160);
+ setStage();
+}
+
+export function mountLifeScore(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let stage = "table";
+ trackCleanup(() => {});
+ chemLabState.phase = "table";
+ playScene("lifeScore", { phase: "table" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 3: Iconic</div>
+ <h3 id="life-sc-title">One clean scorecard</h3>
+ <div id="life-sc-body"></div>
+ <button type="button" class="btn primary" id="life-sc-go">The virus, formally ?</button>
+ </div>`;
+ const title = host.querySelector("#life-sc-title");
+ const body = host.querySelector("#life-sc-body");
+ const go = host.querySelector("#life-sc-go");
+ body.innerHTML = `${narrationHtml(
+ "Laid out like this, the picture becomes clear. Real living things do not just pass the checklist by accident here and there. They pass almost the entire thing, consistently, using their own internal machinery. Fire and crystals fake a trait or two through simple physics and chemistry, not biology.",
+ )}<p class="tiny-onscreen">Living things do not just pass one or two checks by coincidence. They consistently pass nearly all seven, using their own cells, on their own terms.</p>`;
+ go.onclick = () => {
+ if (stage === "table") {
+ stage = "virus";
+ chemLabState.phase = "virus";
+ playScene("lifeScore", { phase: "virus" });
+ title.textContent = "On the border of life";
+ body.innerHTML = `${narrationHtml(
+ "Most biologists officially classify viruses as non-living, because they fail Respiration, Nutrition, Excretion, and independent Growth completely. They are essentially a set of genetic instructions in a protective shell, incapable of doing anything at all without hijacking a real living cell. Calling them on the edge of life is a fair way to describe them too.",
+ )}<p class="tiny-onscreen">Viruses are usually classified as non-living: no metabolism of their own, and they can only reproduce by hijacking a living host.</p>
+ <p class="tiny-onscreen">Some biologists prefer to call them on the border of life rather than firmly one or the other.</p>
+ <p class="tiny-onscreen">This is not a gap in the checklist. It is the checklist doing exactly its job on a genuinely hard case.</p>`;
+ go.textContent = "Continue ?";
+ return;
+ }
+ finish();
+ };
+}
+
+export function mountLifeMars(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ });
+ chemLabState.lifeMars = [null, null, null, null];
+ chemLabState.lifeMarsI = 0;
+ chemLabState.lifeMarsDone = false;
+ chemLabState.lifeMarsOpt = false;
+ playScene("lifeMars");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 4: Enactive</div>
+ <h3 id="life-mars-title">Mars life-detector</h3>
+ <div id="life-mars-body"></div>
+ <p id="life-mars-status" class="drag-hint" aria-live="polite"></p>
+ <div class="btn-row">
+ <button type="button" class="btn secondary" data-flag="weak">Weak / inconclusive</button>
+ <button type="button" class="btn secondary" data-flag="strong">Strong evidence</button>
+ <button type="button" class="btn secondary" data-flag="none">No biological evidence</button>
+ </div>
+ <button type="button" class="btn primary" id="life-mars-go" disabled>Continue ?</button>
+ <button type="button" class="btn secondary" id="life-mars-opt" hidden>Optional: warmed sample ?</button>
+ </div>`;
+ const title = host.querySelector("#life-mars-title");
+ const body = host.querySelector("#life-mars-body");
+ const status = host.querySelector("#life-mars-status");
+ const go = host.querySelector("#life-mars-go");
+ const opt = host.querySelector("#life-mars-opt");
+
+ function showCase() {
+ const i = chemLabState.lifeMarsI || 0;
+ const item = LIFE_MARS[i];
+ title.textContent = item.optional ? "Optional sensor" : `Sensor ${i + 1} of 3`;
+ body.innerHTML = `${narrationHtml(
+ "A Mars rover sends readings. You use the same MRS GREN checklist - there is no special alien rulebook. Look at the canvas: each sensor shows a clear picture of what was found. Flag it Weak, Strong, or No evidence.",
+ )}<p class="tiny-onscreen"><strong>${item.title}.</strong> ${item.prompt}</p>
+ <p class="tiny-onscreen">Hint: ${item.hint}</p>`;
+ status.textContent = "Match the canvas picture to one flag below.";
+ }
+
+ host.querySelectorAll("[data-flag]").forEach((btn) => {
+ btn.onclick = () => {
+ const i = chemLabState.lifeMarsI || 0;
+ const item = LIFE_MARS[i];
+ if (btn.dataset.flag !== item.ok) {
+ pulseFailFeedback(280);
+ status.textContent = "Use MRS GREN. That flag does not fit this reading.";
+ return;
+ }
+ const next = [...(chemLabState.lifeMars || [null, null, null, null])];
+ next[i] = item.ok;
+ chemLabState.lifeMars = next;
+ pulseSuccessFeedback(200);
+ status.textContent = "Same 7 questions. Same checklist. Just applied somewhere no one has checked in person.";
+ if (item.optional) {
+ chemLabState.lifeMarsOpt = true;
+ go.disabled = false;
+ return;
+ }
+ if (i < 2) {
+ chemLabState.lifeMarsI = i + 1;
+ showCase();
+ } else {
+ chemLabState.lifeMarsDone = true;
+ go.disabled = false;
+ opt.hidden = false;
+ }
+ };
+ });
+ opt.onclick = () => {
+ chemLabState.lifeMarsI = 3;
+ showCase();
+ opt.hidden = true;
+ };
+ iv = setInterval(() => {
+ if (cancelled) return;
+ if (chemLabState.lifeMarsDone) go.disabled = false;
+ }, 200);
+ go.onclick = () => {
+ if (!chemLabState.lifeMarsDone) return;
+ finish();
+ };
+ showCase();
+}
+
+export function mountLifeStakes(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let stage = "montage";
+ trackCleanup(() => {});
+ chemLabState.phase = "montage";
+ playScene("lifeStakes", { phase: "montage" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 4: Iconic</div>
+ <h3 id="life-st-title">Why the line matters</h3>
+ <div id="life-st-body"></div>
+ <button type="button" class="btn primary" id="life-st-go">Keep the rule ?</button>
+ </div>`;
+ const title = host.querySelector("#life-st-title");
+ const body = host.querySelector("#life-st-body");
+ const go = host.querySelector("#life-st-go");
+ body.innerHTML = `${narrationHtml(
+ "Watch three real cases on the canvas. 1) Extremophiles in boiling vents are still alive by MRS GREN. 2) Antibiotics kill bacteria but fail on viruses - viruses are not living cells. 3) A robot vacuum moves and senses, but it is a machine, not an organism.",
+ )}<p class="tiny-onscreen">Where you draw the alive / not-alive line changes medicine and the search for life in space.</p>`;
+ go.onclick = () => {
+ if (stage === "montage") {
+ stage = "card";
+ chemLabState.phase = "card";
+ playScene("lifeStakes", { phase: "card" });
+ title.textContent = "One checklist to keep";
+ body.innerHTML = `${narrationHtml(
+ "Keep this rule: something is alive if it can carry out essentially all seven MRS GREN traits using its own biology. Next question: what is the smallest unit inside a living thing that does that work?",
+ )}<p class="tiny-onscreen"><strong>MRS GREN</strong> - Movement · Respiration · Sensitivity · Growth · Reproduction · Excretion · Nutrition</p>
+ <p class="tiny-onscreen">Next hunt: the cell - the smallest living unit.</p>`;
+ go.textContent = "Continue";
+ return;
+ }
+ finish();
+ };
+}
+
+export function mountCellZoom(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ });
+ chemLabState.cellZoomClick = 0;
+ chemLabState.cellLeafClick = 0;
+ chemLabState.cellView = "hand";
+ playScene("cellZoom");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 1: Enactive</div>
+ <h3>The Zoom Tool</h3>
+ ${narrationHtml(
+ "Zoom in far enough on your own skin, or on a leaf, and 'solid material' stops being the right way to describe it. What you're actually looking at is a packed city of individual living units.",
+ )}
+ <p class="drag-hint">Tap + three times on the hand. The leaf zoom is optional.</p>
+ <div class="btn-row">
+ <button type="button" class="btn secondary" id="cell-zoom-minus">-</button>
+ <button type="button" class="btn primary tiny-pulse" id="cell-zoom-plus">+</button>
+ </div>
+ <div class="btn-row">
+ <button type="button" class="btn secondary" id="cell-view-hand">Hand</button>
+ <button type="button" class="btn secondary" id="cell-view-leaf">Optional: zoom a leaf ?</button>
+ </div>
+ <p id="cell-zoom-status" class="drag-hint" aria-live="polite">Zoom 0 of 3 on the hand.</p>
+ <button type="button" class="btn primary" id="cell-zoom-go" disabled>Continue ?</button>
+ </div>`;
+ const status = host.querySelector("#cell-zoom-status");
+ const go = host.querySelector("#cell-zoom-go");
+ function bump(dir) {
+ if (chemLabState.cellView === "leaf") {
+ chemLabState.cellLeafClick = Math.max(0, Math.min(3, (chemLabState.cellLeafClick || 0) + dir));
+ } else {
+ chemLabState.cellZoomClick = Math.max(0, Math.min(3, (chemLabState.cellZoomClick || 0) + dir));
+ }
+ if (dir > 0) pulseSuccessFeedback(140);
+ }
+ host.querySelector("#cell-zoom-plus").onclick = () => bump(1);
+ host.querySelector("#cell-zoom-minus").onclick = () => bump(-1);
+ host.querySelector("#cell-view-hand").onclick = () => {
+ chemLabState.cellView = "hand";
+ };
+ host.querySelector("#cell-view-leaf").onclick = () => {
+ chemLabState.cellView = "leaf";
+ };
+ iv = setInterval(() => {
+ if (cancelled) return;
+ const n = chemLabState.cellZoomClick || 0;
+ status.textContent =
+ n >= 3
+ ? "You're not looking at skin anymore. You're looking at a city: millions of individual cells, packed wall to wall."
+ : `Zoom ${n} of 3 on the hand.${chemLabState.cellView === "leaf" ? " Leaf zoom is extra." : ""}`;
+ if (n >= 3) go.disabled = false;
+ }, 160);
+ go.onclick = () => finish();
+}
+
+export function mountCellCompare(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let stage = "see";
+ trackCleanup(() => {});
+ chemLabState.phase = "see";
+ playScene("cellGrid", { phase: "see" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 1: Iconic</div>
+ <h3 id="cell-cmp-title">City block ? single cell</h3>
+ <div id="cell-cmp-body"></div>
+ <button type="button" class="btn primary" id="cell-cmp-go">Lock cell theory ?</button>
+ </div>`;
+ const title = host.querySelector("#cell-cmp-title");
+ const body = host.querySelector("#cell-cmp-body");
+ const go = host.querySelector("#cell-cmp-go");
+ body.innerHTML = `${narrationHtml(
+ "Every block in a city could technically survive alone for a little while, but a city only really works because thousands of blocks cooperate, share resources, and specialize. A body works the exact same way, except the blocks are cells, and there isn't just thousands. There's trillions of them, in you alone.",
+ )}<p class="tiny-onscreen">City block ? single cell. Both: a complete, self-contained unit, that only works because thousands of them cooperate.</p>`;
+ go.onclick = () => {
+ if (stage === "see") {
+ stage = "theory";
+ chemLabState.phase = "theory";
+ playScene("cellGrid", { phase: "theory" });
+ title.textContent = "Cell theory";
+ body.innerHTML = `${narrationHtml(
+ "These three rules are called cell theory, and they're one of the most important ideas in all of biology. A cell is simply the smallest complete unit of a living thing.",
+ )}${CELL_THEORY.map((line, i) => `<p class="tiny-onscreen"><strong>${i + 1}.</strong> ${line}.</p>`).join("")}`;
+ go.textContent = "Continue ?";
+ return;
+ }
+ finish();
+ };
+}
+
+export function mountCellTour(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ });
+ chemLabState.cellTour = {};
+ chemLabState.cellTourStop = null;
+ chemLabState.cellTourDone = false;
+ playScene("cellTour");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 2: Enactive</div>
+ <h3>Tour the city</h3>
+ ${narrationHtml(
+ "None of these six workers could do the whole job alone. A cell only works because all six of these jobs run at once, constantly, in cooperation.",
+ )}
+ <p class="drag-hint">Visit all six zones. You can replay any stop afterward.</p>
+ <div class="chip-bank" id="cell-tour-bank"></div>
+ <p id="cell-tour-status" class="drag-hint" aria-live="polite">0 of 6 stops visited.</p>
+ <button type="button" class="btn primary" id="cell-tour-go" disabled>Continue ?</button>
+ </div>`;
+ const bank = host.querySelector("#cell-tour-bank");
+ const status = host.querySelector("#cell-tour-status");
+ const go = host.querySelector("#cell-tour-go");
+ bank.innerHTML = CELL_ORGANELLES.map(
+ (o) => `<button type="button" class="chip" data-dept="${o.id}">${o.city}</button>`,
+ ).join("");
+ bank.querySelectorAll("[data-dept]").forEach((btn) => {
+ btn.onclick = () => {
+ const id = btn.dataset.dept;
+ const item = CELL_ORGANELLES.find((o) => o.id === id);
+ chemLabState.cellTourStop = id;
+ chemLabState.cellTour = { ...chemLabState.cellTour, [id]: true };
+ pulseSuccessFeedback(180);
+ const n = Object.keys(chemLabState.cellTour).length;
+ if (CELL_ORGANELLES.every((o) => chemLabState.cellTour[o.id])) {
+ chemLabState.cellTourDone = true;
+ go.disabled = false;
+ }
+ status.textContent = `${n} of 6. ${item.city} (${item.name}): ${item.cityLine}.`;
+ };
+ });
+ iv = setInterval(() => {
+ if (cancelled) return;
+ if (chemLabState.cellTourDone) go.disabled = false;
+ }, 160);
+ go.onclick = () => finish();
+}
+
+export function mountCellMorph(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let stage = "morph";
+ trackCleanup(() => {});
+ chemLabState.phase = "morph";
+ playScene("cellMorph", { phase: "morph" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 2: Iconic</div>
+ <h3 id="cell-mo-title">The city map is a way in</h3>
+ <div id="cell-mo-body"></div>
+ <button type="button" class="btn primary" id="cell-mo-go">Formal names ?</button>
+ </div>`;
+ const title = host.querySelector("#cell-mo-title");
+ const body = host.querySelector("#cell-mo-body");
+ const go = host.querySelector("#cell-mo-go");
+ body.innerHTML = `${narrationHtml(
+ "The city map isn't a replacement for the real diagram. It's a way into it. Every real organelle you'll see on any biology diagram from now on maps directly onto a job you already understand.",
+ )}<p class="tiny-onscreen">City Hall ? Nucleus. Power Plant ? Mitochondria. Factory ? Ribosome. Highway ? Endoplasmic Reticulum. Post Office ? Golgi Apparatus. City Wall ? Cell Membrane.</p>`;
+ go.onclick = () => {
+ if (stage === "morph") {
+ stage = "card";
+ chemLabState.phase = "card";
+ playScene("cellMorph", { phase: "card" });
+ title.textContent = "Organelles";
+ body.innerHTML = `${narrationHtml(
+ "Every one of these structures has a formal name: an organelle, meaning 'little organ,' since each does one specific job for the whole cell.",
+ )}${CELL_ORGANELLES.map((o) => `<p class="tiny-onscreen"><strong>${o.name}</strong> - ${o.def}.</p>`).join("")}
+ <p class="tiny-onscreen">Each of these structures inside a cell is called an organelle, literally 'little organ.'</p>`;
+ go.textContent = "Continue ?";
+ return;
+ }
+ finish();
+ };
+}
+
+export function mountCellPlant(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ });
+ chemLabState.cellPlant = {};
+ chemLabState.cellPlantPick = null;
+ chemLabState.cellPlantDone = false;
+ playScene("cellPlant");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 3: Enactive</div>
+ <h3>Upgrade the city</h3>
+ ${narrationHtml(
+ "This city just got three new residents that only some cities have. Let's add them and see what changes. Notice this new city didn't lose anything. Those three additions are the entire difference between an animal cell and a plant cell.",
+ )}
+ <p class="drag-hint">Tap an add-on, then its place on the city. All three required.</p>
+ <div class="chip-bank" id="cell-plant-bank"></div>
+ <div class="btn-row">
+ <button type="button" class="btn secondary" data-drop="wall">Outer wall</button>
+ <button type="button" class="btn secondary" data-drop="chloro">Scatter solar panels</button>
+ <button type="button" class="btn secondary" data-drop="vacuole">Center tank</button>
+ </div>
+ <p id="cell-plant-status" class="drag-hint" aria-live="polite">0 of 3 placed.</p>
+ <button type="button" class="btn primary" id="cell-plant-go" disabled>Continue ?</button>
+ </div>`;
+ const bank = host.querySelector("#cell-plant-bank");
+ const status = host.querySelector("#cell-plant-status");
+ const go = host.querySelector("#cell-plant-go");
+ function renderBank() {
+ bank.innerHTML = CELL_PLANT_ADDONS.filter((p) => !chemLabState.cellPlant[p.id])
+ .map((p) => `<button type="button" class="chip" data-addon="${p.id}">${p.name}</button>`)
+ .join("");
+ bank.querySelectorAll("[data-addon]").forEach((btn) => {
+ btn.onclick = () => {
+ chemLabState.cellPlantPick = btn.dataset.addon;
+ bank.querySelectorAll(".chip").forEach((el) => el.classList.toggle("chip--selected", el === btn));
+ };
+ });
+ }
+ let lastN = 0;
+ function place(zone) {
+ const id = chemLabState.cellPlantPick;
+ if (!id) {
+ status.textContent = "Tap an add-on first.";
+ return;
+ }
+ const item = CELL_PLANT_ADDONS.find((p) => p.id === id);
+ if (item.drop !== zone) {
+ pulseFailFeedback(260);
+ chemLabState.prompt = "That add-on belongs on a different part of the city.";
+ status.textContent = chemLabState.prompt;
+ return;
+ }
+ chemLabState.prompt = "";
+ chemLabState.cellPlant = { ...chemLabState.cellPlant, [id]: true };
+ chemLabState.cellPlantPick = null;
+ pulseSuccessFeedback(200);
+ lastN = Object.keys(chemLabState.cellPlant).length;
+ if (CELL_PLANT_ADDONS.every((p) => chemLabState.cellPlant[p.id])) chemLabState.cellPlantDone = true;
+ status.textContent = chemLabState.cellPlantDone
+ ? "Same City Hall, Power Plants, Factories, Highway, Post Office, and Wall. Plus three new residents."
+ : `${lastN} of 3. ${item.hint}`;
+ if (chemLabState.cellPlantDone) go.disabled = false;
+ renderBank();
+ }
+ host.querySelectorAll("[data-drop]").forEach((btn) => {
+ btn.onclick = () => place(btn.dataset.drop);
+ });
+ renderBank();
+ iv = setInterval(() => {
+ if (cancelled) return;
+ if (chemLabState.cellPlantDone) {
+ go.disabled = false;
+ return;
+ }
+ if (chemLabState.prompt) {
+ status.textContent = chemLabState.prompt;
+ return;
+ }
+ const n = Object.keys(chemLabState.cellPlant || {}).length;
+ if (n !== lastN) {
+ lastN = n;
+ status.textContent = `${n} of 3 placed.`;
+ }
+ }, 160);
+ go.onclick = () => finish();
+}
+
+export function mountCellPair(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let stage = "pair";
+ trackCleanup(() => {});
+ chemLabState.phase = "pair";
+ playScene("cellPair", { phase: "pair" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 3: Iconic</div>
+ <h3 id="cell-pair-title">Same core team</h3>
+ <div id="cell-pair-body"></div>
+ <button type="button" class="btn primary" id="cell-pair-go">Build the table ?</button>
+ </div>`;
+ const title = host.querySelector("#cell-pair-title");
+ const body = host.querySelector("#cell-pair-body");
+ const go = host.querySelector("#cell-pair-go");
+ body.innerHTML = `${narrationHtml(
+ "A plant doesn't need to move around to find food the way an animal does, so its cells come equipped to make their own food from sunlight, store huge reserves of water, and hold a firm, rigid shape without a skeleton.",
+ )}<p class="tiny-onscreen">Same core team. Three new specialists. One key difference in shape: plant cells are rigid boxes, animal cells are soft and round.</p>`;
+ go.onclick = () => {
+ if (stage === "pair") {
+ stage = "table";
+ chemLabState.phase = "table";
+ playScene("cellPair", { phase: "table" });
+ title.textContent = "Animal cell vs plant cell";
+ body.innerHTML = `${narrationHtml(
+ "Chloroplasts are where photosynthesis happens: turning sunlight, water, and carbon dioxide directly into food. Pair that with mitochondria, which every cell has: chloroplasts make food from sunlight, mitochondria release energy from that food. Plant cells often get to run both. Animal cells rely on mitochondria alone.",
+ )}<p class="tiny-onscreen">Shared: nucleus, mitochondria, ribosomes, ER, Golgi, membrane.</p>
+ <p class="tiny-onscreen">Plant only: cell wall (rigid, for structure and protection), chloroplasts (photosynthesis), large central vacuole (storage and shape).</p>
+ <p class="tiny-onscreen">Animal cells have small vacuoles only, not one huge central tank.</p>`;
+ go.textContent = "Continue ?";
+ return;
+ }
+ finish();
+ };
+}
+
+export function mountCellLine(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ });
+ chemLabState.cellLineStep = 0;
+ chemLabState.cellLineDone = false;
+ chemLabState.prompt = "";
+ playScene("cellLine");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 4: Enactive</div>
+ <h3>Run the production line</h3>
+ ${narrationHtml(
+ "City Hall just posted an order: Build Protein X. Send it through the departments in working order. A wrong stop gets a gentle 'not yet,' not a harsh fail.",
+ )}
+ <p class="drag-hint">Nucleus ? Ribosome ? ER ? Golgi ? Membrane.</p>
+ <div class="chip-bank" id="cell-line-bank"></div>
+ <p id="cell-line-status" class="drag-hint" aria-live="polite">Order waiting at City Hall.</p>
+ <button type="button" class="btn primary" id="cell-line-go" disabled>Continue ?</button>
+ </div>`;
+ const bank = host.querySelector("#cell-line-bank");
+ const status = host.querySelector("#cell-line-status");
+ const go = host.querySelector("#cell-line-go");
+ bank.innerHTML = CELL_ORGANELLES.map(
+ (o) => `<button type="button" class="chip" data-dept="${o.id}">${o.city}</button>`,
+ ).join("");
+ function send(toId) {
+ const step = CELL_LINE[chemLabState.cellLineStep || 0];
+ if (!step || chemLabState.cellLineDone) return;
+ if (toId !== step.to) {
+ pulseFailFeedback(240);
+ chemLabState.prompt = "That department isn't ready for this yet.";
+ status.textContent = chemLabState.prompt;
+ return;
+ }
+ chemLabState.cellLineStep = (chemLabState.cellLineStep || 0) + 1;
+ pulseSuccessFeedback(200);
+ chemLabState.prompt = step.caption;
+ status.textContent = step.caption;
+ if (chemLabState.cellLineStep >= CELL_LINE.length) {
+ chemLabState.cellLineDone = true;
+ go.disabled = false;
+ }
+ }
+ bank.querySelectorAll("[data-dept]").forEach((btn) => {
+ btn.onclick = () => send(btn.dataset.dept);
+ });
+ iv = setInterval(() => {
+ if (cancelled) return;
+ if (chemLabState.cellLineDone) {
+ status.textContent =
+ "You just completed one full round of a real process every living cell performs constantly, thousands of times a day: making and shipping a protein.";
+ go.disabled = false;
+ } else if (chemLabState.prompt) {
+ status.textContent = chemLabState.prompt;
+ }
+ }, 160);
+ go.onclick = () => finish();
+}
+
+export function mountCellScale(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let stage = "zoom";
+ trackCleanup(() => {});
+ chemLabState.phase = "zoom";
+ playScene("cellScale", { phase: "zoom" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 4: Iconic</div>
+ <h3 id="cell-sc-title">Some cities merge. Some stay city-states.</h3>
+ <div id="cell-sc-body"></div>
+ <button type="button" class="btn primary" id="cell-sc-go">Name the two strategies ?</button>
+ </div>`;
+ const title = host.querySelector("#cell-sc-title");
+ const body = host.querySelector("#cell-sc-body");
+ const go = host.querySelector("#cell-sc-go");
+ body.innerHTML = `${narrationHtml(
+ "Most of the cells you've met today are team players. They group into tissues, tissues group into organs, and organs group into an entire organism. But some organisms are just one single cell, doing every single job entirely on its own. Both strategies work.",
+ )}<p class="tiny-onscreen">Cell ? Tissue ? Organ ? Organism. Some cities merge into countries. Some stay proud, independent city-states.</p>`;
+ go.onclick = () => {
+ if (stage === "zoom") {
+ stage = "card";
+ chemLabState.phase = "card";
+ playScene("cellScale", { phase: "card" });
+ title.textContent = "Unicellular and multicellular";
+ body.innerHTML = `${narrationHtml(
+ "Whether an organism is unicellular, running its entire life from one single cell, or multicellular, built from trillions of cooperating cells like you are, it all comes back to the exact same basic unit.",
+ )}<p class="tiny-onscreen"><strong>Unicellular</strong> - an organism made of just one single cell (e.g., bacteria, amoeba).</p>
+ <p class="tiny-onscreen"><strong>Multicellular</strong> - an organism made of many cells working together (e.g., you, a tree, a mushroom).</p>
+ <p class="tiny-onscreen">Next question worth hunting: when City Hall's instructions get damaged or copied incorrectly, what actually happens to the whole city?</p>`;
+ go.textContent = "Continue ?";
+ return;
+ }
+ finish();
+ };
 }
 

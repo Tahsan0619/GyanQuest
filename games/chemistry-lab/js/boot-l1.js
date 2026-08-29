@@ -19,19 +19,19 @@ import {
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
 import { createArena2D } from "./arena-2d.js";
-import { registerAtomScenes } from "./atom-scenes.js?v=elemhunt7";
-import { playScene, cancelActiveActivity } from "./chem-activities.js?v=elemhunt7";
-import { runL1Sub, L1_META } from "./level1.js?v=elemhunt7";
-import { runL2Sub, L2_META } from "./level2.js?v=elemhunt7";
-import { runL3Sub, L3_META } from "./level3.js?v=bond1";
+import { registerAtomScenes } from "./atom-scenes.js?v=bondbuddy1";
+import { playScene, cancelActiveActivity } from "./chem-activities.js?v=bondbuddy1";
+import { runL1Sub, L1_META } from "./level1.js?v=bondbuddy1";
+import { runL2Sub, L2_META } from "./level2.js?v=bondbuddy1";
+import { runL3Sub, L3_META } from "./level3.js?v=bondbuddy1";
 import { MISSIONS } from "./missions-meta.js";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerElementScenes } from "./element-scenes.js?v=elemhunt7";
-import { registerBondScenes } from "./bond-scenes.js?v=bond1";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=tinybits3";
-import { BOOK as BOOK_L2 } from "../books/level2.js?v=elemhunt7";
-import { BOOK as BOOK_L3 } from "../books/level3.js?v=book7";
+import { registerElementScenes } from "./element-scenes.js?v=bondbuddy1";
+import { registerBondScenes } from "./bond-scenes.js?v=bondbuddy1";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=genimg1";
+import { BOOK as BOOK_L2 } from "../books/level2.js?v=genimg1";
+import { BOOK as BOOK_L3 } from "../books/level3.js?v=genimg1";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=book7";
 
 
@@ -367,7 +367,7 @@ try {
  : state.level === 1
  ? ["elemOpen", { dwellMs: 3200 }]
  : state.level === 2
- ? ["bondMeet", { dwellMs: 3200 }]
+ ? ["bondOpen", { dwellMs: 3200 }]
  : ["atomsMeet", { phase: "settle", dwellMs: 2400 }];
  playScene(introScene[0], introScene[1]);
  overlay.innerHTML = `
@@ -392,7 +392,7 @@ try {
  <p class="chem-intro__brunner"><strong>Bruner path:</strong> four spirals: do and see → pictures → name the rule, each time deeper. This hunt: protons, then orbits, then orbital shapes, then element personalities.</p>`
  : state.level === 2
  ? `<ul class="chem-intro__hooks">${L3_META.everyday.map((e) => `<li>${e}</li>`).join("")}</ul>
- <p class="chem-intro__brunner"><strong>Bruner path:</strong> attract &amp; snap → water buddies → name the bond rule.</p>`
+ <p class="chem-intro__brunner"><strong>Bruner path:</strong> four spirals: why bond (stability) → ionic give/take → covalent share → one spectrum of pull.</p>`
  : `<p>This mission’s full labs are coming soon.</p>`
  }
  <button type="button" class="btn primary" id="chem-intro-go">Start ▶</button>
@@ -473,7 +473,7 @@ try {
  const meta = currentMeta();
  setCoach(`${meta.kidTitle} is on the path - live labs ship mission by mission.`);
  const preview =
- state.level === 1 ? "elemOpen" : state.level === 2 ? "bondMeet" : "atomsMeet";
+ state.level === 1 ? "elemOpen" : state.level === 2 ? "bondOpen" : "atomsMeet";
  playScene(preview, { phase: state.level === 1 ? "open" : "settle" });
  overlay.innerHTML = `
  <div class="chem-card">
@@ -605,16 +605,16 @@ try {
  "Last screen is a recap map. Tap a numbered stop to replay, then tap Finish Element Hunt on the canvas or in the panel.",
  ];
  const l3 = [
- "Tap lonely atoms A and B so a bond link appears.",
- "Drag opposite magnets closer - attraction buddy feel.",
- "Sort into Bonded molecule, Attraction buddy, or No chemical bond.",
- "Slide until magnets click (≥ 75%) - snap glow.",
- "Tap water models - H-O-H bonded buddies.",
- "Build: Atoms link with BONDS as buddies.",
- "Walk salt, O₂, sugar, plastic, protein - same bond idea.",
- "Bust myths: glue, fridge magnets, mixtures, breaking, solids-only.",
- "Hit about 80% on the bond drill.",
- "Order the Bond Buddies path, then finish Explorer checks.",
+ "Tap Bring Them Together on the restless atoms.",
+ "Happy or Restless for Neon, Sodium, Chlorine, then Oxygen. Full outer shell is happy.",
+ "Tap both canvas paths: transfer (ionic) and share (covalent). Then read the octet rule and Lewis dots.",
+ "Drag Sodium's outer electron onto Chlorine. Then drag the charged ions until they snap.",
+ "Watch the pair become a lattice, then continue to ion, ionic bond, and NaCl.",
+ "Try transferring a hydrogen electron (it bounces). Overlap the atoms, then snap water with shared-pair clouds.",
+ "Compare H2, O2, N2 (single, double, triple). Then Lewis water and the lopsided share.",
+ "Drag the spectrum marker: H-H left, H-Cl center-left, Na-Cl far right.",
+ "Tap salt to shatter, sugar to melt. Then read ΔEN 0-0.4, 0.4-1.7, 1.7+.",
+ "Last screen is a recap map. Tap a numbered stop to replay, then tap Finish Bond Buddies on the canvas or in the panel.",
  ];
  const hints = state.level === 2 ? l3 : state.level === 1 ? l2 : l1;
  showToast(hints[state.sub] || "Interact with the left canvas - it teaches the idea.");

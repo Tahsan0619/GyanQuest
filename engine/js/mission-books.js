@@ -1,5 +1,5 @@
 import { openDigitalBook } from "/engine/js/digital-book.js?v=book7";
-import { mountBookChat, openBookChat } from "/engine/js/book-chat.js?v=chatfix2";
+import { mountBookChat, openBookChat } from "/engine/js/book-chat.js?v=tutor2";
 import {
  areAllBooksUnlocked,
  syncUnlockFlagFromUrl,

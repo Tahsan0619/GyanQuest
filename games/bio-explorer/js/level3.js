@@ -1,402 +1,189 @@
 /**
- * Bio Explorer - Mission 3: Plant Power
+ * Bio Explorer Mission 3: Plant Power
+ * Script: Opening + 4 Bruner spirals (plant body → kitchen → plumbing → next generation) + recap.
  */
-import { bioLabState, BIO_ASSET_PATHS } from "./bio-state.js";
+import { bioLabState, resetPlantState, BIO_ASSET_PATHS, pulseSuccessFeedback } from "./bio-state.js?v=cellplant2";
+import { mountGate, mountSpiralMap, badgeHtml } from "./bio-activities.js?v=cellplant2";
 import {
- mountMotionChain,
- mountDragSort,
- mountHeatLab,
- mountEquationBuild,
- mountQuiz,
- mountSpeedDrill,
- mountMythCards,
- mountTapContinue,
- mountOrderSteps,
- badgeHtml,
-} from "./bio-activities.js";
+ mountPlantBuild,
+ mountPlantOrgans,
+ mountPlantKitchen,
+ mountPlantPhoto,
+ mountPlantTrace,
+ mountPlantHighways,
+ mountPlantBloom,
+ mountPlantCycle,
+} from "./plant-activities.js?v=cellplant2";
 
 export const L3_META = {
- objective: "By the end of this mission, you'll be able to explain plants in your own words.",
- bdHook: "Bangladesh everyday: mango trees, rice paddies, bees on flowers - plants power food with light.",
+ objective:
+ "By the end of this mission, you'll be able to name a plant's four organs, run photosynthesis as inputs and outputs, explain xylem and phloem, and tell the story from flower to seed.",
+ bdHook: "Last time we were inside a plant cell. Today we zoom out to the whole machine.",
  predict: {
- q: "What do green plants mainly need to make food?",
+ q: "This plant never eats a meal. How does it still grow?",
  options: [
- "Only soil and nothing else",
- "Light, water, and air (CO₂) working together",
- "Phone chargers and Wi‑Fi",
+ "It eats soil the way we eat food",
+ "It makes food from sunlight, water, and air",
+ "It only grows if someone pours sugar on the leaves",
  ],
  ok: 1,
  },
-
  kidTitle: "Plant Power",
- theme: "plants",
+ theme: "how a whole plant works",
  emoji: "🍃",
  rewardName: "Plant Explorer",
- intro: "Plants make food with light, water, and air - then grow flowers, fruit, and more plants.",
- everyday: ["Mango trees", "Rice paddies", "Bees visiting flowers"],
+ intro:
+ "We've already met a single plant cell, with its chloroplasts, cell wall, and water tower. Today we zoom all the way back out. This plant never eats a meal, never drinks from a cup, and never moves from its windowsill, and yet it's pulling water up with no pump, building its own food out of sunlight and air, and growing entirely new parts of itself, all at once. Welcome to Plant Power.",
+ everyday: [
+ "A potted plant on a windowsill",
+ "A leaf cooking food from sunlight and air",
+ "Water rising up a stem with no pump",
+ ],
  subTitles: [
- "Meet Plant Power",
- "Sun Energy Lab",
- "Sort: Plant Needs",
- "Grow Stages",
- "Food vs Soil",
- "Name the Plant Rule",
- "Stretch: BD Stories",
- "Myth Bust",
- "Fluency Drill",
- "Plant Explorer Mastery",
+ "Meet the plant",
+ "Build a plant",
+ "Four organs",
+ "Stock the kitchen",
+ "The photosynthesis equation",
+ "Trace the routes",
+ "Xylem and phloem",
+ "Pollinate the flower",
+ "The life cycle",
+ "The whole machine",
  ],
 };
 
 export function runL3Sub(subIndex, api) {
  const { registerTryAgain } = api;
- bioLabState.reveal = false;
- bioLabState.tokenProgress = 0;
- bioLabState.masteryStep = 0;
- bioLabState.placed = {};
- bioLabState.selectedId = null;
- bioLabState.mythPhase = "claim";
- bioLabState.heat = 0.25;
- bioLabState.sun = 0.25;
- bioLabState.phase = "seed";
- bioLabState.mode = "mango";
- bioLabState.labFocus = "sun";
-
+ resetPlantState();
  const runners = [
- sub1_meet,
- sub2_sun,
- sub3_sort,
- sub4_grow,
- sub5_food,
- sub6_rule,
- sub7_stretch,
- sub8_myths,
- sub9_drill,
- sub10_mastery,
+ sub1_opening,
+ sub2_build,
+ sub3_organs,
+ sub4_kitchen,
+ sub5_photo,
+ sub6_trace,
+ sub7_highways,
+ sub8_bloom,
+ sub9_cycle,
+ sub10_closing,
  ];
  const fn = runners[subIndex] || runners[0];
  registerTryAgain(() => {
  api.overlay.innerHTML = "";
+ resetPlantState();
  fn(api);
  });
  fn(api);
 }
 
-function sub1_meet({ overlay, setCoach, completeSub }) {
- setCoach("Hook: seeds wait, then light + water + air help plants make food.");
- mountMotionChain(overlay, {
- title: "Meet Plant Power",
- beats: [
- {
- scene: "plantMeet",
- sceneArgs: { phase: "seed" },
- dwellMs: 4000,
+function sub1_opening({ overlay, setCoach, completeSub }) {
+ setCoach("A windowsill plant, then meet the whole machine.");
+ mountGate(overlay, {
+ scene: "plantOpen",
+ badge: "Opening",
+ title: "Plant Power",
+ pulse: true,
+ status: "Watch the sill. Then meet the plant.",
+ ready: () => bioLabState.plantOpenU >= 0.4 || bioLabState.plantSeen,
+ readyText: "The plant is running more than one job at once.",
+ doneLabel: "Meet the Plant →",
  html: `${badgeHtml(BIO_ASSET_PATHS.plant, "plant")}
- <p><strong>Act 1:</strong> A seed is a living plant waiting to grow.</p>`,
- },
- {
- scene: "plantMeet",
- sceneArgs: { phase: "leaf" },
- dwellMs: 4200,
- html: `<p><strong>Act 2:</strong> Leaves catch light - plant food factories.</p>`,
- },
- {
- scene: "plantMeet",
- sceneArgs: { phase: "flower" },
- dwellMs: 4000,
- html: `<p><strong>Act 3:</strong> Flowers and fruit help make more plants.</p>`,
- },
- {
- scene: "plantMeet",
- sceneArgs: { phase: "fruit" },
- dwellMs: 3800,
- html: `<p><strong>Act 4:</strong> Big idea - plants make food; they don’t eat candy.</p>`,
- },
- ],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "plantMeet",
- sceneArgs: { phase: "fruit" },
- title: "Exit check",
- q: "Where does most of a plant’s food energy come from?",
- opts: ["Light (with water and air)", "Eating soil like a sandwich", "Phone chargers", "Only fertilizer packets"],
- ok: 0,
- onDone: () => {
- mountTapContinue(overlay, {
- scene: "plantMeet",
- badge: BIO_ASSET_PATHS.plant,
- html: `<h3>Plant Power online</h3><p>Next: drag sun energy and watch growth.</p>`,
- onDone: completeSub,
- advanceAfterDone: true,
+ ${n(
+ "This plant never eats a meal, never drinks from a cup, and never moves from this windowsill, and yet it's quietly running one of the most impressive operations in all of biology. It's pulling water up from the ground with no pump, building its own food out of sunlight and air, and growing entirely new parts of itself, all at once, right now. We've already met a single plant cell. Today we zoom out and meet the whole machine that cell is a part of. Welcome to Plant Power.",
+ )}`,
+ bind(host) {
+ const btn = host.querySelector("#tiny-gate-go");
+ btn?.addEventListener("click", () => {
+ bioLabState.plantSeen = true;
  });
- },
- });
- },
- });
-}
-
-function sub2_sun({ overlay, setCoach, completeSub }) {
- setCoach("Lab: more light energy -> more plant food / growth (kid level).");
- bioLabState.heat = 0.3;
- bioLabState.sun = 0.3;
- bioLabState.labFocus = "sun";
- mountHeatLab(overlay, {
- scene: "plantLab",
- title: "Sun Energy Lab",
- html: `<p>Drag the <strong>sun</strong> handle - watch leaves, flower, then fruit.</p>`,
- goalText: "Goal: sun ≥ 65%.",
- doneLabel: "Sun checked ▶",
- threshold: 0.65,
- startHeat: 0.3,
- axis: "x",
- canvasAction: "stretch",
- sliderLabel: "Sun energy",
- syncKey: "sun",
- readoutLabels: {
- cold: "Dim - slow growth",
- melting: "Leaves working",
- liquid: "Flowering",
- simmer: "Fruit time - plant power!",
- },
- badge: BIO_ASSET_PATHS.plant,
- onDone: completeSub,
- });
-}
-
-function sub3_sort({ overlay, setCoach, completeSub }) {
- setCoach("Sort must-haves, helpers, and not-plant-food.");
- mountTapContinue(overlay, {
- scene: "plantSort",
- html: `<h3>Plant needs</h3>
- <p><strong>Must have:</strong> sun, water, air (CO₂).</p>
- <p><strong>Helps:</strong> soil minerals, bees (some plants).</p>
- <p><strong>Not plant food:</strong> candy, chargers, toys.</p>`,
- onDone: () => {
- mountDragSort(overlay, {
- scene: "plantSort",
- title: "Sort plant needs",
- instructions: "Drag into Must have, Helps, or Not plant food.",
- successText: "Plants make food - they don’t eat candy!",
- chips: [
- { id: "sun", text: "Sunlight", short: "Sun", color: 0xfbbf24 },
- { id: "water", text: "Water", short: "Water", color: 0x38bdf8 },
- { id: "air", text: "Air (CO₂)", short: "Air", color: 0xa5b4fc },
- { id: "soil", text: "Soil minerals", short: "Soil", color: 0xa16207 },
- { id: "candy", text: "Candy", short: "Candy", color: 0xf472b6 },
- { id: "phone", text: "Phone charger", short: "Charger", color: 0x94a3b8 },
- { id: "bee", text: "Bees (some plants)", short: "Bees", color: 0xf59e0b },
- { id: "toys", text: "Toys", short: "Toys", color: 0x78716c },
- ],
- zones: [
- { id: "need", label: "Must have", accept: ["sun", "water", "air"] },
- { id: "help", label: "Helps", accept: ["soil", "bee"] },
- { id: "no", label: "Not plant food", accept: ["candy", "phone", "toys"] },
- ],
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub4_grow({ overlay, setCoach, completeSub }) {
- setCoach("Push sun high - read Seed → Leaf → Flower → Fruit stage chips.");
- bioLabState.heat = 0.4;
- bioLabState.sun = 0.4;
- bioLabState.labFocus = "stages";
- mountHeatLab(overlay, {
- scene: "plantLab",
- title: "Grow Stages",
- html: `<p>Reach 80% sun energy to unlock full <strong>stage chips</strong> (seed → fruit).</p>`,
- goalText: "Goal: sun ≥ 80%.",
- doneLabel: "Stages seen ▶",
- threshold: 0.8,
- startHeat: 0.4,
- axis: "x",
- canvasAction: "stretch",
- sliderLabel: "Growth stages",
- syncKey: "sun",
- readoutLabels: {
- cold: "Stage: seed",
- melting: "Stage: leaf",
- liquid: "Stage: flower",
- simmer: "Stage: fruit",
- },
- badge: BIO_ASSET_PATHS.plant,
- onDone: () => {
- mountQuiz(overlay, {
- scene: "plantLab",
- title: "Check",
- q: "What order best matches plant stages?",
- opts: [
- "Seed → leaf → flower → fruit",
- "Fruit → seed → candy → phone",
- "Only flower forever",
- "Soil → candy → toy",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub5_food({ overlay, setCoach, completeSub }) {
- setCoach("Soil helps with minerals - food is made with light.");
- mountOrderSteps(overlay, {
- scene: "plantMeet",
- sceneArgs: { phase: "leaf" },
- title: "Food vs soil",
- instructions: "Order how plant food is made (kid level).",
- items: [
- { id: "light", html: "Catch light" },
- { id: "water", html: "Use water" },
- { id: "air", html: "Use air (CO2)" },
- { id: "food", html: "Make plant food" },
- ],
- correctIds: ["light", "water", "air", "food"],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "plantMeet",
- sceneArgs: { phase: "leaf" },
- title: "Check",
- q: "Soil mainly gives plants...",
- opts: [
- "Minerals / anchorage - not the main ‘meal’ like light-made food",
- "Candy energy",
- "Phone signal",
- "Only darkness",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub6_rule({ overlay, setCoach, completeSub }) {
- setCoach("Build the plant food rule.");
- mountEquationBuild(overlay, {
- scene: "plantRule",
- title: "Name the Plant Rule",
- instructions: "Tap tokens in order.",
- tokens: [
- { id: "a", html: "Light" },
- { id: "b", html: "+" },
- { id: "c", html: "water" },
- { id: "d", html: "+" },
- { id: "e", html: "air" },
- { id: "f", html: "-> food" },
- ],
- correctIds: ["a", "b", "c", "d", "e", "f"],
- badge: BIO_ASSET_PATHS.plantRule,
- onDone: () => {
- mountTapContinue(overlay, {
- scene: "plantRule",
- badge: BIO_ASSET_PATHS.plantRule,
- html: `<h3>Plant rule locked</h3><p>Plants make food using light, water, and air.</p>`,
- onDone: completeSub,
- advanceAfterDone: true,
- });
- },
- });
-}
-
-function sub7_stretch({ overlay, setCoach, completeSub }) {
- setCoach("Mango, rice, rose, bamboo, algae - same plant power.");
- const modes = [
- { mode: "mango", html: `${badgeHtml(BIO_ASSET_PATHS.plant, "plant")}<p><strong>Mango:</strong> Leaves catch light for sweet fruit.</p>` },
- { mode: "rice", html: `<p><strong>Rice paddy:</strong> Plants feed a nation with light-made food.</p>` },
- { mode: "rose", html: `<p><strong>Rose:</strong> Flowers need light too.</p>` },
- { mode: "bamboo", html: `<p><strong>Bamboo:</strong> Fast-growing plant power.</p>` },
- { mode: "algae", html: `<p><strong>Algae:</strong> Tiny pond plants still make food with light.</p>` },
- ];
- let step = 0;
- function show() {
- if (step >= modes.length) {
- mountQuiz(overlay, {
- scene: "plantStretch",
- sceneArgs: { mode: "rice" },
- title: "Transfer",
- q: "Rice plants in a paddy mainly get food energy from...",
- opts: ["Sunlight (plus water & air)", "Eating mud", "Boat engines", "Only fertilizer bags"],
- ok: 0,
- onDone: completeSub,
- });
- return;
+ window.__arena?.setIntentHandler?.((intent) => {
+ if (intent.type !== "CANVAS_TAP") return;
+ if (intent.meta?.action === "meet") {
+ bioLabState.plantSeen = true;
+ pulseSuccessFeedback(200);
+ if (btn && !btn.disabled) btn.click();
  }
- const m = modes[step];
- bioLabState.mode = m.mode;
- mountTapContinue(overlay, {
- scene: "plantStretch",
- sceneArgs: { mode: m.mode },
- html: `<div class="lab-demo__badge">Context ${step + 1} of ${modes.length}</div>${m.html}`,
- onDone: () => {
- step++;
- show();
- },
- });
- }
- show();
-}
-
-function sub8_myths({ overlay, setCoach, completeSub }) {
- setCoach("Bust plant myths.");
- mountMythCards(overlay, {
- scene: "plantMyth",
- title: "Myth Bust",
- badge: BIO_ASSET_PATHS.myth,
- myths: [
- { claim: "Plants eat soil for food", truth: "Soil helps with minerals - food is made with light", sceneMyth: 0 },
- { claim: "Plants don’t need air", truth: "Plants use air (CO₂) when they make food", sceneMyth: 1 },
- { claim: "Seeds are dead until they sprout", truth: "Seeds can be dormant living plants", sceneMyth: 2 },
- { claim: "Only green leaves matter", truth: "Roots, stems, and flowers are plant parts too", sceneMyth: 3 },
- { claim: "Bees make the plant’s food", truth: "Bees help pollinate - leaves still make food", sceneMyth: 4 },
- ],
- onDone: completeSub,
- });
-}
-
-function sub9_drill({ overlay, setCoach, completeSub }) {
- setCoach("Quick plant fluency.");
- mountSpeedDrill(overlay, {
- scene: "plantDrill",
- title: "Fluency Drill",
- passScene: "plantMastery",
- items: [
- { q: "Sunlight helps plants make food?", opts: ["Yes", "No"], ok: 0, prompt: "Sun" },
- { q: "Candy is plant food?", opts: ["Yes", "No"], ok: 1, prompt: "Candy" },
- { q: "Seeds can be living?", opts: ["Yes", "No"], ok: 0, prompt: "Seed" },
- { q: "Plants eat soil as their meal?", opts: ["Yes", "No"], ok: 1, prompt: "Soil" },
- { q: "Rice uses light energy?", opts: ["Yes", "No"], ok: 0, prompt: "Rice" },
- { q: "Bees replace photosynthesis?", opts: ["Yes", "No"], ok: 1, prompt: "Bees" },
- ],
- onDone: completeSub,
- });
-}
-
-function sub10_mastery({ overlay, setCoach, completeSub }) {
- setCoach("Mastery - Plant Explorer.");
- mountOrderSteps(overlay, {
- scene: "plantMastery",
- title: "Plant Explorer Mastery",
- instructions: "Order your Plant Power journey.",
- items: [
- { id: "meet", html: "Meet" },
- { id: "sort", html: "Sort" },
- { id: "lab", html: "Lab" },
- { id: "rule", html: "Rule" },
- { id: "myth", html: "Myth" },
- { id: "explorer", html: "Explorer" },
- ],
- correctIds: ["meet", "sort", "lab", "rule", "myth", "explorer"],
- onDone: () => {
- mountTapContinue(overlay, {
- scene: "plantMastery",
- badge: BIO_ASSET_PATHS.plant,
- html: `<h3>🍃 Plant Explorer!</h3><p>You know plants make food with light - mango to rice.</p>`,
- onDone: completeSub,
- advanceAfterDone: true,
  });
  },
+ onDone: completeSub,
  });
+}
+
+function sub2_build({ overlay, setCoach, completeSub }) {
+ setCoach("Place roots, stem, leaves, and flower. All four required.");
+ mountPlantBuild(overlay, { onDone: completeSub });
+}
+
+function sub3_organs({ overlay, setCoach, completeSub }) {
+ setCoach("Four jobs, then the four organ names.");
+ mountPlantOrgans(overlay, { onDone: completeSub });
+}
+
+function sub4_kitchen({ overlay, setCoach, completeSub }) {
+ setCoach("Three ingredients in, then two products out. Do not skip a chute.");
+ mountPlantKitchen(overlay, { onDone: completeSub });
+}
+
+function sub5_photo({ overlay, setCoach, completeSub }) {
+ setCoach("A real leaf factory, then the photosynthesis equation.");
+ mountPlantPhoto(overlay, { onDone: completeSub });
+}
+
+function sub6_trace({ overlay, setCoach, completeSub }) {
+ setCoach("Water up first, then sugar down. Two separate routes.");
+ mountPlantTrace(overlay, { onDone: completeSub });
+}
+
+function sub7_highways({ overlay, setCoach, completeSub }) {
+ setCoach("Two one-way highways, then xylem, phloem, and transpiration.");
+ mountPlantHighways(overlay, { onDone: completeSub });
+}
+
+function sub8_bloom({ overlay, setCoach, completeSub }) {
+ setCoach("Pollinate first, then match each seed to how it travels.");
+ mountPlantBloom(overlay, { onDone: completeSub });
+}
+
+function sub9_cycle({ overlay, setCoach, completeSub }) {
+ setCoach("The life cycle, then pollination, fertilization, and dispersal.");
+ mountPlantCycle(overlay, { onDone: completeSub });
+}
+
+function sub10_closing({ overlay, setCoach, completeSub }) {
+ setCoach("The whole machine, then a recap map of the four spirals.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "plantClose",
+ badge: "Closing",
+ title: "The whole machine",
+ html: n(
+ "We started today looking at a plant that seemed to be doing nothing at all. Now you know better. It's pulling water up with no pump, cooking its own food from sunlight and air, running two separate one-way highways through its stem every second, and building the next generation, one flower at a time. Nothing about a plant is actually still. It's just quiet.",
+ ),
+ ready: () => bioLabState.plantCloseU >= 0.95 || Date.now() - t0 > 8000,
+ readyText: "Roots, leaves, highways, and a new flower, all on the same plant.",
+ doneLabel: "Open the spiral map ▶",
+ onDone: () => {
+ setCoach("Last screen: a recap map of the four spirals. Tap a number to replay, then Finish Plant Power.");
+ mountSpiralMap(overlay, {
+ scene: "plantSpiral",
+ title: "Your recap map",
+ finishLabel: "Finish Plant Power ▶",
+ narration:
+ "This last screen is a recap, not a new puzzle. The four numbers are the four loops you already finished. Tap a number (on the canvas or here) to replay a short highlight. When you are ready, tap Finish Plant Power.",
+ statusIdle: "Tap a number to replay, or finish now.",
+ stops: [
+ { n: 1, label: "1: Plant body" },
+ { n: 2, label: "2: The kitchen" },
+ { n: 3, label: "3: Plumbing" },
+ { n: 4, label: "4: Next generation" },
+ ],
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+function n(text) {
+ return `<p class="tiny-narration">${text}</p>`;
 }

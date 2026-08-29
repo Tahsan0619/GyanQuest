@@ -1,4 +1,4 @@
-import { bootDatabaseSql } from "./js/boot-l1.js?v=tier3";
+import { bootDatabaseSql } from "./js/boot-l1.js?v=stor5";
 import { manifest } from "./manifest.js";
 
 function showBootError(msg) {

@@ -147,14 +147,15 @@ export const CATALOG = [
   },
   {
     id: "mouth",
-    file: "mouth.glb",
+    file: "human_mouth_detailed.glb",
     subject: "anatomy",
-    mb: 22.3,
+    mb: 32.1,
+    heavy: true,
     credit: "Sketchfab · CC-BY",
     title: { en: "Mouth", bn: "মুখগহ্বর" },
     blurb: {
-      en: "Oral cavity. Place pins on teeth, tongue and palate in the editor if needed.",
-      bn: "মুখগহ্বর। দাঁত, জিহ্বা, তালুতে পিন বসাতে এডিটর ব্যবহার করুন।",
+      en: "Detailed lips, teeth and tongue. Pins snap to named meshes - drag if one sits off.",
+      bn: "বিস্তারিত ঠোঁট, দাঁত ও জিহ্বা। পিন নামে আটকে - ভুল হলে টেনে সরিয়ে নিন।",
     },
   },
   {
@@ -174,6 +175,9 @@ export const CATALOG = [
     file: "solar_system_custom.glb",
     subject: "space",
     mb: 17.1,
+    /** Orbit guide rings span ~400 units; fit to planet meshes so worlds stay visible. */
+    fitExclude: /^(Circle|Tube)/i,
+    fitDistScale: 0.55,
     credit: "Sketchfab · CC-BY",
     title: { en: "Solar system", bn: "সৌরজগৎ" },
     blurb: {

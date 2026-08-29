@@ -104,28 +104,46 @@ _CHAT_CHAIN: list[str] = []
 
 SYSTEM = (
     "You are a friendly GyanQuest tutor for school kids (roughly ages 9-14). "
-    "Explain ideas from the root in simple, clear English. Use short paragraphs. "
-    "Avoid jargon unless you define it. When a specific word/term is given, explain "
-    "that word in the subject context first. "
-    "Finish every reply with exactly one question, on its own line, with nothing after it."
+    "Use plain, clear English. You may use **bold** for key words, `-` bullet lines for lists, "
+    "and short paragraphs. Never output raw HTML tags or broken encoding. "
+    "Be warm and Socratic: guide thinking with questions; do not lecture unless evaluating a word."
 )
 
-# First tap on a book word: full explanation, then the fixed opt-in question.
+FORMATTING_RULE = (
+    " Formatting: use **bold** labels, `-` bullets when listing, numbered lists like `1.` when steps help. "
+    "No markdown headings (#). Keep Unicode clean (apostrophes, dashes as - not mojibake)."
+)
+
+SOCRATIC_CHAT_RULE = (
+    " The learner is chatting freely. Use the Socratic method: ask what they think first when a "
+    "definition or idea is unclear, build on their words, and end with ONE thoughtful question "
+    "that makes them reason — not yes/no."
+)
+
+EVALUATE_RULE = (
+    " The learner tapped a red glossary word in the digital book and just shared what they think "
+    "it means. Reply in this structure (use these **bold** section labels exactly):\n\n"
+    "**What it means:** Clear correct meaning in this subject, 2-4 sentences.\n\n"
+    "**What you said:** Restate their idea fairly in your own words.\n\n"
+    "**How close:** Say if they are right, partly right, or off track. If partly right, name what "
+    "made sense. If wrong, be kind — credit any sensible part.\n\n"
+    "**Compare:** One short paragraph linking the real meaning to their idea — what to keep, "
+    "what to adjust.\n\n"
+    "End with exactly ONE Socratic question on its own line about this word in the topic. "
+    'Never ask "Do you want to learn more?" or similar.'
+)
+
 FIRST_TURN_RULE = (
-    " This is the learner's first tap on this word, so give the whole picture: 5 to 7 sentences "
-    "covering what the word means, one everyday Bangladesh-friendly example, and why it matters "
-    "in this topic. Do not stop at a one-line hint. "
-    'End with exactly this line: "Do you want to learn more?"'
+    " This is a deeper re-read of a glossary word (not the first Socratic pass). "
+    "Give 5 to 7 sentences: meaning, a Bangladesh-friendly everyday example, why it matters. "
+    "End with one Socratic question about the idea itself."
 )
 
-# Every later turn: the closing question is generated from the conversation, never canned.
 FOLLOW_UP_RULE = (
-    " The learner already got the first explanation and has just replied. Build on what they "
-    "actually said about this word - go one step deeper, or clear up whatever they sound unsure "
-    "about - in 5 to 7 sentences. Then end with ONE question you compose yourself that names the "
-    "specific idea you just taught and pushes their thinking forward. "
-    'Never ask "Do you want to learn more?" again, and never reword it as "want to know more", '
-    '"shall I explain more", "learn more?" or anything similar. Ask about the idea itself.'
+    " The learner already discussed this word and just replied. Use Socratic tutoring: respond to "
+    "what they actually said, go one step deeper, clear a misconception if needed. "
+    "End with ONE question you compose that names the specific idea and pushes their thinking. "
+    'Never ask "Do you want to learn more?" or rewordings of it.'
 )
 
 
@@ -295,26 +313,37 @@ def follow_up_question(term: str, subject: str) -> str:
     return f'Where in {sub} do you think "{t}" would change what happens?'
 
 
-def local_explain(term: str, subject: str, phase: str = "explain") -> str:
+def local_explain(term: str, subject: str, phase: str = "explain", user_attempt: str = "") -> str:
     t = (term or "this idea").strip() or "this idea"
     sub = (subject or "this school topic").strip()
+    attempt = (user_attempt or "").strip()
+    if phase == "evaluate" and attempt:
+        return (
+            f"**What it means:** In {sub}, **{t}** is a key idea from the lesson — "
+            f"the building block the book pictures and examples point to.\n\n"
+            f"**What you said:** You said: \"{attempt}\"\n\n"
+            f"**How close:** That is a fair try. Some parts may match the book; compare your words "
+            f"to the red glossary line and the diagram on this page.\n\n"
+            f"**Compare:** Keep the parts that fit what you see in the book. Adjust anything that "
+            f"does not match the mission examples.\n\n"
+            f"(Online tutor briefly unavailable — local helper used.)\n\n"
+            f'Where in {sub} would **{t}** change what happens if it were missing?'
+        )
     if phase == "followup":
         return (
-            f'Good - let\'s push "{t}" a bit further in {sub}.\n\n'
-            f'The next layer is where "{t}" shows up when things change: watch what happens '
-            f"before, during, and after, and notice which part the word is naming. That is the "
-            f"part you can point to in the mission book pictures.\n\n"
-            f"(Online tutor briefly unavailable - local helper used.)\n\n"
-            f"{follow_up_question(t, sub)}"
+            f'Good — let\'s push **"{t}"** further in {sub}.\n\n'
+            f"- Watch what happens before, during, and after in the mission.\n"
+            f"- Name which part the word is labeling.\n\n"
+            f"(Online tutor briefly unavailable — local helper used.)\n\n"
+            f'{follow_up_question(t, sub)}'
         )
     return (
-        f'Let\'s start from the root with "{t}" in {sub}.\n\n'
-        f'A simple way to think about it: "{t}" is a building-block idea you use to understand '
-        f"the bigger lesson. Look for where it shows up in the mission book pictures and examples.\n\n"
-        f"Try this: say the word aloud, point to a picture that matches it, then use it in one "
-        f"short sentence of your own.\n\n"
-        f"(Online tutor briefly unavailable - local helper used.)\n\n"
-        f"Do you want to learn more?"
+        f"**What it means:** In {sub}, **{t}** is a core word for this topic.\n\n"
+        f"- Say it aloud.\n"
+        f"- Point to a book picture that matches.\n"
+        f"- Use it in one sentence of your own.\n\n"
+        f"(Online tutor briefly unavailable — local helper used.)\n\n"
+        f'What do you think **{t}** means in your own words?'
     )
 
 
@@ -360,6 +389,7 @@ class Handler(SimpleHTTPRequestHandler):
         term = (body.get("term") or "").strip()
         subject = (body.get("subject") or body.get("context") or "").strip()
         user = (body.get("message") or body.get("prompt") or "").strip()
+        user_attempt = (body.get("userAttempt") or body.get("user_attempt") or "").strip()
         # Optional tier 1|2|3 for Hint Ladder — same endpoint, varied depth (Feature 2).
         try:
             tier = int(body.get("tier") or 1)
@@ -381,15 +411,29 @@ class Handler(SimpleHTTPRequestHandler):
         # Cap history
         messages = messages[-12:]
 
-        # Phase drives the closing question: fixed opt-in first, AI-generated after that.
+        # Phase drives tutor behaviour: evaluate (word tap reply), explain, followup, chat.
         phase = (body.get("phase") or "").strip().lower()
-        if phase not in ("explain", "followup"):
+        if phase not in ("explain", "followup", "evaluate", "chat"):
             answered_before = any(
                 isinstance(m, dict) and m.get("role") == "assistant" for m in messages
             )
-            phase = "explain" if term and not answered_before else "followup"
+            if term and user_attempt:
+                phase = "evaluate"
+            elif term and not answered_before:
+                phase = "explain"
+            elif term or answered_before:
+                phase = "followup"
+            else:
+                phase = "chat"
 
-        system = SYSTEM + (FIRST_TURN_RULE if phase == "explain" else FOLLOW_UP_RULE)
+        if phase == "evaluate":
+            system = SYSTEM + FORMATTING_RULE + EVALUATE_RULE
+        elif phase == "explain":
+            system = SYSTEM + FORMATTING_RULE + FIRST_TURN_RULE
+        elif phase == "followup":
+            system = SYSTEM + FORMATTING_RULE + FOLLOW_UP_RULE
+        else:
+            system = SYSTEM + FORMATTING_RULE + SOCRATIC_CHAT_RULE
         if tier >= 3:
             system += " Point to a book diagram if one would help."
         max_tokens = 700
@@ -400,7 +444,7 @@ class Handler(SimpleHTTPRequestHandler):
             self._json(401, {"error": "Groq API error", "detail": str(e)[:800]})
             return
         except Exception as e:
-            fallback = local_explain(term or user, subject, phase)
+            fallback = local_explain(term or user, subject, phase, user_attempt)
             self._json(
                 200,
                 {

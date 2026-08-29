@@ -1,6 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" role="img">
   <rect width="320" height="220" fill="#f8fafc"/>
   <rect x="8" y="8" width="304" height="204" rx="10" fill="none" stroke="#cbd5e1" stroke-width="2"/>
-  <rect x="50" y="50" width="70" height="160" rx="8" fill="#f97316"/><rect x="135" y="90" width="70" height="120" rx="8" fill="#f97316" opacity="0.75"/><rect x="220" y="120" width="70" height="90" rx="8" fill="#f97316" opacity="0.55"/><text x="160" y="40" text-anchor="middle" fill="#334155" font-family="Sora,sans-serif" font-size="14">Chart</text>
-  <text x="160" y="205" text-anchor="middle" fill="#475569" font-family="Georgia,serif" font-size="12">The Lazy Rock</text>
+  <ellipse cx="70" cy="150" rx="28" ry="8" fill="#d6d3d1"/>
+  <circle cx="70" cy="118" r="22" fill="#dc2626"/>
+  <circle cx="64" cy="110" r="6" fill="#fecaca"/>
+  <text x="70" y="188" text-anchor="middle" fill="#334155" font-family="Segoe UI,sans-serif" font-size="12" font-weight="700">Ball</text>
+  <rect x="128" y="96" width="64" height="44" rx="3" fill="#c2410c"/>
+  <polygon points="192,96 212,108 212,152 192,140" fill="#9a3412"/>
+  <polygon points="128,96 192,96 212,108 148,108" fill="#ea580c"/>
+  <text x="168" y="188" text-anchor="middle" fill="#334155" font-family="Segoe UI,sans-serif" font-size="12" font-weight="700">Brick</text>
+  <circle cx="250" cy="118" r="24" fill="#f8fafc" stroke="#0f172a" stroke-width="2"/>
+  <polygon points="250,104 257,118 250,132 243,118" fill="#0f172a"/>
+  <text x="250" y="188" text-anchor="middle" fill="#334155" font-family="Segoe UI,sans-serif" font-size="12" font-weight="700">Football</text>
+  <text x="160" y="40" text-anchor="middle" fill="#334155" font-family="Sora,sans-serif" font-size="14">Same push, three masses</text>
 </svg>

@@ -3,7 +3,7 @@
  * Script: Opening + 4 Bruner spirals (enactive → iconic → symbolic) + closing zoom-out.
  * Packed into the shared 10-step mission engine (N_SUBS = 10).
  */
-import { chemLabState, resetTinyBitsState, ATOM_ASSET_PATHS } from "./atom-scenes.js?v=elemhunt7";
+import { chemLabState, resetTinyBitsState, ATOM_ASSET_PATHS } from "./atom-scenes.js?v=bondbuddy1";
 import {
  mountDragSort,
  mountHeatLab,
@@ -19,7 +19,7 @@ import {
  mountSpiralMap,
  mountTempPreview,
  badgeHtml,
-} from "./chem-activities.js?v=elemhunt7";
+} from "./chem-activities.js?v=bondbuddy1";
 
 export const L1_META = {
  objective:

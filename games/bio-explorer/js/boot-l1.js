@@ -17,20 +17,20 @@ import {
  levelDoneCount,
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
-import { createArena2D } from "./arena-2d.js";
-import { playScene, cancelActiveActivity } from "./bio-activities.js?v=plain-arrows3";
-import { runL1Sub, L1_META } from "./level1.js?v=bioqa1";
-import { runL2Sub, L2_META } from "./level2.js?v=bioqa1";
-import { runL3Sub, L3_META } from "./level3.js?v=bioqa1";
-import { MISSIONS } from "./missions-meta.js";
+import { createArena2D } from "./arena-2d.js?v=living2";
+import { playScene, cancelActiveActivity } from "./bio-activities.js?v=cellplant2";
+import { runL1Sub, L1_META } from "./level1.js?v=cellplant2";
+import { runL2Sub, L2_META } from "./level2.js?v=cellplant2";
+import { runL3Sub, L3_META } from "./level3.js?v=cellplant2";
+import { MISSIONS } from "./missions-meta.js?v=cellplant2";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerLifeScenes } from "./life-scenes.js?v=bioqa1";
-import { registerCellScenes } from "./cell-scenes.js?v=bioqa1";
-import { registerPlantScenes } from "./plant-scenes.js?v=bioqa1";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
-import { BOOK as BOOK_L2 } from "../books/level2.js?v=book3";
-import { BOOK as BOOK_L3 } from "../books/level3.js?v=book3";
+import { registerLifeScenes } from "./life-scenes.js?v=cellplant2";
+import { registerCellScenes } from "./cell-scenes.js?v=cellplant2";
+import { registerPlantScenes } from "./plant-scenes.js?v=cellplant2";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=genbio1";
+import { BOOK as BOOK_L2 } from "../books/level2.js?v=genbio1";
+import { BOOK as BOOK_L3 } from "../books/level3.js?v=genbio1";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
 
 
@@ -99,7 +99,7 @@ try {
 
  if (!canvas) throw new Error("Missing #c3d canvas");
 
- const arena = createArena2D(canvas, { defaultScene: "lifeMeet" });
+ const arena = createArena2D(canvas, { defaultScene: "lifeOpen" });
  window.__arena = arena;
  registerLifeScenes(arena);
  registerCellScenes(arena);
@@ -371,14 +371,22 @@ try {
  const meta = currentMeta();
  const introScene =
  state.level === 0
- ? ["lifeMeet", { phase: "desk", dwellMs: 3200 }]
+ ? ["lifeOpen", { dwellMs: 3200 }]
  : state.level === 1
- ? ["pushMeet", { phase: "predict", dwellMs: 3200 }]
+ ? ["cellOpen", { dwellMs: 3200 }]
  : state.level === 2
- ? ["pairMeet", { phase: "desk", dwellMs: 3200 }]
- : ["lifeMeet", { phase: "settle", dwellMs: 2400 }];
+ ? ["plantOpen", { dwellMs: 3200 }]
+ : ["lifeOpen", { dwellMs: 2400 }];
  playScene(introScene[0], introScene[1]);
  const bodyMeta = state.level === 0 ? L1_META : state.level === 1 ? L2_META : state.level === 2 ? L3_META : null;
+ const brunner =
+ state.level === 0
+ ? "four spirals: living vs non-living by gut → MRS GREN (seven signs) → fire, crystals, viruses, seeds → Mars, medicine, and machines."
+ : state.level === 1
+ ? "four spirals: bodies as cities of cells → six animal-cell workers → plant-cell upgrades → how cities cooperate."
+ : state.level === 2
+ ? "four spirals: meet the plant body → photosynthesis kitchen → roots and stems as plumbing → flowers, seeds, and the next generation."
+ : "";
  overlay.innerHTML = `
  <div class="chem-card chem-intro">
  <div class="lab-demo__badge">Mission ${state.level + 1}</div>
@@ -387,8 +395,8 @@ try {
  ${
  bodyMeta
  ? `<ul class="chem-intro__hooks">${bodyMeta.everyday.map((e) => `<li>${e}</li>`).join("")}</ul>
- <p class="chem-intro__brunner"><strong>Bruner path:</strong> do &amp; see → pictures → name the rule.</p>`
- : `<p>This mission’s full labs are coming soon.</p>`
+ <p class="chem-intro__brunner"><strong>Bruner path:</strong> ${brunner}</p>`
+ : `<p>This mission's full labs are coming soon.</p>`
  }
  <button type="button" class="btn primary" id="ff-intro-go">Start ▶</button>
  </div>`;
@@ -410,7 +418,7 @@ try {
  updateProgressUI();
  showNext(false);
  clearOverlay();
- const winScene = state.level === 1 ? "pushMastery" : state.level === 2 ? "pairMastery" : "rockMastery";
+ const winScene = state.level === 1 ? "cellMastery" : state.level === 2 ? "plantMastery" : "lifeMastery";
  playScene(winScene);
  if (overlay) {
  overlay.innerHTML = `
@@ -553,18 +561,51 @@ try {
  tryAgainHandler?.();
  });
  btnHint?.addEventListener("click", () => {
- const pack = (m) => {
+ const hints = [
+ [
+ "Watch the four suspects, then tap Start the Investigation.",
+ "Sort all eight by gut. Living: dog, tree, mushroom, person. Non-living: rock, chair, car, cloud.",
+ "Watch the tree versus the rock, then name the pattern.",
+ "Match all seven mushroom clips to the numbered slots. Do not skip any.",
+ "MRS GREN names, then a one-line definition for each.",
+ "Flame, crystal, virus, then add water to the seed. Do not skip a suspect.",
+ "Read the scorecard, then the virus on the border.",
+ "Flag three Mars readings. The warmed sample is optional.",
+ "Doctors, vents, robot vacuum. Then the rule to keep.",
+ "Watch the verdicts, then tap the recap numbers or Finish Living or Not.",
+ ],
+ [
+ "Watch the city become tissue, then tap Enter the City.",
+ "Tap + three times on the hand. The leaf zoom is optional.",
+ "City block beside a cell, then the three cell-theory rules.",
+ "Visit all six workers. Replay is allowed. Do not skip a stop.",
+ "Watch city jobs become real organelles, then lock the formal names.",
+ "Place wall, chloroplasts, and the water tower. All three required.",
+ "Compare animal and plant, then read the table.",
+ "Send Protein X: nucleus → ribosome → ER → Golgi → membrane.",
+ "Cell to organism, then unicellular vs multicellular.",
+ "Watch the silhouette, then tap the recap numbers or Finish Cell City.",
+ ],
+ [
+ "Watch the windowsill plant, then tap Meet the Plant.",
+ "Place roots, stem, leaves, and flower. All four required.",
+ "Four jobs, then the four organ names.",
+ "Three ingredients in, then sugar and oxygen out. Do not skip a chute.",
+ "A real leaf factory, then the photosynthesis equation.",
+ "Water up first, then sugar down. Two separate routes.",
+ "Two one-way highways, then xylem, phloem, and transpiration.",
+ "Bee to stamen, then pistil. Then match each seed to how it travels.",
+ "The life cycle, then pollination, fertilization, and dispersal.",
+ "Watch the whole machine, then tap the recap numbers or Finish Plant Power.",
+ ],
+ ];
+ function pack(m) {
  const titles = m?.subTitles || [];
- if (!titles.length) {
- return ["Try the activity on the left. Watch the canvas on the right."];
+ return titles.map((title) => `${title}. Use the panel, then check the canvas.`);
  }
- return titles.map(
- (title, i) => `Step ${i + 1}: ${title}. Use the left panel, then check the canvas.`
- );
- };
- const hints = [pack(L1_META), pack(L2_META), pack(L3_META)];
  const row = hints[state.level] || hints[0];
- const tip = row[state.sub] || row[0] || "Watch the canvas and try the left panel.";
+ const tip = row[state.sub] || row[0] || "Interact with the left canvas. It teaches the idea.";
+ showToast(row[state.sub] || "Interact with the left canvas - it teaches the idea.");
  setCoach(`Hint: ${tip}`);
  });
  btnResetAll?.addEventListener("click", () => {

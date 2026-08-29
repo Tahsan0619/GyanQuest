@@ -17,20 +17,20 @@ import {
  levelDoneCount,
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
-import { createArena2D } from "./arena-2d.js?v=forceqa1";
-import { playScene, cancelActiveActivity } from "./force-activities.js?v=forceqa1";
-import { runL1Sub, L1_META } from "./level1.js?v=forceqa1";
-import { runL2Sub, L2_META } from "./level2.js?v=forceqa1";
-import { runL3Sub, L3_META } from "./level3.js?v=forceqa1";
-import { MISSIONS } from "./missions-meta.js?v=forceqa1";
+import { createArena2D } from "./arena-2d.js?v=pairvis6";
+import { playScene, cancelActiveActivity } from "./force-activities.js?v=pairvis6";
+import { runL1Sub, L1_META } from "./level1.js?v=pairvis6";
+import { runL2Sub, L2_META } from "./level2.js?v=pairvis6";
+import { runL3Sub, L3_META } from "./level3.js?v=pairvis6";
+import { MISSIONS } from "./missions-meta.js?v=pairvis6";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerRockScenes } from "./rock-scenes.js?v=forceqa1";
-import { registerPushScenes } from "./push-scenes.js?v=forceqa1";
-import { registerPairScenes } from "./pair-scenes.js?v=forceqa1";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book4";
-import { BOOK as BOOK_L2 } from "../books/level2.js?v=book4";
-import { BOOK as BOOK_L3 } from "../books/level3.js?v=book4";
+import { registerRockScenes } from "./rock-scenes.js?v=pairvis6";
+import { registerPushScenes } from "./push-scenes.js?v=pairvis6";
+import { registerPairScenes } from "./pair-scenes.js?v=pairvis6";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=genff1";
+import { BOOK as BOOK_L2 } from "../books/level2.js?v=genff1";
+import { BOOK as BOOK_L3 } from "../books/level3.js?v=genff1";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
 
 
@@ -99,7 +99,7 @@ try {
 
  if (!canvas) throw new Error("Missing #c3d canvas");
 
- const arena = createArena2D(canvas, { defaultScene: "rockMeet" });
+ const arena = createArena2D(canvas, { defaultScene: "rockOpen" });
  window.__arena = arena;
  registerRockScenes(arena);
  registerPushScenes(arena);
@@ -220,7 +220,7 @@ try {
  completed: state.completed,
  forceAllLocked: false,
  unlockByProgress: false,
- subtitle: "Missions 1-3 are live (Canvas 2D). Lazy Rock → Push Power → Push & Pull Pairs.",
+ subtitle: "Missions 1-3 are live (Canvas 2D). Lazy Rock → Push Power → Push & Pull.",
  onSelect: (idx) => enterMission(idx),
  onLockedClick: (idx) => {
  if (!MISSIONS[idx]?.playable) {
@@ -371,14 +371,22 @@ try {
  const meta = currentMeta();
  const introScene =
  state.level === 0
- ? ["rockMeet", { phase: "desk", dwellMs: 3200 }]
+ ? ["rockOpen", { dwellMs: 3200 }]
  : state.level === 1
- ? ["pushMeet", { phase: "predict", dwellMs: 3200 }]
+ ? ["pushOpen", { dwellMs: 3200 }]
  : state.level === 2
- ? ["pairMeet", { phase: "desk", dwellMs: 3200 }]
- : ["rockMeet", { phase: "settle", dwellMs: 2400 }];
+ ? ["pairOpen", { dwellMs: 3200 }]
+ : ["rockOpen", { dwellMs: 2400 }];
  playScene(introScene[0], introScene[1]);
  const bodyMeta = state.level === 0 ? L1_META : state.level === 1 ? L2_META : state.level === 2 ? L3_META : null;
+ const brunner =
+ state.level === 0
+ ? "four spirals: stillness and motion → inertia (mass resists change) → ice vs gravel (Newton's First Law) → seatbelts and everyday inertia."
+ : state.level === 1
+ ? "four spirals: what a push is (force) → power is not strength → gears trade force for speed → watts and horsepower."
+ : state.level === 2
+ ? "four spirals: push vs pull (two directions) → ropes cannot push (tension vs compression) → every force has a partner (Newton's Third Law) → cables, pillars, and muscles."
+ : "";
  overlay.innerHTML = `
  <div class="chem-card chem-intro">
  <div class="lab-demo__badge">Mission ${state.level + 1}</div>
@@ -387,8 +395,8 @@ try {
  ${
  bodyMeta
  ? `<ul class="chem-intro__hooks">${bodyMeta.everyday.map((e) => `<li>${e}</li>`).join("")}</ul>
- <p class="chem-intro__brunner"><strong>Bruner path:</strong> do &amp; see → pictures → name the rule.</p>`
- : `<p>This mission’s full labs are coming soon.</p>`
+ <p class="chem-intro__brunner"><strong>Bruner path:</strong> ${brunner}</p>`
+ : `<p>This mission's full labs are coming soon.</p>`
  }
  <button type="button" class="btn primary" id="ff-intro-go">Start ▶</button>
  </div>`;
@@ -410,7 +418,7 @@ try {
  updateProgressUI();
  showNext(false);
  clearOverlay();
- const winScene = state.level === 1 ? "pushMastery" : state.level === 2 ? "pairMastery" : "rockMastery";
+ const winScene = state.level === 1 ? "pushMastery" : state.level === 2 ? "pairMastery" : "rockSpiral";
  playScene(winScene);
  if (overlay) {
  overlay.innerHTML = `
@@ -461,7 +469,7 @@ try {
  updateProgressUI();
  const meta = currentMeta();
  setCoach(`${meta.kidTitle} is on the path - live labs ship mission by mission.`);
- playScene("rockMeet", { phase: "settle" });
+ playScene("rockOpen");
  overlay.innerHTML = `
  <div class="chem-card">
  <h3>${meta.emoji} ${meta.kidTitle}</h3>
@@ -525,7 +533,13 @@ try {
  if (!sameMission) state.sub = 0;
  persist();
  showPlay();
- ped.runPreMission(() => currentMeta(), () => openIntro(runCurrent));
+ function missionPlayMeta() {
+ const m = currentMeta();
+ const extra = state.level === 0 ? L1_META : state.level === 1 ? L2_META : state.level === 2 ? L3_META : null;
+ return extra ? { ...m, ...extra } : m;
+ }
+
+ ped.runPreMission(() => missionPlayMeta(), () => openIntro(runCurrent));
  }
 
 
@@ -555,40 +569,40 @@ try {
  btnHint?.addEventListener("click", () => {
  const hints = [
  [
- "Drag door, ball, and rock - then flick the rock awake.",
- "Drag the coast handle - speed stays flat without a new force.",
- "Sort into coast, balanced, or unbalanced bins.",
- "Slide the rock into the wall - wall force points opposite.",
- "Reveal why coasting happens - inertia.",
- "Build: Stay still or coast until FORCE.",
- "Tap door / ice / space / belt / asteroid contexts.",
- "Bust myths about forever-kicks and constant push.",
- "Hit the fluency checks.",
- "Order the inertia story and claim Rock Rookie.",
+ "Tap Try Nudging It. The rock only moves because you make it.",
+ "A tap is not enough. Drag to push the rock, then try the ball.",
+ "Watch the split replay, then name rest and motion as one state.",
+ "Hold to push the ball, brick, and football. Then hold to brake each one.",
+ "Start the bus, then brake. Then read the word INERTIA.",
+ "Push on the ICE page first. Then flip to GRAVEL while it is still sliding.",
+ "Nudge the wrench in space, then the puck on the table. Then Newton's First Law.",
+ "Drive with no seatbelt, then with one. Watch the curve. Optional tablecloth after.",
+ "Do the bus, the coin, and the satellite yourself. Then net force = 0 means no change.",
+ "Watch the overlays, then tap the recap numbers or Finish The Lazy Rock.",
  ],
  [
- "Predict then GO - light car accelerates more.",
- "Read F, m, a on the panel.",
- "Sort chips into Force, Mass, Acceleration.",
- "Drag force on the crate - watch a.",
- "Tap mass chips and drag force - live F=ma.",
- "Build F = m · a.",
- "Walk truck / bike / sofa / rocket / elevator.",
- "Bust F=ma myths.",
- "Number drill: 600 N, double F → double a.",
- "Claim Speed Star.",
+ "Tap Give It a Push. The stalled car starts to roll.",
+ "Drag the crate. The compass stays put. The crate travels the way you push.",
+ "Look at all four force pictures, then name force in newtons.",
+ "Tortoise on the top lane, rabbit on the bottom. Hold to push each one. Do not skip the guess.",
+ "Same work, different time. Work in joules, power in watts.",
+ "Low gear climbs. High gear on the hill slides back. Watch gravity, then high gear on the road.",
+ "Force vs speed on a pivot. Then Power = Force × Velocity.",
+ "Push the stalled car alone, then recruit friends.",
+ "Five power pictures from a bulb to a rocket. Then force vs power.",
+ "Watch the overlays, then tap the recap numbers or Finish Push Power.",
  ],
  [
- "Tap PUSH - skaters shove apart as a pair.",
- "Rower: oar-water pair.",
- "Sort Action / Reaction / Interaction.",
- "Slide rocket thrust - exhaust↓ rocket↑.",
- "Rope scale reads ~one side’s tension.",
- "Tap STEP - foot back, ground forward.",
- "Build: equal & opposite pairs.",
- "Balloon, rower, weight, bug, tug.",
- "Bust pair myths.",
- "Claim Team Force.",
+ "Tap Push It or Pull It. Watch the 3D door swing inward or outward.",
+ "Squeeze the spring, then stretch it. It fights back both ways.",
+ "Four real examples on screen: box, wagon, door, drawer.",
+ "Fail at pushing the rope first. Then pull. Do not skip the crumple.",
+ "Stretching versus squeezing. Then tension and compression.",
+ "Push-off first, then pull together. Both skaters move both times.",
+ "Swimmer, rowboat, rocket, wall. Then Newton's Third Law.",
+ "Build the suspension bridge: cables, pillars, drive across.",
+ "Crane, tent, bones. Then push, pull, and pairs on one card.",
+ "Watch the overlays, then tap the recap numbers or Finish Push & Pull.",
  ],
  ];
  const row = hints[state.level] || hints[0];

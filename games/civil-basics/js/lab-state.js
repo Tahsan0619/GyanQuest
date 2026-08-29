@@ -1,5 +1,5 @@
 /**
- * Civil Basics shared lab state (Chem / Force pattern).
+ * Civil Basics shared lab state (Bruner spiral pattern).
  */
 export const labState = {
  heat: 0.12,
@@ -26,24 +26,31 @@ export const labState = {
  scale: 0,
  reducedMotion: false,
  _placedVersion: 0,
- /** Living or Not */
- lifeScore: 0,
- sprout: 0,
- /** Cell City */
- cellZoom: 0.2,
- organelle: "membrane",
- /** Plant Power */
- sun: 0.3,
- rootWater: 0.2,
- beeVisit: 0,
+ /** Mission 1: Strong Structures */
+ structMode: "open",
+ structOpenReady: false,
+ structSquarePushed: false,
+ structDiagonalAdded: false,
+ structBracedPushTried: false,
+ structWindNarrow: false,
+ structWindWide: false,
+ structLoadGood: false,
+ structLoadWeak: false,
+ structLoadAmount: 0,
+ structWeakCollapsed: false,
+ structLoadTestDone: false,
+ structCloseU: 0,
+ spiralStop: 0,
+ spiralUntil: 0,
+ spiralFinish: false,
 };
 
 export const chemLabState = labState;
 
 export const LAB_ASSET_PATHS = {
- "rule": "/games/civil-basics/assets/rule.svg",
- "myth": "/games/civil-basics/assets/myth.svg",
- "m1": "/games/civil-basics/assets/m1.svg"
+ rule: "/games/civil-basics/assets/rule.svg",
+ myth: "/games/civil-basics/assets/myth.svg",
+ m1: "/games/civil-basics/assets/m1.svg",
 };
 
 export const ATOM_ASSET_PATHS = LAB_ASSET_PATHS;
@@ -58,6 +65,78 @@ export function pulseFailFeedback(ms = 420) {
 
 export function pulseSuccessFeedback(ms = 320) {
  labState.successPulse = performance.now() + ms;
+}
+
+export function resetStructState() {
+ initStructSub(0);
+ labState.structOpenReady = false;
+ labState.structSquarePushed = false;
+ labState.structDiagonalAdded = false;
+ labState.structBracedPushTried = false;
+ labState.structWindNarrow = false;
+ labState.structWindWide = false;
+ labState.structLoadGood = false;
+ labState.structLoadWeak = false;
+ labState.structLoadAmount = 0;
+ labState.structWeakCollapsed = false;
+ labState.structLoadTestDone = false;
+ labState.structCloseU = 0;
+ labState.spiralStop = 0;
+ labState.spiralUntil = 0;
+ labState.spiralFinish = false;
+}
+
+/** Prepare lab state for one substep without wiping the whole mission. */
+export function initStructSub(subIndex) {
+ switch (subIndex) {
+ case 0:
+ labState.structMode = "open";
+ labState.structOpenReady = false;
+ break;
+ case 1:
+ labState.structMode = "square1";
+ labState.structSquarePushed = false;
+ labState.structDiagonalAdded = false;
+ labState.structBracedPushTried = false;
+ break;
+ case 2:
+ labState.structMode = "compare1";
+ break;
+ case 3:
+ labState.structMode = "tower2";
+ labState.structWindNarrow = false;
+ labState.structWindWide = false;
+ break;
+ case 4:
+ labState.structMode = "cog2";
+ break;
+ case 5:
+ labState.structMode = "bridge3";
+ labState.structLoadGood = false;
+ labState.structLoadWeak = false;
+ break;
+ case 6:
+ labState.structMode = "real3";
+ break;
+ case 7:
+ labState.structMode = "load4";
+ labState.structLoadAmount = 0;
+ labState.structWeakCollapsed = false;
+ labState.structLoadTestDone = false;
+ break;
+ case 8:
+ labState.structMode = "safe4";
+ break;
+ case 9:
+ labState.structMode = "close";
+ labState.structCloseU = 0;
+ labState.spiralStop = 0;
+ labState.spiralUntil = 0;
+ labState.spiralFinish = false;
+ break;
+ default:
+ break;
+ }
 }
 
 if (typeof window !== "undefined") {

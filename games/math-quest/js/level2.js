@@ -1,7 +1,7 @@
 /**
  * Math Quest - Mission 2: Fraction Friends (deepened)
  */
-import { labState, LAB_ASSET_PATHS } from "./lab-state.js";
+import { labState, LAB_ASSET_PATHS } from "./lab-state.js?v=numbersense1";
 import {
  mountMotionChain,
  mountDragSort,
@@ -13,7 +13,7 @@ import {
  mountTapContinue,
  mountOrderSteps,
  badgeHtml,
-} from "./lab-activities.js";
+} from "./lab-activities.js?v=numbersense1";
 
 export const L2_META = {
  objective: "By the end of this mission, you'll be able to explain equal shares / parts of a whole in your own words.",

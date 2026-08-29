@@ -33,6 +33,7 @@ ImpactX.zip
 *.mp3
 *.ogg
 sketchfab models/*.glb
+*.glb
 ~$*
 
 # Cursor / local agent junk

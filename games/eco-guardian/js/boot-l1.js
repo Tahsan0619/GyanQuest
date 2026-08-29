@@ -18,15 +18,15 @@ import {
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
 import { createArena2D } from "./arena-2d.js";
-import { playScene, cancelActiveActivity } from "./lab-activities.js?v=wasteqa1";
-import { runL1Sub, L1_META } from "./level1.js?v=wasteqa1";
+import { playScene, cancelActiveActivity } from "./lab-activities.js?v=waste1";
+import { runL1Sub, L1_META } from "./level1.js?v=waste1";
 import { runL2Sub, L2_META } from "./level2.js";
 import { runL3Sub, L3_META } from "./level3.js";
 import { MISSIONS } from "./missions-meta.js";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerWasteScenes } from "./waste-scenes.js?v=wasteqa1";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
+import { registerWasteScenes } from "./waste-scenes.js?v=waste1";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=geneco1";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
 
 
@@ -95,7 +95,7 @@ try {
 
  if (!canvas) throw new Error("Missing #c3d canvas");
 
- const arena = createArena2D(canvas, { defaultScene: "wasteMeet" });
+ const arena = createArena2D(canvas, { defaultScene: "wasteOpen" });
  window.__arena = arena;
  registerWasteScenes(arena);
 
@@ -365,12 +365,12 @@ try {
  const meta = currentMeta();
  const introScene =
  state.level === 0
- ? ["wasteMeet", { phase: "desk", dwellMs: 3200 }]
+ ? ["wasteOpen", { dwellMs: 3200 }]
  : state.level === 1
  ? ["pushMeet", { phase: "predict", dwellMs: 3200 }]
  : state.level === 2
  ? ["pairMeet", { phase: "desk", dwellMs: 3200 }]
- : ["wasteMeet", { phase: "settle", dwellMs: 2400 }];
+ : ["wasteOpen", { dwellMs: 2400 }];
  playScene(introScene[0], introScene[1]);
  const bodyMeta = state.level === 0 ? L1_META : state.level === 1 ? L2_META : state.level === 2 ? L3_META : null;
  overlay.innerHTML = `
@@ -455,7 +455,7 @@ try {
  updateProgressUI();
  const meta = currentMeta();
  setCoach(`${meta.kidTitle} is on the path - live labs ship mission by mission.`);
- playScene("wasteMeet", { phase: "settle" });
+ playScene("wasteOpen", { dwellMs: 2400 });
  overlay.innerHTML = `
  <div class="chem-card">
  <h3>${meta.emoji} ${meta.kidTitle}</h3>

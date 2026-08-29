@@ -18,16 +18,16 @@ import {
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
 import { createArena2D } from "./arena-2d.js";
-import { playScene, cancelActiveActivity } from "./lab-activities.js?v=meanqa1";
-import { runL1Sub, L1_META } from "./level1.js?v=meanqa1";
+import { playScene, cancelActiveActivity } from "./lab-activities.js?v=mean3";
+import { runL1Sub, L1_META } from "./level1.js?v=mean3";
 import { runL2Sub, L2_META } from "./level2.js";
 import { runL3Sub, L3_META } from "./level3.js";
-import { MISSIONS } from "./missions-meta.js?v=meanqa1";
+import { MISSIONS } from "./missions-meta.js?v=mean3";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerMeanScenes } from "./mean-scenes.js?v=meanqa1";
+import { registerMeanScenes } from "./mean-scenes.js?v=mean3";
 import { registerChanceScenes } from "./chance-scenes.js";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=genst1";
 import { BOOK as BOOK_L2 } from "../books/level2.js?v=book3";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
 
@@ -97,7 +97,7 @@ try {
 
  if (!canvas) throw new Error("Missing #c3d canvas");
 
- const arena = createArena2D(canvas, { defaultScene: "meanMeet" });
+ const arena = createArena2D(canvas, { defaultScene: "meanOpen" });
  window.__arena = arena;
  registerMeanScenes(arena);
  registerChanceScenes(arena);

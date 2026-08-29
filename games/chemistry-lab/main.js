@@ -1,4 +1,4 @@
-import { bootChemLevel1 } from "./js/boot-l1.js?v=elemhunt7";
+import { bootChemLevel1 } from "./js/boot-l1.js?v=bondbuddy1";
 import { manifest } from "./manifest.js";
 
 function showBootError(msg) {

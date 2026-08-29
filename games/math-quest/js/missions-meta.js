@@ -8,7 +8,7 @@ export const MISSIONS = [
  "theme": "counting & place",
  "emoji": "\ud83d\udd22",
  "rewardName": "Number Scout",
- "hook": "Count, group, and place values - tens and ones.",
+ "hook": "A messy pile versus 47. Counting, bundles of ten, and why a digit's seat changes its meaning.",
  "accent": "#38bdf8",
  "accent2": "#0369a1",
  "icon": "leaf",

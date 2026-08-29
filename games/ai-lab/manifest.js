@@ -8,6 +8,6 @@ export const manifest = {
  emoji: "\ud83e\udd16",
  storageKey: "gq-ai-lab-save-v2",
  localeKey: "gq-ai-lab-locale",
- defaultScene: "aiMeet",
+ defaultScene: "aiOpen",
  theme: { accent: "#c084fc", accent2: "#7e22ce" },
 };

@@ -341,7 +341,10 @@ async function openModel(id) {
   $("fail").classList.add("hidden");
   viewer.clearFocus();
   syncCallout();
-  await viewer.load(modelUrl(entry));
+  await viewer.load(modelUrl(entry), {
+    fitExclude: entry.fitExclude,
+    fitDistScale: entry.fitDistScale,
+  });
 }
 
 function downloadPins() {

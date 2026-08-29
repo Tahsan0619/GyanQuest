@@ -18,18 +18,18 @@ import {
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
 import { createArena2D } from "./arena-2d.js";
-import { playScene, cancelActiveActivity } from "./lab-activities.js?v=ictqa2";
-import { runL1Sub, L1_META } from "./level1.js?v=ictqa2";
-import { runL2Sub, L2_META } from "./level2.js?v=ictqa2";
+import { playScene, cancelActiveActivity } from "./lab-activities.js?v=ictkitchen4";
+import { runL1Sub, L1_META } from "./level1.js?v=ictkitchen4";
+import { runL2Sub, L2_META } from "./level2.js?v=ioKitchen4";
 import { runL3Sub, L3_META } from "./level3.js";
 import { MISSIONS } from "./missions-meta.js";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerBitsScenes } from "./bits-scenes.js?v=ictqa2";
-import { registerIoScenes } from "./io-scenes.js?v=ictqa2";
+import { registerBitsScenes } from "./bits-scenes.js?v=ictkitchen4";
+import { registerIoScenes } from "./io-scenes.js?v=ioKitchen4";
 import { registerFilesScenes } from "./files-scenes.js";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
-import { BOOK as BOOK_L2 } from "../books/level2.js?v=book3";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=genict1";
+import { BOOK as BOOK_L2 } from "../books/level2.js?v=genict1";
 import { BOOK as BOOK_L3 } from "../books/level3.js?v=book3";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
 
@@ -99,7 +99,7 @@ try {
 
  if (!canvas) throw new Error("Missing #c3d canvas");
 
- const arena = createArena2D(canvas, { defaultScene: "bitsMeet" });
+ const arena = createArena2D(canvas, { defaultScene: "bitsOpen" });
  window.__arena = arena;
  registerBitsScenes(arena);
  registerIoScenes(arena);
@@ -220,7 +220,7 @@ try {
  completed: state.completed,
  forceAllLocked: false,
  unlockByProgress: false,
- subtitle: "Missions 1-3 are live (Canvas 2D). Computer Bits / Input & Output / Files & Folders.",
+ subtitle: "Missions 1-3 are live (Canvas 2D). Bits: Kitchen / Input & Output / Files & Folders.",
  onSelect: (idx) => enterMission(idx),
  onLockedClick: (idx) => {
  if (!MISSIONS[idx]?.playable) {
@@ -371,12 +371,12 @@ try {
  const meta = currentMeta();
  const introScene =
  state.level === 0
- ? ["bitsMeet", { phase: "desk", dwellMs: 3200 }]
+ ? ["bitsOpen", { dwellMs: 3200 }]
  : state.level === 1
- ? ["pushMeet", { phase: "predict", dwellMs: 3200 }]
+ ? ["ioOpen", { dwellMs: 3200 }]
  : state.level === 2
  ? ["pairMeet", { phase: "desk", dwellMs: 3200 }]
- : ["bitsMeet", { phase: "settle", dwellMs: 2400 }];
+ : ["bitsOpen", { dwellMs: 2400 }];
  playScene(introScene[0], introScene[1]);
  const bodyMeta = state.level === 0 ? L1_META : state.level === 1 ? L2_META : state.level === 2 ? L3_META : null;
  overlay.innerHTML = `
@@ -387,7 +387,7 @@ try {
  ${
  bodyMeta
  ? `<ul class="chem-intro__hooks">${bodyMeta.everyday.map((e) => `<li>${e}</li>`).join("")}</ul>
- <p class="chem-intro__brunner"><strong>Bruner path:</strong> do &amp; see -> pictures -> name the rule.</p>`
+ <p class="chem-intro__brunner"><strong>Bruner path:</strong> do &amp; see → pictures → name the rule (4 spirals).</p>`
  : `<p>This mission's full labs are coming soon.</p>`
  }
  <button type="button" class="btn primary" id="ff-intro-go">Start </button>
@@ -410,7 +410,7 @@ try {
  updateProgressUI();
  showNext(false);
  clearOverlay();
- const winScene = state.level === 1 ? "pushMastery" : state.level === 2 ? "pairMastery" : "rockMastery";
+ const winScene = state.level === 1 ? "ioSpiral" : state.level === 2 ? "pairMastery" : "bitsSpiral";
  playScene(winScene);
  if (overlay) {
  overlay.innerHTML = `
@@ -461,7 +461,7 @@ try {
  updateProgressUI();
  const meta = currentMeta();
  setCoach(`${meta.kidTitle} is on the path - live labs ship mission by mission.`);
- playScene("bitsMeet", { phase: "settle" });
+ playScene("bitsOpen", { phase: "open" });
  overlay.innerHTML = `
  <div class="chem-card">
  <h3>${meta.emoji} ${meta.kidTitle}</h3>
@@ -555,28 +555,28 @@ try {
  btnHint?.addEventListener("click", () => {
  const hints = [
  [
- "Drag CPU, RAM, and storage - meet the inside team.",
- "Drag until the busy bar fills - RAM holds open work.",
- "Sort jobs into CPU / RAM / Storage / Not.",
- "Push the RAM fill higher on the heat lab.",
- "Order why we need three parts.",
- "Tap the Bits rule pieces in order.",
- "Tap phone / laptop / lab / game / class modes.",
- "Bust computer myths on the cards.",
- "Hit the fluency checks.",
- "Order the journey and claim Bit Scout.",
+ "Tap Open the Kitchen - watch the laptop wake up.",
+ "Flip the 8 switches - watch binary and decimal update.",
+ "Same pattern = number, letter, pixel - then bit and byte.",
+ "Drag 3 and 5 to the chef, Execute, then speed up the slider.",
+ "Watch the 4-step CPU loop, then read CPU / GHz terms.",
+ "Fetch from counter (fast), pantry (slow), then Power Off.",
+ "Compare speed vs permanence - RAM and storage names.",
+ "Open a program - walk through 4 steps and see cramped-kitchen lag.",
+ "Hover spec lines - RAM, SSD, CPU map to the kitchen.",
+ "Closing zoom-out - open the spiral recap map.",
  ],
  [
- "Drag keyboard, screen, mic, speaker - meet I/O.",
- "Type or drag until the screen signal is high enough.",
- "Sort devices into Input / Output / Both / Not.",
- "Push the signal lab higher.",
- "Order the keypress path: press -> process -> show -> read.",
- "Tap the I/O rule: Input -> Process -> Output.",
- "Tap class / game / call / print / music modes.",
- "Bust I/O myths on the cards.",
- "Hit the fluency checks.",
- "Order the journey and claim I/O Ranger.",
+ "Tap Open the Windows on the sealed kitchen.",
+ "Type at sealed wall, cut order window with keyboard, type again.",
+ "Input gallery - arrows in - then input device definition.",
+ "Serve fails at sealed wall - drag monitor/speaker/printer out.",
+ "Output gallery - arrows out - then output device definition.",
+ "Tap touchscreen in+out, sort 6 devices into Input/Output/Both.",
+ "Venn diagram - then I/O device definition.",
+ "Run full cycle: input → chef/RAM/storage → output.",
+ "Accessibility montage - braille, voice, rumble - summary.",
+ "Closing - windows open both ways - spiral recap map.",
  ],
  [
  "Drag School/Photos folders and files.",

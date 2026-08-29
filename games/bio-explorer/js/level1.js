@@ -1,440 +1,196 @@
 /**
- * Bio Explorer - Mission 1: Living or Not
+ * Bio Explorer Mission 1: Living or Not
+ * Script: Opening + 4 Bruner spirals (gut pattern → MRS GREN → tricky cases → why it matters) + recap.
  */
-import { bioLabState, BIO_ASSET_PATHS } from "./bio-state.js";
+import { bioLabState, resetLivingState, BIO_ASSET_PATHS, pulseSuccessFeedback } from "./bio-state.js?v=cellplant2";
 import {
- mountMotionChain,
- mountDragSort,
- mountHeatLab,
- mountEquationBuild,
- mountQuiz,
- mountSpeedDrill,
- mountMythCards,
- mountTapContinue,
- mountOrderSteps,
+ mountGate,
+ mountSpiralMap,
+ mountLifeSort,
+ mountLifeCompare,
+ mountLifeProve,
+ mountLifeMrs,
+ mountLifeSuspects,
+ mountLifeScore,
+ mountLifeMars,
+ mountLifeStakes,
  badgeHtml,
-} from "./bio-activities.js";
+} from "./bio-activities.js?v=cellplant2";
 
 export const L1_META = {
- objective: "By the end of this mission, you'll be able to explain life in your own words.",
- bdHook: "Bangladesh everyday: a mango seed, a sleeping cat, a glowing phone - which ones are truly living?",
+ objective:
+ "By the end of this mission, you'll be able to use MRS GREN to decide whether something is alive, including tricky cases like fire, crystals, viruses, and dormant seeds.",
+ bdHook: "A flame, a crystal, a virus, a sleeping cat. Gut checks fail. The checklist is the toolkit.",
  predict: {
- q: "Before we start - which clue best says something is living?",
+ q: "Which of these four is the easiest to call alive, and why might the others fool you?",
  options: [
- "It can move when you poke it (like a phone)",
- "It can grow, use energy, and make more life",
- "It looks shiny or colorful",
+ "The flame, because it moves and needs food",
+ "The sleeping cat is clearly alive; the others copy one or two signs of life without being organisms",
+ "Anything that grows is alive, including crystals",
  ],
  ok: 1,
  },
-
  kidTitle: "Living or Not",
- theme: "life",
+ theme: "signs of life, MRS GREN",
  emoji: "🌱",
  rewardName: "Living Rookie",
- intro: "Living things grow, need energy, respond, and can make more life - even quiet seeds!",
- everyday: ["A sleeping cat", "A mango seed", "A phone that ‘moves’ when you touch it"],
+ intro:
+ "Quick gut check: which of these four things are alive? A flame. It moves, it grows, it needs food. A crystal. It grows too, in its own way. A virus. Doctors fight it like it is alive, but is it, really? And a sleeping cat, not moving a muscle right now, but obviously alive. If your gut answers did not come easily for all four, good. They are not supposed to. By the end of today, you will have an actual toolkit for answering this question properly, for absolutely anything you throw at it.",
+ everyday: [
+ "A flickering flame that looks busy",
+ "A virus doctors treat like an enemy",
+ "A sleeping cat that is not moving at all",
+ ],
  subTitles: [
- "Meet Living Clues",
- "Seed Sprout Lab",
- "Sort: Living or Not?",
- "Watch Growth",
- "Why Seeds Count",
- "Name the Life Rule",
- "Stretch: New Contexts",
- "Myth Bust",
- "Fluency Drill",
- "Living Rookie Mastery",
+ "Four suspects",
+ "Sort it yourself",
+ "Tree versus rock",
+ "Prove the mushroom",
+ "MRS GREN",
+ "Four tricky cases",
+ "The virus on the border",
+ "Mars life-detector",
+ "Why the line matters",
+ "The investigation, solved",
  ],
 };
 
 export function runL1Sub(subIndex, api) {
  const { registerTryAgain } = api;
- bioLabState.reveal = false;
- bioLabState.tokenProgress = 0;
- bioLabState.masteryStep = 0;
- bioLabState.sortPlaced = 0;
- bioLabState.placed = {};
- bioLabState.selectedId = null;
- bioLabState.mythBusted = false;
- bioLabState.mythPhase = "claim";
- bioLabState.heat = 0.15;
- bioLabState.heatTarget = 0.15;
- bioLabState.sprout = 0.15;
- bioLabState.phase = "desk";
- bioLabState.mode = "rice";
- bioLabState.labFocus = "water";
-
+ resetLivingState();
  const runners = [
- sub1_meet,
- sub2_sprout,
- sub3_sort,
- sub4_watch,
- sub5_explain,
- sub6_rule,
- sub7_stretch,
- sub8_myths,
- sub9_drill,
- sub10_mastery,
+ sub1_opening,
+ sub2_sort,
+ sub3_compare,
+ sub4_prove,
+ sub5_mrs,
+ sub6_suspects,
+ sub7_score,
+ sub8_mars,
+ sub9_stakes,
+ sub10_closing,
  ];
  const fn = runners[subIndex] || runners[0];
  registerTryAgain(() => {
  api.overlay.innerHTML = "";
+ resetLivingState();
  fn(api);
  });
  fn(api);
 }
 
-function sub1_meet({ overlay, setCoach, completeSub }) {
- setCoach("Hook: living is more than moving - growth, energy, response, new life.");
- mountMotionChain(overlay, {
- title: "Meet Living Clues",
- beats: [
- {
- scene: "lifeMeet",
- sceneArgs: { phase: "desk" },
- dwellMs: 4000,
+function sub1_opening({ overlay, setCoach, completeSub }) {
+ setCoach("Four suspects in the dark. Then start the investigation.");
+ mountGate(overlay, {
+ scene: "lifeOpen",
+ badge: "Opening",
+ title: "Living or Not",
+ pulse: true,
+ status: "Watch the four suspects. Then start the investigation.",
+ ready: () => bioLabState.lifeOpenU > 0 || bioLabState.lifeSeen,
+ readyText: "The four suspects are on the table.",
+ doneLabel: "Start the Investigation →",
  html: `${badgeHtml(BIO_ASSET_PATHS.life, "life")}
- <p><strong>Act 1:</strong> Drag the cat, seed, rock, and phone - which feel alive?</p>`,
- },
- {
- scene: "lifeMeet",
- sceneArgs: { phase: "grow" },
- dwellMs: 4200,
- html: `<p><strong>Act 2:</strong> Living things can grow and change over time.</p>`,
- },
- {
- scene: "lifeMeet",
- sceneArgs: { phase: "respond" },
- dwellMs: 4000,
- html: `<p><strong>Act 3:</strong> They respond - a cat wakes, a plant leans to light.</p>`,
- },
- {
- scene: "lifeMeet",
- sceneArgs: { phase: "settle" },
- dwellMs: 3800,
- html: `<p><strong>Act 4:</strong> Big idea - living ≠ “moves when you poke it.”</p>`,
- },
- ],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "lifeMeet",
- sceneArgs: { phase: "settle" },
- title: "Exit check",
- q: "A phone lights up when you tap it. Is it living?",
- opts: [
- "No - it needs a human + battery; it doesn’t grow or make more phones",
- "Yes - anything that moves is living",
- "Yes - screens are alive",
- "Only if it has apps",
- ],
- ok: 0,
- onDone: () => {
- mountTapContinue(overlay, {
- scene: "lifeMeet",
- sceneArgs: { phase: "desk" },
- badge: BIO_ASSET_PATHS.life,
- html: `<h3>You met living clues</h3><p>Next: water a seed and watch a living process.</p>`,
- onDone: completeSub,
- advanceAfterDone: true,
+ ${n(
+ "Quick gut check: which of these four things are alive? A flame. It moves, it grows, it needs food. A crystal. It grows too, in its own way. A virus. Doctors fight it like it is alive, but is it, really? And a sleeping cat, not moving a muscle right now, but obviously alive. If your gut answers did not come easily for all four, good. They are not supposed to.",
+ )}`,
+ bind(host) {
+ const btn = host.querySelector("#tiny-gate-go");
+ btn?.addEventListener("click", () => {
+ bioLabState.lifeSeen = true;
  });
- },
- });
- },
- });
-}
-
-function sub2_sprout({ overlay, setCoach, completeSub }) {
- setCoach("Lab: seeds can be dormant living plants - water helps them sprout.");
- bioLabState.heat = 0.2;
- bioLabState.sprout = 0.2;
- bioLabState.labFocus = "water";
- mountHeatLab(overlay, {
- scene: "lifeSprout",
- title: "Seed Sprout Lab",
- html: `<p>Drag the <strong>water</strong> handle. Watch the seed sprout - a living change.</p>`,
- goalText: "Goal: sprout ≥ 60%.",
- doneLabel: "Sprout checked ▶",
- threshold: 0.6,
- startHeat: 0.2,
- axis: "x",
- canvasAction: "stretch",
- sliderLabel: "Water / sprout",
- syncKey: "sprout",
- readoutLabels: {
- cold: "Dry seed - still living, waiting",
- melting: "Water soaks in",
- liquid: "Root peek!",
- simmer: "Sprout rising - living process",
- },
- badge: BIO_ASSET_PATHS.sprout,
- onDone: () => {
- mountQuiz(overlay, {
- scene: "lifeSprout",
- title: "Check",
- q: "Before it sprouts, a dry mango seed is...",
- opts: [
- "Still living (dormant) if it can grow later",
- "Definitely dead forever",
- "The same as a pebble",
- "Only living after you paint it green",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub3_sort({ overlay, setCoach, completeSub }) {
- setCoach("Sort: living, not living, or tricky myths.");
- mountTapContinue(overlay, {
- scene: "lifeSort",
- html: `<h3>Living or not?</h3>
- <p><strong>Living:</strong> cat, seed, tree, fish.</p>
- <p><strong>Not living:</strong> rock, phone, car.</p>
- <p><strong>Tricky:</strong> fire looks “alive” but isn’t an organism.</p>`,
- onDone: () => {
- mountDragSort(overlay, {
- scene: "lifeSort",
- title: "Sort living stories",
- instructions: "Drag into Living, Not living, or Tricky.",
- successText: "Nice sort - life is more than motion!",
- chips: [
- { id: "cat", text: "Cat", short: "Cat", color: 0xf59e0b },
- { id: "rock", text: "Rock", short: "Rock", color: 0x78716c },
- { id: "seed", text: "Seed", short: "Seed", color: 0x92400e },
- { id: "phone", text: "Phone", short: "Phone", color: 0x38bdf8 },
- { id: "tree", text: "Mango tree", short: "Tree", color: 0x22c55e },
- { id: "car", text: "Car", short: "Car", color: 0x94a3b8 },
- { id: "fire", text: "Campfire", short: "Fire", color: 0xf97316 },
- { id: "fish", text: "Fish", short: "Fish", color: 0x0ea5e9 },
- ],
- zones: [
- { id: "living", label: "Living", accept: ["cat", "seed", "tree", "fish"] },
- { id: "notliving", label: "Not living", accept: ["rock", "phone", "car"] },
- { id: "tricky", label: "Tricky / myth", accept: ["fire"] },
- ],
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub4_watch({ overlay, setCoach, completeSub }) {
- setCoach("Watch growth again - living change takes time (day markers), not just a poke.");
- bioLabState.heat = 0.35;
- bioLabState.sprout = 0.35;
- bioLabState.labFocus = "growth";
- mountHeatLab(overlay, {
- scene: "lifeSprout",
- title: "Watch Growth",
- html: `<p>Push past 70% and read the <strong>day markers</strong> - living things change over time.</p>`,
- goalText: "Goal: growth ≥ 70%.",
- doneLabel: "Growth watched ▶",
- threshold: 0.7,
- startHeat: 0.35,
- axis: "x",
- canvasAction: "stretch",
- sliderLabel: "Growth over time",
- syncKey: "sprout",
- readoutLabels: {
- cold: "Day 1 - seed waiting",
- melting: "Day 3 - early change",
- liquid: "Day 7 - sprout rising",
- simmer: "Day 14 - clear living growth",
- },
- badge: BIO_ASSET_PATHS.sprout,
- onDone: () => {
- mountQuiz(overlay, {
- scene: "lifeSprout",
- title: "Check",
- q: "What does watching growth over days show?",
- opts: [
- "Living things change and develop - not just sit forever like a rock",
- "Growth only happens in chemistry class",
- "Anything that moves once is living",
- "Seeds never change",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub5_explain({ overlay, setCoach, completeSub }) {
- setCoach("Order the life clues - what makes something living?");
- mountOrderSteps(overlay, {
- scene: "lifeMeet",
- sceneArgs: { phase: "settle" },
- title: "Why seeds count",
- instructions: "Put the living clues in a sensible order.",
- items: [
- { id: "energy", html: "Need energy / materials" },
- { id: "grow", html: "Can grow or develop" },
- { id: "respond", html: "Can respond to the world" },
- { id: "more", html: "Can make more life (reproduce)" },
- ],
- correctIds: ["energy", "grow", "respond", "more"],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "lifeMeet",
- sceneArgs: { phase: "settle" },
- title: "Check",
- q: "Fire spreads and ‘uses’ fuel. Why isn’t it living?",
- opts: [
- "It isn’t an organism that grows, reproduces as life does",
- "Because it’s hot",
- "Because scientists hate campfires",
- "It is living",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub6_rule({ overlay, setCoach, completeSub }) {
- setCoach("Build the life rule from tokens.");
- mountEquationBuild(overlay, {
- scene: "lifeRule",
- title: "Name the Life Rule",
- instructions: "Tap tokens in order to lock the idea.",
- tokens: [
- { id: "a", html: "Living" },
- { id: "b", html: "things" },
- { id: "c", html: "grow," },
- { id: "d", html: "respond," },
- { id: "e", html: "make more" },
- ],
- correctIds: ["a", "b", "c", "d", "e"],
- badge: BIO_ASSET_PATHS.rule,
- onDone: () => {
- mountTapContinue(overlay, {
- scene: "lifeRule",
- badge: BIO_ASSET_PATHS.rule,
- html: `<h3>Life rule locked</h3><p>Living ≠ merely moving. Seeds can wait and still be alive.</p>`,
- onDone: completeSub,
- advanceAfterDone: true,
- });
- },
- });
-}
-
-function sub7_stretch({ overlay, setCoach, completeSub }) {
- setCoach("Same idea in Bangladesh everyday contexts.");
- const modes = [
- {
- mode: "rice",
- html: `${badgeHtml(BIO_ASSET_PATHS.life, "life")}<p><strong>Rice seed:</strong> Quiet in a bag - can still be a living plant waiting.</p>`,
- },
- {
- mode: "cat",
- html: `<p><strong>Street cat:</strong> Grows, needs food, responds - clearly living.</p>`,
- },
- {
- mode: "rickshaw",
- html: `<p><strong>Rickshaw:</strong> Rolls when you push it - a machine, not an organism.</p>`,
- },
- {
- mode: "fish",
- html: `<p><strong>River fish:</strong> Living animal in water.</p>`,
- },
- {
- mode: "fire",
- html: `<p><strong>Campfire:</strong> Spreads and uses fuel - a process, not a living thing.</p>`,
- },
- ];
- let step = 0;
- function show() {
- if (step >= modes.length) {
- mountQuiz(overlay, {
- scene: "lifeStretch",
- sceneArgs: { mode: "rickshaw" },
- title: "Transfer",
- q: "A parked rickshaw rolls when you push it. Living?",
- opts: ["No - machines aren’t organisms", "Yes - it moved", "Yes - wheels are cells", "Only in rain"],
- ok: 0,
- onDone: completeSub,
- });
- return;
+ window.__arena?.setIntentHandler?.((intent) => {
+ if (intent.type !== "CANVAS_TAP") return;
+ if (intent.meta?.action === "spot") {
+ bioLabState.lifeSpot = Number(intent.meta.i) || 0;
+ bioLabState.lifeSeen = true;
+ pulseSuccessFeedback(160);
  }
- const m = modes[step];
- bioLabState.mode = m.mode;
- mountTapContinue(overlay, {
- scene: "lifeStretch",
- sceneArgs: { mode: m.mode },
- html: `<div class="lab-demo__badge">Context ${step + 1} of ${modes.length}</div>${m.html}`,
- onDone: () => {
- step++;
- show();
- },
- });
+ if (intent.meta?.action === "start") {
+ bioLabState.lifeSeen = true;
+ pulseSuccessFeedback(200);
+ if (btn && !btn.disabled) btn.click();
  }
- show();
-}
-
-function sub8_myths({ overlay, setCoach, completeSub }) {
- setCoach("Bust myths about living things.");
- mountMythCards(overlay, {
- scene: "lifeMyth",
- title: "Myth Bust",
- badge: BIO_ASSET_PATHS.myth,
- myths: [
- { claim: "Only things that move are living", truth: "Seeds and trees are living even when still", sceneMyth: 0 },
- { claim: "Fire is a living thing", truth: "Fire is a chemical process, not an organism", sceneMyth: 1 },
- { claim: "Phones are alive because they respond", truth: "Phones are designed machines, not living", sceneMyth: 2 },
- { claim: "Dry seeds are dead", truth: "Many seeds are dormant living plants", sceneMyth: 3 },
- { claim: "Rocks grow like plants", truth: "Rocks don’t grow as living organisms do", sceneMyth: 4 },
- ],
+ });
+ },
  onDone: completeSub,
  });
 }
 
-function sub9_drill({ overlay, setCoach, completeSub }) {
- setCoach("Quick fluency - living or not?");
- mountSpeedDrill(overlay, {
- scene: "lifeDrill",
- title: "Fluency Drill",
- passScene: "lifeMastery",
- items: [
- { q: "Mango seed - living?", opts: ["Yes", "No"], ok: 0, prompt: "Seed" },
- { q: "Granite rock - living?", opts: ["Yes", "No"], ok: 1, prompt: "Rock" },
- { q: "Sleeping cat - living?", opts: ["Yes", "No"], ok: 0, prompt: "Cat" },
- { q: "Campfire - living?", opts: ["Yes", "No"], ok: 1, prompt: "Fire" },
- { q: "River fish - living?", opts: ["Yes", "No"], ok: 0, prompt: "Fish" },
- { q: "Smartphone - living?", opts: ["Yes", "No"], ok: 1, prompt: "Phone" },
- ],
- onDone: completeSub,
- });
+function sub2_sort({ overlay, setCoach, completeSub }) {
+ setCoach("Sort by gut instinct. Living or non-living. No trick items yet.");
+ mountLifeSort(overlay, { onDone: completeSub });
 }
 
-function sub10_mastery({ overlay, setCoach, completeSub }) {
- setCoach("Mastery - Living Rookie.");
- bioLabState.masteryStep = 0;
- mountOrderSteps(overlay, {
- scene: "lifeMastery",
- title: "Living Rookie Mastery",
- instructions: "Order your journey badges.",
- items: [
- { id: "meet", html: "Meet" },
- { id: "sort", html: "Sort" },
- { id: "lab", html: "Lab" },
- { id: "rule", html: "Rule" },
- { id: "myth", html: "Myth" },
- { id: "rookie", html: "Rookie" },
- ],
- correctIds: ["meet", "sort", "lab", "rule", "myth", "rookie"],
+function sub3_compare({ overlay, setCoach, completeSub }) {
+ setCoach("Tree versus rock, then name the pattern you already used.");
+ mountLifeCompare(overlay, { onDone: completeSub });
+}
+
+function sub4_prove({ overlay, setCoach, completeSub }) {
+ setCoach("Match all seven mushroom clips to unlabeled slots. Do not skip any.");
+ mountLifeProve(overlay, { onDone: completeSub });
+}
+
+function sub5_mrs({ overlay, setCoach, completeSub }) {
+ setCoach("MRS GREN, then a precise definition for every letter.");
+ mountLifeMrs(overlay, { onDone: completeSub });
+}
+
+function sub6_suspects({ overlay, setCoach, completeSub }) {
+ setCoach("Flame, crystal, virus, seed. Run the same checklist on all four. Add water for the seed.");
+ mountLifeSuspects(overlay, { onDone: completeSub });
+}
+
+function sub7_score({ overlay, setCoach, completeSub }) {
+ setCoach("One scorecard, then why viruses sit on the border.");
+ mountLifeScore(overlay, { onDone: completeSub });
+}
+
+function sub8_mars({ overlay, setCoach, completeSub }) {
+ setCoach("Flag three Mars readings. The warmed sample is optional.");
+ mountLifeMars(overlay, { onDone: completeSub });
+}
+
+function sub9_stakes({ overlay, setCoach, completeSub }) {
+ setCoach("Doctors, alien hunts, machines. Then the rule to keep.");
+ mountLifeStakes(overlay, { onDone: completeSub });
+}
+
+function sub10_closing({ overlay, setCoach, completeSub }) {
+ setCoach("Four verdicts, then a recap map of the four spirals.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "lifeClose",
+ badge: "Closing",
+ title: "The investigation, solved",
+ html: n(
+ "We opened today with four things and a gut feeling. Now you have something much better: an actual, seven-part checklist that biologists genuinely use, that you built and tested yourself, on a mushroom, a flame, a crystal, a virus, a dormant seed, and even a hypothetical patch of Mars. That sleeping cat was never in doubt. But now, neither is anything else.",
+ ),
+ ready: () => bioLabState.lifeCloseU >= 0.95 || Date.now() - t0 > 8000,
+ readyText: "The verdicts are in.",
+ doneLabel: "Open the spiral map ▶",
  onDone: () => {
- mountTapContinue(overlay, {
- scene: "lifeMastery",
- badge: BIO_ASSET_PATHS.life,
- html: `<h3>🌱 Living Rookie!</h3><p>You can sort living from not-living - and explain why seeds count.</p>`,
+ setCoach("Last screen: a recap map of the four spirals. Tap a number to replay, then Finish Living or Not.");
+ mountSpiralMap(overlay, {
+ scene: "lifeSpiral",
+ title: "Your recap map",
+ finishLabel: "Finish Living or Not ▶",
+ narration:
+ "This last screen is a recap, not a new puzzle. The four numbers are the four loops you already finished. Tap a number (on the canvas or here) to replay a short highlight. When you are ready, tap Finish Living or Not.",
+ statusIdle: "Tap a number to replay, or finish now.",
+ stops: [
+ { n: 1, label: "1: Gut pattern" },
+ { n: 2, label: "2: MRS GREN" },
+ { n: 3, label: "3: Tricky cases" },
+ { n: 4, label: "4: Why it matters" },
+ ],
  onDone: completeSub,
- advanceAfterDone: true,
  });
  },
  });
+}
+
+function n(text) {
+ return `<p class="tiny-narration">${text}</p>`;
 }

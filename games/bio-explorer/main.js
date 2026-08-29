@@ -1,4 +1,4 @@
-import { bootBioExplorer } from "./js/boot-l1.js?v=tier3";
+import { bootBioExplorer } from "./js/boot-l1.js?v=cellplant2";
 import { manifest } from "./manifest.js";
 
 function showBootError(msg) {

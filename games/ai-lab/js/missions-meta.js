@@ -5,10 +5,10 @@ export const MISSIONS = [
  {
  "id": "what-is-ai",
  "kidTitle": "What is AI?",
- "theme": "patterns from examples, not magic",
- "emoji": "\ud83e\udde0",
+ "theme": "the apprentice that learns from examples",
+ "emoji": "\ud83c\udf93",
  "rewardName": "AI Rookie",
- "hook": "AI spots patterns from examples - not a magic brain.",
+ "hook": "Meet the Apprentice - trained on examples, not a rulebook.",
  "accent": "#c084fc",
  "accent2": "#7e22ce",
  "icon": "leaf",

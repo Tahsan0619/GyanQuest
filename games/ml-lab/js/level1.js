@@ -1,256 +1,287 @@
 /**
- * Machine Learning - Mission 1: Teach the Model (deepened)
+ * Machine Learning - Mission 1: Teach the Model
+ * Script: Opening + 4 Bruner spirals (clean → split → epochs → evaluate) + recap.
  */
-import { labState, LAB_ASSET_PATHS } from "./lab-state.js";
-import {
- mountMotionChain, mountDragSort, mountHeatLab, mountEquationBuild,
- mountQuiz, mountSpeedDrill, mountMythCards, mountTapContinue, mountOrderSteps, badgeHtml,
-} from "./lab-activities.js";
+import { labState, LAB_ASSET_PATHS, resetTeachModelState, initMlSub } from "./lab-state.js?v=acad6";
+import { mountGate, mountSpiralMap, mountTapContinue, badgeHtml } from "./lab-activities.js?v=acad6";
 
 export const L1_META = {
- objective: "By the end of this mission, you'll be able to explain train vs test - more good examples in your own words.",
- bdHook: "Bangladesh everyday: fruit photos, handwriting, spam mail - teach with labeled examples, then check on new ones.",
+ objective:
+ "By the end of this mission, you'll explain the real ML workflow - clean data, train/test split, epochs, early stopping, and honest evaluation.",
+ bdHook:
+ "Fruit photo sorters, handwriting apps, spam filters - all built with this same disciplined cycle behind the scenes.",
  predict: {
- q: "What's the fair way to check if a model learned?",
+ q: "You already know a model learns from examples. What's the first practical step before training?",
  options: [
- "Only reuse the exact training photos",
- "Test on fresh examples it did not train on",
- "Never check - just trust the glow",
+ "Clean and fix the dataset - garbage in, garbage out",
+ "Train on every card including the final exam set",
+ "Skip labels and hope the model guesses",
  ],
- ok: 1,
+ ok: 0,
  },
-
  kidTitle: "Teach the Model",
- theme: "train vs test - more good examples",
- emoji: "\ud83c\udf93",
+ theme: "the real machine learning work cycle",
+ emoji: "🏫",
  rewardName: "Model Mentor",
- intro: "A model learns from training examples, then we test it on new ones it has not memorized.",
- everyday: [
- "Sorting fruit photos",
- "Handwriting samples",
- "Spam vs real mail"
- ],
+ intro:
+ "Open the training academy and run an apprentice through the entire process - good material in, vault sealed early, disciplined practice, honest final exam.",
+ everyday: ["Labeled photo decks", "Train vs test split", "Error graphs", "Accuracy score"],
  subTitles: [
- "Meet Training",
- "Watch Train Dial",
- "Sort Train vs Test",
- "Stronger Train Lab",
- "Why Models Learn",
- "Name the Train Rule",
- "Stretch: Places",
- "Myth Bust",
- "Fluency Drill",
- "Model Mentor Mastery"
+ "Enroll the Apprentice",
+ "Clean the Deck",
+ "Gathering Good Material",
+ "Split the Deck",
+ "Training vs Testing",
+ "Practice Loop",
+ "When to Stop",
+ "Final Exam",
+ "The Full Cycle",
+ "Properly Trained",
  ],
 };
 
 export function runL1Sub(subIndex, api) {
  const { registerTryAgain } = api;
- labState.reveal = false; labState.tokenProgress = 0; labState.masteryStep = 0;
- labState.placed = {}; labState.selectedId = null; labState.mythPhase = "claim";
- labState.heat = 0.25; labState.phase = "desk"; labState.mode = "home";
+ initMlSub(subIndex);
  const runners = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10];
  const fn = runners[subIndex] || runners[0];
- registerTryAgain(() => { api.overlay.innerHTML = ""; fn(api); });
+ registerTryAgain(() => {
+ api.overlay.innerHTML = "";
+ resetTeachModelState();
+ fn(api);
+ });
  fn(api);
 }
 
-function s1({ overlay, setCoach, completeSub }) {
- setCoach("Hook: feed good examples, then test on fresh ones.");
- mountMotionChain(overlay, {
- title: "Meet Training",
- beats: [
- { scene: "mlMeet", sceneArgs: { phase: "desk" }, dwellMs: 4000, html: `${badgeHtml(LAB_ASSET_PATHS.m1, "ml")}<p><strong>Act 1:</strong> Stack labeled examples the model can study.</p>` },
- { scene: "mlMeet", sceneArgs: { phase: "glow" }, dwellMs: 4200, html: `<p><strong>Act 2:</strong> Training glow - the model adjusts from those examples.</p>` },
- { scene: "mlMeet", sceneArgs: { phase: "settle" }, dwellMs: 4000, html: `<p><strong>Act 3:</strong> Hold out a fresh test set - no peeking during train.</p>` }
- ],
- onDone: () => mountQuiz(overlay, {
- scene: "mlMeet", sceneArgs: { phase: "settle" }, title: "Exit check",
- q: "What is the fair way to check a model?",
- opts: ["Test on new examples it did not train on", "Only reuse the exact training set", "Never check at all", "Delete all labels"],
- ok: 0, onDone: () => mountTapContinue(overlay, {
- scene: "mlMeet", badge: LAB_ASSET_PATHS.m1,
- html: `<h3>Train ready</h3><p>Next: dial training strength.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
- }),
- });
+function n(text) {
+ return `<p class="tiny-narration">${text}</p>`;
 }
 
-function s2({ overlay, setCoach, completeSub }) {
- setCoach("Add training strength until the model looks ready.");
- labState.heat = 0.25;
- mountHeatLab(overlay, {
- scene: "mlLab", title: "Watch Train Dial",
- html: `<p>Drag the <strong>training strength</strong> dial (not a chemistry heat dial) until &gt;= 60%.</p>`,
- goalText: "Goal: train strength ≥ 60%.", doneLabel: "Dial checked ▶", threshold: 0.6, startHeat: 0.25,
- axis: "x", canvasAction: "stretch", sliderLabel: "Train strength", badge: LAB_ASSET_PATHS.m1,
- readoutLabels: {
- cold: "Few examples - model unsure",
- melting: "More labels stacking…",
- liquid: "Patterns forming",
- simmer: "Strong train - ready to test!",
+function s1_opening({ overlay, setCoach, completeSub }) {
+ setCoach("Tap Enroll the Apprentice on the canvas - you'll advance automatically.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "mlOpen",
+ badge: "Opening",
+ title: "Teach the Model",
+ pulse: true,
+ autoAdvanceOnReady: true,
+ ready: () => labState.mlOpenReady || Date.now() - t0 > 4000,
+ readyText: "You know models learn from examples - today we run the real kitchen.",
+ doneLabel: "Continue ▶",
+ controlsHtml: `<p class="drag-hint">Or tap here if the canvas button is hard to reach:</p>
+ <button type="button" class="btn secondary" id="gate-enroll-ml">Enroll the Apprentice →</button>`,
+ bind: (host, { finish, signalGateReady: signal }) => {
+ host.querySelector("#gate-enroll-ml")?.addEventListener("click", () => {
+ labState.mlOpenReady = true;
+ signal({ forceAdvance: true });
+ finish();
+ });
  },
+ html: `${badgeHtml(LAB_ASSET_PATHS.m1, "ml")}
+ ${n(
+ "Knowing a model learns from examples is like knowing a chef cooks with ingredients - it doesn't tell you how the kitchen runs. Today we open a real training academy and run the full cycle start to finish.",
+ )}`,
  onDone: completeSub,
  });
 }
 
-function s3({ overlay, setCoach, completeSub }) {
- setCoach("Sort train examples, test examples, and junk.");
+function s2_clean({ overlay, setCoach, completeSub }) {
+ setCoach("Fix mislabels, discard duplicates and blurry cards - then compare two apprentices.");
+ mountGate(overlay, {
+ scene: "mlClean1",
+ badge: "Spiral 1 · Enactive",
+ title: "Gathering Good Material",
+ pulse: true,
+ ready: () => labState.mlCompareDone,
+ readyText: "Same process - only the material quality differed.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Clean the messy flashcard deck, then train one apprentice on the messy pile and one on the clean pile. See who generalizes on new photos.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function s3_funnel({ overlay, setCoach, completeSub }) {
+ setCoach("Raw data pours in messy - cleaning filters it to ready-to-train.");
+ mountGate(overlay, {
+ scene: "mlFunnel1",
+ badge: "Spiral 1 · Iconic",
+ title: "The Cleaning Funnel",
+ ready: () => true,
+ html: n(
+ "In real projects, cleaning often takes more time than training. Skipping it doesn't save time - it guarantees a worse model.",
+ ),
+ onDone: () => {
  mountTapContinue(overlay, {
- scene: "mlSort",
- html: `<h3>Guide</h3><p><strong>Train:</strong> labeled examples used to teach.<br><strong>Test:</strong> fresh examples for checking.<br><strong>Junk:</strong> blank / wrong labels.</p>`,
- onDone: () => mountDragSort(overlay, {
- scene: "mlSort", title: "Sort Train vs Test",
- instructions: "Drag into Train / Test / Junk.",
- successText: "Train vs test sorted!",
- chips: [
- { id: "t1", text: "Labeled mango photo", short: "Train A", color: 16020150 },
- { id: "t2", text: "Labeled banana photo", short: "Train B", color: 16478597 },
- { id: "t3", text: "Labeled apple photo", short: "Train C", color: 2278750 },
- { id: "x1", text: "Fresh fruit photo", short: "Test A", color: 3718648 },
- { id: "x2", text: "New handwriting", short: "Test B", color: 959977 },
- { id: "j1", text: "Blank card", short: "Blank", color: 9741240 },
- { id: "j2", text: "Wrong label mess", short: "Wrong", color: 16347926 },
- { id: "t4", text: "More labeled samples", short: "Train D", color: 10980346 }
- ],
- zones: [
- { id: "train", label: "Train set", accept: ["t1", "t2", "t3", "t4"] },
- { id: "test", label: "Test set", accept: ["x1", "x2"] },
- { id: "junk", label: "Junk", accept: ["j1", "j2"] }
- ],
+ scene: "mlTerms1",
+ html: `<h3>Spiral 1 · Symbolic</h3>
+ <p><strong>Dataset</strong> · <strong>Data cleaning</strong></p>
+ <p><em>Garbage in, garbage out.</em> No technique fully fixes a poorly built dataset.</p>`,
  onDone: completeSub,
- }),
  });
-}
-
-function s4({ overlay, setCoach, completeSub }) {
- setCoach("Push training quality higher.");
- labState.heat = 0.4;
- mountHeatLab(overlay, {
- scene: "mlLab", title: "Stronger Train Lab",
- html: `<p>Push <strong>training quality</strong> higher with more good labeled examples (≥ 75%).</p>`,
- goalText: "Goal: train strength ≥ 75%.", doneLabel: "Lab done ▶", threshold: 0.75, startHeat: 0.4,
- axis: "x", canvasAction: "stretch", sliderLabel: "Train quality", badge: LAB_ASSET_PATHS.m1,
- readoutLabels: {
- cold: "Weak train - sparse labels",
- melting: "Quality climbing…",
- liquid: "Solid example pile",
- simmer: "Strong train - hold out a test set!",
  },
+ });
+}
+
+function s4_split({ overlay, setCoach, completeSub }) {
+ setCoach("Split 80 cards to practice, 20 into a sealed vault - then try to peek.");
+ mountGate(overlay, {
+ scene: "mlSplit2",
+ badge: "Spiral 2 · Enactive",
+ title: "Split Before You Start",
+ pulse: true,
+ ready: () => labState.mlVaultSealed && labState.mlPeekAttempted,
+ readyText: "Vault sealed - peeking refused. Final exam stays meaningful.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Drag cards into Practice (80) and Sealed Vault (20). Confirm the split, then tap Peek at the Vault to see why it must stay closed during training.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s5({ overlay, setCoach, completeSub }) {
- setCoach("Order how teaching a model works.");
- mountOrderSteps(overlay, {
- scene: "mlMeet", sceneArgs: { phase: "settle" }, title: "Why Models Learn",
- instructions: "Order the story.",
- items: [
- { id: "collect", html: "Collect labeled examples" },
- { id: "train", html: "Train the model on them" },
- { id: "test", html: "Test on fresh examples" },
- { id: "improve", html: "Improve with better data" }
- ],
- correctIds: ["collect", "train", "test", "improve"],
- onDone: () => mountQuiz(overlay, {
- scene: "mlMeet", title: "Check",
- q: "Using only the training set to prove success is...",
- opts: ["Unfair - it may have memorized", "The only correct method", "Required by light switches", "How clocks work"],
- ok: 0, onDone: completeSub,
- }),
- });
-}
-
-function s6({ overlay, setCoach, completeSub }) {
- setCoach("Lock: train on examples, test on new ones.");
- mountEquationBuild(overlay, {
- scene: "mlRule", title: "Name the Train Rule", instructions: "Tap in order.",
- tokens: [ { id: "a", html: "Train" }, { id: "b", html: "on examples" }, { id: "c", html: "->" }, { id: "d", html: "test new" } ],
- correctIds: ["a", "b", "c", "d"], badge: LAB_ASSET_PATHS.rule,
- onDone: () => mountTapContinue(overlay, {
- scene: "mlRule", badge: LAB_ASSET_PATHS.rule,
- html: `<h3>Rule locked</h3><p>Train on examples -> test on new ones you held out.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
- });
-}
-
-function s7({ overlay, setCoach, completeSub }) {
- setCoach("Fruit, handwriting, mail, BD shop tags, lab - same train/test idea. Tap canvas modes.");
- const modes = [
- { mode: "fruit", title: "Fruit photos", blurb: "Labeled mango/banana train set → fresh fruit test photos." },
- { mode: "hand", title: "Handwriting", blurb: "Many labeled letters teach; new handwriting checks the model." },
- { mode: "mail", title: "Spam mail", blurb: "Correct spam/ham labels train; new inbox messages test." },
- { mode: "shop", title: "BD shop tags", blurb: "Labeled price tags teach; a new shelf item is the test." },
- { mode: "lab", title: "School lab", blurb: "Labeled samples teach; a held-out sample checks fairness." },
- ];
- let i = 0;
- function step() {
- if (i >= modes.length) {
- mountQuiz(overlay, {
- scene: "mlStretch", title: "Transfer",
- q: "Spam filters improve when you...",
- opts: ["Give more correctly labeled mail examples", "Never check on new mail", "Remove all labels", "Only use blank cards"],
- ok: 0, onDone: completeSub,
- });
- return;
- }
- const m = modes[i++];
- labState.mode = m.mode;
+function s5_rooms({ overlay, setCoach, completeSub }) {
+ setCoach("Practice room for learning - vault room locked until training ends.");
+ mountGate(overlay, {
+ scene: "mlRooms2",
+ badge: "Spiral 2 · Iconic",
+ title: "Two Rooms",
+ ready: () => true,
+ html: n(
+ "Every real project keeps this separation. Mixing training and test data - even accidentally - undermines the entire point of evaluation.",
+ ),
+ onDone: () => {
  mountTapContinue(overlay, {
- scene: "mlStretch",
- sceneArgs: { mode: m.mode },
- html: `<h3>${m.title}</h3><p>${m.blurb}</p>
- <p class="drag-hint">Tap matching chips on the canvas when shown.</p>`,
- onDone: step,
+ scene: "mlTerms2",
+ html: `<h3>Spiral 2 · Symbolic</h3>
+ <p><strong>Training set</strong> (~80%) · <strong>Test set</strong> (~20%)</p>
+ <p>The split happens first - vault stays sealed.</p>`,
+ onDone: completeSub,
  });
- }
- step();
+ },
+ });
 }
 
-function s8({ overlay, setCoach, completeSub }) {
- setCoach("Bust ML myths.");
- mountMythCards(overlay, {
- scene: "mlMyth", title: "Myth Bust", badge: LAB_ASSET_PATHS.myth,
- myths: [
- { claim: "More random junk always helps", truth: "Quality labeled examples matter more than junk", sceneMyth: 0 },
- { claim: "Testing on the train set is enough", truth: "Hold out fresh examples to check for real", sceneMyth: 1 },
- { claim: "Models never need updates", truth: "Better data and checks improve them", sceneMyth: 2 },
- { claim: "One example teaches everything", truth: "Many varied examples usually teach better", sceneMyth: 3 },
- { claim: "Kids cannot teach a simple model idea", truth: "Train vs test is a kid-friendly rule", sceneMyth: 4 }
- ],
+function s6_train({ overlay, setCoach, completeSub }) {
+ setCoach("Run full passes - watch error fall and check score dip then rise.");
+ mountGate(overlay, {
+ scene: "mlTrain3",
+ badge: "Spiral 3 · Enactive",
+ title: "The Practice Loop",
+ pulse: true,
+ ready: () => labState.mlStopDone,
+ readyText: "You chose when to stop - early stopping in action.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Tap Run one full pass for each epoch. Watch the check score - stop training near its lowest point, before it climbs again (overfitting warning).",
+ ),
  onDone: completeSub,
  });
 }
 
-function s9({ overlay, setCoach, completeSub }) {
- setCoach("Quick train/test fluency.");
- mountSpeedDrill(overlay, {
- scene: "mlDrill", title: "Fluency Drill", passScene: "mlMastery",
- items: [
- { q: "Train set teaches the model?", opts: ["Yes", "No"], ok: 0, prompt: "Train?" },
- { q: "Test should be fresh?", opts: ["Yes", "No"], ok: 0, prompt: "Fresh?" },
- { q: "Blank cards help training?", opts: ["No", "Yes"], ok: 0, prompt: "Blank?" },
- { q: "Wrong labels hurt?", opts: ["Yes", "No"], ok: 0, prompt: "Wrong?" },
- { q: "Memorizing train = mastery?", opts: ["No", "Yes"], ok: 0, prompt: "Memo?" },
- { q: "More good examples help?", opts: ["Yes", "No"], ok: 0, prompt: "More?" }
- ],
+function s7_graph({ overlay, setCoach, completeSub }) {
+ setCoach("One line falls forever - the other dips then rises. Stop at the star.");
+ mountGate(overlay, {
+ scene: "mlGraph3",
+ badge: "Spiral 3 · Iconic",
+ title: "The Sweet Spot",
+ ready: () => true,
+ html: n(
+ "This shape shows up constantly in real ML work. Recognizing it and stopping at the turning point is one of the most practical skills in the field.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "mlTerms3",
+ html: `<h3>Spiral 3 · Symbolic</h3>
+ <p><strong>Epoch</strong> · <strong>Loss</strong> · <strong>Overfitting</strong> · <strong>Early stopping</strong></p>`,
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+function s8_exam({ overlay, setCoach, completeSub }) {
+ setCoach("Unlock the vault for the first time - score the honest final exam.");
+ mountGate(overlay, {
+ scene: "mlExam4",
+ badge: "Spiral 4 · Enactive",
+ title: "Report Card",
+ pulse: true,
+ ready: () => labState.mlExamDone,
+ readyText: "18/20 - trustworthy because the vault was never used in training.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Unlock the sealed vault and run all 20 cards. Optional: compare to a cheater who peeked during training - their 100% proves nothing.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s10({ overlay, setCoach, completeSub }) {
- setCoach("Mastery - Model Mentor.");
- mountOrderSteps(overlay, {
- scene: "mlMastery", title: "Model Mentor Mastery", instructions: "Order your journey.",
- items: [ { id: "meet", html: "Meet" }, { id: "sort", html: "Sort" }, { id: "lab", html: "Lab" }, { id: "rule", html: "Rule" }, { id: "myth", html: "Myth" }, { id: "ml", html: "Ml" } ],
- correctIds: ["meet", "sort", "lab", "rule", "myth", "ml"],
- onDone: () => mountTapContinue(overlay, {
- scene: "mlMastery", badge: LAB_ASSET_PATHS.m1,
- html: `<h3>\ud83c\udf93 Model Mentor!</h3><p>You can teach with a train set and check with a test set.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
+function s9_cycle({ overlay, setCoach, completeSub }) {
+ setCoach("Collect → Clean → Split → Train → Evaluate - one continuous cycle.");
+ mountGate(overlay, {
+ scene: "mlCycle4",
+ badge: "Spiral 4 · Iconic",
+ title: "The Full Workflow",
+ ready: () => true,
+ html: n(
+ "Everything you did today is one disciplined cycle. Skipping any stage quietly undermines everything that comes after.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "mlTerms4",
+ html: `<h3>Spiral 4 · Symbolic</h3>
+ <p><strong>Accuracy</strong> - percent correct on the test set.</p>
+ <p><em>Next: what does learning look like without an answer key at all?</em></p>`,
+ onDone: completeSub,
+ });
+ },
  });
 }
+
+function s10_closing({ overlay, setCoach, completeSub }) {
+ setCoach("Watch the full academy cycle play out - then open the recap map.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "mlClose",
+ badge: "Closing",
+ title: "The Apprentice, Properly Trained",
+ html: n(
+ "Good material in, fair exam locked away early, disciplined practice with honest error correction, and a final score that actually means something.",
+ ),
+ ready: () => labState.mlCloseU >= 0.85 || Date.now() - t0 > 7000,
+ readyText: "Clean · Split · Train · Evaluate.",
+ doneLabel: "Open the recap map ▶",
+ onDone: () => {
+ setCoach("Tap a spiral number to replay, then finish Teach the Model.");
+ mountSpiralMap(overlay, {
+ scene: "mlSpiral",
+ title: "Your recap map",
+ finishLabel: "Finish Teach the Model ▶",
+ narration:
+ "The four numbers are the four spirals you finished. Tap a number to replay a highlight, then finish when ready.",
+ statusIdle: "Tap a number to replay, or finish now.",
+ stops: [
+ { n: 1, label: "1: Cleaning" },
+ { n: 2, label: "2: Split" },
+ { n: 3, label: "3: Epochs" },
+ { n: 4, label: "4: Evaluate" },
+ ],
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+const s1 = s1_opening;
+const s2 = s2_clean;
+const s3 = s3_funnel;
+const s4 = s4_split;
+const s5 = s5_rooms;
+const s6 = s6_train;
+const s7 = s7_graph;
+const s8 = s8_exam;
+const s9 = s9_cycle;
+const s10 = s10_closing;

@@ -8,7 +8,7 @@ export const MISSIONS = [
  "theme": "averages",
  "emoji": "📊",
  "rewardName": "Mean Scout",
- "hook": "Mean balances the data; mode is the value that shows up most.",
+ "hook": "Ice cream scoops and flavors: mean shares evenly; mode picks what's most popular.",
  "accent": "#fbbf24",
  "accent2": "#b45309",
  "icon": "chart",

@@ -8,6 +8,6 @@ export const manifest = {
  emoji: "\ud83e\uddee",
  storageKey: "gq-math-quest-save-v2",
  localeKey: "gq-math-quest-locale",
- defaultScene: "numMeet",
+ defaultScene: "numOpen",
  theme: { accent: "#38bdf8", accent2: "#0369a1" },
 };

@@ -1,4 +1,4 @@
-import { bootElectricalBasics } from "./js/boot-l1.js?v=tier3";
+import { bootElectricalBasics } from "./js/boot-l1.js?v=loop4";
 import { manifest } from "./manifest.js";
 
 function showBootError(msg) {

@@ -1,4 +1,4 @@
-import { bootForceFighter } from "./js/boot-l1.js?v=tier3";
+import { bootForceFighter } from "./js/boot-l1.js?v=pairvis6";
 import { manifest } from "./manifest.js";
 
 function showBootError(msg) {

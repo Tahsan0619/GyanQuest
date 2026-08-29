@@ -1,10 +1,8 @@
 /**
- * Chemistry Lab · Mission 3: Bond Buddies - Canvas 2D scenes.
- * Tiny Bits parity: phased meet, zoneId sort + PLACE_CHIP, prop drag, distinct stretch.
+ * Chemistry Lab Mission 3 Bond Buddies: Canvas 2D.
+ * Script: Opening + 4 Bruner spirals (stability → ionic → covalent → spectrum) + recap map.
  */
-import { chemLabState, pulseFailFeedback, pulseSuccessFeedback } from "./atom-scenes.js?v=elemhunt7";
-import { CUP_FOOT, footAlign } from "./scene-layout.js";
-import { sortSlotPositions, getActiveSession } from "./activity-controller.js";
+import { chemLabState, pulseFailFeedback, pulseSuccessFeedback, drawH2O } from "./atom-scenes.js?v=bondbuddy1";
 
 function roundRect(ctx, x, y, w, h, r) {
  const rr = Math.min(r, w / 2, h / 2);
@@ -18,9 +16,9 @@ function roundRect(ctx, x, y, w, h, r) {
 }
 
 function drawLabel(ctx, text, x, y, opts = {}) {
- ctx.font = opts.font || "600 14px Segoe UI, system-ui, sans-serif";
+ ctx.font = opts.font || "600 13px Segoe UI, system-ui, sans-serif";
  const tw = ctx.measureText(text).width;
- const bw = tw + 24;
+ const bw = Math.min((opts.maxW || 9999), tw + 22);
  const bh = opts.h || 26;
  ctx.fillStyle = opts.bg || "rgba(46,16,80,0.88)";
  roundRect(ctx, x - bw / 2, y - bh / 2, bw, bh, 10);
@@ -34,72 +32,13 @@ function drawLabel(ctx, text, x, y, opts = {}) {
  ctx.fillText(text, x, y + 1);
 }
 
-function drawAtom(ctx, x, y, r, color, t = 0, label = "") {
- const g = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, 1, x, y, r);
- const hex = `#${color.toString(16).padStart(6, "0")}`;
- g.addColorStop(0, "#fff");
- g.addColorStop(0.4, hex);
- g.addColorStop(1, "#1e1b4b");
+function fillNight(ctx, w, h) {
+ const g = ctx.createLinearGradient(0, 0, 0, h);
+ g.addColorStop(0, "#2e1065");
+ g.addColorStop(0.45, "#1e1b4b");
+ g.addColorStop(1, "#0f172a");
  ctx.fillStyle = g;
- ctx.beginPath();
- ctx.arc(x, y, r, 0, Math.PI * 2);
- ctx.fill();
- ctx.strokeStyle = "rgba(255,255,255,0.35)";
- ctx.stroke();
- if (label) {
- ctx.fillStyle = "#0f172a";
- ctx.font = `700 ${Math.max(9, r)}px Segoe UI`;
- ctx.textAlign = "center";
- ctx.textBaseline = "middle";
- ctx.fillText(label, x, y + 1);
- }
- if (t) {
- ctx.strokeStyle = "rgba(196,181,253,0.3)";
- ctx.beginPath();
- ctx.ellipse(x, y, r * 1.7, r * 0.65, t * 0.3, 0, Math.PI * 2);
- ctx.stroke();
- }
-}
-
-function drawBond(ctx, x1, y1, x2, y2, strength = 1) {
- ctx.strokeStyle = `rgba(167,139,250,${0.35 + strength * 0.55})`;
- ctx.lineWidth = 2 + strength * 3;
- ctx.lineCap = "round";
- ctx.beginPath();
- ctx.moveTo(x1, y1);
- ctx.lineTo(x2, y2);
- ctx.stroke();
-}
-
-function drawMagnet(ctx, x, y, pole, scale = 1) {
- ctx.save();
- ctx.translate(x, y);
- ctx.scale(scale, scale);
- ctx.fillStyle = pole === "N" ? "#ef4444" : "#3b82f6";
- roundRect(ctx, -18, -28, 36, 56, 6);
- ctx.fill();
- ctx.fillStyle = "#fff";
- ctx.font = "700 16px Segoe UI";
- ctx.textAlign = "center";
- ctx.textBaseline = "middle";
- ctx.fillText(pole, 0, 0);
- ctx.restore();
-}
-
-function drawCup(ctx, x, footY, fill = 0.5) {
- ctx.save();
- ctx.translate(x, footAlign(footY, CUP_FOOT));
- ctx.strokeStyle = "rgba(226,232,240,0.7)";
- ctx.lineWidth = 3;
- ctx.beginPath();
- ctx.moveTo(-22, -40);
- ctx.lineTo(-18, 20);
- ctx.lineTo(18, 20);
- ctx.lineTo(22, -40);
- ctx.stroke();
- ctx.fillStyle = "rgba(96,165,250,0.55)";
- ctx.fillRect(-16, 20 - fill * 50, 32, fill * 50);
- ctx.restore();
+ ctx.fillRect(0, 0, w, h);
 }
 
 function failShake() {
@@ -124,1259 +63,1113 @@ function successFlash(ctx, w, h) {
  ctx.fillRect(0, 0, w, h);
 }
 
-function clampXY(x, y, w, layout) {
- return {
- x: Math.max(36, Math.min(w - 36, x)),
- y: Math.max(48, Math.min(layout.deskTop + 8, y)),
- };
+function drawElectron(ctx, x, y, r = 5, color = "#c4b5fd") {
+ ctx.fillStyle = color;
+ ctx.beginPath();
+ ctx.arc(x, y, r, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.strokeStyle = "rgba(255,255,255,0.45)";
+ ctx.lineWidth = 1;
+ ctx.stroke();
 }
 
-export function registerBondScenes(arena) {
- if (!arena?.registerScene) return;
-
- /** Meet Bond Buddies - desk → link → glow → settle (phase-driven like Tiny Bits) */
- arena.registerScene("bondMeet", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, opts, setHitRegions, setIntentHandler, reducedMotion } =
- api;
- const startPhase = opts.phase || chemLabState.bondPhase || chemLabState.phase || "desk";
- chemLabState.bondPhase = startPhase;
- chemLabState.phase = startPhase;
- const start = performance.now();
- const magN = { x: 0, y: 0, ready: false };
- const magS = { x: 0, y: 0, ready: false };
- const cup = { x: 0, y: 0, ready: false };
- let linked = false;
-
- const descs = {
- desk: "Drag the magnets and cup. Everyday clues that things pull and stick.",
- link: "Tap atoms A and B so a bond buddy link forms between them.",
- glow: "Watch the bond glow - lasting links, not craft glue.",
- settle: "Drag props - lines stay tied to the bonded pair. Molecules need bonds.",
- predict: "Predict: do mixtures need chemical bonds between their parts?",
- };
- setDescription(descs[startPhase] || descs.desk);
-
- setIntentHandler((intent) => {
- if (intent.type === "CANVAS_TAP" && intent.meta?.action === "link") {
- linked = true;
- chemLabState.bondSnap = Math.min(1, (chemLabState.bondSnap || 0) + 0.35);
- pulseSuccessFeedback(280);
- }
- });
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const t = (performance.now() - start) / 1000;
- const live = chemLabState.phase || chemLabState.bondPhase || startPhase;
- chemLabState.bondPhase = live;
- const snap = chemLabState.bondSnap || 0;
- const shake = failShake();
- if (!magN.ready) {
- magN.x = layout.leftProp.x;
- magN.y = layout.deskTop - 10;
- magN.ready = true;
- magS.x = layout.rightProp.x;
- magS.y = layout.deskTop - 10;
- magS.ready = true;
- cup.x = layout.midProp.x;
- cup.y = layout.deskTop;
- cup.ready = true;
- }
- ctx.save();
- if (shake) ctx.translate(shake, 0);
- drawBackdrop();
- const hits = [];
-
- const ax = w * 0.32 + snap * 28;
- const bx = w * 0.68 - snap * 28;
- const cy = h * 0.34;
-
- if (live === "desk") {
- drawCup(ctx, cup.x, cup.y, 0.45);
- drawMagnet(ctx, magN.x, magN.y, "N", 0.95);
- drawMagnet(ctx, magS.x, magS.y, "S", 0.95);
- drawLabel(ctx, "N", magN.x, magN.y + 40, { h: 18, font: "700 11px Segoe UI" });
- drawLabel(ctx, "S", magS.x, magS.y + 40, { h: 18, font: "700 11px Segoe UI" });
- drawLabel(ctx, "Bond Buddies · Drag magnets & cup", w * 0.5, layout.labelY);
- hits.push(
- {
- id: "magN",
- shape: "rect",
- x: magN.x,
- y: magN.y,
- w: 48,
- h: 64,
- meta: { propId: "magN" },
- onDrag(pt) {
- const n = clampXY(pt.x, pt.y, w, layout);
- magN.x = n.x;
- magN.y = n.y;
- },
- },
- {
- id: "magS",
- shape: "rect",
- x: magS.x,
- y: magS.y,
- w: 48,
- h: 64,
- meta: { propId: "magS" },
- onDrag(pt) {
- const n = clampXY(pt.x, pt.y, w, layout);
- magS.x = n.x;
- magS.y = n.y;
- },
- },
- {
- id: "cup",
- shape: "rect",
- x: cup.x,
- y: cup.y - 10,
- w: 56,
- h: 70,
- meta: { propId: "cup" },
- onDrag(pt) {
- const n = clampXY(pt.x, pt.y, w, layout);
- cup.x = n.x;
- cup.y = n.y;
- },
- },
- );
- } else if (live === "link") {
- drawCup(ctx, cup.x, layout.deskTop, 0.4);
- drawMagnet(ctx, magN.x, layout.deskTop - 8, "N", 0.75);
- drawMagnet(ctx, magS.x, layout.deskTop - 8, "S", 0.75);
- if (snap > 0.25 || linked) drawBond(ctx, ax + 14, cy, bx - 14, cy, Math.max(0.4, snap));
- drawAtom(ctx, ax, cy, 18, 0x38bdf8, reducedMotion ? 0 : t, "A");
- drawAtom(ctx, bx, cy, 18, 0xf472b6, reducedMotion ? 0 : t, "B");
- drawLabel(
- ctx,
- snap > 0.5 || linked ? "Bond buddies linked!" : "Tap atoms A & B to form a bond",
- w * 0.5,
- layout.labelY,
- );
- hits.push(
- { id: "a", shape: "rect", x: ax, y: cy, w: 56, h: 56, meta: { action: "link" } },
- { id: "b", shape: "rect", x: bx, y: cy, w: 56, h: 56, meta: { action: "link" } },
- );
- } else if (live === "glow" || live === "predict") {
- const glow = live === "glow";
- if (glow || snap > 0.2) drawBond(ctx, ax + 14, cy, bx - 14, cy, 1);
- drawAtom(ctx, ax, cy, 18, 0x38bdf8, reducedMotion ? 0 : t, "A");
- drawAtom(ctx, bx, cy, 18, 0xf472b6, reducedMotion ? 0 : t, "B");
- if (glow) {
- ctx.strokeStyle = "rgba(196,181,253,0.55)";
- ctx.lineWidth = 3;
+function drawCharge(ctx, x, y, sign) {
+ const plus = sign === "+" || sign === "plus";
+ ctx.fillStyle = plus ? "#fbbf24" : "#67e8f9";
  ctx.beginPath();
- ctx.ellipse(w * 0.5, cy, 90 + Math.sin(t) * 4, 36, 0, 0, Math.PI * 2);
- ctx.stroke();
- }
- drawLabel(
- ctx,
- glow
- ? "Glow = lasting electrical link (not craft glue)"
- : "Predict: do sand + water need chemical bonds?",
- w * 0.5,
- layout.labelY,
- );
- if (!glow) {
- drawCup(ctx, layout.midProp.x, layout.deskTop, 0.5);
- drawLabel(ctx, "mixture clue", layout.midProp.x, layout.deskTop + 32, {
- h: 18,
- font: "600 11px Segoe UI",
- });
- }
- } else {
- // settle
- drawCup(ctx, cup.x, cup.y, 0.5);
- drawMagnet(ctx, magN.x, magN.y, "N", 0.85);
- drawMagnet(ctx, magS.x, magS.y, "S", 0.85);
- drawBond(ctx, ax + 14, cy, bx - 14, cy, 1);
- drawAtom(ctx, ax, cy, 16, 0x38bdf8, reducedMotion ? 0 : t, "A");
- drawAtom(ctx, bx, cy, 16, 0xf472b6, reducedMotion ? 0 : t, "B");
- ctx.strokeStyle = "rgba(167,139,250,0.35)";
- ctx.lineWidth = 1.5;
- ctx.setLineDash([4, 4]);
- ctx.beginPath();
- ctx.moveTo(magN.x, magN.y - 20);
- ctx.lineTo(ax, cy + 18);
- ctx.moveTo(magS.x, magS.y - 20);
- ctx.lineTo(bx, cy + 18);
- ctx.moveTo(cup.x, cup.y - 30);
- ctx.lineTo(w * 0.5, cy + 20);
- ctx.stroke();
- ctx.setLineDash([]);
- drawLabel(ctx, "Molecules exist because bonds hold atom friends", w * 0.5, layout.labelY);
- hits.push(
- {
- id: "magN",
- shape: "rect",
- x: magN.x,
- y: magN.y,
- w: 48,
- h: 64,
- meta: { propId: "magN" },
- onDrag(pt) {
- const n = clampXY(pt.x, pt.y, w, layout);
- magN.x = n.x;
- magN.y = n.y;
- },
- },
- {
- id: "magS",
- shape: "rect",
- x: magS.x,
- y: magS.y,
- w: 48,
- h: 64,
- meta: { propId: "magS" },
- onDrag(pt) {
- const n = clampXY(pt.x, pt.y, w, layout);
- magS.x = n.x;
- magS.y = n.y;
- },
- },
- {
- id: "cup",
- shape: "rect",
- x: cup.x,
- y: cup.y - 10,
- w: 56,
- h: 70,
- meta: { propId: "cup" },
- onDrag(pt) {
- const n = clampXY(pt.x, pt.y, w, layout);
- cup.x = n.x;
- cup.y = n.y;
- },
- },
- );
- }
-
- setHitRegions(hits);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- ctx.restore();
- });
- setDispose(() => setIntentHandler(null));
- });
-
- /** Attraction - independently draggable magnets */
- arena.registerScene("bondMagnet", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler, reducedMotion } =
- api;
- const start = performance.now();
- const magN = { x: 0, y: 0, ready: false };
- const magS = { x: 0, y: 0, ready: false };
- setDescription("Drag each magnet - opposite poles attract like ionic buddies.");
-
- function syncGapFromPositions(w) {
- const dist = Math.abs(magS.x - magN.x);
- const maxD = w * 0.55;
- const minD = 44;
- const g = Math.max(0, Math.min(1, (dist - minD) / (maxD - minD)));
- chemLabState.magnetGap = g;
- chemLabState.heat = 1 - g;
- chemLabState.heatTarget = 1 - g;
- }
-
- setIntentHandler((intent) => {
- if (intent.type === "CANVAS_TAP" && intent.meta?.action === "nudge") {
- chemLabState.magnetGap = Math.max(0, (chemLabState.magnetGap ?? 1) - 0.1);
- chemLabState.heat = 1 - chemLabState.magnetGap;
- const mid = api.width * 0.5;
- const spread = 40 + chemLabState.magnetGap * 90;
- magN.x = mid - spread;
- magS.x = mid + spread;
- }
- });
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const t = (performance.now() - start) / 1000;
- const shake = failShake();
- if (!magN.ready) {
- const gap0 = chemLabState.magnetGap ?? 1 - (chemLabState.heat || 0);
- const mid = w * 0.5;
- const cy = h * 0.38;
- const spread = 40 + gap0 * 90;
- magN.x = mid - spread;
- magN.y = cy;
- magS.x = mid + spread;
- magS.y = cy;
- magN.ready = true;
- magS.ready = true;
- }
- // Heat slider can drive magnets closer
- const heatPull = chemLabState.heat || 0;
- if (heatPull > 0.05 && !api._magDragging) {
- const mid = w * 0.5;
- const targetSpread = 40 + (1 - heatPull) * 90;
- const ease = reducedMotion ? 1 : 0.12;
- const cur = (magS.x - magN.x) / 2;
- const next = cur + (targetSpread - cur) * ease;
- magN.x = mid - next;
- magS.x = mid + next;
- }
- syncGapFromPositions(w);
- const gap = chemLabState.magnetGap ?? 0;
-
- ctx.save();
- if (shake) ctx.translate(shake, 0);
- drawBackdrop();
- drawMagnet(ctx, magN.x, magN.y, "N", 1.1);
- drawMagnet(ctx, magS.x, magS.y, "S", 1.1);
- if (gap < 0.35) {
- drawBond(ctx, magN.x + 20, magN.y, magS.x - 20, magS.y, 1 - gap);
- drawLabel(ctx, "Click! Attraction holds them", w * 0.5, magN.y - 60);
- }
- ctx.strokeStyle = "#94a3b8";
- ctx.lineWidth = 3;
- ctx.beginPath();
- ctx.moveTo(layout.leftProp.x, h * 0.12);
- ctx.lineTo(layout.leftProp.x, layout.deskTop - 50);
- ctx.stroke();
- drawCup(ctx, layout.leftProp.x, layout.deskTop, 0.4);
- drawLabel(
- ctx,
- gap < 0.3 ? "Held together - bond buddy feel" : "Drag each magnet closer (or use the slider)",
- w * 0.5,
- layout.labelY,
- );
- setHitRegions([
- {
- id: "magN",
- shape: "rect",
- x: magN.x,
- y: magN.y,
- w: 52,
- h: 70,
- meta: { propId: "magN" },
- onDrag(pt) {
- api._magDragging = true;
- magN.x = Math.max(40, Math.min(magS.x - 50, pt.x));
- magN.y = Math.max(60, Math.min(h * 0.55, pt.y));
- syncGapFromPositions(w);
- },
- },
- {
- id: "magS",
- shape: "rect",
- x: magS.x,
- y: magS.y,
- w: 52,
- h: 70,
- meta: { propId: "magS" },
- onDrag(pt) {
- api._magDragging = true;
- magS.x = Math.max(magN.x + 50, Math.min(w - 40, pt.x));
- magS.y = Math.max(60, Math.min(h * 0.55, pt.y));
- syncGapFromPositions(w);
- },
- },
- {
- id: "nudge",
- shape: "rect",
- x: w * 0.5,
- y: (magN.y + magS.y) / 2 + 70,
- w: 100,
- h: 36,
- meta: { action: "nudge" },
- },
- ]);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- ctx.restore();
- });
- setDispose(() => {
- api._magDragging = false;
- setIntentHandler(null);
- });
- });
-
- /** Sort - zoneId strings + PLACE_CHIP (Tiny Bits / Element Hunt pattern) */
- arena.registerScene("bondSort", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler, reducedMotion } =
- api;
- setDescription("Drag cards: bonded molecule, ionic stick, or no bond / just mix.");
-
- const chips = [
- { id: "h2o", text: "H₂O molecule", short: "H₂O", color: 0x60a5fa },
- { id: "nacl", text: "Na⁺ Cl⁻ salt", short: "NaCl", color: 0xf472b6 },
- { id: "o2", text: "O₂ pair", short: "O₂", color: 0x38bdf8 },
- { id: "fe", text: "Lone Fe atom", short: "Fe", color: 0x94a3b8 },
- { id: "air", text: "N₂ near O₂ (air)", short: "Air", color: 0x93c5fd },
- { id: "magnet", text: "N-S magnet snap", short: "Magnet", color: 0xef4444 },
- { id: "sand", text: "Sand in water", short: "Sand", color: 0xfbbf24 },
- { id: "co2", text: "CO₂ molecule", short: "CO₂", color: 0xa78bfa },
- ];
- const accept = {
- bonded: ["h2o", "o2", "co2"],
- attraction: ["nacl", "magnet"],
- nobond: ["fe", "air", "sand"],
- };
- const cardPos = {};
- chips.forEach((c) => {
- cardPos[c.id] = { x: 0, y: 0 };
- });
- let draggingId = null;
- let lastZones = [];
-
- function placeChip(chipId, zoneId) {
- if (!chipId || !zoneId) return false;
- if (!(accept[zoneId] || []).includes(chipId)) {
- pulseFailFeedback(400);
- return false;
- }
- chemLabState.placed = { ...(chemLabState.placed || {}), [chipId]: zoneId };
- chemLabState.sortPlaced = Object.keys(chemLabState.placed).length;
- chemLabState.selectedId = chipId;
- const session = getActiveSession();
- if (session?.dispatch) {
- session.dispatch({ type: "PLACE_CHIP", chipId, zoneId, accept: accept[zoneId] });
- } else {
- chemLabState._placedVersion = (chemLabState._placedVersion || 0) + 1;
- }
- pulseSuccessFeedback(220);
- return true;
- }
-
- function zoneAt(x, y) {
- for (const z of lastZones) {
- if (x >= z.x && x <= z.x + z.ww && y >= z.y && y <= z.y + z.hh) return z.id;
- }
- return null;
- }
-
- setIntentHandler((intent) => {
- if (intent.type === "CANVAS_DOWN" && intent.meta?.chipId) {
- draggingId = intent.meta.chipId;
- chemLabState.selectedId = intent.meta.chipId;
- }
- if (intent.type === "CANVAS_DRAG" && intent.meta?.chipId && cardPos[intent.meta.chipId]) {
- draggingId = intent.meta.chipId;
- cardPos[intent.meta.chipId].x = intent.x;
- cardPos[intent.meta.chipId].y = intent.y;
- }
- if (intent.type === "CANVAS_TAP" && intent.meta?.chipId) {
- chemLabState.selectedId = intent.meta.chipId;
- }
- if (intent.type === "CANVAS_TAP" && intent.meta?.zoneId && chemLabState.selectedId) {
- placeChip(chemLabState.selectedId, intent.meta.zoneId);
- }
- if (intent.type === "CANVAS_UP" && intent.meta?.chipId) {
- const zoneId = intent.dropMeta?.zoneId || zoneAt(intent.x, intent.y);
- if (zoneId) placeChip(intent.meta.chipId, zoneId);
- draggingId = null;
- } else if (intent.type === "CANVAS_UP") {
- draggingId = null;
- }
- });
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const shake = failShake();
- ctx.save();
- if (shake) ctx.translate(shake, 0);
- drawBackdrop();
-
- const zoneH = Math.max(100, Math.min(h * 0.3, 140));
- const zoneY = Math.max(layout.labelY + 30, h * 0.09);
- const zones = [
- { id: "bonded", label: "Bonded molecule", x: w * 0.03, y: zoneY, ww: w * 0.3, hh: zoneH, color: "#a78bfa" },
- { id: "attraction", label: "Attraction buddy", x: w * 0.35, y: zoneY, ww: w * 0.3, hh: zoneH, color: "#f472b6" },
- { id: "nobond", label: "No chemical bond", x: w * 0.67, y: zoneY, ww: w * 0.3, hh: zoneH, color: "#94a3b8" },
- ];
- lastZones = zones;
-
- const hits = [];
- for (const z of zones) {
- ctx.fillStyle = "rgba(15,23,42,0.55)";
- roundRect(ctx, z.x, z.y, z.ww, z.hh, 12);
+ ctx.arc(x, y, 11, 0, Math.PI * 2);
  ctx.fill();
- ctx.strokeStyle = z.color;
- ctx.lineWidth = 2.5;
- ctx.stroke();
- drawLabel(ctx, z.label, z.x + z.ww / 2, z.y + 16, { h: 20, font: "700 11px Segoe UI" });
- hits.push({
- id: "zone-" + z.id,
- shape: "rect",
- x: z.x + z.ww / 2,
- y: z.y + z.hh / 2,
- w: z.ww,
- h: z.hh,
- meta: { zoneId: z.id, accept: accept[z.id] },
- });
- }
-
- const placed = chemLabState.placed || {};
- const byZone = {
- bonded: chips.filter((c) => placed[c.id] === "bonded").map((c) => c.id),
- attraction: chips.filter((c) => placed[c.id] === "attraction").map((c) => c.id),
- nobond: chips.filter((c) => placed[c.id] === "nobond").map((c) => c.id),
- };
- const bankIds = chips.filter((c) => typeof placed[c.id] !== "string").map((c) => c.id);
- const bankTop = zoneY + zoneH + (chemLabState.reveal ? 50 : 30);
- const ease = reducedMotion ? 1 : 0.18;
-
- chips.forEach((c) => {
- let targetX;
- let targetY;
- const zoneKey = typeof placed[c.id] === "string" ? placed[c.id] : null;
- if (zoneKey && byZone[zoneKey]) {
- const z = zones.find((zz) => zz.id === zoneKey);
- const idx = byZone[zoneKey].indexOf(c.id);
- const slot = sortSlotPositions(
- { x: z.x, y: z.y + 18, w: z.ww, h: z.hh - 22 },
- Math.max(byZone[zoneKey].length, 1),
- idx,
- );
- targetX = slot.x;
- targetY = slot.y;
- } else {
- const idx = bankIds.indexOf(c.id);
- const cols = Math.min(4, Math.max(1, bankIds.length));
- const col = idx % cols;
- const row = Math.floor(idx / cols);
- targetX = w * 0.14 + col * (w * 0.22);
- targetY = bankTop + row * 50;
- }
-
- const prev = cardPos[c.id];
- if (!prev.x && !prev.y) {
- prev.x = targetX;
- prev.y = targetY;
- }
- if (draggingId !== c.id) {
- prev.x += (targetX - prev.x) * ease;
- prev.y += (targetY - prev.y) * ease;
- }
-
- const selected = chemLabState.selectedId === c.id;
- const hex = "#" + c.color.toString(16).padStart(6, "0");
- ctx.fillStyle = selected ? "rgba(167,139,250,0.45)" : "rgba(30,27,75,0.95)";
- roundRect(ctx, prev.x - 48, prev.y - 20, 96, 40, 10);
- ctx.fill();
- ctx.strokeStyle = selected ? "#c4b5fd" : hex;
- ctx.lineWidth = selected ? 2.5 : 1.6;
- ctx.stroke();
- ctx.fillStyle = "#ede9fe";
- ctx.font = "700 12px Segoe UI,sans-serif";
+ ctx.fillStyle = "#0f172a";
+ ctx.font = "800 14px Segoe UI, sans-serif";
  ctx.textAlign = "center";
  ctx.textBaseline = "middle";
- ctx.fillText(c.short || c.text, prev.x, prev.y);
+ ctx.fillText(plus ? "+" : "−", x, y + 1);
+}
 
- hits.push({
- id: c.id,
- shape: "rect",
- x: prev.x,
- y: prev.y,
- w: 100,
- h: 44,
- meta: { chipId: c.id, propId: c.id },
- onDrag(pt) {
- draggingId = c.id;
- prev.x = Math.max(30, Math.min(w - 30, pt.x));
- prev.y = Math.max(30, Math.min(h - 30, pt.y));
- },
- });
- });
-
- drawLabel(ctx, "Sort bond stories", w * 0.5, layout.labelY);
- if (chemLabState.reveal) {
- drawLabel(ctx, "Bonds = lasting atom links · Mixtures just sit nearby", w * 0.5, zoneY + zoneH + 16, {
- h: 22,
- font: "600 11px Segoe UI",
- bg: "rgba(46,16,80,0.92)",
- });
- }
-
- setHitRegions(hits);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- ctx.restore();
- });
- setDispose(() => setIntentHandler(null));
- });
-
- /** Magnet snap - horizontal handle (action snap, never heat) */
- arena.registerScene("bondSnap", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler, reducedMotion } =
- api;
- const start = performance.now();
- setDescription("Drag the violet handle until magnets click - model for opposites attracting.");
-
- function applySnap(next) {
- const v = Math.max(0, Math.min(1, next));
- chemLabState.heat = v;
- chemLabState.heatTarget = v;
- chemLabState.bondSnap = v;
- }
-
- setIntentHandler((intent) => {
- if (intent.type === "CANVAS_DRAG" && intent.meta?.action === "snap") {
- applySnap((intent.x - api.width * 0.2) / (api.width * 0.6));
- }
- if (intent.type === "CANVAS_TAP" && intent.meta?.action === "nudge") {
- applySnap((chemLabState.heat || 0) + 0.1);
- }
- });
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const t = reducedMotion ? 0 : (performance.now() - start) / 1000;
- const snap = chemLabState.heat ?? chemLabState.bondSnap ?? 0;
- chemLabState.bondSnap = snap;
- const shake = failShake();
- ctx.save();
- if (shake) ctx.translate(shake, 0);
- drawBackdrop();
- const mid = w * 0.5;
- const cy = h * 0.4;
- const spread = 100 - snap * 85;
- drawMagnet(ctx, mid - spread, cy, "N", 1.15);
- drawMagnet(ctx, mid + spread, cy, "S", 1.15);
- drawAtom(ctx, mid - spread, cy - 70, 12, 0xf87171, t, "+");
- drawAtom(ctx, mid + spread, cy - 70, 12, 0x60a5fa, t, "−");
- if (snap > 0.7) {
- drawBond(ctx, mid - 20, cy - 70, mid + 20, cy - 70, 1);
- drawLabel(ctx, "SNAP! Buddy bond formed", mid, cy - 110);
- }
- const hx = w * 0.2 + snap * w * 0.6;
- ctx.fillStyle = "#c4b5fd";
- ctx.beginPath();
- ctx.arc(hx, cy + 70, 14, 0, Math.PI * 2);
- ctx.fill();
- drawLabel(ctx, "Bring together", hx, cy + 95, { h: 20, font: "600 11px Segoe UI" });
- drawLabel(ctx, snap > 0.75 ? "Ionic-style attraction click" : "Slide handle to click magnets", w * 0.5, layout.labelY);
- setHitRegions([
- { id: "h", shape: "rect", x: hx, y: cy + 70, w: 48, h: 48, meta: { action: "snap" } },
- { id: "m", shape: "rect", x: mid, y: cy, w: spread * 2 + 60, h: 90, meta: { action: "nudge" } },
- ]);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- ctx.restore();
- });
- setDispose(() => setIntentHandler(null));
- });
-
- arena.registerScene("bondWater", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler, reducedMotion } =
- api;
- const start = performance.now();
- const dropPos = [];
- for (let i = 0; i < 4; i++) dropPos.push({ x: 0, y: 0, ready: false });
- setDescription("Drag droplets or tap - H and O stick as H₂O bond buddies.");
-
- setIntentHandler((intent) => {
- if (intent.type === "CANVAS_TAP" && intent.meta?.action === "merge") {
- chemLabState.dropMerge = Math.min(1, (chemLabState.dropMerge || 0) + 0.2);
- if (chemLabState.dropMerge >= 0.8) pulseSuccessFeedback(300);
- }
- });
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const t = reducedMotion ? 0 : (performance.now() - start) / 1000;
- const merge = chemLabState.dropMerge || 0;
- const shake = failShake();
- ctx.save();
- if (shake) ctx.translate(shake, 0);
- drawBackdrop();
- drawCup(ctx, layout.midProp.x, layout.deskTop, 0.35 + merge * 0.4);
- const hits = [
- {
- id: "cup",
- shape: "rect",
- x: layout.midProp.x,
- y: layout.deskTop - 10,
- w: 56,
- h: 70,
- meta: { action: "merge" },
- },
- ];
- for (let i = 0; i < 4; i++) {
- if (!dropPos[i].ready) {
- dropPos[i].x = w * 0.22 + i * 90;
- dropPos[i].y = h * 0.32;
- dropPos[i].ready = true;
- }
- const x = dropPos[i].x;
- const y = dropPos[i].y + Math.sin(t + i) * (reducedMotion ? 0 : 8);
- const hy1 = x - 18 + merge * 6;
- const hy2 = x + 18 - merge * 6;
- drawBond(ctx, hy1, y + 10, x, y, 0.6 + merge * 0.4);
- drawBond(ctx, hy2, y + 10, x, y, 0.6 + merge * 0.4);
- drawAtom(ctx, x, y, 11, 0xf87171, t, "O");
- drawAtom(ctx, hy1, y + 14, 7, 0x38bdf8, t, "H");
- drawAtom(ctx, hy2, y + 14, 7, 0x38bdf8, t, "H");
- hits.push({
- id: "drop" + i,
- shape: "rect",
- x,
- y: y + 4,
- w: 56,
- h: 48,
- meta: { propId: "drop" + i, action: "merge" },
- onDrag(pt) {
- dropPos[i].x = Math.max(40, Math.min(w - 40, pt.x));
- dropPos[i].y = Math.max(60, Math.min(layout.deskTop - 40, pt.y));
- chemLabState.dropMerge = Math.min(1, (chemLabState.dropMerge || 0) + 0.01);
- },
- });
- }
- drawLabel(
- ctx,
- merge > 0.7 ? "Droplets stick - molecules are bonded H₂O buddies" : "Drag or tap water models to strengthen bonds",
- w * 0.5,
- layout.labelY,
- );
- setHitRegions(hits);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- ctx.restore();
- });
- setDispose(() => setIntentHandler(null));
- });
-
- arena.registerScene("bondRule", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop } = api;
- const start = performance.now();
- setDescription("Build the bond rule, then scrub magnets → atom link → BONDS.");
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const t = (performance.now() - start) / 1000;
- const prog = chemLabState.tokenProgress || 0;
- const scale = chemLabState.scale || 0;
- drawBackdrop();
-
- if (scale < 0.33) {
- if (scale <= 0.02 && prog > 0) {
- const tokens = ["Atoms", "link with", "BONDS", "as buddies"];
- tokens.forEach((label, i) => {
- const x = w * 0.18 + i * (w * 0.18);
- const on = i < prog;
- ctx.fillStyle = on ? "rgba(167,139,250,0.4)" : "rgba(30,27,75,0.85)";
- roundRect(ctx, x - 50, h * 0.28 - 18, 100, 36, 10);
- ctx.fill();
- ctx.strokeStyle = on ? "#a78bfa" : "#4c1d95";
- ctx.stroke();
- ctx.fillStyle = on ? "#f5f3ff" : "#a5b4fc";
- ctx.font = "700 12px Segoe UI";
- ctx.textAlign = "center";
- ctx.fillText(label, x, h * 0.28);
- });
- }
- drawMagnet(ctx, layout.leftProp.x, layout.deskTop - 8, "N", 0.9);
- drawCup(ctx, layout.midProp.x, layout.deskTop, 0.55);
- drawMagnet(ctx, layout.rightProp.x, layout.deskTop - 8, "S", 0.9);
- drawLabel(
- ctx,
- scale <= 0.02 && prog > 0
- ? "Build the rule · magnets hint attraction"
- : "Desk magnets / cup - attraction analogy",
- w * 0.5,
- layout.labelY,
- );
- } else if (scale < 0.66) {
- drawAtom(ctx, w * 0.38, h * 0.38, 16, 0x38bdf8, t, "Na");
- drawAtom(ctx, w * 0.62, h * 0.38, 16, 0xf472b6, t, "Cl");
- drawBond(ctx, w * 0.38 + 18, h * 0.38, w * 0.62 - 18, h * 0.38, 1);
- drawLabel(ctx, "Atom buddies held by a lasting link", w * 0.5, layout.labelY);
- drawMagnet(ctx, layout.midProp.x, layout.deskTop - 4, "N", 0.55);
- } else {
- ctx.fillStyle = "rgba(167,139,250,0.22)";
- roundRect(ctx, w * 0.18, h * 0.28, w * 0.64, h * 0.28, 18);
- ctx.fill();
- ctx.strokeStyle = "#a78bfa";
+function drawBohr(ctx, x, y, shells, t, opts = {}) {
+ const scale = opts.scale || 1;
+ const jit = opts.jitter ? Math.sin(t * (opts.fast ? 18 : 12)) * (opts.fast ? 5 : 3) : 0;
+ const gx = x + jit;
+ const gy = y + (opts.jitter ? Math.cos(t * 10) * 2 : 0);
+ const n = shells.length;
+ if (opts.glow) {
+ ctx.strokeStyle = "rgba(45,212,191,0.75)";
  ctx.lineWidth = 3;
- roundRect(ctx, w * 0.18, h * 0.28, w * 0.64, h * 0.28, 18);
+ ctx.beginPath();
+ ctx.arc(gx, gy, (28 + (n - 1) * 18) * scale + 14, 0, Math.PI * 2);
+ ctx.stroke();
+ }
+ ctx.fillStyle = opts.nucleus || "#fb7185";
+ ctx.beginPath();
+ ctx.arc(gx, gy, 9 * scale, 0, Math.PI * 2);
+ ctx.fill();
+ if (opts.symbol) {
+ ctx.fillStyle = "#0f172a";
+ ctx.font = `700 ${Math.max(9, 11 * scale)}px Segoe UI, sans-serif`;
+ ctx.textAlign = "center";
+ ctx.textBaseline = "middle";
+ ctx.fillText(opts.symbol, gx, gy + 1);
+ }
+ shells.forEach((count, i) => {
+ const r = (28 + i * 18) * scale;
+ const valence = i === n - 1;
+ ctx.strokeStyle = valence ? "rgba(196,181,253,0.9)" : "rgba(148,163,184,0.35)";
+ ctx.lineWidth = valence ? 2.2 : 1.2;
+ ctx.beginPath();
+ ctx.arc(gx, gy, r, 0, Math.PI * 2);
+ ctx.stroke();
+ for (let k = 0; k < count; k++) {
+ const a = t * (0.7 - i * 0.12) + (k / Math.max(1, count)) * Math.PI * 2;
+ drawElectron(
+ ctx,
+ gx + Math.cos(a) * r,
+ gy + Math.sin(a) * r,
+ (valence ? 5 : 3.4) * scale,
+ valence ? "#c4b5fd" : "#64748b",
+ );
+ }
+ });
+ if (opts.charge) drawCharge(ctx, gx + 38 * scale, gy - 30 * scale, opts.charge);
+ return { x: gx, y: gy };
+}
+
+function lewisSlots(n) {
+ const dirs = [
+ [0, -1],
+ [1, 0],
+ [0, 1],
+ [-1, 0],
+ [0, -1],
+ [1, 0],
+ [0, 1],
+ [-1, 0],
+ ];
+ return dirs.slice(0, Math.max(0, Math.min(8, n)));
+}
+
+function drawLewis(ctx, x, y, symbol, n, scale = 1) {
+ ctx.fillStyle = "#f5f3ff";
+ ctx.font = `800 ${18 * scale}px Segoe UI, sans-serif`;
+ ctx.textAlign = "center";
+ ctx.textBaseline = "middle";
+ ctx.fillText(symbol, x, y);
+ const r = 22 * scale;
+ lewisSlots(n).forEach((d, i) => {
+ const pair = i >= 4 ? 5 : 0;
+ const ox = d[0] * r + (d[0] === 0 ? (i >= 4 ? 5 : -5) : 0);
+ const oy = d[1] * r + (d[1] === 0 ? (i >= 4 ? 5 : -5) : 0);
+ drawElectron(ctx, x + ox, y + oy, 3.6 * scale);
+ void pair;
+ });
+}
+
+function drawSharedCloud(ctx, x1, y1, x2, y2, pairs = 1, pull = 0.5) {
+ const mx = x1 + (x2 - x1) * pull;
+ const my = y1 + (y2 - y1) * pull;
+ const ang = Math.atan2(y2 - y1, x2 - x1);
+ const dist = Math.hypot(x2 - x1, y2 - y1) || 1;
+ ctx.save();
+ ctx.translate(mx, my);
+ ctx.rotate(ang);
+ const thick = 8 + pairs * 5;
+ const g = ctx.createRadialGradient(0, 0, 2, 0, 0, Math.max(16, dist * 0.28));
+ g.addColorStop(0, `rgba(196,181,253,${0.45 + pairs * 0.18})`);
+ g.addColorStop(1, "rgba(196,181,253,0)");
+ ctx.fillStyle = g;
+ ctx.beginPath();
+ ctx.ellipse(0, 0, Math.max(18, dist * 0.26), thick, 0, 0, Math.PI * 2);
+ ctx.fill();
+ for (let p = 0; p < pairs; p++) {
+ const yy = (p - (pairs - 1) / 2) * 7;
+ drawElectron(ctx, -5, yy - 3, 3.1);
+ drawElectron(ctx, 5, yy + 3, 3.1);
+ }
+ ctx.restore();
+}
+
+function drawCanvasBtn(ctx, x, y, w, h, label, lit) {
+ roundRect(ctx, x - w / 2, y - h / 2, w, h, 12);
+ ctx.fillStyle = lit ? "#6d28d9" : "#5b21b6";
+ ctx.fill();
+ ctx.strokeStyle = "rgba(216,180,254,0.7)";
+ ctx.lineWidth = 1.6;
  ctx.stroke();
  ctx.fillStyle = "#f5f3ff";
- ctx.font = "800 28px Segoe UI,sans-serif";
+ ctx.font = "800 14px Segoe UI, sans-serif";
  ctx.textAlign = "center";
- ctx.fillText("BONDS", w * 0.5, h * 0.4);
- ctx.font = "600 14px Segoe UI,sans-serif";
- ctx.fillStyle = "#ddd6fe";
- ctx.fillText("links that hold atoms together as buddies", w * 0.5, h * 0.48);
- drawAtom(ctx, w * 0.4, h * 0.68, 12, 0xa78bfa, t, "A");
- drawAtom(ctx, w * 0.6, h * 0.68, 12, 0xf472b6, t, "B");
- drawBond(ctx, w * 0.4 + 14, h * 0.68, w * 0.6 - 14, h * 0.68, 1);
- drawLabel(ctx, "Name it: BONDS (not glue sticks, not only magnets)", w * 0.5, layout.labelY);
+ ctx.textBaseline = "middle";
+ ctx.fillText(label, x, y + 1);
+}
+
+const MOODS = [
+ { id: "ne", symbol: "Ne", name: "Neon", shells: [2, 8], happy: true, note: "full outer shell → Happy" },
+ { id: "na", symbol: "Na", name: "Sodium", shells: [2, 8, 1], happy: false, note: "1 lonely electron → Restless" },
+ { id: "cl", symbol: "Cl", name: "Chlorine", shells: [2, 8, 7], happy: false, note: "1 electron short of full → Restless" },
+ { id: "o", symbol: "O", name: "Oxygen", shells: [2, 6], happy: false, note: "2 electrons short of full → Restless" },
+];
+
+const TUGS = [
+ { id: "hh", a: "H", b: "H", pull: 0.5, target: 0.08, type: "nonpolar covalent" },
+ { id: "hcl", a: "H", b: "Cl", pull: 0.72, target: 0.38, type: "polar covalent" },
+ { id: "nacl", a: "Na", b: "Cl", pull: 0.97, target: 0.9, type: "ionic" },
+];
+
+export function registerBondScenes(arena) {
+ arena.registerScene("bondOpen", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ const start = performance.now();
+ setDescription("A restless atom. Bring a partner in.");
+ setIntentHandler((intent) => {
+ if (intent.type === "CANVAS_TAP" && intent.meta?.action === "together") {
+ chemLabState.bondTogether = true;
+ pulseSuccessFeedback(320);
  }
+ });
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = (performance.now() - start) / 1000;
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const together = chemLabState.bondTogether;
+ const x1 = together ? w * 0.42 : w * 0.38 + Math.sin(t * 0.7) * Math.min(40, w * 0.06);
+ const y1 = h * 0.46 + Math.cos(t * 0.9) * 8;
+ drawBohr(ctx, x1, y1, [1], t, { symbol: "?", jitter: !together, scale: 1.05 });
+ let x2 = w + 40;
+ if (t > 1.1 || together) x2 = together ? w * 0.58 : w * 0.66 + Math.sin(t * 0.8 + 1) * 10;
+ if (t > 1.1 || together) drawBohr(ctx, x2, h * 0.46 + Math.cos(t * 0.8) * 6, [1], t + 1, { symbol: "?", jitter: !together, scale: 1.05 });
+ if (together) {
+ ctx.strokeStyle = "rgba(196,181,253,0.7)";
+ ctx.lineWidth = 3;
+ ctx.beginPath();
+ ctx.moveTo(x1 + 28, y1);
+ ctx.lineTo(x2 - 28, h * 0.46);
+ ctx.stroke();
+ drawLabel(ctx, "They found a partner.", w * 0.5, 28);
+ } else {
+ drawLabel(ctx, "Its outer shell is almost empty. Restless, reactive, eager for company.", w * 0.5, 28, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 28,
+ });
+ }
+ const hits = [];
+ if (t > 1.2 && !together) {
+ const bx = w * 0.5;
+ const by = h - 42;
+ drawCanvasBtn(ctx, bx, by, Math.min(260, w * 0.7), 44, "Bring Them Together →", true);
+ hits.push({ id: "together", shape: "rect", x: bx, y: by, w: 260, h: 48, meta: { action: "together" } });
+ }
+ setHitRegions(hits);
+ ctx.restore();
  failFlash(ctx, w, h);
  successFlash(ctx, w, h);
  });
  setDispose(() => {});
  });
 
- arena.registerScene("bondStretch", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler, reducedMotion } =
- api;
- const start = performance.now();
- const modes = ["salt", "o2", "sugar", "plastic", "protein"];
- const modeLabels = { salt: "Salt", o2: "O₂", sugar: "Sugar", plastic: "Plastic", protein: "Protein" };
- setDescription("Tap each bonded context - same bond idea in new places.");
+ arena.registerScene("bondMood", (api) => {
+ const { ctx, setTick, setDispose, setDescription } = api;
+ setDescription("Happy or restless? Read the outer shell.");
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = performance.now() / 1000;
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const i = Math.max(0, Math.min(3, chemLabState.bondMoodI || 0));
+ const m = MOODS[i];
+ const ok = (chemLabState.bondMoodOk || [])[i];
+ const wrong = chemLabState.bondMoodWrong;
+ drawBohr(ctx, w * 0.5, h * 0.46, m.shells, t, {
+ symbol: m.symbol,
+ jitter: !m.happy && !ok,
+ fast: wrong && !m.happy,
+ glow: ok && m.happy,
+ scale: 1.15,
+ });
+ drawLabel(ctx, `${m.name} (${m.symbol})`, w * 0.5, 26);
+ if (ok) drawLabel(ctx, `${m.name}: ${m.note}`, w * 0.5, h - 28, { h: 26, font: "600 12px Segoe UI, sans-serif" });
+ else drawLabel(ctx, "Look at the outer shell. Full, or not?", w * 0.5, h - 28, { h: 24, font: "600 12px Segoe UI, sans-serif" });
+ ctx.restore();
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
 
+ arena.registerScene("bondPaths", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ setDescription("Two moves: transfer or share.");
  setIntentHandler((intent) => {
- if (intent.type === "CANVAS_TAP" && intent.meta?.mode) {
- chemLabState.mode = intent.meta.mode;
+ if (intent.type !== "CANVAS_TAP") return;
+ const seen = chemLabState.bondPathSeen || { transfer: false, share: false };
+ if (intent.meta?.action === "path") {
+ if (intent.meta.id === "transfer") seen.transfer = true;
+ if (intent.meta.id === "share") seen.share = true;
+ chemLabState.bondPathSeen = { ...seen };
  pulseSuccessFeedback(200);
  }
  });
-
  setTick(() => {
  const w = api.width;
  const h = api.height;
- const layout = api.layout;
- const t = reducedMotion ? 0 : (performance.now() - start) / 1000;
- const mode = chemLabState.mode || api.opts?.mode || "salt";
- const shake = failShake();
+ const t = performance.now() / 1000;
+ const phase = chemLabState.bondPhase || "paths";
+ fillNight(ctx, w, h);
  ctx.save();
- if (shake) ctx.translate(shake, 0);
- drawBackdrop();
+ ctx.translate(failShake(), 0);
  const hits = [];
- modes.forEach((m, i) => {
- const x = w * 0.12 + i * (w * 0.17);
- const on = m === mode;
- ctx.fillStyle = on ? "rgba(167,139,250,0.4)" : "#1e1b4b";
- roundRect(ctx, x - 36, layout.deskTop - 36, 72, 48, 10);
- ctx.fill();
- ctx.strokeStyle = on ? "#a78bfa" : "#4c1d95";
- ctx.lineWidth = on ? 2 : 1;
- ctx.stroke();
- ctx.fillStyle = "#ede9fe";
- ctx.font = "600 11px Segoe UI";
- ctx.textAlign = "center";
- ctx.fillText(modeLabels[m] || m, x, layout.deskTop - 10);
- hits.push({ id: m, shape: "rect", x, y: layout.deskTop - 12, w: 72, h: 48, meta: { mode: m } });
- });
-
- const cy = h * 0.32;
- if (mode === "salt") {
- for (let r = 0; r < 3; r++) {
- for (let c = 0; c < 4; c++) {
- const x = w * 0.32 + c * 36;
- const y = cy - 20 + r * 28;
- const plus = (r + c) % 2 === 0;
- drawAtom(ctx, x, y, 9, plus ? 0x38bdf8 : 0xf472b6, t, plus ? "+" : "−");
- if (c < 3) drawBond(ctx, x + 10, y, x + 26, y, 0.7);
- }
- }
- } else if (mode === "o2") {
- drawAtom(ctx, w * 0.45, cy, 14, 0x38bdf8, t, "O");
- drawAtom(ctx, w * 0.55, cy, 14, 0x38bdf8, t, "O");
- drawBond(ctx, w * 0.45 + 14, cy - 3, w * 0.55 - 14, cy - 3, 1);
- drawBond(ctx, w * 0.45 + 14, cy + 3, w * 0.55 - 14, cy + 3, 1);
- } else if (mode === "sugar") {
- const ring = [
- [0, -28],
- [26, -14],
- [26, 14],
- [0, 28],
- [-26, 14],
- [-26, -14],
- ];
- ring.forEach(([dx, dy], i) => {
- const x = w * 0.5 + dx;
- const y = cy + dy;
- drawAtom(ctx, x, y, 8, i % 2 ? 0xf87171 : 0xa78bfa, t, i % 2 ? "O" : "C");
- const n = ring[(i + 1) % ring.length];
- drawBond(ctx, x, y, w * 0.5 + n[0], cy + n[1], 0.75);
- });
- drawAtom(ctx, w * 0.5, cy - 52, 6, 0x38bdf8, t, "H");
- drawBond(ctx, w * 0.5, cy - 28, w * 0.5, cy - 46, 0.5);
- } else if (mode === "plastic") {
- for (let i = 0; i < 7; i++) {
- const x = w * 0.22 + i * 48;
- const y = cy + Math.sin(i * 0.9 + t) * 6;
- drawAtom(ctx, x, y, 9, 0xa78bfa, t, "C");
- if (i < 6) drawBond(ctx, x + 10, y, x + 38, cy + Math.sin((i + 1) * 0.9 + t) * 6, 0.85);
- drawAtom(ctx, x, y - 22, 5, 0x38bdf8, t, "H");
- drawBond(ctx, x, y - 10, x, y - 18, 0.4);
- }
- } else {
- const pts = [];
- for (let i = 0; i < 8; i++) {
- const x = w * 0.22 + i * 42;
- const y = cy + Math.sin(i * 0.85) * 28;
- pts.push([x, y]);
- drawAtom(ctx, x, y, 8, 0xf472b6, t, "N");
- if (i % 2 === 0) {
- drawAtom(ctx, x + 8, y - 24, 6, 0xfbbf24, t, "R");
- drawBond(ctx, x, y - 8, x + 6, y - 18, 0.5);
- }
- }
- for (let i = 0; i < pts.length - 1; i++) {
- drawBond(ctx, pts[i][0] + 8, pts[i][1], pts[i + 1][0] - 8, pts[i + 1][1], 0.8);
- }
- }
-
- const captions = {
- salt: "Salt lattice · opposite charges buddy up → bonds",
- o2: "O₂ · two oxygen atoms share a double bond",
- sugar: "Sugar ring · many C/H/O atoms bonded",
- plastic: "Plastic chain · long bonded C backbone",
- protein: "Protein fold · bonded amino buddies",
- };
- drawLabel(ctx, captions[mode] || "Stretch", w * 0.5, layout.labelY);
- setHitRegions(hits);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- ctx.restore();
- });
- setDispose(() => setIntentHandler(null));
- });
-
- /** Myths - claim vs truth with bond-specific diagrams */
- arena.registerScene("bondMyth", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop, setHitRegions, setIntentHandler } = api;
- const start = performance.now();
- setDescription("Bust bond myths - canvas shows glue vs link, mixture vs molecule, and more.");
- const myths = [
- {
- claim: "Bonds are tiny glue sticks",
- truth: "Bonds are electrical attractions / shared electrons - not craft glue",
- kind: "glue",
- },
- {
- claim: "Magnets = exact chemical bonds",
- truth: "Magnets are a helpful analogy, not the full chemistry story",
- kind: "magnet",
- },
- {
- claim: "Mixtures have chemical bonds between parts",
- truth: "Mixtures sit together without new bonded compounds",
- kind: "mixture",
- },
- {
- claim: "Breaking a bond creates new elements",
- truth: "Breaking bonds rearranges atoms - atom kinds stay the same",
- kind: "break",
- },
- {
- claim: "Only solids have bonds",
- truth: "Gases like O₂ and liquids like water also have bonded molecules",
- kind: "states",
- },
- ];
-
- setIntentHandler((intent) => {
- if (intent.type === "CANVAS_TAP" && intent.meta?.action === "flip") {
- chemLabState.mythPhase = chemLabState.mythPhase === "truth" ? "claim" : "truth";
- if (chemLabState.mythPhase === "truth") pulseSuccessFeedback(220);
- }
- });
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const t = (performance.now() - start) / 1000;
- const idx = chemLabState.myth ?? 0;
- const phase = chemLabState.mythPhase || "claim";
- const m = myths[idx] || myths[0];
- drawBackdrop();
- ctx.fillStyle = phase === "truth" ? "rgba(167,139,250,0.18)" : "rgba(248,113,113,0.16)";
- roundRect(ctx, w * 0.1, h * 0.1, w * 0.8, 44, 12);
- ctx.fill();
- drawLabel(ctx, phase === "truth" ? m.truth : `Myth: ${m.claim}`, w * 0.5, h * 0.12 + 12, {
+ if (phase === "lewis") {
+ drawLewis(ctx, w * 0.32, h * 0.42, "Na", 1, 1.4);
+ drawLewis(ctx, w * 0.68, h * 0.42, "Cl", 7, 1.4);
+ drawLabel(ctx, "Lewis dots: only valence electrons around the symbol", w * 0.5, 26, {
+ font: "600 12px Segoe UI, sans-serif",
  h: 28,
- font: "700 13px Segoe UI",
  });
-
- const cx = w * 0.5;
- const cy = h * 0.42;
-
- if (phase === "claim") {
- if (m.kind === "glue") {
- ctx.fillStyle = "#fbbf24";
- roundRect(ctx, cx - 40, cy - 50, 28, 70, 4);
- ctx.fill();
- ctx.fillStyle = "#f59e0b";
- ctx.beginPath();
- ctx.ellipse(cx - 26, cy + 28, 18, 10, 0, 0, Math.PI * 2);
- ctx.fill();
- drawAtom(ctx, cx + 30, cy - 10, 12, 0xf87171, t, "?");
- drawAtom(ctx, cx + 60, cy + 10, 12, 0x38bdf8, t, "?");
- drawLabel(ctx, "Claim: craft glue between atoms?", cx, cy + 70, { h: 22, font: "600 12px Segoe UI" });
- } else if (m.kind === "magnet") {
- drawMagnet(ctx, cx - 40, cy, "N", 1);
- drawMagnet(ctx, cx + 40, cy, "S", 1);
- drawLabel(ctx, "Claim: fridge magnets = full chemistry?", cx, cy + 70, { h: 22, font: "600 12px Segoe UI" });
- } else if (m.kind === "mixture") {
- drawAtom(ctx, cx - 50, cy, 10, 0x94a3b8, t, "N");
- drawAtom(ctx, cx, cy - 12, 10, 0x38bdf8, t, "O");
- drawAtom(ctx, cx + 50, cy + 8, 10, 0xfbbf24, t, "S");
- drawLabel(ctx, "Claim: nearby stuff must be bonded?", cx, cy + 70, { h: 22, font: "600 12px Segoe UI" });
- } else if (m.kind === "break") {
- drawAtom(ctx, cx - 30, cy, 14, 0xa78bfa, t, "A");
- drawAtom(ctx, cx + 30, cy, 14, 0xf472b6, t, "B");
- ctx.strokeStyle = "rgba(248,113,113,0.9)";
+ drawLabel(ctx, "Octet rule: most atoms chase 8 outer electrons (2 for H and He)", w * 0.5, h - 28, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 28,
+ });
+ } else {
+ drawBohr(ctx, w * 0.5, h * 0.22, [2, 8, 1], t, { symbol: "?", scale: 0.7, jitter: true });
+ const left = { x: w * 0.28, y: h * 0.62 };
+ const right = { x: w * 0.72, y: h * 0.62 };
+ ctx.strokeStyle = "rgba(196,181,253,0.55)";
  ctx.lineWidth = 3;
  ctx.beginPath();
- ctx.moveTo(cx - 8, cy - 16);
- ctx.lineTo(cx + 8, cy + 16);
- ctx.moveTo(cx + 8, cy - 16);
- ctx.lineTo(cx - 8, cy + 16);
+ ctx.moveTo(w * 0.5, h * 0.34);
+ ctx.lineTo(left.x, left.y - 50);
+ ctx.moveTo(w * 0.5, h * 0.34);
+ ctx.lineTo(right.x, right.y - 50);
  ctx.stroke();
- drawLabel(ctx, "Claim: break → brand-new elements?", cx, cy + 70, { h: 22, font: "600 12px Segoe UI" });
- } else {
- ctx.fillStyle = "#64748b";
- roundRect(ctx, cx - 40, cy - 20, 80, 50, 6);
+ const seen = chemLabState.bondPathSeen || {};
+ roundRect(ctx, left.x - 90, left.y - 48, 180, 96, 14);
+ ctx.fillStyle = seen.transfer ? "rgba(109,40,217,0.55)" : "rgba(30,27,75,0.8)";
  ctx.fill();
- drawLabel(ctx, "Claim: only solids have bonds?", cx, cy + 70, { h: 22, font: "600 12px Segoe UI" });
- }
- } else if (m.kind === "glue") {
- drawAtom(ctx, cx - 36, cy, 14, 0x38bdf8, t, "Na");
- drawAtom(ctx, cx + 36, cy, 14, 0xf472b6, t, "Cl");
- drawBond(ctx, cx - 20, cy, cx + 20, cy, 1);
- // tiny e⁻ hint dots along the bond
- for (let i = 0; i < 3; i++) {
- const px = cx - 12 + i * 12;
- ctx.fillStyle = "rgba(250,204,21,0.85)";
- ctx.beginPath();
- ctx.arc(px, cy - 10 + Math.sin(t + i) * 3, 3, 0, Math.PI * 2);
- ctx.fill();
- }
- drawLabel(ctx, "Truth: charge / shared electrons (not glue)", cx, cy + 70, { h: 22, font: "600 12px Segoe UI" });
- } else if (m.kind === "magnet") {
- drawMagnet(ctx, cx - 70, cy, "N", 0.7);
- drawMagnet(ctx, cx - 30, cy, "S", 0.7);
- drawLabel(ctx, "analogy", cx - 50, cy + 48, { h: 18, font: "600 10px Segoe UI" });
- drawAtom(ctx, cx + 30, cy, 12, 0x38bdf8, t, "Na");
- drawAtom(ctx, cx + 70, cy, 12, 0xf472b6, t, "Cl");
- drawBond(ctx, cx + 42, cy, cx + 58, cy, 1);
- drawLabel(ctx, "chemistry", cx + 50, cy + 48, { h: 18, font: "600 10px Segoe UI" });
- drawLabel(ctx, "Truth: magnets hint attraction - bonds are deeper", cx, cy + 78, {
- h: 22,
- font: "600 12px Segoe UI",
- });
- } else if (m.kind === "mixture") {
- // left: mixture (no bond lines), right: molecule (with bond)
- drawAtom(ctx, cx - 70, cy - 8, 10, 0x94a3b8, t, "N");
- drawAtom(ctx, cx - 40, cy + 12, 10, 0x38bdf8, t, "O");
- drawLabel(ctx, "mixture", cx - 55, cy + 48, { h: 18, font: "600 10px Segoe UI" });
- drawAtom(ctx, cx + 30, cy, 11, 0xf87171, t, "H");
- drawAtom(ctx, cx + 58, cy - 8, 13, 0x38bdf8, t, "O");
- drawAtom(ctx, cx + 82, cy + 10, 11, 0xf87171, t, "H");
- drawBond(ctx, cx + 40, cy - 2, cx + 48, cy - 6, 0.9);
- drawBond(ctx, cx + 68, cy - 2, cx + 74, cy + 6, 0.9);
- drawLabel(ctx, "molecule", cx + 55, cy + 48, { h: 18, font: "600 10px Segoe UI" });
- drawLabel(ctx, "Truth: mixture parts stay separate substances", cx, cy + 78, {
- h: 22,
- font: "600 12px Segoe UI",
- });
- } else if (m.kind === "break") {
- drawAtom(ctx, cx - 50, cy, 14, 0xa78bfa, t, "A");
- drawAtom(ctx, cx + 10, cy, 14, 0xf472b6, t, "B");
- ctx.strokeStyle = "rgba(167,139,250,0.35)";
- ctx.setLineDash([4, 4]);
- ctx.lineWidth = 2;
- ctx.beginPath();
- ctx.moveTo(cx - 34, cy);
- ctx.lineTo(cx - 6, cy);
+ ctx.strokeStyle = "rgba(196,181,253,0.6)";
  ctx.stroke();
- ctx.setLineDash([]);
- drawAtom(ctx, cx + 70, cy - 20, 10, 0xa78bfa, t, "A");
- drawAtom(ctx, cx + 70, cy + 20, 10, 0xf472b6, t, "B");
- drawLabel(ctx, "Truth: same atom kinds, new arrangement", cx, cy + 70, {
- h: 22,
- font: "600 12px Segoe UI",
- });
- } else {
- // gas O2 + liquid H2O
- drawAtom(ctx, cx - 60, cy - 8, 11, 0x38bdf8, t, "O");
- drawAtom(ctx, cx - 30, cy - 8, 11, 0x38bdf8, t, "O");
- drawBond(ctx, cx - 49, cy - 10, cx - 41, cy - 10, 1);
- drawBond(ctx, cx - 49, cy - 6, cx - 41, cy - 6, 1);
- drawLabel(ctx, "gas O₂", cx - 45, cy + 28, { h: 18, font: "600 10px Segoe UI" });
- drawAtom(ctx, cx + 20, cy, 10, 0xf87171, t, "H");
- drawAtom(ctx, cx + 48, cy - 8, 12, 0x38bdf8, t, "O");
- drawAtom(ctx, cx + 72, cy + 8, 10, 0xf87171, t, "H");
- drawBond(ctx, cx + 30, cy - 2, cx + 38, cy - 6, 0.9);
- drawBond(ctx, cx + 58, cy - 2, cx + 64, cy + 4, 0.9);
- drawLabel(ctx, "liquid H₂O", cx + 48, cy + 36, { h: 18, font: "600 10px Segoe UI" });
- drawLabel(ctx, "Truth: gases and liquids can have bonded molecules", cx, cy + 72, {
- h: 22,
- font: "600 12px Segoe UI",
- });
- }
-
- drawLabel(ctx, `Myth ${idx + 1} / 5`, w * 0.5, layout.labelY);
- setHitRegions([
- { id: "card", shape: "rect", x: w * 0.5, y: h * 0.42, w: w * 0.86, h: h * 0.55, meta: { action: "flip" } },
- ]);
- failFlash(ctx, w, h);
- successFlash(ctx, w, h);
- });
- setDispose(() => setIntentHandler(null));
- });
-
- /** Drill - prompt-aware bond identity visuals */
- arena.registerScene("bondDrill", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop } = api;
- const start = performance.now();
- setDescription(chemLabState.prompt || "Bond Buddies drill");
-
- function drillVisual(prompt) {
- const p = (prompt || "").toLowerCase();
- if (p.includes("water") || p.includes("h₂o") || p.includes("h2o")) return "water";
- if (p.includes("sand")) return "mixture";
- if (p.includes("magnet")) return "magnet";
- if (p.includes("o₂") || p.includes("o2")) return "o2";
- if (p.includes("break")) return "break";
- if (p.includes("salt") || p.includes("ion") || p.includes("na")) return "ionic";
- if (p.includes("rule") || p.includes("bond does") || p.includes("bond?")) return "rule";
- return "link";
- }
-
- setTick(() => {
- const w = api.width;
- const h = api.height;
- const layout = api.layout;
- const t = (performance.now() - start) / 1000;
- drawBackdrop();
- ctx.fillStyle = "rgba(167,139,250,0.22)";
- ctx.fillRect(0, 0, w, h * 0.18);
- drawLabel(ctx, chemLabState.prompt || "Speed drill!", w * 0.5, h * 0.1, { h: 28, font: "700 16px Segoe UI" });
- const kind = drillVisual(chemLabState.prompt);
- const cx = w * 0.5;
- const cy = h * 0.42;
-
- if (kind === "water") {
- drawAtom(ctx, cx - 28, cy, 12, 0xf87171, t, "H");
- drawAtom(ctx, cx + 6, cy - 10, 14, 0x38bdf8, t, "O");
- drawAtom(ctx, cx + 36, cy + 12, 12, 0xf87171, t, "H");
- drawBond(ctx, cx - 16, cy - 4, cx - 2, cy - 8, 0.9);
- drawBond(ctx, cx + 18, cy - 4, cx + 28, cy + 6, 0.9);
- drawLabel(ctx, "H₂O · bonded molecule", cx, layout.labelY);
- } else if (kind === "mixture") {
- ctx.fillStyle = "#fbbf24";
- for (let i = 0; i < 5; i++) {
- roundRect(ctx, cx - 70 + i * 18, cy + 10, 12, 10, 2);
- ctx.fill();
- }
- ctx.fillStyle = "rgba(96,165,250,0.5)";
- roundRect(ctx, cx - 50, cy - 30, 100, 40, 8);
- ctx.fill();
- drawLabel(ctx, "Sand in water · mixture (no new bond)", cx, layout.labelY);
- } else if (kind === "magnet") {
- drawMagnet(ctx, cx - 40, cy, "N", 0.9);
- drawMagnet(ctx, cx + 40, cy, "S", 0.9);
- drawLabel(ctx, "Magnet snap · attraction analogy", cx, layout.labelY);
- } else if (kind === "o2") {
- drawAtom(ctx, cx - 22, cy, 14, 0x38bdf8, t, "O");
- drawAtom(ctx, cx + 22, cy, 14, 0x38bdf8, t, "O");
- drawBond(ctx, cx - 8, cy - 4, cx + 8, cy - 4, 1);
- drawBond(ctx, cx - 8, cy + 4, cx + 8, cy + 4, 1);
- drawLabel(ctx, "O₂ · two oxygen atoms bonded", cx, layout.labelY);
- } else if (kind === "break") {
- drawAtom(ctx, cx - 40, cy, 13, 0xa78bfa, t, "A");
- drawAtom(ctx, cx + 40, cy, 13, 0xf472b6, t, "B");
- ctx.setLineDash([5, 5]);
- drawBond(ctx, cx - 26, cy, cx + 26, cy, 0.4);
- ctx.setLineDash([]);
- drawLabel(ctx, "Break bond · rearrange, same atom kinds", cx, layout.labelY);
- } else if (kind === "ionic") {
- drawAtom(ctx, cx - 30, cy, 14, 0x38bdf8, t, "+");
- drawAtom(ctx, cx + 30, cy, 14, 0xf472b6, t, "−");
- drawBond(ctx, cx - 14, cy, cx + 14, cy, 1);
- drawLabel(ctx, "Na⁺ / Cl⁻ · ionic-style attraction", cx, layout.labelY);
- } else if (kind === "rule") {
- ctx.fillStyle = "rgba(167,139,250,0.25)";
- roundRect(ctx, cx - 90, cy - 28, 180, 56, 12);
- ctx.fill();
- ctx.fillStyle = "#f5f3ff";
- ctx.font = "800 18px Segoe UI,sans-serif";
+ drawBohr(ctx, left.x - 36, left.y, [1], t, { scale: 0.45, symbol: "Na" });
+ drawBohr(ctx, left.x + 36, left.y, [7], t, { scale: 0.45, symbol: "Cl" });
+ ctx.fillStyle = "#e9d5ff";
+ ctx.font = "700 12px Segoe UI, sans-serif";
  ctx.textAlign = "center";
- ctx.fillText("BONDS = links", cx, cy + 6);
- drawLabel(ctx, "Hold atoms together as buddies", cx, layout.labelY);
- } else {
- drawAtom(ctx, cx - 28, cy, 14, 0xa78bfa, t, "A");
- drawAtom(ctx, cx + 28, cy, 14, 0xf472b6, t, "B");
- drawBond(ctx, cx - 12, cy, cx + 12, cy, 1);
- drawLabel(ctx, "Bond · lasting link between atoms", cx, layout.labelY);
+ ctx.fillText("Option A: Transfer", left.x, left.y + 38);
+ roundRect(ctx, right.x - 90, right.y - 48, 180, 96, 14);
+ ctx.fillStyle = seen.share ? "rgba(14,116,144,0.55)" : "rgba(30,27,75,0.8)";
+ ctx.fill();
+ ctx.stroke();
+ drawSharedCloud(ctx, right.x - 28, right.y - 8, right.x + 28, right.y - 8, 1, 0.5);
+ ctx.fillStyle = "#e9d5ff";
+ ctx.fillText("Option B: Share", right.x, right.y + 38);
+ hits.push({ id: "p-a", shape: "rect", x: left.x, y: left.y, w: 180, h: 96, meta: { action: "path", id: "transfer" } });
+ hits.push({ id: "p-b", shape: "rect", x: right.x, y: right.y, w: 180, h: 96, meta: { action: "path", id: "share" } });
+ drawLabel(ctx, "Transfer → ionic bond. Share → covalent bond.", w * 0.5, 26, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 28,
+ });
  }
+ setHitRegions(hits);
+ ctx.restore();
  failFlash(ctx, w, h);
  successFlash(ctx, w, h);
  });
  setDispose(() => {});
  });
 
- /** Mastery - path + bond showcase */
- arena.registerScene("bondMastery", (api) => {
- const { ctx, setTick, setDispose, setDescription, drawBackdrop } = api;
- const start = performance.now();
- setDescription("Bond Buddies mastery - apply the link rule.");
-
+ arena.registerScene("bondHandoff", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ setDescription("Drag Sodium's outer electron onto Chlorine, then snap them together.");
+ setIntentHandler((intent) => {
+ const w = api.width;
+ const h = api.height;
+ const nay = h * 0.48;
+ const cly = h * 0.48;
+ const nax = (chemLabState.bondNaX || 0.3) * w;
+ const clx = (chemLabState.bondClX || 0.7) * w;
+ if (intent.type === "CANVAS_DOWN") {
+ if (!chemLabState.bondHandoff && intent.meta?.action === "e") chemLabState.bondDrag = "e";
+ else if (chemLabState.bondHandoff && !chemLabState.bondSnapPair && intent.meta?.action === "na") chemLabState.bondDrag = "na";
+ else if (chemLabState.bondHandoff && !chemLabState.bondSnapPair && intent.meta?.action === "cl") chemLabState.bondDrag = "cl";
+ }
+ if (intent.type === "CANVAS_DRAG" && chemLabState.bondDrag === "e") {
+ chemLabState.bondEx = intent.x / w;
+ chemLabState.bondEy = intent.y / h;
+ }
+ if (intent.type === "CANVAS_DRAG" && chemLabState.bondDrag === "na") chemLabState.bondNaX = Math.max(0.12, Math.min(0.88, intent.x / w));
+ if (intent.type === "CANVAS_DRAG" && chemLabState.bondDrag === "cl") chemLabState.bondClX = Math.max(0.12, Math.min(0.88, intent.x / w));
+ if (intent.type === "CANVAS_UP") {
+ if (chemLabState.bondDrag === "e") {
+ const ex = (chemLabState.bondEx ?? 0.3) * w;
+ const ey = (chemLabState.bondEy ?? 0.48) * h;
+ if (Math.hypot(ex - clx, ey - cly) < 70) {
+ chemLabState.bondHandoff = true;
+ chemLabState.bondEx = null;
+ chemLabState.bondEy = null;
+ pulseSuccessFeedback(360);
+ } else {
+ chemLabState.bondEx = null;
+ chemLabState.bondEy = null;
+ }
+ }
+ if ((chemLabState.bondDrag === "na" || chemLabState.bondDrag === "cl") && chemLabState.bondHandoff) {
+ const dx = Math.abs((chemLabState.bondNaX || 0.3) - (chemLabState.bondClX || 0.7)) * w;
+ if (dx < 92) {
+ chemLabState.bondSnapPair = true;
+ chemLabState.bondNaX = 0.42;
+ chemLabState.bondClX = 0.58;
+ pulseSuccessFeedback(400);
+ }
+ }
+ chemLabState.bondDrag = "";
+ void nay;
+ }
+ });
  setTick(() => {
  const w = api.width;
  const h = api.height;
- const layout = api.layout;
- const t = (performance.now() - start) / 1000;
- const locked = chemLabState.masteryStep || 0;
- drawBackdrop();
- const steps = ["Meet", "Attract", "Sort", "Snap", "Water", "Rule"];
- steps.forEach((label, i) => {
- const x = w * 0.1 + i * (w * 0.14);
- ctx.fillStyle = i < locked ? "#a78bfa" : "rgba(148,163,184,0.35)";
- roundRect(ctx, x - 28, h * 0.78 - 12, 56, 24, 8);
+ const t = performance.now() / 1000;
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const done = chemLabState.bondHandoff;
+ const snap = chemLabState.bondSnapPair;
+ const nax = (chemLabState.bondNaX || 0.3) * w;
+ const clx = (chemLabState.bondClX || 0.7) * w;
+ const y = h * 0.48;
+ if (done && !snap) {
+ ctx.strokeStyle = "rgba(251,191,36,0.35)";
+ ctx.lineWidth = 2;
+ for (let i = 0; i < 5; i++) {
+ const a = t * 2 + i;
+ ctx.beginPath();
+ ctx.ellipse((nax + clx) / 2, y, 40 + i * 10, 18 + i * 4, 0, 0, Math.PI * 2);
+ ctx.stroke();
+ void a;
+ }
+ }
+ if (snap) {
+ ctx.strokeStyle = "rgba(167,139,250,0.85)";
+ ctx.lineWidth = 4;
+ ctx.beginPath();
+ ctx.moveTo(nax + 34, y);
+ ctx.lineTo(clx - 34, y);
+ ctx.stroke();
+ }
+ drawBohr(ctx, nax, y, done ? [2, 8] : [2, 8, chemLabState.bondDrag === "e" || chemLabState.bondEx != null ? 0 : 1], t, {
+ symbol: "Na",
+ scale: done ? 0.82 : 1,
+ charge: done ? "+" : "",
+ glow: done,
+ });
+ drawBohr(ctx, clx, y, done ? [2, 8, 8] : [2, 8, 7], t, {
+ symbol: "Cl",
+ scale: done ? 1.12 : 1,
+ charge: done ? "−" : "",
+ glow: done,
+ });
+ const hits = [];
+ if (!done) {
+ const homeX = nax + 46;
+ const homeY = y - 18;
+ const ex = chemLabState.bondEx != null ? chemLabState.bondEx * w : homeX;
+ const ey = chemLabState.bondEy != null ? chemLabState.bondEy * h : homeY;
+ drawElectron(ctx, ex, ey, 7, "#fde68a");
+ hits.push({ id: "e-na", shape: "ellipse", x: ex, y: ey, r: 22, meta: { action: "e" } });
+ drawLabel(ctx, "Drag Sodium's lonely electron onto Chlorine.", w * 0.5, 26, { font: "600 12px Segoe UI, sans-serif", h: 28 });
+ } else if (!snap) {
+ hits.push({ id: "na", shape: "ellipse", x: nax, y: y, r: 56, meta: { action: "na" } });
+ hits.push({ id: "cl", shape: "ellipse", x: clx, y: y, r: 62, meta: { action: "cl" } });
+ drawLabel(ctx, "Sodium: gave 1 electron away → now Na⁺. Chlorine: received 1 → now Cl⁻.", w * 0.5, 26, {
+ font: "600 11px Segoe UI, sans-serif",
+ h: 28,
+ });
+ drawLabel(ctx, "Opposite charges attract. Drag them close until they snap.", w * 0.5, h - 28, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 26,
+ });
+ } else {
+ drawLabel(ctx, "That attraction is the ionic bond. You built the glue.", w * 0.5, 26);
+ }
+ setHitRegions(hits);
+ ctx.restore();
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("bondLattice", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setIntentHandler } = api;
+ setDescription("Ionic pairs stack into a crystal lattice.");
+ setIntentHandler((intent) => {
+ if (intent.type === "CANVAS_DRAG") {
+ chemLabState.bondLatShake = 10;
+ }
+ });
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = performance.now() / 1000;
+ const phase = chemLabState.bondPhase || "lattice";
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ if (phase === "words") {
+ drawBohr(ctx, w * 0.32, h * 0.42, [2, 8], t, { symbol: "Na", charge: "+", scale: 0.9, glow: true });
+ drawBohr(ctx, w * 0.68, h * 0.42, [2, 8, 8], t, { symbol: "Cl", charge: "−", scale: 1.05, glow: true });
+ drawLabel(ctx, "Ion: an atom that gained or lost electrons (Na⁺, Cl⁻)", w * 0.5, 26, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 28,
+ });
+ drawLabel(ctx, "Ionic bond: attraction of opposite charges. Formula NaCl, a 1:1 ratio.", w * 0.5, h - 28, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 28,
+ });
+ } else {
+ const shake = chemLabState.bondLatShake || 0;
+ if (shake > 0) chemLabState.bondLatShake = shake * 0.9;
+ const rot = t * 0.45;
+ const cx = w * 0.5 + Math.sin(t * 8) * Math.min(shake, 4);
+ const cy = h * 0.46;
+ const s = Math.min(w, h) * 0.09;
+ const cells = [];
+ for (let i = 0; i < 3; i++) {
+ for (let j = 0; j < 3; j++) {
+ for (let k = 0; k < 3; k++) {
+ const c = Math.cos(rot);
+ const si = Math.sin(rot);
+ const x = (i - 1) * s;
+ const z = (k - 1) * s;
+ const xr = x * c - z * si;
+ const zr = x * si + z * c;
+ const y = (j - 1) * s;
+ cells.push({
+ x: cx + xr * 0.9 - y * 0.18,
+ y: cy + zr * 0.38 + y * 0.7,
+ z: zr,
+ na: (i + j + k) % 2 === 0,
+ });
+ }
+ }
+ }
+ cells.sort((a, b) => a.z - b.z);
+ cells.forEach((c) => {
+ ctx.fillStyle = c.na ? "#c4b5fd" : "#6ee7b7";
+ ctx.beginPath();
+ ctx.arc(c.x, c.y, c.na ? 7 : 9, 0, Math.PI * 2);
  ctx.fill();
  ctx.fillStyle = "#0f172a";
- ctx.font = "600 10px Segoe UI";
+ ctx.font = "700 8px Segoe UI, sans-serif";
  ctx.textAlign = "center";
- ctx.fillText(label, x, h * 0.78);
+ ctx.textBaseline = "middle";
+ ctx.fillText(c.na ? "+" : "−", c.x, c.y + 1);
  });
-
- // Showcase trio: H2O bonded, O2 bonded, mixture without bond
- drawAtom(ctx, w * 0.22, h * 0.32, 10, 0xf87171, t, "H");
- drawAtom(ctx, w * 0.28, h * 0.28, 12, 0x38bdf8, t, "O");
- drawAtom(ctx, w * 0.34, h * 0.34, 10, 0xf87171, t, "H");
- drawBond(ctx, w * 0.23, h * 0.31, w * 0.26, h * 0.29, 0.9);
- drawBond(ctx, w * 0.3, h * 0.29, w * 0.33, h * 0.33, 0.9);
- drawLabel(ctx, "H₂O bonded", w * 0.28, h * 0.48, { h: 18, font: "600 10px Segoe UI" });
-
- drawAtom(ctx, w * 0.48, h * 0.3, 12, 0x38bdf8, t, "O");
- drawAtom(ctx, w * 0.58, h * 0.3, 12, 0x38bdf8, t, "O");
- drawBond(ctx, w * 0.5, h * 0.28, w * 0.56, h * 0.28, 1);
- drawBond(ctx, w * 0.5, h * 0.32, w * 0.56, h * 0.32, 1);
- drawLabel(ctx, "O₂ bonded", w * 0.53, h * 0.48, { h: 18, font: "600 10px Segoe UI" });
-
- drawAtom(ctx, w * 0.72, h * 0.28, 10, 0x94a3b8, t, "N");
- drawAtom(ctx, w * 0.82, h * 0.34, 10, 0xfbbf24, t, "S");
- drawLabel(ctx, "mixture · no link", w * 0.77, h * 0.48, { h: 18, font: "600 10px Segoe UI" });
-
- drawMagnet(ctx, layout.leftProp.x, layout.deskTop - 8, "N", 0.75);
- drawCup(ctx, layout.midProp.x, layout.deskTop, 0.5);
- drawMagnet(ctx, layout.rightProp.x, layout.deskTop - 8, "S", 0.75);
-
- ctx.fillStyle = "rgba(167,139,250,0.22)";
- roundRect(ctx, w * 0.28, h * 0.55, w * 0.44, 32, 10);
+ const grain = Math.min(1, Math.max(0, t / 4 - 0.4));
+ if (grain > 0) {
+ ctx.globalAlpha = grain * 0.85;
+ ctx.fillStyle = "#e7e5e4";
+ roundRect(ctx, w * 0.72, h * 0.62, 70, 54, 8);
  ctx.fill();
- ctx.fillStyle = "#f5f3ff";
- ctx.font = "700 13px Segoe UI,sans-serif";
- ctx.textAlign = "center";
- ctx.fillText("Bond Explorer · links hold atoms together", w * 0.5, h * 0.55 + 20);
- drawLabel(ctx, "Mastery: prove the bond rule on mixed cases", w * 0.5, layout.labelY);
+ ctx.fillStyle = "#a8a29e";
+ ctx.fillRect(w * 0.74, h * 0.64, 20, 16);
+ ctx.globalAlpha = 1;
+ drawLabel(ctx, "table salt", w * 0.8, h * 0.86, { h: 20, font: "600 11px Segoe UI, sans-serif" });
+ }
+ drawLabel(ctx, "One ionic bond does not stop at a pair. It repeats in every direction.", w * 0.5, 26, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 28,
+ });
+ }
+ ctx.restore();
  failFlash(ctx, w, h);
  successFlash(ctx, w, h);
  });
  setDispose(() => {});
  });
+
+ arena.registerScene("bondShare", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ setDescription("Hydrogen will not give the electron away. Overlap to share.");
+ setIntentHandler((intent) => {
+ const w = api.width;
+ const h = api.height;
+ const y = h * 0.48;
+ const x0 = (chemLabState.bondH0 || 0.3) * w;
+ const x1 = (chemLabState.bondH1 || 0.7) * w;
+ if (intent.type === "CANVAS_DOWN") {
+ if (!chemLabState.bondHTried && intent.meta?.action === "e") chemLabState.bondDrag = "e";
+ else if (chemLabState.bondHTried && !chemLabState.bondHShare && intent.meta?.action === "h0") chemLabState.bondDrag = "h0";
+ else if (chemLabState.bondHTried && !chemLabState.bondHShare && intent.meta?.action === "h1") chemLabState.bondDrag = "h1";
+ }
+ if (intent.type === "CANVAS_DRAG" && chemLabState.bondDrag === "e") {
+ chemLabState.bondEx = intent.x / w;
+ chemLabState.bondEy = intent.y / h;
+ }
+ if (intent.type === "CANVAS_DRAG" && chemLabState.bondDrag === "h0") chemLabState.bondH0 = Math.max(0.12, Math.min(0.8, intent.x / w));
+ if (intent.type === "CANVAS_DRAG" && chemLabState.bondDrag === "h1") chemLabState.bondH1 = Math.max(0.2, Math.min(0.88, intent.x / w));
+ if (intent.type === "CANVAS_UP") {
+ if (chemLabState.bondDrag === "e") {
+ const ex = (chemLabState.bondEx ?? 0.3) * w;
+ const ey = (chemLabState.bondEy ?? 0.48) * h;
+ if (Math.hypot(ex - x1, ey - y) < 64) {
+ chemLabState.bondHTried = true;
+ chemLabState.bondEx = null;
+ chemLabState.bondEy = null;
+ pulseFailFeedback(420);
+ } else {
+ chemLabState.bondEx = null;
+ chemLabState.bondEy = null;
+ }
+ }
+ if ((chemLabState.bondDrag === "h0" || chemLabState.bondDrag === "h1") && chemLabState.bondHTried) {
+ const gap = Math.abs((chemLabState.bondH0 || 0.3) - (chemLabState.bondH1 || 0.7)) * w;
+ if (gap < 78) {
+ chemLabState.bondHShare = true;
+ chemLabState.bondH0 = 0.44;
+ chemLabState.bondH1 = 0.56;
+ pulseSuccessFeedback(380);
+ }
+ }
+ chemLabState.bondDrag = "";
+ }
+ });
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = performance.now() / 1000;
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const x0 = (chemLabState.bondH0 || 0.3) * w;
+ const x1 = (chemLabState.bondH1 || 0.7) * w;
+ const y = h * 0.48;
+ const share = chemLabState.bondHShare;
+ const tried = chemLabState.bondHTried;
+ if (share) drawSharedCloud(ctx, x0, y, x1, y, 1, 0.5);
+ drawBohr(ctx, x0, y, [share ? 2 : 1], t, { symbol: "H", scale: 0.95, glow: share, jitter: !share });
+ drawBohr(ctx, x1, y, [share ? 2 : 1], t + 0.4, { symbol: "H", scale: 0.95, glow: share, jitter: !share });
+ const hits = [];
+ if (!tried) {
+ const homeX = x0 + 32;
+ const homeY = y - 10;
+ const ex = chemLabState.bondEx != null ? chemLabState.bondEx * w : homeX;
+ const ey = chemLabState.bondEy != null ? chemLabState.bondEy * h : homeY;
+ drawElectron(ctx, ex, ey, 7, "#fde68a");
+ hits.push({ id: "e-h", shape: "ellipse", x: ex, y: ey, r: 22, meta: { action: "e" } });
+ drawLabel(ctx, "Try dragging one Hydrogen's electron fully onto the other, like Sodium.", w * 0.5, 26, {
+ font: "600 11px Segoe UI, sans-serif",
+ h: 28,
+ });
+ } else if (!share) {
+ hits.push({ id: "h0", shape: "ellipse", x: x0, y: y, r: 52, meta: { action: "h0" } });
+ hits.push({ id: "h1", shape: "ellipse", x: x1, y: y, r: 52, meta: { action: "h1" } });
+ drawLabel(ctx, "Both atoms want to keep this electron. Try overlapping them instead of transferring.", w * 0.5, 26, {
+ font: "600 11px Segoe UI, sans-serif",
+ h: 32,
+ });
+ } else {
+ drawLabel(ctx, "Neither atom gave anything away. Both count the same shared pair as their own.", w * 0.5, 26, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 32,
+ });
+ }
+ setHitRegions(hits);
+ ctx.restore();
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("bondPairs", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ let pull = 0;
+ setDescription("Single, double, and triple shared pairs.");
+ setIntentHandler((intent) => {
+ if (intent.type === "CANVAS_TAP" && intent.meta?.action === "mol") {
+ chemLabState.bondGallery = intent.meta.i;
+ pulseSuccessFeedback(160);
+ }
+ if (intent.type === "CANVAS_DRAG" && intent.meta?.action === "pull") {
+ pull = Math.min(48, Math.abs(intent.x - api.width * 0.5) * 0.25);
+ }
+ if (intent.type === "CANVAS_UP") pull *= 0.2;
+ });
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = performance.now() / 1000;
+ const phase = chemLabState.bondPhase || "gallery";
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const hits = [];
+ if (phase === "lewis") {
+ const ox = w * 0.5;
+ const oy = h * 0.46;
+ drawLewis(ctx, ox, oy, "O", 0, 1.5);
+ drawLewis(ctx, ox - 70, oy + 36, "H", 0, 1.2);
+ drawLewis(ctx, ox + 70, oy + 36, "H", 0, 1.2);
+ ctx.strokeStyle = "#e9d5ff";
+ ctx.lineWidth = 3;
+ ctx.beginPath();
+ ctx.moveTo(ox - 16, oy + 8);
+ ctx.lineTo(ox - 52, oy + 28);
+ ctx.moveTo(ox + 16, oy + 8);
+ ctx.lineTo(ox + 52, oy + 28);
+ ctx.stroke();
+ drawElectron(ctx, ox - 10, oy - 28, 3.4);
+ drawElectron(ctx, ox + 10, oy - 28, 3.4);
+ drawElectron(ctx, ox + 28, oy - 8, 3.4);
+ drawElectron(ctx, ox + 28, oy + 8, 3.4);
+ drawSharedCloud(ctx, ox - 8, oy + 6, ox - 48, oy + 28, 1, 0.62);
+ drawSharedCloud(ctx, ox + 8, oy + 6, ox + 48, oy + 28, 1, 0.38);
+ drawLabel(ctx, "Covalent bond: sharing a pair. Lines = bonding pairs. Dots = lone pairs.", w * 0.5, 26, {
+ font: "600 11px Segoe UI, sans-serif",
+ h: 30,
+ });
+ drawLabel(ctx, "In H₂O, oxygen pulls the shared electrons closer than hydrogen does.", w * 0.5, h - 28, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 26,
+ });
+ } else {
+ const mols = [
+ { i: 0, label: "H₂", sub: "1 shared pair = single bond", pairs: 1, k: 0.55 },
+ { i: 1, label: "O₂", sub: "2 shared pairs = double bond", pairs: 2, k: 0.32 },
+ { i: 2, label: "N₂", sub: "3 shared pairs = triple bond", pairs: 3, k: 0.18 },
+ ];
+ const sel = chemLabState.bondGallery || 0;
+ mols.forEach((m, idx) => {
+ const cx = w * (0.22 + idx * 0.28);
+ const cy = h * 0.46;
+ const gap = 34 + pull * m.k;
+ roundRect(ctx, cx - 70, cy - 78, 140, 150, 14);
+ ctx.fillStyle = sel === idx ? "rgba(109,40,217,0.4)" : "rgba(30,27,75,0.55)";
+ ctx.fill();
+ ctx.strokeStyle = "rgba(196,181,253,0.45)";
+ ctx.stroke();
+ drawSharedCloud(ctx, cx - gap, cy, cx + gap, cy, m.pairs, 0.5);
+ drawBohr(ctx, cx - gap, cy, m.i === 0 ? [1] : [2, m.i === 1 ? 6 : 5], t, {
+ symbol: m.label[0],
+ scale: 0.55,
+ glow: true,
+ });
+ drawBohr(ctx, cx + gap, cy, m.i === 0 ? [1] : [2, m.i === 1 ? 6 : 5], t, {
+ symbol: m.label[0],
+ scale: 0.55,
+ glow: true,
+ });
+ ctx.fillStyle = "#f5f3ff";
+ ctx.font = "700 13px Segoe UI, sans-serif";
+ ctx.textAlign = "center";
+ ctx.fillText(m.label, cx, cy + 52);
+ ctx.font = "600 10px Segoe UI, sans-serif";
+ ctx.fillStyle = "#c4b5fd";
+ ctx.fillText(m.sub, cx, cy + 66);
+ hits.push({ id: `mol-${idx}`, shape: "rect", x: cx, y: cy, w: 140, h: 150, meta: { action: "mol", i: idx } });
+ });
+ hits.push({ id: "pull", shape: "rect", x: w * 0.5, y: h * 0.46, w: w * 0.9, h: 160, meta: { action: "pull" } });
+ drawLabel(ctx, "Each extra shared pair makes the bond stronger and shorter. Drag to tug.", w * 0.5, 26, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 28,
+ });
+ pull *= 0.92;
+ }
+ setHitRegions(hits);
+ ctx.restore();
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("bondTug", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ setDescription("Electronegativity tug-of-war. Place the marker on the spectrum.");
+ setIntentHandler((intent) => {
+ const w = api.width;
+ const barX0 = w * 0.12;
+ const barW = w * 0.76;
+ if (intent.type === "CANVAS_DOWN" && intent.meta?.action === "mark") chemLabState.bondDrag = "mark";
+ if (intent.type === "CANVAS_DRAG" && chemLabState.bondDrag === "mark") {
+ chemLabState.bondTugX = Math.max(0, Math.min(1, (intent.x - barX0) / barW));
+ }
+ if (intent.type === "CANVAS_UP" && chemLabState.bondDrag === "mark") {
+ const i = chemLabState.bondTugI || 0;
+ const pair = TUGS[i];
+ const x = chemLabState.bondTugX ?? 0.5;
+ if (pair && Math.abs(x - pair.target) < 0.16) {
+ chemLabState.bondTugX = pair.target;
+ const hits = { ...(chemLabState.bondTugHits || {}) };
+ hits[pair.id] = true;
+ chemLabState.bondTugHits = hits;
+ chemLabState.bondTugHoldUntil = performance.now() + 900;
+ pulseSuccessFeedback(320);
+ } else {
+ pulseFailFeedback(360);
+ }
+ chemLabState.bondDrag = "";
+ }
+ });
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = performance.now() / 1000;
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const i = Math.min(2, chemLabState.bondTugI || 0);
+ const hitsMap = chemLabState.bondTugHits || {};
+ const done = hitsMap.hh && hitsMap.hcl && hitsMap.nacl;
+ const hold = chemLabState.bondTugHoldUntil || 0;
+ if (hold && performance.now() > hold && hitsMap[TUGS[i].id] && i < 2) {
+ chemLabState.bondTugI = i + 1;
+ chemLabState.bondTugX = 0.5;
+ chemLabState.bondTugHoldUntil = 0;
+ }
+ const pair = TUGS[Math.min(2, chemLabState.bondTugI || 0)];
+ const y = h * 0.4;
+ const xL = w * 0.28;
+ const xR = w * 0.72;
+ drawBohr(ctx, xL, y, pair.a === "Na" ? [2, 8, 1] : [pair.a === "Cl" ? 7 : 1], t, { symbol: pair.a, scale: 0.85 });
+ drawBohr(ctx, xR, y, pair.b === "Cl" ? [2, 8, 7] : [1], t, { symbol: pair.b, scale: 0.85 });
+ const pull = pair.id === "nacl" && hitsMap.nacl ? 0.98 : pair.pull;
+ drawSharedCloud(ctx, xL + 30, y, xR - 30, y, 1, pull);
+ ctx.fillStyle = "#c4b5fd";
+ ctx.font = "700 12px Segoe UI, sans-serif";
+ ctx.textAlign = "center";
+ ctx.fillText(pair.a === pair.b ? "even tug" : pair.b + " pulls harder", w * 0.5, y + 70);
+ const barX0 = w * 0.12;
+ const barY = h * 0.78;
+ const barW = w * 0.76;
+ roundRect(ctx, barX0, barY - 10, barW, 20, 8);
+ const g = ctx.createLinearGradient(barX0, 0, barX0 + barW, 0);
+ g.addColorStop(0, "#67e8f9");
+ g.addColorStop(0.45, "#a78bfa");
+ g.addColorStop(1, "#f59e0b");
+ ctx.fillStyle = g;
+ ctx.fill();
+ ctx.fillStyle = "#e9d5ff";
+ ctx.font = "600 11px Segoe UI, sans-serif";
+ ctx.textAlign = "left";
+ ctx.fillText("Equal sharing", barX0, barY - 20);
+ ctx.textAlign = "right";
+ ctx.fillText("Complete transfer", barX0 + barW, barY - 20);
+ const mx = barX0 + (chemLabState.bondTugX ?? 0.5) * barW;
+ ctx.fillStyle = "#f5f3ff";
+ ctx.beginPath();
+ ctx.moveTo(mx, barY - 18);
+ ctx.lineTo(mx - 8, barY - 4);
+ ctx.lineTo(mx + 8, barY - 4);
+ ctx.closePath();
+ ctx.fill();
+ ctx.beginPath();
+ ctx.arc(mx, barY, 9, 0, Math.PI * 2);
+ ctx.fill();
+ if (hitsMap[pair.id] || done) {
+ drawLabel(ctx, `Correct. ${pair.type}, based on how one-sided the pull was.`, w * 0.5, 26, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 28,
+ });
+ } else {
+ drawLabel(ctx, `${pair.a}-${pair.b}: drag the marker to where the tug belongs.`, w * 0.5, 26, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 28,
+ });
+ }
+ const hits = [{ id: "mark", shape: "rect", x: barX0 + barW / 2, y: barY, w: barW, h: 52, meta: { action: "mark" } }];
+ setHitRegions(hits);
+ ctx.restore();
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("bondMaterials", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ setDescription("Bond type decides how a material behaves.");
+ setIntentHandler((intent) => {
+ if (intent.type !== "CANVAS_TAP") return;
+ if (intent.meta?.action === "shatter") {
+ chemLabState.bondShatter = true;
+ pulseSuccessFeedback(200);
+ }
+ if (intent.meta?.action === "dissolve") chemLabState.bondDissolve = true;
+ if (intent.meta?.action === "melt") {
+ chemLabState.bondMelt = true;
+ pulseSuccessFeedback(200);
+ }
+ });
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = performance.now() / 1000;
+ const phase = chemLabState.bondPhase || "mats";
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const hits = [];
+ if (phase === "den") {
+ const barX0 = w * 0.12;
+ const barY = h * 0.42;
+ const barW = w * 0.76;
+ roundRect(ctx, barX0, barY - 10, barW, 20, 8);
+ const g = ctx.createLinearGradient(barX0, 0, barX0 + barW, 0);
+ g.addColorStop(0, "#67e8f9");
+ g.addColorStop(0.45, "#a78bfa");
+ g.addColorStop(1, "#f59e0b");
+ ctx.fillStyle = g;
+ ctx.fill();
+ ctx.fillStyle = "#f5f3ff";
+ ctx.font = "700 13px Segoe UI, sans-serif";
+ ctx.textAlign = "center";
+ ctx.fillText("ΔEN 0-0.4  nonpolar covalent", w * 0.5, barY + 36);
+ ctx.fillText("ΔEN 0.4-1.7  polar covalent", w * 0.5, barY + 56);
+ ctx.fillText("ΔEN 1.7+  ionic", w * 0.5, barY + 76);
+ drawLabel(ctx, "Electronegativity: how strongly an atom pulls on shared electrons", w * 0.5, 26, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 28,
+ });
+ drawLabel(ctx, "These numbers are a useful map, not strict walls. Bonding is a spectrum.", w * 0.5, h - 28, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 28,
+ });
+ } else {
+ const cols = [
+ { x: w * 0.22, title: "Salt (ionic)", id: "shatter" },
+ { x: w * 0.5, title: "Sugar (covalent)", id: "melt" },
+ { x: w * 0.78, title: "Metal (preview)", id: "metal" },
+ ];
+ cols.forEach((c, idx) => {
+ roundRect(ctx, c.x - 70, h * 0.22, 140, h * 0.52, 14);
+ ctx.fillStyle = "rgba(30,27,75,0.7)";
+ ctx.fill();
+ ctx.strokeStyle = "rgba(196,181,253,0.4)";
+ ctx.stroke();
+ ctx.fillStyle = "#e9d5ff";
+ ctx.font = "700 12px Segoe UI, sans-serif";
+ ctx.textAlign = "center";
+ ctx.fillText(c.title, c.x, h * 0.28);
+ if (idx === 0) {
+ const sh = chemLabState.bondShatter;
+ ctx.fillStyle = "#e7e5e4";
+ if (!sh) {
+ roundRect(ctx, c.x - 28, h * 0.4, 56, 56, 4);
+ ctx.fill();
+ } else {
+ roundRect(ctx, c.x - 40, h * 0.38, 28, 40, 2);
+ ctx.fill();
+ roundRect(ctx, c.x + 4, h * 0.46, 30, 36, 2);
+ ctx.fill();
+ }
+ if (chemLabState.bondDissolve) {
+ for (let k = 0; k < 6; k++) {
+ ctx.fillStyle = k % 2 ? "#c4b5fd" : "#6ee7b7";
+ ctx.beginPath();
+ ctx.arc(c.x - 24 + k * 10, h * 0.62 + Math.sin(t * 3 + k) * 6, 4, 0, Math.PI * 2);
+ ctx.fill();
+ }
+ ctx.strokeStyle = "#fbbf24";
+ ctx.lineWidth = 2;
+ ctx.strokeRect(c.x - 30, h * 0.68, 60, 18);
+ }
+ hits.push({ id: "sh", shape: "rect", x: c.x, y: h * 0.48, w: 140, h: 120, meta: { action: "shatter" } });
+ hits.push({ id: "dis", shape: "rect", x: c.x, y: h * 0.7, w: 80, h: 28, meta: { action: "dissolve" } });
+ ctx.fillStyle = "#a5b4fc";
+ ctx.font = "600 10px Segoe UI, sans-serif";
+ ctx.fillText(sh ? "Tap again to dissolve" : "Tap to shatter", c.x, h * 0.7);
+ } else if (idx === 1) {
+ ctx.fillStyle = chemLabState.bondMelt ? "#fde68a" : "#fef3c7";
+ if (chemLabState.bondMelt) {
+ ctx.beginPath();
+ ctx.ellipse(c.x, h * 0.52, 36, 18, 0, 0, Math.PI * 2);
+ ctx.fill();
+ } else {
+ roundRect(ctx, c.x - 22, h * 0.42, 44, 44, 6);
+ ctx.fill();
+ }
+ ctx.fillStyle = "#a5b4fc";
+ ctx.font = "600 10px Segoe UI, sans-serif";
+ ctx.fillText(chemLabState.bondMelt ? "melts, does not conduct" : "Tap to melt", c.x, h * 0.7);
+ hits.push({ id: "melt", shape: "rect", x: c.x, y: h * 0.48, w: 140, h: 120, meta: { action: "melt" } });
+ } else {
+ ctx.fillStyle = "#94a3b8";
+ roundRect(ctx, c.x - 30, h * 0.44, 60, 18, 4);
+ ctx.fill();
+ ctx.fillStyle = "#cbd5e1";
+ roundRect(ctx, c.x - 26, h * 0.5, 52, 14, 4);
+ ctx.fill();
+ ctx.fillStyle = "#a5b4fc";
+ ctx.font = "600 10px Segoe UI, sans-serif";
+ ctx.fillText("bends, conducts as a solid", c.x, h * 0.66);
+ ctx.fillText("metallic bonding: another day", c.x, h * 0.72);
+ }
+ });
+ drawLabel(ctx, "How atoms bond decides how the whole material behaves.", w * 0.5, 26, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 28,
+ });
+ }
+ setHitRegions(hits);
+ ctx.restore();
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("bondClose", (api) => {
+ const { ctx, setTick, setDispose, setDescription } = api;
+ const start = performance.now();
+ setDescription("Every bond has a reason.");
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = (performance.now() - start) / 1000;
+ chemLabState.bondCloseU = Math.min(1, t / 3.2);
+ chemLabState.scale = chemLabState.bondCloseU;
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ drawBohr(ctx, w * 0.22, h * 0.38, [2, 8], t, { symbol: "Na", charge: "+", scale: 0.7, glow: true });
+ drawBohr(ctx, w * 0.38, h * 0.38, [2, 8, 8], t, { symbol: "Cl", charge: "−", scale: 0.8, glow: true });
+ drawSharedCloud(ctx, w * 0.58, h * 0.4, w * 0.78, h * 0.4, 1, 0.5);
+ drawBohr(ctx, w * 0.58, h * 0.4, [2], t, { symbol: "H", scale: 0.55, glow: true });
+ drawBohr(ctx, w * 0.78, h * 0.4, [2], t, { symbol: "H", scale: 0.55, glow: true });
+ drawH2O(ctx, w * 0.5, h * 0.68, 2.2, Math.sin(t) * 0.1);
+ drawLabel(ctx, "Give an electron away, or share one. Salt, water, and the air you breathe.", w * 0.5, 26, {
+ font: "600 12px Segoe UI, sans-serif",
+ h: 30,
+ });
+ ctx.restore();
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ arena.registerScene("bondSpiral", (api) => {
+ const { ctx, setTick, setDispose, setDescription, setHitRegions, setIntentHandler } = api;
+ const start = performance.now();
+ const stops = [
+ { id: 1, label: "1 Why bond", caption: "Spiral 1: full outer shell, stability" },
+ { id: 2, label: "2 Ionic", caption: "Spiral 2: give and take, then a crystal" },
+ { id: 3, label: "3 Covalent", caption: "Spiral 3: share instead of giving" },
+ { id: 4, label: "4 Spectrum", caption: "Spiral 4: one tug-of-war, every bond type" },
+ ];
+ setDescription("Recap map of the four Bond Buddies spirals.");
+ setIntentHandler((intent) => {
+ if (intent.type !== "CANVAS_TAP") return;
+ if (intent.meta?.action === "spiral") {
+ chemLabState.spiralStop = Number(intent.meta.stop) || 0;
+ chemLabState.spiralUntil = performance.now() + 4500;
+ }
+ if (intent.meta?.action === "spiralFinish") chemLabState.spiralFinish = true;
+ });
+ function polar(s, w, h) {
+ const cx = w * 0.5;
+ const cy = Math.min(h * 0.44, h - 118);
+ const maxR = Math.min(w * 0.36, Math.max(70, h - 140) * 0.42, 150);
+ const a = -0.55 + s * 1.28;
+ const r = maxR * (0.55 + s * 0.15);
+ return { x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r, a, cx, cy };
+ }
+ setTick(() => {
+ const w = api.width;
+ const h = api.height;
+ const t = (performance.now() - start) / 1000;
+ const stop = chemLabState.spiralStop || 0;
+ fillNight(ctx, w, h);
+ ctx.save();
+ ctx.translate(failShake(), 0);
+ const origin = polar(0, w, h);
+ ctx.strokeStyle = "rgba(167,139,250,0.55)";
+ ctx.lineWidth = 3;
+ ctx.beginPath();
+ for (let s = 0; s <= 3.02; s += 0.04) {
+ const p = polar(s, w, h);
+ if (s === 0) ctx.moveTo(p.x, p.y);
+ else ctx.lineTo(p.x, p.y);
+ }
+ ctx.stroke();
+ ctx.beginPath();
+ ctx.arc(origin.cx, origin.cy, 48, 0, Math.PI * 2);
+ ctx.fillStyle = "rgba(46,16,80,0.55)";
+ ctx.fill();
+ if (stop === 1) drawBohr(ctx, origin.cx, origin.cy, [2, 8, 1], t, { symbol: "?", scale: 0.45, jitter: true });
+ if (stop === 2) {
+ drawBohr(ctx, origin.cx - 16, origin.cy, [2, 8], t, { symbol: "Na", scale: 0.32, charge: "+" });
+ drawBohr(ctx, origin.cx + 16, origin.cy, [2, 8, 8], t, { symbol: "Cl", scale: 0.36, charge: "−" });
+ }
+ if (stop === 3) {
+ drawSharedCloud(ctx, origin.cx - 18, origin.cy, origin.cx + 18, origin.cy, 1, 0.5);
+ drawBohr(ctx, origin.cx - 18, origin.cy, [2], t, { symbol: "H", scale: 0.28 });
+ drawBohr(ctx, origin.cx + 18, origin.cy, [2], t, { symbol: "H", scale: 0.28 });
+ }
+ if (stop === 4) {
+ roundRect(ctx, origin.cx - 36, origin.cy - 6, 72, 12, 6);
+ const g = ctx.createLinearGradient(origin.cx - 36, 0, origin.cx + 36, 0);
+ g.addColorStop(0, "#67e8f9");
+ g.addColorStop(1, "#f59e0b");
+ ctx.fillStyle = g;
+ ctx.fill();
+ }
+ const hits = [];
+ stops.forEach((s, i) => {
+ const p = polar(i, w, h);
+ ctx.fillStyle = stop === s.id ? "#c4b5fd" : "#7c3aed";
+ ctx.beginPath();
+ ctx.arc(p.x, p.y, 22, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.fillStyle = "#f5f3ff";
+ ctx.font = "800 16px Segoe UI, sans-serif";
+ ctx.textAlign = "center";
+ ctx.textBaseline = "middle";
+ ctx.fillText(String(s.id), p.x, p.y);
+ const lx = Math.min(w - 70, Math.max(70, p.x + Math.cos(p.a) * 42));
+ const ly = Math.min(h - 88, Math.max(58, p.y + Math.sin(p.a) * 36));
+ drawLabel(ctx, s.label, lx, ly, { font: "600 12px Segoe UI, sans-serif", h: 22 });
+ hits.push({ id: `stop-${s.id}`, shape: "ellipse", x: p.x, y: p.y, r: 36, meta: { action: "spiral", stop: s.id } });
+ });
+ drawLabel(ctx, stop ? stops[stop - 1].caption : "Your four spirals. Tap a number, then Finish Bond Buddies.", w * 0.5, 28, {
+ h: 32,
+ font: "700 13px Segoe UI, sans-serif",
+ });
+ const fx = w * 0.5;
+ const fy = h - 34;
+ const fw = Math.min(280, w * 0.76);
+ roundRect(ctx, fx - fw / 2, fy - 22, fw, 44, 12);
+ ctx.fillStyle = "#6d28d9";
+ ctx.fill();
+ ctx.fillStyle = "#f5f3ff";
+ ctx.font = "800 16px Segoe UI, sans-serif";
+ ctx.textAlign = "center";
+ ctx.textBaseline = "middle";
+ ctx.fillText("Finish Bond Buddies", fx, fy);
+ hits.push({ id: "spiral-finish", shape: "rect", x: fx, y: fy, w: fw, h: 44, meta: { action: "spiralFinish" } });
+ setHitRegions(hits);
+ ctx.restore();
+ failFlash(ctx, w, h);
+ successFlash(ctx, w, h);
+ });
+ setDispose(() => {});
+ });
+
+ if (typeof arena.registerAlias === "function") {
+ arena.registerAlias("bondMeet", "bondOpen");
+ arena.registerAlias("bondMagnet", "bondHandoff");
+ arena.registerAlias("bondSort", "bondMood");
+ arena.registerAlias("bondSnap", "bondHandoff");
+ arena.registerAlias("bondWater", "bondShare");
+ arena.registerAlias("bondRule", "bondPaths");
+ arena.registerAlias("bondStretch", "bondPairs");
+ arena.registerAlias("bondMyth", "bondTug");
+ arena.registerAlias("bondDrill", "bondMaterials");
+ arena.registerAlias("bondMastery", "bondSpiral");
+ }
 }
 
 export const BOND_ASSET_PATHS = {

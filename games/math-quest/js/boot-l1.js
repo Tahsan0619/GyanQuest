@@ -17,17 +17,17 @@ import {
  levelDoneCount,
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
-import { createArena2D } from "./arena-2d.js";
-import { playScene, cancelActiveActivity } from "./lab-activities.js?v=plain-arrows3";
-import { runL1Sub, L1_META } from "./level1.js";
-import { runL2Sub, L2_META } from "./level2.js";
-import { runL3Sub, L3_META } from "./level3.js";
-import { MISSIONS } from "./missions-meta.js";
+import { createArena2D } from "./arena-2d.js?v=numbersense1";
+import { playScene, cancelActiveActivity } from "./lab-activities.js?v=numbersense1";
+import { runL1Sub, L1_META } from "./level1.js?v=numbersense1";
+import { runL2Sub, L2_META } from "./level2.js?v=numbersense1";
+import { runL3Sub, L3_META } from "./level3.js?v=numbersense1";
+import { MISSIONS } from "./missions-meta.js?v=numbersense1";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerNumScenes } from "./num-scenes.js";
-import { registerFracScenes } from "./frac-scenes.js";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
+import { registerNumScenes } from "./num-scenes.js?v=numbersense1";
+import { registerFracScenes } from "./frac-scenes.js?v=numbersense1";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=genmq1";
 import { BOOK as BOOK_L2 } from "../books/level2.js?v=book3";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
 
@@ -97,7 +97,7 @@ try {
 
  if (!canvas) throw new Error("Missing #c3d canvas");
 
- const arena = createArena2D(canvas, { defaultScene: "numMeet" });
+ const arena = createArena2D(canvas, { defaultScene: "numOpen" });
  window.__arena = arena;
  registerNumScenes(arena);
  registerFracScenes(arena);
@@ -368,14 +368,18 @@ try {
  const meta = currentMeta();
  const introScene =
  state.level === 0
- ? ["numMeet", { phase: "desk", dwellMs: 3200 }]
+ ? ["numOpen", { dwellMs: 3200 }]
  : state.level === 1
- ? ["pushMeet", { phase: "predict", dwellMs: 3200 }]
- : state.level === 2
- ? ["pairMeet", { phase: "desk", dwellMs: 3200 }]
- : ["numMeet", { phase: "settle", dwellMs: 2400 }];
+ ? ["fracMeet", { phase: "desk", dwellMs: 3200 }]
+ : ["numOpen", { dwellMs: 2400 }];
  playScene(introScene[0], introScene[1]);
  const bodyMeta = state.level === 0 ? L1_META : state.level === 1 ? L2_META : state.level === 2 ? L3_META : null;
+ const brunner =
+ state.level === 0
+ ? "four spirals: what a number is → why we bundle by tens → tens and ones (place value) → why that system lets you compare, roll over, and scale."
+ : state.level === 1
+ ? "do & see → pictures → name the rule."
+ : "";
  overlay.innerHTML = `
  <div class="chem-card chem-intro">
  <div class="lab-demo__badge">Mission ${state.level + 1}</div>
@@ -384,7 +388,7 @@ try {
  ${
  bodyMeta
  ? `<ul class="chem-intro__hooks">${bodyMeta.everyday.map((e) => `<li>${e}</li>`).join("")}</ul>
- <p class="chem-intro__brunner"><strong>Bruner path:</strong> do &amp; see → pictures → name the rule.</p>`
+ <p class="chem-intro__brunner"><strong>Bruner path:</strong> ${brunner || "do &amp; see → pictures → name the rule."}</p>`
  : `<p>This mission’s full labs are coming soon.</p>`
  }
  <button type="button" class="btn primary" id="ff-intro-go">Start ▶</button>
@@ -407,7 +411,7 @@ try {
  updateProgressUI();
  showNext(false);
  clearOverlay();
- const winScene = state.level === 1 ? "pushMastery" : state.level === 2 ? "pairMastery" : "rockMastery";
+ const winScene = state.level === 0 ? "numSpiral" : state.level === 1 ? "fracMastery" : "numOpen";
  playScene(winScene);
  if (overlay) {
  overlay.innerHTML = `
@@ -458,7 +462,7 @@ try {
  updateProgressUI();
  const meta = currentMeta();
  setCoach(`${meta.kidTitle} is on the path - live labs ship mission by mission.`);
- playScene("numMeet", { phase: "settle" });
+ playScene("numOpen");
  overlay.innerHTML = `
  <div class="chem-card">
  <h3>${meta.emoji} ${meta.kidTitle}</h3>
@@ -550,18 +554,23 @@ try {
  tryAgainHandler?.();
  });
  btnHint?.addEventListener("click", () => {
- const pack = (m) => {
- const titles = m?.subTitles || [];
- if (!titles.length) {
- return ["Try the activity on the left. Watch the canvas on the right."];
- }
- return titles.map(
- (title, i) => `Step ${i + 1}: ${title}. Use the left panel, then check the canvas.`
- );
- };
- const hints = [pack(L1_META), pack(L2_META), pack(L3_META)];
+ const hints = [
+ [
+ "Watch the messy pile, then tap Find the System.",
+ "Tap all 8 apples. Each one only counts once.",
+ "Apples and stars share an amount. Then number vs numeral.",
+ "Count one by one first. Then bundle tens. Do not skip the slow way.",
+ "Messy pile versus groups of ten, then the grouping words.",
+ "Build 47: exactly 4 tens and 7 ones.",
+ "Every two-digit number, then place value and expanded form.",
+ "Sort both banks into tens, then tap the one with more.",
+ "Watch the rollover, then base 10 and the binary bonus.",
+ "Watch the pile become 47, then tap the recap numbers or Finish Number Sense.",
+ ],
+ L2_META?.subTitles?.map((title) => `${title}. Use the panel, then check the canvas.`) || [],
+ ];
  const row = hints[state.level] || hints[0];
- const tip = row[state.sub] || row[0] || "Watch the canvas and try the left panel.";
+ const tip = row[state.sub] || row[0] || "Interact with the left canvas. It teaches the idea.";
  setCoach(`Hint: ${tip}`);
  });
  btnResetAll?.addEventListener("click", () => {

@@ -1,0 +1,26 @@
+{
+  "report": [
+    {
+      "mission": "HTML House",
+      "errors": []
+    },
+    {
+      "mission": "CSS Style",
+      "errors": []
+    },
+    {
+      "mission": "JS Clicks",
+      "errors": []
+    },
+    {
+      "mission": "Server Basics",
+      "errors": []
+    },
+    {
+      "mission": "Tables & Rows",
+      "errors": []
+    }
+  ],
+  "visualIssues": [],
+  "shotCount": 100
+}

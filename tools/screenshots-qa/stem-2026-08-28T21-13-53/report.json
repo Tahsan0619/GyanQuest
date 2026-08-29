@@ -1,0 +1,539 @@
+{
+  "report": [
+    {
+      "mission": "What is AI?",
+      "errors": [
+        {
+          "step": 1,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 2,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 3,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 4,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 5,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 6,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 7,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 8,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 9,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 10,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        }
+      ]
+    },
+    {
+      "mission": "Teach the Model",
+      "errors": [
+        {
+          "step": 1,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 2,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 3,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 4,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 5,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 6,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 7,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 8,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 9,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 10,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        }
+      ]
+    },
+    {
+      "mission": "Circuit Loop",
+      "errors": [
+        {
+          "step": 1,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 2,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 3,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 4,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 5,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 6,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 7,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 8,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 9,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        },
+        {
+          "step": 10,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        }
+      ]
+    },
+    {
+      "mission": "Strong Structures",
+      "errors": [
+        {
+          "step": 1,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        }
+      ]
+    },
+    {
+      "mission": "Levers & Gears",
+      "errors": [
+        {
+          "step": 1,
+          "error": "page.waitForFunction: Timeout 30000ms exceeded."
+        }
+      ]
+    }
+  ],
+  "visualIssues": [
+    {
+      "ctx": "ai-step1",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Meet the Apprentice — trained on examples, not a rulebook.",
+        "A photo tagged Dog instantly — no rule for every angle."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "ai-step3",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Meet the Apprentice — trained on examples, not a rulebook.",
+        "A photo tagged Dog instantly — no rule for every angle."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "ai-step5",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Meet the Apprentice — trained on examples, not a rulebook.",
+        "A photo tagged Dog instantly — no rule for every angle."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "ai-step7",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Meet the Apprentice — trained on examples, not a rulebook.",
+        "A photo tagged Dog instantly — no rule for every angle."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "ai-step9",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Meet the Apprentice — trained on examples, not a rulebook.",
+        "A photo tagged Dog instantly — no rule for every angle."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "ai-step10",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Meet the Apprentice — trained on examples, not a rulebook.",
+        "A photo tagged Dog instantly — no rule for every angle."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "ml-step1",
+      "type": "em-dash",
+      "emDashCount": 7,
+      "emDashSample": [
+        "Run the full academy cycle — clean, split, train, evaluate honestly.",
+        "Training academy — enroll now."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "ml-step3",
+      "type": "em-dash",
+      "emDashCount": 7,
+      "emDashSample": [
+        "Run the full academy cycle — clean, split, train, evaluate honestly.",
+        "Training academy — enroll now."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "ml-step5",
+      "type": "em-dash",
+      "emDashCount": 7,
+      "emDashSample": [
+        "Run the full academy cycle — clean, split, train, evaluate honestly.",
+        "Training academy — enroll now."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "ml-step7",
+      "type": "em-dash",
+      "emDashCount": 7,
+      "emDashSample": [
+        "Run the full academy cycle — clean, split, train, evaluate honestly.",
+        "Training academy — enroll now."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "ml-step9",
+      "type": "em-dash",
+      "emDashCount": 7,
+      "emDashSample": [
+        "Run the full academy cycle — clean, split, train, evaluate honestly.",
+        "Training academy — enroll now."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "ml-step10",
+      "type": "em-dash",
+      "emDashCount": 7,
+      "emDashSample": [
+        "Run the full academy cycle — clean, split, train, evaluate honestly.",
+        "Training academy — enroll now."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "circ-step1",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Battery, wire, bulb — one closed loop, like water in pipes.",
+        "Battery, wire, bulb — disconnected. Why no light?"
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "circ-step3",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Battery, wire, bulb — one closed loop, like water in pipes.",
+        "Battery, wire, bulb — disconnected. Why no light?"
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "circ-step5",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Battery, wire, bulb — one closed loop, like water in pipes.",
+        "Battery, wire, bulb — disconnected. Why no light?"
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "circ-step7",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Battery, wire, bulb — one closed loop, like water in pipes.",
+        "Battery, wire, bulb — disconnected. Why no light?"
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "circ-step9",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Battery, wire, bulb — one closed loop, like water in pipes.",
+        "Battery, wire, bulb — disconnected. Why no light?"
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "circ-step10",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Battery, wire, bulb — one closed loop, like water in pipes.",
+        "Battery, wire, bulb — disconnected. Why no light?"
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "struct-step1",
+      "type": "em-dash",
+      "emDashCount": 3,
+      "emDashSample": [
+        "Square folds — one diagonal makes triangles rigid. Shape beats material.",
+        "Four hinged corners — almost no resistance to folding."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "struct-step2",
+      "type": "em-dash",
+      "emDashCount": 3,
+      "emDashSample": [
+        "Square folds — one diagonal makes triangles rigid. Shape beats material.",
+        "Drag to push the square into a slanted parallelogram. Add a diagonal rod corner "
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "struct-step3",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Square folds — one diagonal makes triangles rigid. Shape beats material.",
+        "Corner angles change freely — sides stay same length."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "struct-step4",
+      "type": "em-dash",
+      "emDashCount": 9,
+      "emDashSample": [
+        "Square folds — one diagonal makes triangles rigid. Shape beats material.",
+        "Wind gust — narrow vs wide base."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "struct-step5",
+      "type": "em-dash",
+      "emDashCount": 2,
+      "emDashSample": [
+        "Square folds — one diagonal makes triangles rigid. Shape beats material.",
+        "Watch center of gravity drift outside the base footprint — that's the tipping ru"
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "struct-step6",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Square folds — one diagonal makes triangles rigid. Shape beats material.",
+        "Trace the load — spread it or funnel it."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "struct-step7",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Square folds — one diagonal makes triangles rigid. Shape beats material.",
+        "Real bridges and buildings — same paths."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "struct-step8",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Square folds — one diagonal makes triangles rigid. Shape beats material.",
+        "Weak vs strong design — load until failure."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "struct-step9",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Square folds — one diagonal makes triangles rigid. Shape beats material.",
+        "Safe working load vs true failure — safety factor."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "struct-step10",
+      "type": "em-dash",
+      "emDashCount": 3,
+      "emDashSample": [
+        "Square folds — one diagonal makes triangles rigid. Shape beats material.",
+        "Standing up isn't an accident — it's a decision, made shape by shape."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "lev-step1",
+      "type": "em-dash",
+      "emDashCount": 4,
+      "emDashSample": [
+        "Plank and bicycle — trade distance for force, speed for torque.",
+        "Lift by hand — then try the plank."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "lev-step2",
+      "type": "em-dash",
+      "emDashCount": 4,
+      "emDashSample": [
+        "Plank and bicycle — trade distance for force, speed for torque.",
+        "Lift by hand — then try the plank."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "lev-step3",
+      "type": "em-dash",
+      "emDashCount": 3,
+      "emDashSample": [
+        "Plank and bicycle — trade distance for force, speed for torque.",
+        "Same machine as the plank — trading distance for force."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "lev-step4",
+      "type": "em-dash",
+      "emDashCount": 3,
+      "emDashSample": [
+        "Plank and bicycle — trade distance for force, speed for torque.",
+        "Slide the fulcrum near the load AND near your hand — push each time."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "lev-step5",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Plank and bicycle — trade distance for force, speed for torque.",
+        "Long arm vs short arm — same height reached."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "lev-step6",
+      "type": "em-dash",
+      "emDashCount": 3,
+      "emDashSample": [
+        "Plank and bicycle — trade distance for force, speed for torque.",
+        "Small gear fast, large gear strong — crank both ways."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "lev-step7",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Plank and bicycle — trade distance for force, speed for torque.",
+        "⛰ Hill — easier pedaling, more turns"
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "lev-step8",
+      "type": "em-dash",
+      "emDashCount": 4,
+      "emDashSample": [
+        "Plank and bicycle — trade distance for force, speed for torque.",
+        "Simple machines everywhere — once you know what to look for."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "lev-step9",
+      "type": "em-dash",
+      "emDashCount": 5,
+      "emDashSample": [
+        "Plank and bicycle — trade distance for force, speed for torque.",
+        "Opening problems — solved with the right machine."
+      ],
+      "brokenImgs": []
+    },
+    {
+      "ctx": "lev-step10",
+      "type": "em-dash",
+      "emDashCount": 3,
+      "emDashSample": [
+        "Plank and bicycle — trade distance for force, speed for torque.",
+        "Watch both opening problems resolve — then open the recap map."
+      ],
+      "brokenImgs": []
+    }
+  ]
+}

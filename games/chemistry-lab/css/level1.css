@@ -519,3 +519,7 @@
 .hunt-orb-row {
  flex-wrap: wrap;
 }
+
+.bond-mood-row {
+ flex-direction: row;
+}

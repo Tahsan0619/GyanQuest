@@ -26,17 +26,113 @@ export const labState = {
  scale: 0,
  reducedMotion: false,
  _placedVersion: 0,
- /** Living or Not */
- lifeScore: 0,
- sprout: 0,
- /** Cell City */
- cellZoom: 0.2,
- organelle: "membrane",
- /** Plant Power */
- sun: 0.3,
- rootWater: 0.2,
- beeVisit: 0,
+ // Mission 1: Teach the Model (academy metaphor)
+ mlMode: "open",
+ mlOpenReady: false,
+ mlCleanPhase: "clean",
+ mlCleanIdx: 0,
+ mlCleanCount: 0,
+ mlFixedCards: {},
+ mlCleanDone: false,
+ mlCompareDone: false,
+ mlSplitPractice: 0,
+ mlSplitVault: 0,
+ mlVaultSealed: false,
+ mlPeekAttempted: false,
+ mlEpochs: 0,
+ mlStopDone: false,
+ mlStopNote: "",
+ mlExamScore: 0,
+ mlExamDone: false,
+ mlCheaterShown: false,
+ mlCloseU: 0,
+ spiralStop: 0,
+ spiralUntil: 0,
+ spiralFinish: false,
 };
+
+export function resetTeachModelState() {
+ initMlSub(0);
+ labState.mlCleanPhase = "clean";
+ labState.mlCleanIdx = 0;
+ labState.mlCleanCount = 0;
+ labState.mlFixedCards = {};
+ labState.mlCleanDone = false;
+ labState.mlCompareDone = false;
+ labState.mlSplitPractice = 0;
+ labState.mlSplitVault = 0;
+ labState.mlVaultSealed = false;
+ labState.mlPeekAttempted = false;
+ labState.mlEpochs = 0;
+ labState.mlStopDone = false;
+ labState.mlStopNote = "";
+ labState.mlExamScore = 0;
+ labState.mlExamDone = false;
+ labState.mlCheaterShown = false;
+ labState.mlCloseU = 0;
+ labState.spiralStop = 0;
+ labState.spiralUntil = 0;
+ labState.spiralFinish = false;
+}
+
+/** Prepare lab state for one substep without wiping the whole mission. */
+export function initMlSub(subIndex) {
+ switch (subIndex) {
+ case 0:
+ labState.mlMode = "open";
+ labState.mlOpenReady = false;
+ break;
+ case 1:
+ labState.mlMode = "clean1";
+ labState.mlCleanPhase = "clean";
+ labState.mlCleanIdx = 0;
+ labState.mlCleanCount = 0;
+ labState.mlFixedCards = {};
+ labState.mlCleanDone = false;
+ labState.mlCompareDone = false;
+ break;
+ case 2:
+ labState.mlMode = "funnel1";
+ break;
+ case 3:
+ labState.mlMode = "split2";
+ labState.mlSplitPractice = 0;
+ labState.mlSplitVault = 0;
+ labState.mlVaultSealed = false;
+ labState.mlPeekAttempted = false;
+ break;
+ case 4:
+ labState.mlMode = "rooms2";
+ break;
+ case 5:
+ labState.mlMode = "train3";
+ labState.mlEpochs = 0;
+ labState.mlStopDone = false;
+ labState.mlStopNote = "";
+ break;
+ case 6:
+ labState.mlMode = "graph3";
+ break;
+ case 7:
+ labState.mlMode = "exam4";
+ labState.mlExamScore = 0;
+ labState.mlExamDone = false;
+ labState.mlCheaterShown = false;
+ break;
+ case 8:
+ labState.mlMode = "cycle4";
+ break;
+ case 9:
+ labState.mlMode = "close";
+ labState.mlCloseU = 0;
+ labState.spiralStop = 0;
+ labState.spiralUntil = 0;
+ labState.spiralFinish = false;
+ break;
+ default:
+ break;
+ }
+}
 
 export const chemLabState = labState;
 

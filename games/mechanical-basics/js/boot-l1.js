@@ -18,17 +18,17 @@ import {
  REWARD_ICONS,
 } from "/engine/js/persist.js?v=resume1";
 import { createArena2D } from "./arena-2d.js";
-import { playScene, cancelActiveActivity } from "./lab-activities.js?v=leverqa1";
-import { runL1Sub, L1_META } from "./level1.js?v=leverqa1";
+import { playScene, cancelActiveActivity } from "./lab-activities.js?v=lev4";
+import { runL1Sub, L1_META } from "./level1.js?v=lev4";
 import { runL2Sub, L2_META } from "./level2.js";
 import { runL3Sub, L3_META } from "./level3.js";
 import { MISSIONS } from "./missions-meta.js";
 import { mountMissionHub, mountSubRail } from "./mission-hub.js?v=tier3";
 import { ensureMissionHubStyles, setMissionHubMode } from "/engine/js/mission-hub.js?v=tier3";
-import { registerLeverScenes } from "./lever-scenes.js?v=leverqa1";
+import { registerLeverScenes } from "./lever-scenes.js?v=lev4";
 import { registerMotionScenes } from "./motion-scenes.js";
 import { registerWorkScenes } from "./work-scenes.js";
-import { BOOK as BOOK_L1 } from "../books/level1.js?v=book3";
+import { BOOK as BOOK_L1 } from "../books/level1.js?v=genme1";
 import { BOOK as BOOK_L2 } from "../books/level2.js?v=book3";
 import { BOOK as BOOK_L3 } from "../books/level3.js?v=book3";
 import { setupMissionBooks } from "/engine/js/mission-books.js?v=ped1";
@@ -99,7 +99,7 @@ try {
 
  if (!canvas) throw new Error("Missing #c3d canvas");
 
- const arena = createArena2D(canvas, { defaultScene: "leverMeet" });
+ const arena = createArena2D(canvas, { defaultScene: "levOpen" });
  window.__arena = arena;
  registerLeverScenes(arena);
  registerMotionScenes(arena);
@@ -220,7 +220,7 @@ try {
  completed: state.completed,
  forceAllLocked: false,
  unlockByProgress: false,
- subtitle: "Missions 1-3 are live (Canvas 2D). Levers & Gears / Motion Machines / Forces at Work.",
+ subtitle: "Mission 1: Levers & Gears (interactive Bruner lesson). Missions 2-3 coming soon.",
  onSelect: (idx) => enterMission(idx),
  onLockedClick: (idx) => {
  if (!MISSIONS[idx]?.playable) {
@@ -371,12 +371,12 @@ try {
  const meta = currentMeta();
  const introScene =
  state.level === 0
- ? ["leverMeet", { phase: "desk", dwellMs: 3200 }]
+ ? ["levOpen", {}]
  : state.level === 1
  ? ["motionMeet", { phase: "desk", dwellMs: 3200 }]
  : state.level === 2
  ? ["workMeet", { phase: "desk", dwellMs: 3200 }]
- : ["leverMeet", { phase: "settle", dwellMs: 2400 }];
+ : ["levOpen", {}];
  playScene(introScene[0], introScene[1]);
  const bodyMeta = state.level === 0 ? L1_META : state.level === 1 ? L2_META : state.level === 2 ? L3_META : null;
  overlay.innerHTML = `
@@ -461,7 +461,7 @@ try {
  updateProgressUI();
  const meta = currentMeta();
  setCoach(`${meta.kidTitle} is on the path - live labs ship mission by mission.`);
- playScene("leverMeet", { phase: "settle" });
+ playScene("levOpen", {});
  overlay.innerHTML = `
  <div class="chem-card">
  <h3>${meta.emoji} ${meta.kidTitle}</h3>

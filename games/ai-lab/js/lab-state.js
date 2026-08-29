@@ -28,7 +28,104 @@ export const labState = {
  scale: 0,
  reducedMotion: false,
  _placedVersion: 0,
+ // Mission 1: What is AI? (apprentice metaphor)
+ aiMode: "open",
+ aiOpenReady: false,
+ aiRulePhase: "pick",
+ aiRulePatches: 0,
+ aiRulesFailed: false,
+ aiExamplesFed: 0,
+ aiApprenticeTrained: false,
+ aiTrainingRound: 0,
+ aiRoundRevealed: false,
+ aiLastGuess: "",
+ aiConfidence: 0.2,
+ aiTrainingDone: false,
+ aiTestDone: false,
+ aiPeekInside: false,
+ aiMatches: {},
+ aiCloseU: 0,
+ spiralStop: 0,
+ spiralUntil: 0,
+ spiralFinish: false,
 };
+
+export function resetWhatIsAiState() {
+ initAiSub(0);
+ labState.aiRulePhase = "pick";
+ labState.aiRulePatches = 0;
+ labState.aiRulesFailed = false;
+ labState.aiExamplesFed = 0;
+ labState.aiApprenticeTrained = false;
+ labState.aiTrainingRound = 0;
+ labState.aiRoundRevealed = false;
+ labState.aiLastGuess = "";
+ labState.aiConfidence = 0.2;
+ labState.aiTrainingDone = false;
+ labState.aiTestDone = false;
+ labState.aiPeekInside = false;
+ labState.aiMatches = {};
+ labState.aiCloseU = 0;
+ labState.spiralStop = 0;
+ labState.spiralUntil = 0;
+ labState.spiralFinish = false;
+}
+
+/** Prepare lab state for one substep without wiping the whole mission. */
+export function initAiSub(subIndex) {
+ switch (subIndex) {
+ case 0:
+ labState.aiMode = "open";
+ labState.aiOpenReady = false;
+ break;
+ case 1:
+ labState.aiMode = "rules1";
+ labState.aiRulePhase = "pick";
+ labState.aiRulePatches = 0;
+ labState.aiRulesFailed = false;
+ labState.aiExamplesFed = 0;
+ labState.aiApprenticeTrained = false;
+ break;
+ case 2:
+ labState.aiMode = "split1";
+ break;
+ case 3:
+ labState.aiMode = "train2";
+ labState.aiTrainingRound = 0;
+ labState.aiRoundRevealed = false;
+ labState.aiLastGuess = "";
+ labState.aiConfidence = 0.2;
+ labState.aiTrainingDone = false;
+ break;
+ case 4:
+ labState.aiMode = "graph2";
+ break;
+ case 5:
+ labState.aiMode = "test3";
+ labState.aiTestDone = false;
+ labState.aiPeekInside = false;
+ break;
+ case 6:
+ labState.aiMode = "exam3";
+ break;
+ case 7:
+ labState.aiMode = "match4";
+ labState.aiMatches = {};
+ break;
+ case 8:
+ labState.aiMode = "montage4";
+ break;
+ case 9:
+ labState.aiMode = "close";
+ labState.aiCloseU = 0;
+ labState.spiralStop = 0;
+ labState.spiralUntil = 0;
+ labState.spiralFinish = false;
+ break;
+ default:
+ break;
+ }
+}
 
 export const chemLabState = labState;
 

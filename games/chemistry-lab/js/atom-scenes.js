@@ -201,6 +201,34 @@ export const chemLabState = {
  huntStops: { ne: false, na: false, cl: false },
  huntBegin: false,
  huntBounce: null,
+ bondTogether: false,
+ bondMoodI: 0,
+ bondMoodOk: [false, false, false, false],
+ bondMoodWrong: false,
+ bondPathSeen: { transfer: false, share: false },
+ bondPhase: "open",
+ bondHandoff: false,
+ bondEx: null,
+ bondEy: null,
+ bondSnapPair: false,
+ bondNaX: 0.3,
+ bondClX: 0.7,
+ bondDrag: "",
+ bondLatShake: 0,
+ bondHTried: false,
+ bondHShare: false,
+ bondH0: 0.3,
+ bondH1: 0.7,
+ bondShareCloud: false,
+ bondGallery: 0,
+ bondTugI: 0,
+ bondTugHits: { hh: false, hcl: false, nacl: false },
+ bondTugX: 0.5,
+ bondTugHoldUntil: 0,
+ bondShatter: false,
+ bondDissolve: false,
+ bondMelt: false,
+ bondCloseU: 0,
 };
 
 if (typeof window !== "undefined") {
@@ -262,6 +290,7 @@ export function resetTinyBitsState() {
  chemLabState.reveal = false;
  chemLabState.phase = "open";
  chemLabState.builderMode = "tiny";
+ chemLabState.bondShareCloud = false;
 }
 
 export function resetElementHuntState() {
@@ -295,6 +324,49 @@ export function resetElementHuntState() {
  chemLabState.placed = {};
  chemLabState.selectedId = null;
  chemLabState.phase = "open";
+}
+
+export function resetBondBuddiesState() {
+ chemLabState.bondTogether = false;
+ chemLabState.bondMoodI = 0;
+ chemLabState.bondMoodOk = [false, false, false, false];
+ chemLabState.bondMoodWrong = false;
+ chemLabState.bondPathSeen = { transfer: false, share: false };
+ chemLabState.bondPhase = "open";
+ chemLabState.bondHandoff = false;
+ chemLabState.bondEx = null;
+ chemLabState.bondEy = null;
+ chemLabState.bondSnapPair = false;
+ chemLabState.bondNaX = 0.3;
+ chemLabState.bondClX = 0.7;
+ chemLabState.bondDrag = "";
+ chemLabState.bondLatShake = 0;
+ chemLabState.bondHTried = false;
+ chemLabState.bondHShare = false;
+ chemLabState.bondH0 = 0.3;
+ chemLabState.bondH1 = 0.7;
+ chemLabState.bondShareCloud = false;
+ chemLabState.build = { o: false, hL: false, hR: false, snapped: false };
+ chemLabState.bondGallery = 0;
+ chemLabState.bondTugI = 0;
+ chemLabState.bondTugHits = { hh: false, hcl: false, nacl: false };
+ chemLabState.bondTugX = 0.5;
+ chemLabState.bondTugHoldUntil = 0;
+ chemLabState.bondShatter = false;
+ chemLabState.bondDissolve = false;
+ chemLabState.bondMelt = false;
+ chemLabState.bondCloseU = 0;
+ chemLabState.spiralStop = 0;
+ chemLabState.spiralUntil = 0;
+ chemLabState.spiralFinish = false;
+ chemLabState.scale = 0;
+ chemLabState.placed = {};
+ chemLabState.selectedId = null;
+ chemLabState.phase = "open";
+ chemLabState.bondKind = "ionic";
+ chemLabState.bondSnap = 0;
+ chemLabState.magnetGap = 1;
+ chemLabState.dropMerge = 0;
 }
 
 export function easeOutCubic(t) {
@@ -381,6 +453,31 @@ export function drawH2O(ctx, x, y, scale = 1, rot = 0) {
  ctx.moveTo(3 * s, 2 * s);
  ctx.lineTo(8 * s, 6 * s);
  ctx.stroke();
+ ctx.restore();
+}
+
+function drawSharedPairCloud(ctx, x1, y1, x2, y2) {
+ const mx = (x1 + x2) / 2;
+ const my = (y1 + y2) / 2;
+ const dist = Math.hypot(x2 - x1, y2 - y1) || 1;
+ const ang = Math.atan2(y2 - y1, x2 - x1);
+ ctx.save();
+ ctx.translate(mx, my);
+ ctx.rotate(ang);
+ const g = ctx.createRadialGradient(0, 0, 2, 0, 0, Math.max(14, dist * 0.38));
+ g.addColorStop(0, "rgba(196,181,253,0.78)");
+ g.addColorStop(1, "rgba(196,181,253,0)");
+ ctx.fillStyle = g;
+ ctx.beginPath();
+ ctx.ellipse(0, 0, Math.max(16, dist * 0.32), 11, 0, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.fillStyle = "#e9d5ff";
+ ctx.beginPath();
+ ctx.arc(-5, -3.5, 3.2, 0, Math.PI * 2);
+ ctx.fill();
+ ctx.beginPath();
+ ctx.arc(5, 3.5, 3.2, 0, Math.PI * 2);
+ ctx.fill();
  ctx.restore();
 }
 
@@ -1271,12 +1368,28 @@ export function registerAtomScenes(arena) {
  if (b.snapped) {
  const driftX = ox + Math.sin(t * 0.8) * 18;
  const driftY = oy + Math.cos(t * 0.6) * 10;
- drawH2O(ctx, driftX, driftY, 2.1, Math.sin(t) * 0.15);
+ const rot = Math.sin(t) * 0.15;
+ const s = 2.1;
+ if (chemLabState.bondShareCloud) {
+ const c = Math.cos(rot);
+ const si = Math.sin(rot);
+ const hxL = driftX + (-11 * s) * c - (7.5 * s) * si;
+ const hyL = driftY + (-11 * s) * si + (7.5 * s) * c;
+ const hxR = driftX + (11 * s) * c - (7.5 * s) * si;
+ const hyR = driftY + (11 * s) * si + (7.5 * s) * c;
+ drawSharedPairCloud(ctx, driftX, driftY, hxL, hyL);
+ drawSharedPairCloud(ctx, driftX, driftY, hxR, hyR);
+ }
+ drawH2O(ctx, driftX, driftY, 2.1, rot);
  ctx.shadowColor = "rgba(125,211,252,0.8)";
  ctx.shadowBlur = 18;
- drawH2O(ctx, driftX, driftY, 2.1, Math.sin(t) * 0.15);
+ drawH2O(ctx, driftX, driftY, 2.1, rot);
  ctx.shadowBlur = 0;
  } else {
+ if (chemLabState.bondShareCloud) {
+ if (b.o && b.hL) drawSharedPairCloud(ctx, slots.o.x, slots.o.y, slots.hL.x, slots.hL.y);
+ if (b.o && b.hR) drawSharedPairCloud(ctx, slots.o.x, slots.o.y, slots.hR.x, slots.hR.y);
+ }
  for (const p of pieces) {
  if (b[p.id]) {
  p.x = slots[p.slot].x;

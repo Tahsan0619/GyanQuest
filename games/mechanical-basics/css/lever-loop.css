@@ -1,0 +1,270 @@
+/* Mission 1: Levers & Gears - DOM overlay (canvas must not steal clicks) */
+.viewport:has(#lever-root) #c3d,
+.chem-l1-live .viewport--lever #c3d,
+.mechanicalba-live .viewport--lever #c3d {
+ opacity: 0 !important;
+ pointer-events: none !important;
+ z-index: 0 !important;
+}
+
+.viewport:has(#lever-root) #lever-root,
+.chem-l1-live .viewport--lever #lever-root,
+.mechanicalba-live .viewport--lever #lever-root {
+ z-index: 5;
+}
+
+.tiny-narration {
+ font-size: 0.92rem;
+ line-height: 1.5;
+ color: #ffedd5;
+ margin: 0.35rem 0 0.65rem;
+}
+
+.tiny-spiral-stops {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 0.4rem;
+ margin: 0.65rem 0;
+}
+
+.tiny-pulse {
+ animation: lv-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes lv-pulse {
+ 0%, 100% { box-shadow: 0 0 0 0 rgba(253, 186, 116, 0.45); }
+ 50% { box-shadow: 0 0 0 8px rgba(253, 186, 116, 0); }
+}
+
+.lever-root {
+ position: absolute;
+ inset: 0;
+ z-index: 3;
+ display: flex;
+ flex-direction: column;
+ padding: clamp(8px, 1.5vh, 14px);
+ gap: 0.45rem;
+ background: radial-gradient(circle at 50% 18%, #7c2d12, #0f172a 72%);
+ pointer-events: auto;
+ overflow: auto;
+}
+
+.lv-banner {
+ margin: 0;
+ padding: 8px 12px;
+ text-align: center;
+ font-size: clamp(11px, 1.8vw, 13px);
+ font-weight: 600;
+ color: #ffedd5;
+ background: rgba(15, 23, 42, 0.88);
+ border: 1px solid rgba(253, 186, 116, 0.45);
+ border-radius: 10px;
+ line-height: 1.35;
+}
+
+.lv-stage {
+ flex: 1;
+ min-height: 160px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ padding: 8px;
+}
+
+.lv-caption, .lv-hint {
+ font-size: 0.85rem;
+ color: #fdba74;
+ text-align: center;
+ margin: 8px auto 0;
+ max-width: 340px;
+ line-height: 1.4;
+}
+
+.lv-open-scene { text-align: center; width: min(96%, 360px); }
+.lv-scene-row { display: flex; justify-content: center; gap: 16px; font-size: 2rem; margin-bottom: 8px; }
+.lv-hill { font-size: 0.9rem; color: #fdba74; margin-bottom: 12px; }
+
+.lv-boulder-big { font-size: 3rem; text-align: center; margin: 12px 0; }
+.lv-meter-wrap { max-width: 260px; margin: 12px auto; }
+.lv-meter-label { font-size: 0.75rem; color: #fdba74; }
+.lv-meter {
+ height: 10px;
+ background: rgba(15, 23, 42, 0.8);
+ border-radius: 5px;
+ overflow: hidden;
+ margin-top: 4px;
+}
+.lv-meter-fill {
+ height: 100%;
+ background: linear-gradient(90deg, #ea580c, #ef4444);
+ transition: width 0.1s linear;
+}
+.lv-meter-fill--low { background: linear-gradient(90deg, #22c55e, #86efac); }
+
+.lv-plank-bar {
+ display: block;
+ width: 100%;
+ max-width: 280px;
+ height: 12px;
+ background: linear-gradient(90deg, #92400e, #d97706);
+ border-radius: 4px;
+ margin: 16px auto;
+ position: relative;
+}
+.lv-fulcrum-mark, .lv-fulcrum-draggable {
+ position: absolute;
+ left: 30%;
+ transform: translateX(-50%);
+ top: -14px;
+ color: #fdba74;
+ font-size: 0.85rem;
+}
+.lv-load-end { position: absolute; right: -8px; top: -20px; }
+
+.lv-seesaw {
+ display: flex;
+ align-items: flex-end;
+ justify-content: center;
+ gap: 4px;
+ max-width: 320px;
+ margin: 0 auto;
+}
+.lv-seesaw-side {
+ flex: 1;
+ padding: 10px;
+ border-radius: 8px;
+ background: rgba(15, 23, 42, 0.7);
+ text-align: center;
+ font-size: 0.78rem;
+ color: #ffedd5;
+}
+.lv-seesaw-side--effort { transform: rotate(-4deg); }
+.lv-seesaw-side--load { transform: rotate(4deg); }
+.lv-seesaw-pivot { padding: 8px; color: #fdba74; font-weight: 700; font-size: 0.8rem; }
+.lv-arrow { font-size: 0.7rem; color: #fdba74; margin-top: 6px; letter-spacing: -1px; }
+
+.lv-term-list {
+ list-style: none;
+ padding: 0;
+ margin: 0;
+ max-width: 360px;
+ text-align: left;
+}
+.lv-term-list li {
+ margin: 0.5rem 0;
+ font-size: 0.88rem;
+ color: #ffedd5;
+ line-height: 1.45;
+}
+.lv-term-note { font-style: italic; color: #fdba74 !important; font-size: 0.82rem !important; }
+
+.lv-range { width: 100%; max-width: 280px; accent-color: #ea580c; margin-top: 8px; }
+.lv-range-label { display: block; font-size: 0.78rem; color: #fdba74; max-width: 300px; margin: 0 auto; }
+
+.lv-arms-compare, .lv-montage {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 12px;
+ justify-content: center;
+ max-width: 400px;
+}
+.lv-arm-panel, .lv-montage-panel {
+ flex: 1 1 140px;
+ padding: 12px;
+ border-radius: 12px;
+ background: rgba(15, 23, 42, 0.75);
+ border: 1px solid rgba(253, 186, 116, 0.35);
+ text-align: center;
+ font-size: 0.78rem;
+ color: #fdba74;
+}
+.lv-arm-panel h4 { margin: 0 0 8px; color: #ffedd5; }
+
+.lv-gear-pair {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 8px;
+ font-size: 2.5rem;
+ margin: 16px 0;
+}
+.lv-gear--small { animation: lv-spin 0.6s linear infinite; }
+.lv-gear--large { font-size: 3rem; }
+.lv-gear--spin { animation: lv-spin 0.25s linear infinite; }
+.lv-weight, .lv-fan { font-size: 1.5rem; margin-left: 8px; }
+@keyframes lv-spin { to { transform: rotate(360deg); } }
+
+.lv-bike-scene { text-align: center; max-width: 320px; }
+.lv-bike-profile { font-size: 3rem; }
+.lv-bike-gears { margin-top: 12px; text-align: left; }
+.lv-bike-mode {
+ padding: 8px;
+ margin: 6px 0;
+ border-radius: 8px;
+ background: rgba(15, 23, 42, 0.7);
+ font-size: 0.82rem;
+ color: #ffedd5;
+}
+
+.lv-sort-list { max-width: 340px; margin: 0 auto; }
+.lv-sort-row, .lv-sorted-row {
+ display: flex;
+ flex-wrap: wrap;
+ align-items: center;
+ gap: 8px;
+ padding: 8px 0;
+ border-bottom: 1px solid rgba(253, 186, 116, 0.2);
+ font-size: 0.85rem;
+ color: #ffedd5;
+}
+.lv-sorted-row--ok { color: #86efac; }
+.lv-sort-row--bonus { margin-top: 12px; border: 1px dashed #fdba74; padding: 10px; border-radius: 8px; }
+
+.lv-note { font-size: 0.82rem; text-align: center; margin-top: 10px; }
+.lv-note--ok { color: #86efac; }
+
+.lv-close-scene { text-align: center; opacity: calc(0.35 + var(--lv-close, 0) * 0.65); }
+.lv-close-row { display: flex; justify-content: center; gap: 24px; font-size: 1.2rem; margin: 16px 0; }
+
+.lv-push-btn { min-width: 140px; }
+
+@media (max-width: 640px) {
+ .lv-arms-compare, .lv-montage { flex-direction: column; align-items: center; }
+}
+/* ══ Lever / gear workflow motion (lev4) ══ */
+.lv-workflow { display:flex; flex-wrap:wrap; gap:4px; justify-content:center; margin-bottom:8px; }
+.lv-wf {
+  padding:3px 8px; border-radius:999px; font-size:10px; font-weight:700;
+  color:#9a3412; border:1px solid #7c2d12; background:rgba(67,20,7,.5);
+}
+.lv-wf.is-on { color:#ffedd5; border-color:#fb923c; background:rgba(234,88,12,.3); }
+
+.lv-gear-disc {
+  width:56px; height:56px; border-radius:50%; display:inline-block; vertical-align:middle;
+  background:
+    repeating-conic-gradient(from 0deg, #fdba74 0deg 12deg, #9a3412 12deg 24deg);
+  border:4px solid #78350f;
+  box-shadow: inset 0 0 0 14px #c2410c;
+  animation: lv-spin 1.4s linear infinite;
+}
+.lv-gear-disc--lg {
+  width:84px; height:84px; animation-duration:2.2s; animation-direction:reverse;
+  box-shadow: inset 0 0 0 22px #c2410c;
+}
+.lv-plank-live {
+  transform-origin: var(--lv-pivot, 40%) 50%;
+  transition: transform .35s ease;
+  animation: lvTeeter 2.6s ease-in-out infinite;
+}
+@keyframes lvTeeter {
+  0%,100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+.lv-meter-fill { transition: width .4s ease; }
+.lv-sort-row { transition: transform .25s, background .25s; }
+.lv-sort-row:hover { transform: translateX(4px); }
+.lv-boulder { display:inline-block; animation: lvBob 2s ease-in-out infinite; }
+@keyframes lvBob {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}

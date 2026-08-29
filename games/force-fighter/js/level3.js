@@ -1,430 +1,194 @@
 /**
- * Force Fighter - Mission 3: Push & Pull Pairs (Newton 3)
+ * Force Fighter Mission 3: Push & Pull
+ * Script: Opening + 4 Bruner spirals (two directions → rope vs rod → Newton 3 → teamwork) + recap map.
  */
-import { forceLabState, FORCE_ASSET_PATHS } from "./force-state.js";
+import { forceLabState, resetPushPullState, FORCE_ASSET_PATHS, pulseSuccessFeedback } from "./force-state.js?v=pairvis6";
 import {
- mountMotionChain,
- mountDragSort,
- mountForceDial,
- mountEquationBuild,
- mountQuiz,
- mountSpeedDrill,
- mountMythCards,
- mountTapContinue,
- mountOrderSteps,
+ mountGate,
+ mountSpiralMap,
+ mountPairSpring,
+ mountPairDirs,
+ mountPairRope,
+ mountPairTension,
+ mountPairSkate,
+ mountPairThird,
+ mountPairBridge,
+ mountPairTeam,
  badgeHtml,
-} from "./force-activities.js";
+} from "./force-activities.js?v=pairvis6";
 
 export const L3_META = {
- objective: "By the end of this mission, you'll be able to explain Newton 3 / pairs in your own words.",
- bdHook: "Bangladesh everyday: tug-of-war rope, walking on the road - every push has a partner push.",
+ objective:
+ "By the end of this mission, you'll be able to explain push and pull as the same kind of force aimed two ways, name tension versus compression, and state Newton's Third Law: every force has an equal, opposite partner on a different object.",
+ bdHook: "Last time, force was a push or a pull in newtons. Today we stop treating those words as interchangeable.",
  predict: {
- q: "When you push a wall, what else happens?",
+ q: "To open a door, is pushing different from pulling, or the same idea aimed two ways?",
  options: [
- "Nothing - walls never push",
- "The wall pushes back on you",
- "Your mass doubles",
+ "They are totally different kinds of force",
+ "They are the same kind of force, just aimed toward you or away from you",
+ "Only pushing is a real force",
  ],
  ok: 1,
  },
-
- kidTitle: "Push & Pull Pairs",
- theme: "Newton 3 / pairs",
+ kidTitle: "Push & Pull",
+ theme: "push, pull, tension, compression",
  emoji: "🤝",
  rewardName: "Team Force",
- intro: "When you push, something pushes back! Pull a rope and the rope pulls you too.",
- everyday: ["Pulling a rope in tug-of-war", "Walking - you push the ground, it pushes you back"],
+ intro:
+ "Quick question: to open a door, do you push it, or pull it? It depends which side you stand on, and which way the hinges swing. Push and pull get treated like two totally different actions, but they are more like two ends of the same idea. Today we pull that idea apart, and you will find that some things are extremely good at pulling, and completely useless at pushing.",
+ everyday: [
+ "A door you might push or pull",
+ "A rope that crumples if you shove with it",
+ "Two skaters who both move when you only act on one",
+ ],
  subTitles: [
- "Meet Force Pairs",
- "Watch the Pair",
- "Sort: Action / Reaction",
- "Rocket Pair Lab",
- "Rope Scale Lab",
- "Walking Pairs",
- "Name the Pair Rule",
- "Stretch: New Contexts",
- "Myth Bust",
- "Pairs Mastery",
+ "Push or pull",
+ "Squeeze and stretch",
+ "Two directions, one idea",
+ "Why can't you push a rope",
+ "Tension and compression",
+ "Both skaters move",
+ "Newton's Third Law",
+ "Cables and pillars",
+ "Push and pull as a team",
+ "Two sides of the same force",
  ],
 };
 
 export function runL3Sub(subIndex, api) {
  const { registerTryAgain } = api;
- forceLabState.reveal = false;
- forceLabState.tokenProgress = 0;
- forceLabState.masteryStep = 0;
- forceLabState.placed = {};
- forceLabState.selectedId = null;
- forceLabState.mythPhase = "claim";
- forceLabState.recoil = 0;
- forceLabState.ropeT = 0.5;
- forceLabState.walkStep = 0;
- forceLabState.heat = 0.2;
- forceLabState.phase = "desk";
- forceLabState.mode = "balloon";
-
+ resetPushPullState();
  const runners = [
- sub1_meet,
- sub2_watch,
- sub3_sort,
- sub4_rocket,
- sub5_rope,
- sub6_walk,
- sub7_rule,
- sub8_stretch,
- sub9_myths,
- sub10_mastery,
+ sub1_opening,
+ sub2_spring,
+ sub3_dirs,
+ sub4_rope,
+ sub5_tension,
+ sub6_skate,
+ sub7_third,
+ sub8_bridge,
+ sub9_team,
+ sub10_closing,
  ];
  const fn = runners[subIndex] || runners[0];
  registerTryAgain(() => {
  api.overlay.innerHTML = "";
+ resetPushPullState();
  fn(api);
  });
  fn(api);
 }
 
-function sub1_meet({ overlay, setCoach, completeSub }) {
- setCoach("Hook: shove apart - equal and opposite pair forces.");
- mountMotionChain(overlay, {
- title: "Meet Force Pairs",
- beats: [
- {
- scene: "pairMeet",
- sceneArgs: { phase: "desk" },
- dwellMs: 4000,
+function sub1_opening({ overlay, setCoach, completeSub }) {
+ setCoach("Tap Push It or Pull It. Watch the door swing inward or outward.");
+ mountGate(overlay, {
+ scene: "pairOpen",
+ badge: "Opening",
+ title: "Push & Pull",
+ pulse: true,
+ ready: () => forceLabState.plDoorOpen,
+ readyText: "The door swung. Same force, two directions.",
+ doneLabel: "Start the lesson ▶",
+ controlsHtml: `<div class="btn-row">
+ <button type="button" class="btn secondary tiny-pulse" id="pl-door-push">Push It →</button>
+ <button type="button" class="btn secondary tiny-pulse" id="pl-door-pull">Pull It →</button>
+ </div>`,
  html: `${badgeHtml(FORCE_ASSET_PATHS.pair, "pairs")}
- <p><strong>Act 1:</strong> Tap PUSH - skaters shove apart.</p>`,
- },
- {
- scene: "pairMeet",
- sceneArgs: { phase: "pair" },
- dwellMs: 4200,
- html: `<p><strong>Act 2:</strong> Arrows are equal size, opposite directions.</p>`,
- },
- {
- scene: "pairMeet",
- sceneArgs: { phase: "glow" },
- dwellMs: 4000,
- html: `<p><strong>Act 3:</strong> One interaction - two forces (action & reaction).</p>`,
- },
- {
- scene: "pairMeet",
- sceneArgs: { phase: "settle" },
- dwellMs: 3600,
- html: `<p><strong>Act 4:</strong> Every push has a partner push back.</p>`,
- },
- ],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "pairMeet",
- sceneArgs: { phase: "settle" },
- title: "Exit check",
- q: "When two skaters push apart, the forces between them are...",
- opts: [
- "Equal size, opposite direction",
- "Bigger on the lighter skater only",
- "Zero while touching",
- "Only gravity",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub2_watch({ overlay, setCoach, completeSub }) {
- setCoach("Watch: rower - oar pushes water, water pushes boat forward. Tap canvas modes.");
- forceLabState.mode = "rower";
- mountMotionChain(overlay, {
- title: "Watch the Pair",
- beats: [
- {
- scene: "pairStretch",
- sceneArgs: { mode: "rower" },
- dwellMs: 4500,
- html: `<p><strong>Act 1:</strong> Tap <strong>rower</strong> on the canvas if needed.</p>
- <p>Oar pushes water backward · water pushes boat forward - a pair.</p>`,
- },
- {
- scene: "pairStretch",
- sceneArgs: { mode: "balloon" },
- dwellMs: 4000,
- html: `<p><strong>Act 2:</strong> Switch to <strong>balloon</strong> - air one way, balloon the other.</p>
- <p>Same idea: equal & opposite partners on two different objects.</p>`,
- },
- ],
- onDone: () => {
- forceLabState.mode = "rower";
- mountQuiz(overlay, {
- scene: "pairStretch",
- sceneArgs: { mode: "rower" },
- title: "Check",
- q: "The water’s push on the boat is best called the...",
- opts: ["Reaction partner of the oar’s push on water", "Proof forces cancel on one object", "Source of new mass", "Only friction myth"],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub3_sort({ overlay, setCoach, completeSub }) {
- setCoach("Sort Action / Reaction / Interaction.");
- mountDragSort(overlay, {
- scene: "pairSort",
- title: "Sort pair stories",
- instructions: "Drag into Action, Reaction, or Interaction.",
- successText: "Nice sort - action, reaction, interaction!",
- chips: [
- { id: "a1", text: "Foot pushes ground back", short: "Foot→", color: 0xf472b6 },
- { id: "r1", text: "Ground pushes foot forward", short: "←Ground", color: 0x38bdf8 },
- { id: "i1", text: "Walking pair", short: "Walk", color: 0xa78bfa },
- { id: "a2", text: "Exhaust gas down", short: "Exhaust", color: 0xf472b6 },
- { id: "r2", text: "Rocket pushed up", short: "Rocket↑", color: 0x38bdf8 },
- { id: "i2", text: "Rocket interaction", short: "Rocket", color: 0xa78bfa },
- { id: "a3", text: "You pull rope left", short: "You←", color: 0xf472b6 },
- { id: "r3", text: "Rope pulls you right", short: "Rope→", color: 0x38bdf8 },
- ],
- zones: [
- { id: "action", label: "Action", accept: ["a1", "a2", "a3"] },
- { id: "reaction", label: "Reaction", accept: ["r1", "r2", "r3"] },
- { id: "interact", label: "Interaction", accept: ["i1", "i2"] },
- ],
- onDone: completeSub,
- });
-}
-
-function sub4_rocket({ overlay, setCoach, completeSub }) {
- setCoach("Rocket: exhaust down ↔ vehicle up.");
- forceLabState.heat = 0.2;
- mountForceDial(overlay, {
- scene: "pairRocket",
- title: "Rocket Pair Lab",
- html: `<p>Slide thrust. Exhaust pushes down; rocket is pushed up - equal & opposite.</p>`,
- goalText: "Goal: thrust ≥ 75%.",
- doneLabel: "Launch feel ▶",
- threshold: 0.75,
- startHeat: 0.2,
- axis: "x",
- canvasAction: "stretch",
- sliderLabel: "Thrust",
- syncKey: "pairGap",
- readoutLabels: {
- cold: "Idle",
- melting: "Throttle up…",
- liquid: "Climbing",
- simmer: "Pair forces roaring!",
- },
- badge: FORCE_ASSET_PATHS.rocket,
- onDone: () => {
- mountQuiz(overlay, {
- scene: "pairRocket",
- title: "Check",
- q: "Rocket exhaust pushes gases down. The pair force on the rocket...",
- opts: ["Pushes the rocket up", "Cancels gravity forever", "Removes mass to zero", "Only heats the cabin"],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub5_rope({ overlay, setCoach, completeSub }) {
- setCoach("Mid-rope scale with equal pulls reads ~one side’s tension - not 0 or 240.");
- forceLabState.ropeT = 0.5;
- forceLabState.heat = 0.5;
- mountForceDial(overlay, {
- scene: "pairRope",
- title: "Rope Scale Lab",
- html: `<p>Each side pulls. The <strong>scale in the middle</strong> reads about the tension (~120 N style), not zero and not double.</p>
- <p>This is a tug-of-war tension dial - not a Tiny Bits salt zoom.</p>`,
- goalText: "Goal: tension slider ≥ 70%.",
- doneLabel: "Scale checked ▶",
- threshold: 0.7,
- startHeat: 0.5,
- axis: "x",
- canvasAction: "stretch",
- sliderLabel: "Rope tension",
- syncKey: "ropeT",
- readoutLabels: {
- cold: "Soft pull",
- melting: "Medium tension",
- liquid: "Firm tug",
- simmer: "Strong - scale ≈ one side",
- },
- badge: FORCE_ASSET_PATHS.pair,
- onDone: () => {
- mountQuiz(overlay, {
- scene: "pairRope",
- title: "Check",
- q: "Two people each pull 120 N on a mid-rope scale. Reading is closest to...",
- opts: ["~120 N", "0 N", "240 N", "∞ N"],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub6_walk({ overlay, setCoach, completeSub }) {
- setCoach("Walking: foot pushes ground back; ground pushes you forward.");
- forceLabState.walkStep = 0;
- mountMotionChain(overlay, {
- title: "Walking pairs",
- beats: [
- {
- scene: "pairWalk",
- dwellMs: 5000,
- html: `<p><strong>Act 1:</strong> Tap STEP several times. Pink arrow = foot on ground; blue = ground on you.</p>`,
- },
- {
- scene: "pairWalk",
- dwellMs: 4000,
- html: `<p><strong>Act 2:</strong> You move forward because the ground pushes you - the pair partner.</p>`,
- },
- ],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "pairWalk",
- title: "Check",
- q: "To walk forward, your foot mainly...",
- opts: [
- "Pushes the ground backward (ground pushes you forward)",
- "Pulls gravity sideways",
- "Deletes friction",
- "Creates new mass under the shoe",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub7_rule({ overlay, setCoach, completeSub }) {
- setCoach("Build: equal & opposite pairs.");
- mountEquationBuild(overlay, {
- scene: "pairRule",
- title: "Build the pair rule",
- instructions: "Tap tokens in order.",
- badge: FORCE_ASSET_PATHS.rule,
- tokens: [
- { id: "a", html: "Equal" },
- { id: "b", html: "&" },
- { id: "c", html: "opposite" },
- { id: "d", html: "pairs" },
- ],
- correctIds: ["a", "b", "c", "d"],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "pairRule",
- title: "Rule check",
- q: "Pair forces act on...",
- opts: [
- "Two different objects (they don’t cancel on one body)",
- "Only one object so nothing can move",
- "Light only",
- "Massless ghosts",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
-}
-
-function sub8_stretch({ overlay, setCoach, completeSub }) {
- setCoach("Stretch: balloon, rower, weight, bug, tug - tap canvas chips.");
- const modes = [
- { mode: "balloon", title: "Balloon", blurb: "Air one way · balloon the other." },
- { mode: "rower", title: "Rower", blurb: "Oar-water pair moves the boat." },
- { mode: "weight", title: "Weight", blurb: "You pull Earth · Earth pulls you." },
- { mode: "bug", title: "Bug", blurb: "Bug/glass forces equal magnitude." },
- { mode: "tug", title: "Tug", blurb: "Partners pull each other." },
- ];
- let i = 0;
- function step() {
- if (i >= modes.length) {
- mountQuiz(overlay, {
- scene: "pairStretch",
- title: "Transfer",
- q: "Your weight’s reaction partner is mainly...",
- opts: [
- "You pull Earth up while Earth pulls you down",
- "Only the floor forever with no Earth pair",
- "Air drag alone",
- "No partner exists",
- ],
- ok: 0,
- onDone: completeSub,
- });
- return;
+ ${n(
+ "Quick question: to open this door, do you push it, or pull it? The honest answer is, it depends entirely on which side of the door you're standing on, and which way the hinges swing. Push and pull get treated like two totally different actions, but they're more like two ends of the same idea. Today we're pulling that idea apart, and some things in this world are extremely good at pulling, and completely useless at pushing.",
+ )}`,
+ bind(host) {
+ function swing(dir) {
+ forceLabState.plDoorDir = dir;
+ forceLabState.plDoorOpen = true;
+ pulseSuccessFeedback(200);
  }
- const m = modes[i++];
- forceLabState.mode = m.mode;
- mountTapContinue(overlay, {
- scene: "pairStretch",
- sceneArgs: { mode: m.mode },
- html: `<h3>${m.title}</h3><p>${m.blurb}</p>
- <p class="drag-hint">Tap matching chips on the canvas.</p>`,
- onDone: step,
+ host.querySelector("#pl-door-push")?.addEventListener("click", () => swing(1));
+ host.querySelector("#pl-door-pull")?.addEventListener("click", () => swing(-1));
+ window.__arena?.setIntentHandler?.((intent) => {
+ if (intent.type !== "CANVAS_TAP" && intent.type !== "CANVAS_UP") return;
+ if (intent.meta?.action === "push") swing(1);
+ if (intent.meta?.action === "pull") swing(-1);
  });
- }
- step();
-}
-
-function sub9_myths({ overlay, setCoach, completeSub }) {
- setCoach("Bust pair myths.");
- mountMythCards(overlay, {
- scene: "pairMyth",
- title: "Pair myths",
- myths: [
- { title: "Bigger wins", claim: "The bigger object wins the force pair.", truth: "Pair forces are equal in size - accelerations differ by mass.", sceneMyth: 0 },
- { title: "Later reaction", claim: "Action happens first, then reaction.", truth: "They are simultaneous - one interaction.", sceneMyth: 1 },
- { title: "Scale zero", claim: "A mid-rope scale should read zero.", truth: "It reads the tension (~one side’s pull), not zero.", sceneMyth: 2 },
- { title: "No Earth push", claim: "You don’t push the Earth when you jump.", truth: "You push Earth down; Earth pushes you up.", sceneMyth: 3 },
- { title: "Cancel myth", claim: "Pairs cancel so nothing can move.", truth: "Each force acts on a different object.", sceneMyth: 4 },
- ],
+ },
  onDone: completeSub,
  });
 }
 
-function sub10_mastery({ overlay, setCoach, completeSub }) {
- setCoach("Mastery - Team Force badge.");
- forceLabState.masteryStep = 5;
- mountOrderSteps(overlay, {
- scene: "pairMastery",
- title: "Pair story",
- instructions: "Order the third-law story.",
- items: [
- { id: "s1", html: "Two objects interact" },
- { id: "s2", html: "Equal & opposite forces appear" },
- { id: "s3", html: "Each force acts on a different body" },
- { id: "s4", html: "Accelerations can differ (by mass)" },
- ],
- correctIds: ["s1", "s2", "s3", "s4"],
+function sub2_spring({ overlay, setCoach, completeSub }) {
+ setCoach("Squeeze the spring, then stretch it. It fights back both ways.");
+ mountPairSpring(overlay, { onDone: completeSub });
+}
+
+function sub3_dirs({ overlay, setCoach, completeSub }) {
+ setCoach("Four everyday examples stay on screen: box, wagon, door, drawer.");
+ mountPairDirs(overlay, { onDone: completeSub });
+}
+
+function sub4_rope({ overlay, setCoach, completeSub }) {
+ setCoach("Fail at pushing the rope first. Then pull. Do not skip the crumple.");
+ mountPairRope(overlay, { onDone: completeSub });
+}
+
+function sub5_tension({ overlay, setCoach, completeSub }) {
+ setCoach("Stretching versus squeezing, then tension and compression.");
+ mountPairTension(overlay, { onDone: completeSub });
+}
+
+function sub6_skate({ overlay, setCoach, completeSub }) {
+ setCoach("Push-off, then pull together. Both skaters move both times.");
+ mountPairSkate(overlay, { onDone: completeSub });
+}
+
+function sub7_third({ overlay, setCoach, completeSub }) {
+ setCoach("Swimmer, rowboat, rocket, wall push. Then Newton's Third Law.");
+ mountPairThird(overlay, { onDone: completeSub });
+}
+
+function sub8_bridge({ overlay, setCoach, completeSub }) {
+ setCoach("Build a real suspension bridge: cables, pillars, drive across.");
+ mountPairBridge(overlay, { onDone: completeSub });
+}
+
+function sub9_team({ overlay, setCoach, completeSub }) {
+ setCoach("Cranes, tents, bones. Then three ideas to keep.");
+ mountPairTeam(overlay, { onDone: completeSub });
+}
+
+function sub10_closing({ overlay, setCoach, completeSub }) {
+ setCoach("Back at the door. Push, pull, equal and opposite. Then the recap map.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "pairClose",
+ badge: "Closing",
+ title: "Two sides of the same force",
+ html: n(
+ "We started today standing in front of a door, unsure whether to push or pull. Now you know both are really the same underlying idea, force, just aimed in opposite directions, and that this simple difference in direction quietly explains why ropes can't push, why bridges need both cables and pillars, and why your own muscles only ever know how to pull. Push and pull were never rivals. They've been a team this entire time.",
+ ),
+ ready: () => forceLabState.plCloseU >= 0.95 || Date.now() - t0 > 8000,
+ readyText: "The overlays are in.",
+ doneLabel: "Open the spiral map ▶",
  onDone: () => {
- forceLabState.masteryStep = 6;
- mountSpeedDrill(overlay, {
- scene: "pairDrill",
- title: "Final checks",
- items: [
- {
- q: "Bug on a windshield - force magnitudes are...",
- opts: ["Equal", "Always larger on the bug", "Always zero", "Undefined"],
- ok: 0,
- prompt: "Bug/glass",
- },
- {
- q: "Balloon release flies opposite the air rush because...",
- opts: ["Pair forces", "Air has no mass", "Gravity flipped", "Inertia vanished"],
- ok: 0,
- prompt: "Balloon",
- },
+ setCoach("Last screen: a recap map of the four spirals. Tap a number to replay, then Finish Push & Pull.");
+ mountSpiralMap(overlay, {
+ scene: "pairSpiral",
+ title: "Your recap map",
+ finishLabel: "Finish Push & Pull ▶",
+ narration:
+ "This last screen is a recap, not a new puzzle. The four numbers are the four loops you already finished. Tap a number (on the canvas or here) to replay a short highlight. When you are ready, tap Finish Push & Pull.",
+ statusIdle: "Tap a number to replay, or finish now.",
+ stops: [
+ { n: 1, label: "1: Two directions" },
+ { n: 2, label: "2: Rope vs rod" },
+ { n: 3, label: "3: Force pairs" },
+ { n: 4, label: "4: Teamwork" },
  ],
  onDone: completeSub,
  });
  },
  });
+}
+
+function n(text) {
+ return `<p class="tiny-narration">${text}</p>`;
 }

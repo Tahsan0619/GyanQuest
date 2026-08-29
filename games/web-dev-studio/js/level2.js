@@ -1,235 +1,292 @@
 /**
- * Web Dev Studio - Mission 2: CSS Style (deepened)
+ * Web Dev Studio: Mission 2: CSS Style
+ * Script: Opening + 4 Bruner spirals (selectors → box model → size/align → cascade) + recap map.
  */
-import { labState, LAB_ASSET_PATHS } from "./lab-state.js";
-import {
- mountMotionChain, mountDragSort, mountHeatLab, mountEquationBuild,
- mountQuiz, mountSpeedDrill, mountMythCards, mountTapContinue, mountOrderSteps, badgeHtml,
-} from "./lab-activities.js";
+import { labState, LAB_ASSET_PATHS, resetCssStyleState } from "./lab-state.js?v=csspaint1";
+import { mountGate, mountSpiralMap, mountTapContinue, badgeHtml } from "./lab-activities.js?v=csspaint3";
 
 export const L2_META = {
- objective: "By the end of this mission, you'll be able to explain look & layout in your own words.",
+ objective:
+ "By the end of this mission, you'll explain CSS selectors, the box model, size and alignment, and how cascading stylesheets restyle many rooms at once.",
  bdHook:
- "Bangladesh everyday: school poster colors, shop product card gaps, rickshaw ads read from far - notice color, size, and space.",
+ "School posters, shop cards, rickshaw ads: color, spacing, and alignment are CSS making the HTML house livable.",
  predict: {
- q: "Before we start - what mainly makes a page look clear (color, size, spacing)?",
+ q: "The HTML house from Mission 1 is built. What's missing before it feels readable?",
  options: [
- "Only renaming <h1> tags with no styles",
- "CSS look rules: color, font-size, margin / space",
- "Clicking buttons with no HTML or CSS",
+ "More HTML tags nested deeper",
+ "CSS: color, spacing, borders, and alignment on top of structure",
+ "Deleting the footer tag entirely",
  ],
  ok: 1,
  },
-
  kidTitle: "CSS Style",
- theme: "look & layout",
- emoji: "\ud83c\udfa8",
+ theme: "paint & layout",
+ emoji: "🎨",
  rewardName: "Style Star",
- intro: "CSS paints the HTML rooms. Color, size, and spacing make a page clear to read.",
- everyday: ["School poster colors", "Shop product card gaps", "Rickshaw ad that must read from far"],
+ intro:
+ "The house you built is structurally perfect, but flat, cramped, and unlivable. CSS is the paintbrush, ruler, and decorating plan that makes it somewhere worth visiting.",
+ everyday: ["School poster colors", "Shop product card gaps", "Readable spacing on a phone"],
  subTitles: [
- "Meet Color Size Space", "Style Dial Lab", "Sort CSS Look", "Stronger Style Lab",
- "Why Clear Look", "Name the Style Rule", "Stretch: Surfaces", "Myth Bust",
- "Fluency Drill", "Style Star Mastery",
+ "Grab the Paintbrush",
+ "Point and Paint",
+ "Selectors & Rules",
+ "Box Model Lab",
+ "Four Layers",
+ "Resize & Align",
+ "Alignment Gallery",
+ "Style Them All",
+ "One Stylesheet",
+ "From Blueprint to Home",
  ],
 };
 
 export function runL2Sub(subIndex, api) {
  const { registerTryAgain } = api;
- labState.reveal = false; labState.tokenProgress = 0; labState.masteryStep = 0;
- labState.placed = {}; labState.selectedId = null; labState.mythPhase = "claim";
- labState.heat = 0.2; labState.phase = "desk"; labState.mode = "poster";
- labState.styleHeat = 0.2;
+ resetCssStyleState();
  const runners = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10];
  const fn = runners[subIndex] || runners[0];
- registerTryAgain(() => { api.overlay.innerHTML = ""; fn(api); });
+ registerTryAgain(() => {
+ api.overlay.innerHTML = "";
+ resetCssStyleState();
+ fn(api);
+ });
  fn(api);
 }
 
-function s1({ overlay, setCoach, completeSub }) {
- setCoach("Hook: paint pots - color, size, space.");
- mountMotionChain(overlay, {
- title: "Meet Color Size Space",
- beats: [
- { scene: "cssMeet", sceneArgs: { phase: "desk" }, dwellMs: 4000,
- html: `${badgeHtml(LAB_ASSET_PATHS.m2, "css")}<p><strong>Act 1:</strong> Drag the color, size, and space pots.</p>` },
- { scene: "cssMeet", sceneArgs: { phase: "glow" }, dwellMs: 4200,
- html: `<p><strong>Act 2:</strong> Lines link pots to the preview page.</p>` },
- { scene: "cssMeet", sceneArgs: { phase: "settle" }, dwellMs: 4000,
- html: `<p><strong>Act 3:</strong> CSS chooses how the page looks - not the tag names.</p>` },
- ],
- onDone: () => mountQuiz(overlay, {
- scene: "cssMeet", sceneArgs: { phase: "settle" }, title: "Exit check",
- q: "Which job is mainly CSS?",
- opts: ["Pick color, size, and spacing", "Name the <body> room only", "Save files forever", "Run CPU math"],
- ok: 0, onDone: () => mountTapContinue(overlay, {
- scene: "cssMeet", badge: LAB_ASSET_PATHS.m2,
- html: `<h3>Style online</h3><p>Next: dial the look stronger.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
- }),
- });
+function n(text) {
+ return `<p class="tiny-narration">${text}</p>`;
 }
 
-function s2({ overlay, setCoach, completeSub }) {
- setCoach("Dial until the page look is clear (>= 60%).");
- labState.heat = 0.2;
- mountHeatLab(overlay, {
- scene: "cssLab", title: "Style Dial Lab",
- html: `<p>Drag until style clarity >= 60%.</p>`,
- goalText: "Goal >= 60%", doneLabel: "Look checked", threshold: 0.6, startHeat: 0.2,
- axis: "x", canvasAction: "stretch", sliderLabel: "Style", badge: LAB_ASSET_PATHS.m2,
- readoutLabels: {
- cold: "Gray & cramped - hard to read",
- melting: "Color waking up…",
- liquid: "Size + gap getting clearer",
- simmer: "Sky accent · readable · spaced",
- },
+function s1_opening({ overlay, setCoach, completeSub }) {
+ setCoach("The finished HTML house: no color, no spacing. Grab the paintbrush.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "cssOpen",
+ badge: "Opening",
+ title: "CSS Style",
+ pulse: true,
+ ready: () => labState.cssOpenReady || Date.now() - t0 > 2800,
+ readyText: "Structure is done. Style makes it livable.",
+ doneLabel: "Grab the Paintbrush ▶",
+ html: `${badgeHtml(LAB_ASSET_PATHS.m2, "css")}
+ ${n(
+ "Here's the house you built last time. Every room is exactly where it should be, but look at it. No color, no spacing, everything crammed edge to edge. Structurally perfect, and completely unlivable. Today we're picking up a paintbrush, a ruler, and a decorating plan.",
+ )}`,
  onDone: completeSub,
  });
 }
 
-function s3({ overlay, setCoach, completeSub }) {
- setCoach("Sort CSS look vs HTML structure vs not.");
+function s2_paint({ overlay, setCoach, completeSub }) {
+ setCoach("Click Pointer, select main, paint it. Then select header with a different color.");
+ mountGate(overlay, {
+ scene: "cssPaint",
+ badge: "Spiral 1 · Enactive",
+ title: "Point and Paint",
+ pulse: true,
+ ready: () => labState.cssPaintMain && labState.cssPaintHeader,
+ readyText: "Two rooms, two independent colors. That's CSS.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Click the pointer on a room: that's the selector. Drag a color onto it: property and value. Each room only changes when you specifically point at it.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function s3_selectors({ overlay, setCoach, completeSub }) {
+ setCoach("Selector → property → value. Then read the formal rule parts.");
+ mountGate(overlay, {
+ scene: "cssRule",
+ badge: "Spiral 1 · Iconic",
+ title: "One Style Rule",
+ ready: () => true,
+ html: n(
+ "Every style you'll ever write is built from three pieces: which room you're pointing at, what you want to change, and what you want to change it to.",
+ ),
+ onDone: () => {
  mountTapContinue(overlay, {
- scene: "cssSort",
- html: `<h3>Guide</h3><p><strong>CSS:</strong> color, font-size, margin, background.<br><strong>HTML:</strong> &lt;h1&gt;, &lt;p&gt;.<br><strong>Not:</strong> onclick, rice.</p>`,
- onDone: () => mountDragSort(overlay, {
- scene: "cssSort", title: "Sort CSS Look",
- instructions: "Drag into CSS / HTML / Not.",
- successText: "Look sorted!",
- chips: [
- { id: "color", text: "Text color", short: "color", color: 0x38bdf8 },
- { id: "font", text: "How big text is", short: "font-size", color: 0x0ea5e9 },
- { id: "margin", text: "Outside gap", short: "margin", color: 0x22c55e },
- { id: "bg", text: "Background fill", short: "background", color: 0x67e8f9 },
- { id: "h1", text: "Heading tag", short: "<h1>", color: 0xea580c },
- { id: "p", text: "Paragraph tag", short: "<p>", color: 0xf97316 },
- { id: "click", text: "Click script", short: "onclick", color: 0xa78bfa },
- { id: "rice", text: "A bowl of rice", short: "Rice", color: 0xf472b6 },
- ],
- zones: [
- { id: "css", label: "CSS look", accept: ["color", "font", "margin", "bg"] },
- { id: "html", label: "HTML structure", accept: ["h1", "p"] },
- { id: "not", label: "Not CSS", accept: ["click", "rice"] },
- ],
+ scene: "cssTerms",
+ badge: LAB_ASSET_PATHS.m2,
+ html: `<h3>Spiral 1 · Symbolic</h3>
+ <pre class="hh-inline-code">main {
+  background-color: lightblue;
+}</pre>
+ <p><strong>Selector</strong> · <strong>Property</strong> · <strong>Value</strong> · <strong>Declaration</strong> · <strong>Rule</strong></p>`,
  onDone: completeSub,
- }),
  });
-}
-
-function s4({ overlay, setCoach, completeSub }) {
- setCoach("Push style strength higher.");
- labState.heat = 0.4;
- mountHeatLab(overlay, {
- scene: "cssLab", title: "Stronger Style Lab", html: `<p>Reach >= 75%.</p>`,
- goalText: "Goal >= 75%", doneLabel: "Lab done", threshold: 0.75, startHeat: 0.4,
- axis: "x", canvasAction: "stretch", sliderLabel: "Style", badge: LAB_ASSET_PATHS.m2,
- readoutLabels: {
- cold: "Still flat - boost color & space",
- melting: "Title growing; gaps opening",
- liquid: "Strong look - almost poster-clear",
- simmer: "Intentional style - easy to scan",
  },
+ });
+}
+
+function s4_box({ overlay, setCoach, completeSub }) {
+ setCoach("Move all three sliders: padding, then border, then margin. Feel the difference.");
+ mountGate(overlay, {
+ scene: "cssBox",
+ badge: "Spiral 2 · Enactive",
+ title: "Box Model Lab",
+ pulse: true,
+ ready: () => labState.cssPaddingTouched && labState.cssBorderTouched && labState.cssMarginTouched,
+ readyText: "Padding inside · border is the wall · margin outside.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Padding pushes furniture from the walls. Border thickens the wall itself. Margin pushes neighboring rooms away. Do not skip any slider: mixing these up is a top beginner mistake.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s5({ overlay, setCoach, completeSub }) {
- setCoach("Order why clear look helps.");
- mountOrderSteps(overlay, {
- scene: "cssMeet", sceneArgs: { phase: "settle" }, title: "Why Clear Look",
- instructions: "Order the story.",
- items: [
- { id: "pick", html: "Select what to style" },
- { id: "set", html: "Set color, size, space" },
- { id: "see", html: "People see a clear page" },
- { id: "fix", html: "Fix until it is readable" },
- ],
- correctIds: ["pick", "set", "see", "fix"],
- onDone: () => mountQuiz(overlay, {
- scene: "cssMeet", title: "Check",
- q: "Tiny cramped text on a phone usually...",
- opts: ["Harder to read - size and space matter", "Always looks more professional", "Deletes HTML tags", "Turns into JavaScript"],
- ok: 0, onDone: completeSub,
- }),
- });
-}
-
-function s6({ overlay, setCoach, completeSub }) {
- setCoach("Lock the CSS style rule.");
- mountEquationBuild(overlay, {
- scene: "cssRule", title: "Name the Style Rule", instructions: "Tap in order.",
- tokens: [
- { id: "a", html: "Select" }, { id: "b", html: "Style" },
- { id: "c", html: "Look" }, { id: "d", html: "Clear" },
- ],
- correctIds: ["a", "b", "c", "d"], badge: LAB_ASSET_PATHS.rule,
- onDone: () => mountTapContinue(overlay, {
- scene: "cssRule", badge: LAB_ASSET_PATHS.rule,
- html: `<h3>Rule locked</h3><p>Select / Style / Look / Clear.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
- });
-}
-
-function s7({ overlay, setCoach, completeSub }) {
- setCoach("Poster, school, shop, BD ad, app - same CSS ideas.");
+function s5_layers({ overlay, setCoach, completeSub }) {
+ setCoach("Four nested layers: content, padding, border, margin.");
+ mountGate(overlay, {
+ scene: "cssBoxCut",
+ badge: "Spiral 2 · Iconic",
+ title: "Four Layers",
+ ready: () => true,
+ html: n(
+ "This four-layer structure exists around absolutely everything on a webpage, whether you've styled it or not.",
+ ),
+ onDone: () => {
  mountTapContinue(overlay, {
- scene: "cssStretch", html: `<h3>Surfaces</h3><p>Tap each mode - color, size, space still apply.</p>`,
- onDone: () => mountQuiz(overlay, {
- scene: "cssStretch", title: "Transfer",
- q: "A rickshaw ad needs...",
- opts: ["Clear color and readable size from far", "Only secret tiny text", "No spacing ever", "HTML tags with zero look"],
- ok: 0, onDone: completeSub,
- }),
+ scene: "cssBoxCode",
+ html: `<h3>Spiral 2 · Symbolic</h3>
+ <p><strong>The box model:</strong> content → padding → border → margin.</p>
+ <pre class="hh-inline-code">main {
+  padding: 20px;
+  border: 3px solid black;
+  margin: 40px;
+}</pre>`,
+ onDone: completeSub,
+ });
+ },
  });
 }
 
-function s8({ overlay, setCoach, completeSub }) {
- setCoach("Bust CSS myths.");
- mountMythCards(overlay, {
- scene: "cssMyth", title: "Myth Bust", badge: LAB_ASSET_PATHS.myth,
- myths: [
- { claim: "More colors always look better", truth: "A few clear colors beat a messy rainbow", sceneMyth: 0 },
- { claim: "CSS and HTML are the same job", truth: "HTML structures; CSS styles the look", sceneMyth: 1 },
- { claim: "Tiny text is fine on phones", truth: "Readable size and spacing help everyone", sceneMyth: 2 },
- { claim: "Spacing does not matter", truth: "Gap and margin guide the eye", sceneMyth: 3 },
- { claim: "Only designers can learn CSS", truth: "Kids can learn color, size, and space", sceneMyth: 4 },
- ],
+function s6_resize({ overlay, setCoach, completeSub }) {
+ setCoach("Drag width and height. Tap Left, Center, and Right alignment.");
+ mountGate(overlay, {
+ scene: "cssResize",
+ badge: "Spiral 3 · Enactive",
+ title: "Resize & Align",
+ pulse: true,
+ ready: () => {
+ const t = labState.cssAlignTried || {};
+ return labState.cssSizeTouched && t.left && t.center && t.right;
+ },
+ readyText: "Room size and furniture placement: independent choices.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "How big a room is, and where things sit inside it, are two genuinely different decisions. CSS lets you control both on purpose.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s9({ overlay, setCoach, completeSub }) {
- setCoach("Quick CSS fluency.");
- mountSpeedDrill(overlay, {
- scene: "cssDrill", title: "Fluency Drill", passScene: "cssMastery",
- items: [
- { q: "font-size mainly changes...", opts: ["How big text is", "The CPU brand"], ok: 0, prompt: "Size" },
- { q: "Is margin a CSS idea?", opts: ["Yes", "No"], ok: 0, prompt: "Margin" },
- { q: "<h1> is mainly...", opts: ["HTML structure", "A CSS color"], ok: 0, prompt: "h1" },
- { q: "Clear spacing helps...", opts: ["Reading", "Deleting pages"], ok: 0, prompt: "Space" },
- { q: "Rice is a CSS property?", opts: ["No", "Yes"], ok: 0, prompt: "Rice" },
- { q: "CSS paints...", opts: ["How the page looks", "Only file names"], ok: 0, prompt: "CSS" },
- ],
+function s7_gallery({ overlay, setCoach, completeSub }) {
+ setCoach("Same room, same text: four alignments side by side.");
+ mountGate(overlay, {
+ scene: "cssGallery",
+ badge: "Spiral 3 · Iconic",
+ title: "Alignment Gallery",
+ ready: () => true,
+ html: n(
+ "Alignment isn't decoration on top of the design. For a lot of designers, it basically is the design.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "cssSizeCode",
+ html: `<h3>Spiral 3 · Symbolic</h3>
+ <pre class="hh-inline-code">main {
+  width: 600px;
+  height: 400px;
+  text-align: center;
+}</pre>`,
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+function s8_cascade({ overlay, setCoach, completeSub }) {
+ setCoach("Apply .cozy-room to 3 rooms, then override #reading-nook only.");
+ mountGate(overlay, {
+ scene: "cssCascade",
+ badge: "Spiral 4 · Enactive",
+ title: "Style Them All",
+ pulse: true,
+ ready: () => (labState.cssCozyRooms || []).length >= 3 && labState.cssOverrideNook,
+ readyText: "Shared class, then one specific override.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "You're almost never styling one room at a time in a real project. Shared styles apply everywhere, then small exceptions only where needed.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s10({ overlay, setCoach, completeSub }) {
- setCoach("Mastery - Style Star.");
- mountOrderSteps(overlay, {
- scene: "cssMastery", title: "Style Star Mastery", instructions: "Order your journey.",
- items: [
- { id: "meet", html: "Meet" }, { id: "sort", html: "Sort" }, { id: "lab", html: "Lab" },
- { id: "rule", html: "Rule" }, { id: "myth", html: "Myth" }, { id: "win", html: "Star" },
- ],
- correctIds: ["meet", "sort", "lab", "rule", "myth", "win"],
- onDone: () => mountTapContinue(overlay, {
- scene: "cssMastery", badge: LAB_ASSET_PATHS.m2,
- html: `<h3>Style Star!</h3><p>Color, size, and space make pages clear.</p>`,
- onDone: completeSub, advanceAfterDone: true,
- }),
+function s9_stylesheet({ overlay, setCoach, completeSub }) {
+ setCoach("Change the stylesheet color: every cozy room updates at once.");
+ mountGate(overlay, {
+ scene: "cssSheet",
+ badge: "Spiral 4 · Iconic",
+ title: "One Stylesheet",
+ ready: () => true,
+ html: n(
+ "This is why CSS lives in its own file from HTML: change one shared stylesheet, and every connected room updates instantly.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "cssSummary",
+ html: `<h3>Spiral 4 · Symbolic</h3>
+ <p><code>.cozy-room</code>: class, many elements. <code>#reading-nook</code>: id, one element.</p>
+ <p><strong>Cascading</strong>: more specific rules override general ones.</p>
+ <p><em>Next: JavaScript makes the house react when you click.</em></p>`,
+ onDone: completeSub,
+ });
+ },
  });
 }
+
+function s10_closing({ overlay, setCoach, completeSub }) {
+ setCoach("Watch the house transform. Then open the spiral recap map.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "cssClose",
+ badge: "Closing",
+ title: "From Blueprint to Home",
+ html: n(
+ "We started with a house that was structurally perfect and completely unlivable. Now you know how to fix that: selectors, the box model, size and alignment, and one cascading stylesheet.",
+ ),
+ ready: () => labState.cssCloseU >= 0.85 || Date.now() - t0 > 7000,
+ readyText: "Color, space, alignment. A home worth staying in.",
+ doneLabel: "Open the recap map ▶",
+ onDone: () => {
+ setCoach("Tap a spiral number to replay, then Finish CSS Style.");
+ mountSpiralMap(overlay, {
+ scene: "cssSpiral",
+ title: "Your recap map",
+ finishLabel: "Finish CSS Style ▶",
+ narration:
+ "The four numbers are the four spirals you finished. Tap a number to replay a highlight, then finish when ready.",
+ statusIdle: "Tap a number to replay, or finish now.",
+ stops: [
+ { n: 1, label: "1: Selectors & color" },
+ { n: 2, label: "2: Box model" },
+ { n: 3, label: "3: Size & align" },
+ { n: 4, label: "4: Cascade" },
+ ],
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+const s1 = s1_opening;
+const s2 = s2_paint;
+const s3 = s3_selectors;
+const s4 = s4_box;
+const s5 = s5_layers;
+const s6 = s6_resize;
+const s7 = s7_gallery;
+const s8 = s8_cascade;
+const s9 = s9_stylesheet;
+const s10 = s10_closing;

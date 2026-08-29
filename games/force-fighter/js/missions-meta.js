@@ -1,6 +1,6 @@
 /**
  * Force Fighter - 10 mission catalog (hub cards).
- * Live: Lazy Rock (M1) + Push Power (M2) + Push & Pull Pairs (M3).
+ * Live: Lazy Rock (M1) + Push Power (M2) + Push & Pull (M3).
  */
 export const MISSIONS = [
  {
@@ -9,7 +9,7 @@ export const MISSIONS = [
  theme: "inertia",
  emoji: "🪨",
  rewardName: "Rock Rookie",
- hook: "Wake a sleepy rock - still until an unbalanced push.",
+ hook: "Things don't change what they're doing by themselves. That's inertia.",
  accent: "#f59e0b",
  accent2: "#b45309",
  icon: "rock",
@@ -18,10 +18,10 @@ export const MISSIONS = [
  {
  id: "push-power",
  kidTitle: "Push Power",
- theme: "F = m·a",
+ theme: "force and power",
  emoji: "🏎️",
  rewardName: "Speed Star",
- hook: "Same push - light things accelerate more.",
+ hook: "Power is not how hard you push. It is how fast you get the job done.",
  accent: "#f97316",
  accent2: "#c2410c",
  icon: "bolt",
@@ -29,11 +29,11 @@ export const MISSIONS = [
  },
  {
  id: "force-pairs",
- kidTitle: "Push & Pull Pairs",
- theme: "Newton 3",
+ kidTitle: "Push & Pull",
+ theme: "push vs pull",
  emoji: "🤝",
  rewardName: "Team Force",
- hook: "Every push has a partner push back.",
+ hook: "Push and pull are the same idea, aimed two ways. Ropes can only pull. Every force has a partner.",
  accent: "#a78bfa",
  accent2: "#6d28d9",
  icon: "pair",

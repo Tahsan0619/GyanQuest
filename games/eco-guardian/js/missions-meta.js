@@ -5,10 +5,10 @@ export const MISSIONS = [
  {
  "id": "waste-watch",
  "kidTitle": "Waste Watch",
- "theme": "reduce reuse recycle",
+ "theme": "every piece of trash takes a journey",
  "emoji": "\u267b\ufe0f",
  "rewardName": "Waste Watcher",
- "hook": "Sort trash smart - recycle, compost, or landfill.",
+ "hook": "Away is not a place - run the sorting station: landfill, recycle, or compost.",
  "accent": "#34d399",
  "accent2": "#047857",
  "icon": "leaf",

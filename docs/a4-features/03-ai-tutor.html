@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GyanQuest A4 - AI Tutor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./a4-styles.css" />
+</head>
+<body>
+  <p class="index no-print"><a href="./index.html">All sheets</a> · Print this page (Ctrl+P) as A4</p>
+
+  <article class="sheet">
+    <div class="sheet__mark" aria-hidden="true"></div>
+    <header class="top">
+      <div class="brand">
+        <img src="./gyanquest-logo.png" alt="" />
+        <div>
+          <strong>Gyan<em>Quest</em></strong>
+          <span>Feature sheet 03 / 04</span>
+        </div>
+      </div>
+      <div class="badge">AI Tutor</div>
+    </header>
+
+    <h1 class="hero-title">Ask anything - GyanQuest Tutor</h1>
+    <p class="hero-lead">
+      A floating tutor sits on every game. Students type a question or tap a red glossary word in a mission book.
+      Answers come from Groq via the local <code>/api/chat</code> proxy so the API key never ships to the browser.
+    </p>
+
+    <figure class="shot">
+      <img src="./snapshots/gq-snap-tutor.png" alt="GyanQuest Tutor chat panel open beside Canvas mission" />
+      <figcaption class="shot__cap">Live snapshot · Ask FAB open · Tutor chat over Living or Not</figcaption>
+    </figure>
+
+    <div class="grid">
+      <section class="card">
+        <h3>What it is</h3>
+        <p>Subject-aware explain chat: short, simple answers for hard words and ideas. Works during play and while reading books.</p>
+        <ul>
+          <li>Blue Ask FAB (bottom-right)</li>
+          <li>Chat panel: messages + input + Send</li>
+          <li>Book terms auto-open the tutor</li>
+          <li>History kept for the session</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>How a student uses it</h3>
+        <ul>
+          <li>Tap Ask anytime in a game</li>
+          <li>Type a question in plain language</li>
+          <li>Or open a book and tap a red word</li>
+          <li>Read the tutor reply in the panel</li>
+          <li>Close chat and keep playing</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>What you see on screen</h3>
+        <ul>
+          <li><strong>Header:</strong> GyanQuest Tutor</li>
+          <li><strong>Subtitle:</strong> Ask anything - or tap a red word</li>
+          <li><strong>Welcome:</strong> explains how to use it</li>
+          <li><strong>Input:</strong> Type a question…</li>
+          <li><strong>Send:</strong> posts to the chat API</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>Backend + safety</h3>
+        <ul>
+          <li>Proxy: <code>tools/groq_proxy.py</code></li>
+          <li>Key only in root <code>.env</code></li>
+          <li>Default model with fallback chain</li>
+          <li>Games still work offline without chat</li>
+          <li>Engine: <code>engine/js/book-chat.js</code></li>
+        </ul>
+      </section>
+      <section class="card wide">
+        <h3>Example in the snapshot</h3>
+        <p>
+          During Living or Not Step 1, the tutor panel sits beside the Canvas suspects.
+          A student can ask “Is a virus alive?” without leaving the mission.
+          Same Ask button appears in Chemistry Lab, Force Fighter, Specimen Lab entry paths, and every other game shell.
+        </p>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <span>gyanquest · impactx</span>
+      <span><em>03</em> AI Tutor</span>
+    </footer>
+  </article>
+</body>
+</html>

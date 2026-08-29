@@ -11,8 +11,8 @@ import {
  pulseSuccessFeedback,
  ZOOM_LEVEL_LABELS,
  elementForProtons,
-} from "./atom-scenes.js?v=elemhunt7";
-import { HUNT_PROTON_SEQ, configString, valenceCount, familyOf, fillingOrbital, sampleSnap } from "./element-scenes.js?v=elemhunt7";
+} from "./atom-scenes.js?v=bondbuddy1";
+import { HUNT_PROTON_SEQ, configString, valenceCount, familyOf, fillingOrbital, sampleSnap } from "./element-scenes.js?v=bondbuddy1";
 import { createActivitySession, stopActivitySession, heatPhase } from "./activity-controller.js";
 
 let activeCleanup = null;
@@ -1946,6 +1946,479 @@ export function mountInspector(host, cfg) {
  if (stage === "heat") {
  stage = "valence";
  render();
+ return;
+ }
+ finish();
+ };
+}
+
+export function mountBondMoods(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ const arena = window.__arena;
+ let cancelled = false;
+ trackCleanup(() => {
+ cancelled = true;
+ arena?.setIntentHandler?.(null);
+ });
+ chemLabState.bondMoodI = 0;
+ chemLabState.bondMoodOk = [false, false, false, false];
+ chemLabState.bondMoodWrong = false;
+ playScene("bondMood");
+ const notes = [
+ "Neon: full outer shell → Happy.",
+ "Sodium: 1 lonely electron → Restless.",
+ "Chlorine: 1 electron short of full → Restless.",
+ "Oxygen: 2 electrons short of full → Restless.",
+ ];
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 1: Enactive</div>
+ <h3>Happy or Restless?</h3>
+ ${narrationHtml("You already knew this from hunting elements. Restless atoms do not sit forever. They look for a fix. There are really only two moves: give electrons away, or share them.")}
+ <p id="bond-mood-status" class="tiny-onscreen" aria-live="polite">Is this outer shell full?</p>
+ <div class="btn-row bond-mood-row">
+ <button type="button" class="btn secondary" id="bond-happy">Happy</button>
+ <button type="button" class="btn secondary" id="bond-restless">Restless</button>
+ </div>
+ <button type="button" class="btn primary" id="bond-mood-go" disabled>Continue ▶</button>
+ </div>`;
+ const status = host.querySelector("#bond-mood-status");
+ const go = host.querySelector("#bond-mood-go");
+ const happyBtn = host.querySelector("#bond-happy");
+ const restlessBtn = host.querySelector("#bond-restless");
+ const wantHappy = [true, false, false, false];
+ function guess(saidHappy) {
+ if (cancelled) return;
+ const i = chemLabState.bondMoodI || 0;
+ if ((chemLabState.bondMoodOk || [])[i]) return;
+ const ok = saidHappy === wantHappy[i];
+ if (!ok) {
+ chemLabState.bondMoodWrong = true;
+ pulseFailFeedback(400);
+ status.textContent = "Look again at whether the outer shell is full.";
+ return;
+ }
+ chemLabState.bondMoodWrong = false;
+ const arr = (chemLabState.bondMoodOk || [false, false, false, false]).slice();
+ arr[i] = true;
+ chemLabState.bondMoodOk = arr;
+ pulseSuccessFeedback(280);
+ status.textContent = notes[i];
+ if (i >= 3) {
+ go.disabled = false;
+ happyBtn.disabled = true;
+ restlessBtn.disabled = true;
+ return;
+ }
+ setTimeout(() => {
+ if (cancelled) return;
+ chemLabState.bondMoodI = i + 1;
+ chemLabState.bondMoodWrong = false;
+ status.textContent = "Is this outer shell full?";
+ }, 900);
+ }
+ happyBtn.onclick = () => guess(true);
+ restlessBtn.onclick = () => guess(false);
+ go.onclick = () => finish();
+}
+
+export function mountBondPaths(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ const arena = window.__arena;
+ let cancelled = false;
+ let stage = "paths";
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ arena?.setIntentHandler?.(null);
+ });
+ chemLabState.bondPathSeen = { transfer: false, share: false };
+ chemLabState.bondPhase = "paths";
+ playScene("bondPaths", { phase: "paths" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 1: Iconic</div>
+ <h3 id="bond-path-title">Give or share</h3>
+ <div id="bond-path-body"></div>
+ <p id="bond-path-status" class="drag-hint" aria-live="polite"></p>
+ <button type="button" class="btn primary" id="bond-path-go" disabled>Continue ▶</button>
+ </div>`;
+ const title = host.querySelector("#bond-path-title");
+ const body = host.querySelector("#bond-path-body");
+ const status = host.querySelector("#bond-path-status");
+ const go = host.querySelector("#bond-path-go");
+ function render() {
+ if (stage === "paths") {
+ title.textContent = "Give or share";
+ body.innerHTML = narrationHtml(
+ "Whether an atom transfers or shares usually comes down to how badly each atom wants its electrons. A metal like sodium holds its lone outer electron loosely and is happy to let it go. Two nonmetals both hold electrons tightly, so they compromise and share.",
+ );
+ status.textContent = "Tap both options on the canvas: transfer (ionic) and share (covalent).";
+ go.disabled = true;
+ go.textContent = "Name the rule ▶";
+ } else {
+ chemLabState.bondPhase = "lewis";
+ playScene("bondPaths", { phase: "lewis" });
+ title.textContent = "The octet rule";
+ body.innerHTML = `${narrationHtml(
+ "Chemists have a name for wanting a full outer shell: the octet rule. Most atoms are chasing a full set of eight outer electrons (two for the smallest atoms, like hydrogen and helium). The shorthand is a Lewis dot structure: just the symbol with dots for each valence electron.",
+ )}<p class="tiny-onscreen">Octet rule: most stable with 8 outer electrons (2 for H and He).</p>
+ <p class="tiny-onscreen">Lewis dots: valence electrons only, around the symbol.</p>`;
+ status.textContent = "You'll be drawing these yourself very soon.";
+ go.disabled = false;
+ go.textContent = "Continue ▶";
+ }
+ }
+ render();
+ arena?.setIntentHandler?.((intent) => {
+ if (cancelled || stage !== "paths" || intent.type !== "CANVAS_TAP" || intent.meta?.action !== "path") return;
+ const seen = chemLabState.bondPathSeen || { transfer: false, share: false };
+ if (intent.meta.id === "transfer") seen.transfer = true;
+ if (intent.meta.id === "share") seen.share = true;
+ chemLabState.bondPathSeen = { ...seen };
+ if (seen.transfer && seen.share) {
+ status.textContent = "Option A: transfer → ionic. Option B: share → covalent.";
+ go.disabled = false;
+ }
+ });
+ iv = setInterval(() => {
+ if (cancelled || stage !== "paths") return;
+ const seen = chemLabState.bondPathSeen || {};
+ if (seen.transfer && seen.share) go.disabled = false;
+ }, 160);
+ go.onclick = () => {
+ if (stage === "paths") {
+ stage = "lewis";
+ render();
+ return;
+ }
+ finish();
+ };
+}
+
+export function mountBondHandoff(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ const arena = window.__arena;
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ arena?.setIntentHandler?.(null);
+ });
+ chemLabState.bondHandoff = false;
+ chemLabState.bondSnapPair = false;
+ chemLabState.bondEx = null;
+ chemLabState.bondEy = null;
+ chemLabState.bondNaX = 0.3;
+ chemLabState.bondClX = 0.7;
+ chemLabState.bondDrag = "";
+ playScene("bondHandoff");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 2: Enactive</div>
+ <h3>The great electron handoff</h3>
+ ${narrationHtml("Giving away that electron did not just fix sodium's problem. Sodium is now positively charged, and chlorine is negatively charged. Opposite charges attract, hard. That attraction is the bond.")}
+ <p id="bond-hand-status" class="drag-hint" aria-live="polite">Drag Sodium's outer electron onto Chlorine.</p>
+ <button type="button" class="btn primary" id="bond-hand-go" disabled>Continue ▶</button>
+ </div>`;
+ const status = host.querySelector("#bond-hand-status");
+ const go = host.querySelector("#bond-hand-go");
+ iv = setInterval(() => {
+ if (cancelled) return;
+ if (chemLabState.bondSnapPair) {
+ status.textContent = "Locked pair. You did not just move an electron. You built the glue.";
+ go.disabled = false;
+ } else if (chemLabState.bondHandoff) {
+ status.textContent = "Sodium: gave 1 electron away → now Na⁺. Chlorine: received 1 → now Cl⁻. Drag them together until they snap.";
+ }
+ }, 140);
+ go.onclick = () => finish();
+}
+
+export function mountBondLattice(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let cancelled = false;
+ let stage = "lattice";
+ trackCleanup(() => {
+ cancelled = true;
+ });
+ chemLabState.bondPhase = "lattice";
+ chemLabState.bondLatShake = 0;
+ playScene("bondLattice", { phase: "lattice" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 2: Iconic</div>
+ <h3 id="bond-lat-title">A crystal of salt</h3>
+ <div id="bond-lat-body"></div>
+ <button type="button" class="btn primary" id="bond-lat-go">Name the ions ▶</button>
+ </div>`;
+ const title = host.querySelector("#bond-lat-title");
+ const body = host.querySelector("#bond-lat-body");
+ const go = host.querySelector("#bond-lat-go");
+ body.innerHTML = `${narrationHtml(
+ "Ionic bonds almost never stop at just two atoms. Opposite charges pull in every direction, so ions stack into a repeating 3D grid called a crystal lattice. That grain of table salt is not one molecule. It is trillions of sodium and chlorine ions locked into this pattern.",
+ )}<p class="tiny-onscreen">Optional: drag the canvas to shake the grid. It holds its shape.</p>`;
+ go.onclick = () => {
+ if (cancelled) return;
+ if (stage === "lattice") {
+ stage = "words";
+ chemLabState.bondPhase = "words";
+ playScene("bondLattice", { phase: "words" });
+ title.textContent = "Ions and NaCl";
+ body.innerHTML = `${narrationHtml(
+ "A charged atom is called an ion: a plus sign for one that lost electrons, a minus sign for one that gained them. The attraction between them is an ionic bond. When chemists write NaCl, that ratio is exactly what is needed for the charges to cancel to zero overall.",
+ )}<p class="tiny-onscreen">Ion: atom with a charge (Na⁺, Cl⁻).</p>
+ <p class="tiny-onscreen">Ionic bond: electrostatic attraction between opposite ions.</p>
+ <p class="tiny-onscreen">Formula: NaCl (1:1).</p>`;
+ go.textContent = "Continue ▶";
+ return;
+ }
+ finish();
+ };
+}
+
+export function mountBondCovalent(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ const arena = window.__arena;
+ let cancelled = false;
+ let stage = "share";
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ arena?.setIntentHandler?.(null);
+ });
+ chemLabState.bondHTried = false;
+ chemLabState.bondHShare = false;
+ chemLabState.bondEx = null;
+ chemLabState.bondEy = null;
+ chemLabState.bondH0 = 0.3;
+ chemLabState.bondH1 = 0.7;
+ chemLabState.bondShareCloud = false;
+ playScene("bondShare");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 3: Enactive</div>
+ <h3 id="bond-cov-title">Share, don't give</h3>
+ <div id="bond-cov-body"></div>
+ <p id="bond-cov-status" class="drag-hint" aria-live="polite"></p>
+ <button type="button" class="btn primary" id="bond-cov-go" disabled>Continue ▶</button>
+ </div>`;
+ const title = host.querySelector("#bond-cov-title");
+ const body = host.querySelector("#bond-cov-body");
+ const status = host.querySelector("#bond-cov-status");
+ const go = host.querySelector("#bond-cov-go");
+
+ function snapIfClose(id, x, y) {
+ const aw = arena?.width || 640;
+ const ah = arena?.height || 360;
+ const ox = aw * 0.58;
+ const oy = ah * 0.46;
+ const slots = {
+ o: { x: ox, y: oy, r: 30 },
+ hL: { x: ox - 38, y: oy + 28, r: 24 },
+ hR: { x: ox + 38, y: oy + 28, r: 24 },
+ };
+ const b = chemLabState.build;
+ function near(slot) {
+ return Math.hypot(x - slot.x, y - slot.y) < slot.r;
+ }
+ if (id === "o" && near(slots.o)) b.o = true;
+ else if (id === "hL" || id === "hR") {
+ if (!b.hL && near(slots.hL)) b.hL = true;
+ else if (!b.hR && near(slots.hR)) b.hR = true;
+ else if (!b.hL && near(slots.hR)) b.hL = true;
+ else if (!b.hR && near(slots.hL)) b.hR = true;
+ }
+ if (b.o && b.hL && b.hR && !b.snapped) {
+ b.snapped = true;
+ pulseSuccessFeedback(420);
+ status.textContent =
+ "Two separate shared pairs, one per O-H connection. This is what holds every water molecule together.";
+ go.disabled = false;
+ }
+ chemLabState.build = { ...b };
+ }
+
+ function render() {
+ if (stage === "share") {
+ title.textContent = "Share, don't give";
+ body.innerHTML = narrationHtml(
+ "Two hydrogen atoms both want to hold onto their one electron, so instead of one giving up, they compromise: they share. That shared pair belongs to both atoms at once, and both count it toward stability.",
+ );
+ status.textContent = "First try transferring the electron (it should bounce). Then overlap the atoms.";
+ go.disabled = true;
+ go.textContent = "Build water ▶";
+ playScene("bondShare");
+ } else {
+ chemLabState.bondShareCloud = true;
+ chemLabState.build = { o: false, hL: false, hR: false, snapped: false };
+ playScene("tinyBuild");
+ title.textContent = "Build water, properly this time";
+ body.innerHTML = narrationHtml(
+ "The H₂O ghost outline from Tiny Bits is back. This time, dragging each Hydrogen next to Oxygen shows the shared-electron-pair cloud forming at each junction.",
+ );
+ status.textContent = "Drop two blue bits and one red bit onto the bent outline.";
+ go.disabled = true;
+ go.textContent = "Continue ▶";
+ }
+ }
+ render();
+ arena?.setIntentHandler?.((intent) => {
+ if (cancelled) return;
+ if (stage === "water" && intent.type === "CANVAS_UP" && intent.meta?.piece) {
+ snapIfClose(intent.meta.piece, intent.x, intent.y);
+ }
+ });
+ iv = setInterval(() => {
+ if (cancelled || stage !== "share") return;
+ if (chemLabState.bondHTried && !chemLabState.bondHShare) {
+ status.textContent = "Both atoms want to keep this electron. Try overlapping them instead of transferring.";
+ }
+ if (chemLabState.bondHShare) {
+ status.textContent = "Neither atom gave anything away. Both now count the same shared pair as their own.";
+ go.disabled = false;
+ }
+ }, 140);
+ go.onclick = () => {
+ if (stage === "share") {
+ stage = "water";
+ render();
+ return;
+ }
+ finish();
+ };
+}
+
+export function mountBondPairs(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let stage = "gallery";
+ trackCleanup(() => {});
+ chemLabState.bondGallery = 0;
+ chemLabState.bondPhase = "gallery";
+ playScene("bondPairs", { phase: "gallery" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 3: Iconic</div>
+ <h3 id="bond-pair-title">Single, double, triple</h3>
+ <div id="bond-pair-body"></div>
+ <button type="button" class="btn primary" id="bond-pair-go">Draw Lewis H₂O ▶</button>
+ </div>`;
+ const title = host.querySelector("#bond-pair-title");
+ const body = host.querySelector("#bond-pair-body");
+ const go = host.querySelector("#bond-pair-go");
+ body.innerHTML = narrationHtml(
+ "Atoms can share more than one pair if they both need to. One shared pair is a single bond, two pairs is a double bond, three is a triple bond. Each extra pair makes the bond stronger and shorter, which you can feel if you try pulling them apart.",
+ );
+ go.onclick = () => {
+ if (stage === "gallery") {
+ stage = "lewis";
+ chemLabState.bondPhase = "lewis";
+ playScene("bondPairs", { phase: "lewis" });
+ title.textContent = "Lewis water, and a lopsided share";
+ body.innerHTML = `${narrationHtml(
+ "This lopsided sharing, where oxygen hogs the shared electrons slightly more than hydrogen, turns out to matter a lot. It is the difference between two flavors of covalent bond, which is exactly what we're hunting next.",
+ )}<p class="tiny-onscreen">Covalent bond: sharing a pair of electrons between two atoms.</p>
+ <p class="tiny-onscreen">Bonding pair (shared, drawn as a line) vs lone pair (unshared, drawn as dots).</p>
+ <p class="tiny-onscreen">Some atoms pull shared electrons harder than others. That pulling power has a name…</p>`;
+ go.textContent = "Continue ▶";
+ return;
+ }
+ finish();
+ };
+}
+
+export function mountBondTug(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ const arena = window.__arena;
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ arena?.setIntentHandler?.(null);
+ });
+ chemLabState.bondTugI = 0;
+ chemLabState.bondTugHits = { hh: false, hcl: false, nacl: false };
+ chemLabState.bondTugX = 0.5;
+ chemLabState.bondDrag = "";
+ playScene("bondTug");
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 4: Enactive</div>
+ <h3>Electronegativity tug-of-war</h3>
+ ${narrationHtml("Ionic and covalent bonds are not two totally separate categories. They are two ends of the same spectrum. It all comes down to how unevenly two atoms pull on shared electrons.")}
+ <p id="bond-tug-status" class="tiny-onscreen" aria-live="polite">H-H first: a perfectly even tug. Drag the marker to Equal sharing.</p>
+ <button type="button" class="btn primary" id="bond-tug-go" disabled>Continue ▶</button>
+ </div>`;
+ const status = host.querySelector("#bond-tug-status");
+ const go = host.querySelector("#bond-tug-go");
+ iv = setInterval(() => {
+ if (cancelled) return;
+ const hits = chemLabState.bondTugHits || {};
+ const i = chemLabState.bondTugI || 0;
+ if (hits.hh && hits.hcl && hits.nacl) {
+ status.textContent =
+ "Pull perfectly evenly: nonpolar covalent. Uneven but not complete: polar covalent. Pull so hard the electron leaves: ionic.";
+ go.disabled = false;
+ } else if (i === 0) status.textContent = "H-H: perfectly even tug. Marker to the far left (nonpolar covalent).";
+ else if (i === 1) status.textContent = "H-Cl: Chlorine pulls harder, but does not fully win (polar covalent).";
+ else status.textContent = "Na-Cl: Sodium barely resists. The electron fully leaves (ionic).";
+ }, 160);
+ go.onclick = () => finish();
+}
+
+export function mountBondMaterials(host, cfg) {
+ const finish = once(() => cfg.onDone());
+ let stage = "mats";
+ let cancelled = false;
+ let iv = null;
+ trackCleanup(() => {
+ cancelled = true;
+ if (iv) clearInterval(iv);
+ });
+ chemLabState.bondPhase = "mats";
+ chemLabState.bondShatter = false;
+ chemLabState.bondDissolve = false;
+ chemLabState.bondMelt = false;
+ playScene("bondMaterials", { phase: "mats" });
+ host.innerHTML = `
+ <div class="chem-card tiny-card">
+ <div class="lab-demo__badge">Spiral 4: Iconic</div>
+ <h3 id="bond-mat-title">How materials behave</h3>
+ <div id="bond-mat-body"></div>
+ <p id="bond-mat-status" class="drag-hint" aria-live="polite">Tap the salt crystal, then the sugar cube.</p>
+ <button type="button" class="btn primary" id="bond-mat-go" disabled>ΔEN numbers ▶</button>
+ </div>`;
+ const title = host.querySelector("#bond-mat-title");
+ const body = host.querySelector("#bond-mat-body");
+ const status = host.querySelector("#bond-mat-status");
+ const go = host.querySelector("#bond-mat-go");
+ body.innerHTML = narrationHtml(
+ "This is not just an abstract electron game. The type of bond holding a material together decides how that material behaves in your hands. Ionic solids shatter and conduct electricity once dissolved. Covalent molecular substances tend to melt more easily and do not conduct.",
+ );
+ iv = setInterval(() => {
+ if (cancelled || stage !== "mats") return;
+ if (chemLabState.bondShatter && chemLabState.bondMelt) {
+ status.textContent = "Ionic: brittle, conducts when dissolved. Covalent molecular: melts easier, does not conduct.";
+ go.disabled = false;
+ }
+ }, 160);
+ go.onclick = () => {
+ if (stage === "mats") {
+ stage = "den";
+ chemLabState.bondPhase = "den";
+ playScene("bondMaterials", { phase: "den" });
+ title.textContent = "Electronegativity difference";
+ body.innerHTML = `${narrationHtml(
+ "Chemists put a number on pulling power: electronegativity. Subtract two atoms' values, and that difference tells you where their bond sits on the spectrum you just built with your hands. These are guidelines, not hard walls, because bonding is a spectrum, not separate boxes.",
+ )}<p class="tiny-onscreen">Electronegativity: how strongly an atom pulls on shared electrons.</p>
+ <p class="tiny-onscreen">ΔEN 0-0.4 → nonpolar covalent. 0.4-1.7 → polar covalent. 1.7+ → ionic.</p>`;
+ status.textContent = "";
+ go.disabled = false;
+ go.textContent = "Continue ▶";
  return;
  }
  finish();

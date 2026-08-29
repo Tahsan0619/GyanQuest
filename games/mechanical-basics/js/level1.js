@@ -1,475 +1,289 @@
 /**
  * Mechanical Basics - Mission 1: Levers & Gears
- * 10 sub-levels, Bruner spiral: enactive -> iconic -> symbolic.
- * Gold-standard depth patterned on chemistry-lab Tiny Bits (level1.js).
+ * Script: Opening + 4 Bruner spirals (lever → fulcrum/MA → gears → everyday) + recap.
  */
-import { labState, LAB_ASSET_PATHS } from "./lab-state.js";
-import {
- mountMotionChain,
- mountDragSort,
- mountHeatLab,
- mountRevealSteps,
- mountEquationBuild,
- mountQuiz,
- mountSpeedDrill,
- mountMythCards,
- mountTapContinue,
- mountOrderSteps,
- mountScaleLab,
- badgeHtml,
-} from "./lab-activities.js";
+import { labState, LAB_ASSET_PATHS, resetLeverGearState, initLevSub } from "./lab-state.js?v=lev4";
+import { mountGate, mountSpiralMap, mountTapContinue, badgeHtml } from "./lab-activities.js?v=lev4";
 
 export const L1_META = {
- objective: "By the end of this mission, you'll be able to explain how levers and gears trade force, distance, and turn in your own words.",
+ objective:
+ "By the end of this mission, you'll explain levers, mechanical advantage, gears, torque, and gear ratio - how small effort moves heavy loads by trading distance for force.",
  bdHook:
- "Bangladesh everyday: park seesaw tip, bottle opener on a soft-drink cap, bike gears climbing a flyover - levers and gears trade force for distance or turn, not free energy.",
+ "Scissors, wheelbarrows, bicycle hills - same trick: trade distance (or speed) for force (or torque).",
  predict: {
- q: "Before we start - a heavy drain cover won't budge with a short pry bar. What helps most?",
+ q: "A boulder is too heavy to lift by hand. What's the honest reason a plank can help?",
  options: [
- "Pushing with magic free force from nowhere",
- "A longer effort arm (or gear trade) so you push farther with less force",
- "Removing the fulcrum so the stick floats",
+ "The plank trades how far your hand moves for how hard it has to push",
+ "The plank magically creates extra strength from nowhere",
+ "Wood is lighter than rock so it cancels the weight",
  ],
- ok: 1,
+ ok: 0,
  },
-
  kidTitle: "Levers & Gears",
- theme: "simple machines",
- emoji: "\u2699\ufe0f",
+ theme: "machines that make effort go further",
+ emoji: "⚙️",
  rewardName: "Lever Learner",
  intro:
- "Levers and gears make hard jobs easier by trading force, distance, and turn. We start with a seesaw and bike gears - then name a clear rule you can reuse anywhere.",
- everyday: ["Seesaw", "Bottle opener", "Bike gears"],
+ "How does a small push move something far too heavy? A lever trades distance for force. A gear trades speed for torque. Same trick - straight line and spinning versions.",
+ everyday: ["Scissors and bottle opener", "Wheelbarrow", "Bicycle climbing a hill"],
  subTitles: [
- "Meet Lever & Gear",
- "Advantage Dial",
- "Sort Machines",
- "Stronger Advantage",
- "Why It Helps",
- "Name the Machine Rule",
- "Stretch: Places",
- "Myth Bust",
- "Fluency Drill",
- "Lever Learner Mastery",
+ "Try Lifting It",
+ "Hand vs Plank",
+ "What Is a Lever?",
+ "Slide the Fulcrum",
+ "Mechanical Advantage",
+ "Crank the Gears",
+ "Torque & Ratio",
+ "Sort the Machines",
+ "Why It Matters",
+ "The Right Tool",
  ],
 };
 
-/**
- * @param {{
- * overlay: HTMLElement,
- * setCoach: (html: string, aside?: string) => void,
- * completeSub: () => void,
- * registerTryAgain: (fn: () => void) => void,
- * }} api
- */
 export function runL1Sub(subIndex, api) {
  const { registerTryAgain } = api;
- labState.reveal = false;
- labState.tokenProgress = 0;
- labState.masteryStep = 0;
- labState.sortPlaced = 0;
- labState.placed = {};
- labState.selectedId = null;
- labState.mythBusted = false;
- labState.mythPhase = "claim";
- labState.scale = 0;
- labState.mode = "home";
- labState.heat = 0.25;
- labState.phase = "desk";
-
+ initLevSub(subIndex);
  const runners = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10];
  const fn = runners[subIndex] || runners[0];
  registerTryAgain(() => {
  api.overlay.innerHTML = "";
+ resetLeverGearState();
  fn(api);
  });
  fn(api);
 }
 
-function s1({ overlay, setCoach, completeSub }) {
- setCoach(
- "Hook + light enactive: drag the lever and meshing gears - meet fulcrum, load, and effort.",
- );
- mountMotionChain(overlay, {
- title: "Meet Lever & Gear",
- beats: [
- {
- scene: "leverMeet",
- sceneArgs: { phase: "desk" },
- dwellMs: 4200,
+function n(text) {
+ return `<p class="tiny-narration">${text}</p>`;
+}
+
+function fulcrumBothTried() {
+ return labState.levFulcrumTriedNearLoad && labState.levFulcrumTriedNearEffort;
+}
+
+function s1_opening({ overlay, setCoach, completeSub }) {
+ setCoach("Tap Try Lifting It on the canvas - you'll advance automatically.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "levOpen",
+ badge: "Opening",
+ title: "Machines That Make Effort Go Further",
+ pulse: true,
+ autoAdvanceOnReady: true,
+ ready: () => labState.levOpenReady || Date.now() - t0 > 4500,
+ readyText: "Clever force beats raw strength.",
+ doneLabel: "Continue ▶",
+ controlsHtml: `<p class="drag-hint">Or tap here:</p>
+ <button type="button" class="btn secondary" id="gate-try-lift">Try Lifting It →</button>`,
+ bind: (host, { finish, signalGateReady: signal }) => {
+ host.querySelector("#gate-try-lift")?.addEventListener("click", () => {
+ labState.levOpenReady = true;
+ signal?.({ forceAdvance: true });
+ finish();
+ });
+ },
  html: `${badgeHtml(LAB_ASSET_PATHS.m1, "lever")}
- <p><strong>Act 1 - Desk machines:</strong> Drag the beam and the meshing gears on the canvas.</p>
- <p>Find three labels on the lever: <strong>fulcrum</strong> (pivot), <strong>load</strong>, and <strong>effort</strong>.</p>`,
- },
- {
- scene: "leverMeet",
- sceneArgs: { phase: "glow" },
- dwellMs: 4500,
- html: `<p><strong>Act 2 - Advantage glow:</strong> A longer effort arm lifts easier; gears mesh to change speed and turn.</p>
- <p>Watch the beam tip and the gear pair spin together.</p>`,
- },
- {
- scene: "leverMeet",
- sceneArgs: { phase: "predict" },
- dwellMs: 3800,
- html: `<p><strong>Act 3 - Predict:</strong> Do machines create free force from nowhere, or trade force for distance / turn?</p>
- <p>Decide before we name the big idea.</p>`,
- },
- {
- scene: "leverMeet",
- sceneArgs: { phase: "settle" },
- dwellMs: 4200,
- html: `<p><strong>Act 4 - Big idea:</strong> Seesaws, openers, and bike gears connect to one claim.</p>
- <p>Simple machines <strong>trade</strong> force, distance, and turn to help - they do not invent energy.</p>`,
- },
- ],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "leverMeet",
- sceneArgs: { phase: "settle" },
- title: "Exit check",
- q: "What did the desk model suggest about levers and gears?",
- opts: [
- "They trade force, distance, and turn to help with jobs",
- "They create free force from nowhere",
- "You should remove the fulcrum forever",
- "Gears never change turn direction",
- ],
- ok: 0,
+ ${n(
+ "That boulder is too heavy for bare hands - and that hill is steep enough to exhaust anyone in the wrong gear. A plain plank and a bicycle are both about to make both problems genuinely easy. Not by adding strength. By being clever about how force gets applied.",
+ )}`,
+ onDone: completeSub,
+ });
+}
+
+function s2_lever({ overlay, setCoach, completeSub }) {
+ setCoach("Hold Push against the boulder - fail honestly. Then push down on the plank.");
+ mountGate(overlay, {
+ scene: "levLever1",
+ badge: "Spiral 1 · Enactive",
+ title: "Lift It By Hand, Then the Plank",
+ pulse: true,
+ ready: () => labState.levHandFailed && labState.levPlankUsed,
+ readyText: "Same boulder - far less force with the plank.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Maximum effort by hand: barely any movement. Then drag down on the far end of the plank - the boulder rises with noticeably less force on the meter.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function s3_seesaw({ overlay, setCoach, completeSub }) {
+ setCoach("Long side travels far with less force; short side lifts with more force.");
+ mountGate(overlay, {
+ scene: "levSeesaw1",
+ badge: "Spiral 1 · Iconic",
+ title: "The Seesaw Trade",
+ ready: () => true,
+ html: n(
+ "A seesaw is the exact same machine: the long side moves a large distance with a small push, and the short side moves a little with a large push - two sides of the same trade.",
+ ),
  onDone: () => {
  mountTapContinue(overlay, {
- scene: "leverMeet",
- sceneArgs: { phase: "settle" },
- badge: LAB_ASSET_PATHS.m1,
- html: `<h3>You met Levers & Gears</h3><p>Next we dial mechanical advantage until the load lifts easier.</p>`,
+ scene: "levTerms1",
+ html: `<h3>Spiral 1 · Symbolic</h3>
+ <p><strong>Lever</strong> · <strong>Fulcrum</strong> · <strong>Effort</strong> · <strong>Load</strong></p>`,
  onDone: completeSub,
- advanceAfterDone: true,
- });
- },
  });
  },
  });
 }
 
-function s2({ overlay, setCoach, completeSub }) {
- setCoach("Enactive: dial mechanical advantage until the load lifts easier.");
- labState.heat = 0.25;
- mountHeatLab(overlay, {
- scene: "leverLab",
- title: "Advantage Dial",
- html: `<p>Drag the canvas handle or scrub the slider. Longer effort advantage makes the load rise with less push.</p>`,
- goalText: "Goal: boost advantage to at least 60%.",
- doneLabel: "Dial checked \u25b6",
- threshold: 0.6,
- startHeat: 0.25,
- axis: "x",
- canvasAction: "stretch",
- sliderLabel: "Mechanical advantage",
- badge: LAB_ASSET_PATHS.m1,
- readoutLabels: {
- cold: "Low advantage - hard push needed",
- melting: "Building advantage - load starts to tip",
- liquid: "Stronger trade - load rising",
- simmer: "High advantage - lift feels easier",
- },
+function s4_fulcrum({ overlay, setCoach, completeSub }) {
+ setCoach("Slide the fulcrum near the load AND near your hand - push each time.");
+ mountGate(overlay, {
+ scene: "levFulcrum2",
+ badge: "Spiral 2 · Enactive",
+ title: "Where You Push Matters",
+ pulse: true,
+ ready: fulcrumBothTried,
+ readyText: "Closer to load: less force, longer travel. Closer to effort: the opposite.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Drag the fulcrum along the plank. Push near the load - force drops but your hand travels further. Push near your hand - more force, barely any motion.",
+ ),
  onDone: completeSub,
  });
 }
 
-function s3({ overlay, setCoach, completeSub }) {
- setCoach("Sort levers, gears, and neither - look for fulcrum/arms vs meshing teeth.");
- mountTapContinue(overlay, {
- scene: "leverSort",
- html: `<h3>Guide</h3><p><strong>Lever:</strong> seesaw, crowbar, scissors.<br><strong>Gear:</strong> bike/clock gears.<br><strong>Neither:</strong> glue alone, loose magnet, ramp only.</p>`,
- onDone: () =>
- mountDragSort(overlay, {
- scene: "leverSort",
- title: "Sort Machines",
- instructions: "Drag into Lever / Gear / Neither.",
- successText: "Machines sorted!",
- chips: [
- { id: "see", text: "Seesaw", short: "Seesaw", color: 0x38bdf8 },
- { id: "crow", text: "Crowbar", short: "Crowbar", color: 0x22c55e },
- { id: "bike", text: "Bike gear", short: "Bike gear", color: 0xfbbf24 },
- { id: "clock", text: "Clock gear", short: "Clock gear", color: 0xfdba74 },
- { id: "glue", text: "Glue alone", short: "Glue", color: 0x94a3b8 },
- { id: "mag", text: "Loose magnet", short: "Magnet", color: 0x78716c },
- { id: "scis", text: "Scissors", short: "Scissors", color: 0xa78bfa },
- { id: "ramp", text: "Ramp only", short: "Ramp", color: 0xf97316 },
- ],
- zones: [
- { id: "lever", label: "Lever", accept: ["see", "crow", "scis"] },
- { id: "gear", label: "Gear", accept: ["bike", "clock"] },
- { id: "neither", label: "Neither", accept: ["glue", "mag", "ramp"] },
- ],
- onDone: completeSub,
- }),
- });
-}
-
-function s4({ overlay, setCoach, completeSub }) {
- setCoach("Push advantage higher - watch the load rise and gears spin faster.");
- labState.heat = 0.4;
- mountHeatLab(overlay, {
- scene: "leverLab",
- title: "Stronger Advantage",
- html: `<p>Reach a stronger trade (&gt;= 75%). Same lever + gear model - bigger advantage means an easier lift.</p>`,
- goalText: "Goal: advantage at least 75%.",
- doneLabel: "Lab done \u25b6",
- threshold: 0.75,
- startHeat: 0.4,
- axis: "x",
- canvasAction: "stretch",
- sliderLabel: "Mechanical advantage",
- badge: LAB_ASSET_PATHS.m1,
- readoutLabels: {
- cold: "Still hard - keep dialing",
- melting: "Advantage climbing",
- liquid: "Load rising clearly",
- simmer: "Strong advantage locked in",
- },
- onDone: completeSub,
- });
-}
-
-function s5({ overlay, setCoach, completeSub }) {
- setCoach("Causal chain: fulcrum place \u2192 effort arm \u2192 load rises \u2192 gears can retune speed/turn.");
- mountOrderSteps(overlay, {
- scene: "leverMeet",
- sceneArgs: { phase: "settle" },
- title: "Why It Helps",
- instructions: "Order the story.",
- items: [
- { id: "f", html: "Place a fulcrum under the beam" },
- { id: "e", html: "Push on the long effort arm" },
- { id: "l", html: "Load rises on the short arm" },
- { id: "g", html: "Gears can change speed or turn" },
- ],
- correctIds: ["f", "e", "l", "g"],
- onDone: () => {
- mountRevealSteps(overlay, {
- scene: "leverMeet",
- sceneArgs: { phase: "glow" },
- title: "Causal chain",
- steps: [
- "Fulcrum is the pivot - without it the beam is just a stick.",
- "A longer effort arm means you push farther but with less force.",
- "The load on the short arm rises - that is the trade.",
- "Gears mesh to retune speed and turn direction for the same idea.",
- ],
- onDone: () => {
- mountQuiz(overlay, {
- scene: "leverMeet",
- sceneArgs: { phase: "settle" },
- title: "Check",
- q: "Moving the fulcrum closer to the load...",
- opts: [
- "Usually makes lifting easier (longer effort arm)",
- "Removes all force forever",
- "Stops gears from existing",
- "Deletes distance from the universe",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
- },
- });
-}
-
-function s6({ overlay, setCoach, completeSub }) {
- setCoach("Symbolic: lock the machine rule, then scrub desk \u2192 labeled arms \u2192 RULE banner.");
- mountEquationBuild(overlay, {
- scene: "leverRule",
- title: "Name the Machine Rule",
- instructions: "Tap tokens in order to build the Levers & Gears rule.",
- tokens: [
- { id: "a", html: "Lever" },
- { id: "b", html: "trades" },
- { id: "c", html: "force" },
- { id: "d", html: "distance" },
- ],
- correctIds: ["a", "b", "c", "d"],
- badge: LAB_ASSET_PATHS.rule,
- onDone: () => {
- mountScaleLab(overlay, {
- scene: "leverRule",
- title: "Machine scale scrubber",
- html: `<p>Slide from everyday desk tools \u2192 labeled fulcrum / effort / load \u2192 the MACHINE RULE banner.</p>
- <p>Gears keep the same idea: trade speed and turn, not free energy.</p>`,
- start: 0,
- threshold: 0.85,
- sliderLabel: "Machine scale: desk tools \u2192 arms labeled \u2192 RULE",
- goalText: "Canvas follows: everyday lever/gears \u2192 labeled parts \u2192 MACHINE RULE.",
- readoutLabels: {
- low: "Desk: seesaw / opener + meshing gears",
- mid: "Labeled fulcrum, effort arm, load arm",
- high: "MACHINE RULE: trade force \u2194 distance / turn",
- },
- onDone: () => {
- mountQuiz(overlay, {
- scene: "leverRule",
- title: "Rule check",
- q: "What is the main Levers & Gears rule?",
- opts: [
- "Machines trade force, distance, and turn to help with jobs",
- "Levers create free force from nowhere",
- "Fulcrum position never matters",
- "Only factory robots use gears",
- ],
- ok: 0,
- onDone: completeSub,
- });
- },
- });
- },
- });
-}
-
-function s7({ overlay, setCoach, completeSub }) {
- setCoach("Transfer: same lever/gear rule at home, school, street, bike shop, and lab.");
- const modes = [
- {
- mode: "home",
- html: `${badgeHtml(LAB_ASSET_PATHS.m1, "home")}<p><strong>Home:</strong> A bottle opener is a lever - fulcrum near the cap multiplies your hand force.</p>`,
- },
- {
- mode: "school",
- html: `<p><strong>School:</strong> A seesaw is a class-1 lever; kit gears mesh to change turn.</p>`,
- },
- {
- mode: "street",
- html: `<p><strong>Street:</strong> A crowbar pries a drain cover - long effort arm, fulcrum close to the load.</p>`,
- },
- {
- mode: "shop",
- html: `<p><strong>Bike shop:</strong> Pedal gears trade cadence for torque - same force/distance idea in a circle.</p>`,
- },
- {
- mode: "lab",
- html: `<p><strong>Lab:</strong> Measure effort arm vs load arm - longer effort arm, smaller push needed.</p>`,
- },
- ];
- let step = 0;
-
- function show() {
- if (step >= modes.length) {
- mountQuiz(overlay, {
- scene: "leverStretch",
- sceneArgs: { mode: "home" },
- title: "Transfer check",
- q: "A bottle opener is mostly a...",
- opts: [
- "Lever with fulcrum near the cap",
- "Loose magnet only",
- "Broken belt",
- "Smoke stack",
- ],
- ok: 0,
- onDone: completeSub,
- });
- return;
- }
- const m = modes[step];
- labState.mode = m.mode;
- mountTapContinue(overlay, {
- scene: "leverStretch",
- sceneArgs: { mode: m.mode },
- html: `<div class="lab-demo__badge">Context ${step + 1} of ${modes.length}</div>${m.html}`,
- onDone: () => {
- step++;
- show();
- },
- });
- }
- show();
-}
-
-function s8({ overlay, setCoach, completeSub }) {
- setCoach("Misconceptions: claim first on canvas; truth diagram appears only after you bust the myth.");
- mountMythCards(overlay, {
- scene: "leverMyth",
- title: "Myth Bust",
- badge: LAB_ASSET_PATHS.myth,
- myths: [
- {
- sceneMyth: 0,
- title: "\u201cLevers only make things heavier\u201d",
- claim: "Levers only make things heavier",
- truth: "Levers trade distance for force - they help lift",
- },
- {
- sceneMyth: 1,
- title: "\u201cGears only look cool\u201d",
- claim: "Gears only look cool",
- truth: "Gears change speed and turn direction",
- },
- {
- sceneMyth: 2,
- title: "\u201cFulcrum position does not matter\u201d",
- claim: "Fulcrum position does not matter",
- truth: "Fulcrum place changes how hard you push",
- },
- {
- sceneMyth: 3,
- title: "\u201cOnly factories use levers\u201d",
- claim: "Only factories use levers",
- truth: "Seesaws, crowbars, and scissors are levers too",
- },
- {
- sceneMyth: 4,
- title: "\u201cBigger gear = infinite force\u201d",
- claim: "Bigger gear always means infinite force",
- truth: "Gear pairs trade speed and force together",
- },
- ],
- onDone: completeSub,
- });
-}
-
-function s9({ overlay, setCoach, completeSub }) {
- setCoach("Fluency: quick lever/gear checks. Need about 80% to unlock Continue.");
- mountSpeedDrill(overlay, {
- scene: "leverDrill",
- title: "Fluency Drill",
- passScene: "leverMastery",
- passRatio: 0.8,
- items: [
- { q: "Fulcrum is the pivot point?", opts: ["Yes", "No"], ok: 0, prompt: "Fulcrum?" },
- { q: "Gears can change turn direction?", opts: ["Yes", "No"], ok: 0, prompt: "Turn?" },
- { q: "Glue alone is a lever?", opts: ["No", "Yes"], ok: 0, prompt: "Glue?" },
- { q: "Longer effort arm can help lift?", opts: ["Yes", "No"], ok: 0, prompt: "Arm?" },
- { q: "Scissors are a double lever?", opts: ["Yes", "No"], ok: 0, prompt: "Scissors?" },
- { q: "Ramp alone is a gear?", opts: ["No", "Yes"], ok: 0, prompt: "Ramp?" },
- ],
- onDone: completeSub,
- });
-}
-
-function s10({ overlay, setCoach, completeSub }) {
- setCoach("Mastery - prove the lever/gear journey and claim your Lever Learner badge.");
- mountOrderSteps(overlay, {
- scene: "leverMastery",
- title: "Lever Learner Mastery",
- instructions: "Order your journey.",
- items: [
- { id: "meet", html: "Meet" },
- { id: "sort", html: "Sort" },
- { id: "lab", html: "Lab" },
- { id: "rule", html: "Rule" },
- { id: "myth", html: "Myth" },
- { id: "win", html: "Win" },
- ],
- correctIds: ["meet", "sort", "lab", "rule", "myth", "win"],
+function s5_arms({ overlay, setCoach, completeSub }) {
+ setCoach("Both levers reach the same height - they split force and distance differently.");
+ mountGate(overlay, {
+ scene: "levArms2",
+ badge: "Spiral 2 · Iconic",
+ title: "Long Arm vs Short Arm",
+ ready: () => true,
+ html: n(
+ "A lever never eliminates effort - it lets you choose: a little force over a long distance, or a lot of force over a short one.",
+ ),
  onDone: () => {
  mountTapContinue(overlay, {
- scene: "leverMastery",
- badge: LAB_ASSET_PATHS.m1,
- html: `<h3>\u2699\ufe0f Lever Learner!</h3><p>You can explain how levers and gears trade force, distance, and turn to make jobs easier.</p>`,
+ scene: "levTerms2",
+ html: `<h3>Spiral 2 · Symbolic</h3>
+ <p><strong>Mechanical advantage</strong> - longer effort arm → less force needed, but your hand moves further. Total work stays the same.</p>`,
  onDone: completeSub,
- advanceAfterDone: true,
  });
  },
  });
 }
+
+function s6_gears({ overlay, setCoach, completeSub }) {
+ setCoach("Crank small→large to lift weight, then large→small to spin the fan fast.");
+ mountGate(overlay, {
+ scene: "levGears3",
+ badge: "Spiral 3 · Enactive",
+ title: "Turning Force: Gears",
+ pulse: true,
+ ready: () => labState.levGearCranked && labState.levGearReversed,
+ readyText: "Same trade as the lever - but spinning: speed ↔ torque.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Turn the small gear: it spins fast while the large gear lifts the weight with more torque. Reverse it: crank the large gear - more effort per turn, small gear spins the fan quickly.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function s7_bike({ overlay, setCoach, completeSub }) {
+ setCoach("Big rear gear for hills; small rear gear for flat speed - same gear trade.");
+ mountGate(overlay, {
+ scene: "levBike3",
+ badge: "Spiral 3 · Iconic",
+ title: "Why Bicycles Have Gears",
+ ready: () => true,
+ html: n(
+ "Cyclists shift going up or down a hill: a big rear gear trades speed for easier pedaling; a small rear gear trades ease back for speed on flat roads.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "levTerms3",
+ html: `<h3>Spiral 3 · Symbolic</h3>
+ <p><strong>Gear</strong> · <strong>Torque</strong> · <strong>Gear ratio</strong></p>
+ <p>Small driving → large driven: more torque, less speed.</p>`,
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+function s8_sort({ overlay, setCoach, completeSub }) {
+ setCoach("Sort scissors, opener, wheelbarrow, seesaw, clock, gear shift - bonus: bicycle uses both.");
+ mountGate(overlay, {
+ scene: "levSort4",
+ badge: "Spiral 4 · Enactive",
+ title: "Sort the Simple Machines",
+ pulse: true,
+ ready: () => labState.levSortDone,
+ readyText: "Levers and gears - genuinely everywhere.",
+ doneLabel: "Continue ▶",
+ html: n(
+ "Scissors are two levers sharing a fulcrum. A wind-up clock runs a chain of gear ratios. Sort each object - then spot the bicycle: lever arm plus gears together.",
+ ),
+ onDone: completeSub,
+ });
+}
+
+function s9_montage({ overlay, setCoach, completeSub }) {
+ setCoach("Opening boulder and hill - solved without extra strength.");
+ mountGate(overlay, {
+ scene: "levMontage4",
+ badge: "Spiral 4 · Iconic",
+ title: "Why This Actually Matters",
+ ready: () => true,
+ html: n(
+ "Neither the boulder nor the hill needed a stronger person - they needed the right simple machine, applied correctly.",
+ ),
+ onDone: () => {
+ mountTapContinue(overlay, {
+ scene: "levTerms4",
+ html: `<h3>Spiral 4 · Symbolic</h3>
+ <p>Lever (distance ↔ force) · Gear (speed ↔ torque) · Simple machines rearrange the trade - they don't add energy.</p>
+ <p><em>Next: pulleys and the wheel-and-axle?</em></p>`,
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+function s10_closing({ overlay, setCoach, completeSub }) {
+ setCoach("Watch both opening problems resolve - then open the recap map.");
+ const t0 = Date.now();
+ mountGate(overlay, {
+ scene: "levClose",
+ badge: "Closing",
+ title: "The Right Tool, Not More Strength",
+ html: n(
+ "That boulder and that hill never needed more muscle - they needed a lever trading distance for force, and gears trading speed for torque. Simple machines don't cheat physics; they let you choose which side of the trade you'd rather deal with.",
+ ),
+ ready: () => labState.levCloseU >= 0.85 || Date.now() - t0 > 7000,
+ readyText: "Lever · Fulcrum · Gear · Torque.",
+ doneLabel: "Open the recap map ▶",
+ onDone: () => {
+ setCoach("Tap a spiral number to replay, then finish Levers & Gears.");
+ mountSpiralMap(overlay, {
+ scene: "levSpiral",
+ title: "Your recap map",
+ finishLabel: "Finish Levers & Gears ▶",
+ narration: "The four numbers are the four spirals you finished. Tap a number to replay a highlight, then finish when ready.",
+ statusIdle: "Tap a number to replay, or finish now.",
+ stops: [
+ { n: 1, label: "1: Lever" },
+ { n: 2, label: "2: Fulcrum" },
+ { n: 3, label: "3: Gears" },
+ { n: 4, label: "4: Everywhere" },
+ ],
+ onDone: completeSub,
+ });
+ },
+ });
+}
+
+const s1 = s1_opening;
+const s2 = s2_lever;
+const s3 = s3_seesaw;
+const s4 = s4_fulcrum;
+const s5 = s5_arms;
+const s6 = s6_gears;
+const s7 = s7_bike;
+const s8 = s8_sort;
+const s9 = s9_montage;
+const s10 = s10_closing;

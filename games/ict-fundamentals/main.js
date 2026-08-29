@@ -1,4 +1,4 @@
-import { bootIctFundamentals } from "./js/boot-l1.js?v=tier3";
+import { bootIctFundamentals } from "./js/boot-l1.js?v=kitchen4";
 import { manifest } from "./manifest.js";
 
 function showBootError(msg) {

@@ -1,4 +1,4 @@
-import { bootWebDevStudio } from "./js/boot-l1.js?v=tier3";
+import { bootWebDevStudio } from "./js/boot-l1.js?v=csspaint1";
 import { manifest } from "./manifest.js";
 
 function showBootError(msg) {

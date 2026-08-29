@@ -5,10 +5,10 @@ export const MISSIONS = [
  {
  "id": "strong-structures",
  "kidTitle": "Strong Structures",
- "theme": "triangles & load",
+ "theme": "why shape decides whether something stands",
  "emoji": "\ud83c\udf09",
  "rewardName": "Structure Scout",
- "hook": "Triangles and wide bases keep bridges strong under load.",
+ "hook": "Square folds - one diagonal makes triangles rigid. Shape beats material.",
  "accent": "#a8a29e",
  "accent2": "#57534e",
  "icon": "leaf",
